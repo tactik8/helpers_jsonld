@@ -35,7 +35,7 @@ Ensure all records have @id, standardize @id
 
 
 ```
-import * as helpers from 'jsonldHelpers' 
+import * as helpers from 'jsonld_helpers' 
 
 // Clean record (ensure all records have @id, standardize @id)
 let record = {...}
