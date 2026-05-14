@@ -10,7 +10,7 @@ export function getItemList(name=0, noOfItems=5) {
         name = record_type + String(name)
     }
 
-    let record_id = "https://www.testrecord.com/" + name
+    let record_id = "https://www.testrecord.com/itemlist/" + name
 
     let record = {
         "@type": record_type,
@@ -48,7 +48,7 @@ function getListItem(item, position=0){
 
     let record = {
         "@type": "ListItem",
-        "@id": "https://www.test.com/" + uuidv4(),
+        "@id": "https://www.testrecord.com/listitem/"  + uuidv4(),
         "item": item,
         "position": position,
         "previousItem": "",
