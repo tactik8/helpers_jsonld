@@ -6,16 +6,13 @@ export function getItemList(noOfItems=5) {
 
 
     let record_type = "Thing"
-     if (!Number.isNaN(name)) {
-        name = record_type + String(name)
-    }
+     
 
     let record_id = "https://www.testrecord.com/itemlist/" + name
 
     let record = {
         "@type": record_type,
         "@id": record_id,
-        "name": name,
         "itemListElement": [],
         "numberOfItems": noOfItems
     }
