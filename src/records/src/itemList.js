@@ -2,7 +2,7 @@ import { records} from '../records.js'
 import { v4 as uuidv4 } from 'uuid';
 
 
-export function getItemList(name=0, noOfItems=5) {
+export function getItemList(noOfItems=5) {
 
 
     let record_type = "Thing"
