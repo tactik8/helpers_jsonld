@@ -16,7 +16,8 @@ export function getItemList(name=0, noOfItems=5) {
         "@type": record_type,
         "@id": record_id,
         "name": name,
-        "itemListElement": [] 
+        "itemListElement": [],
+        "numberOfItems": noOfItems
     }
 
     
