@@ -28,13 +28,12 @@ export function get(record, path) {
     for (let p of pathElements) {
 
         if (!isNaN(p)) {
-            workingRecord = (Array.isArray(workingRecord) && typeof workingRecord != "string") ? workingRecord : [workingRecord]
+            workingRecord = Array.isArray(workingRecord) ? workingRecord : [workingRecord]
         } else {
-            workingRecord = (Array.isArray(workingRecord) && typeof workingRecord != "string") ? workingRecord[0] : workingRecord
+            workingRecord = Array.isArray(workingRecord) ? workingRecord[0] : workingRecord
         }
 
-
-        workingRecord = workingRecord?.[p] || undefined
+        workingRecord = workingRecord?.[p] 
 
     }
 
@@ -83,13 +82,13 @@ export function set(record, path, value) {
 
         // Convert to array if number
         if (isNumber == true) {
-            parentRecord[p0] = (Array.isArray(parentRecord[p0]) && typeof parentRecord[p0] != "string") ? parentRecord[p0] : [parentRecord[p0]]
+            parentRecord[p0] = Array.isArray(parentRecord[p0])? parentRecord[p0] : [parentRecord[p0]]
             parentRecord = parentRecord?.[p0]
         }
 
         if (isNumber == false) {
             parentRecord[p0] = parentRecord?.[p0] || {}
-            parentRecord = (Array.isArray(parentRecord?.[p0]) && typeof parentRecord[p0] != "string") ? parentRecord?.[p0][0] : parentRecord?.[p0]
+            parentRecord = Array.isArray(parentRecord?.[p0])  ? parentRecord?.[p0][0] : parentRecord?.[p0]
         }
 
     }

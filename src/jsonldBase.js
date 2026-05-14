@@ -240,7 +240,7 @@ export function clean(value, baseUrl) {
 
 function toArray(value) {
 
-    return (Array.isArray(value) && typeof value != "string") ? value : [value]
+    return Array.isArray(value) ? value : [value]
 
 }
 
@@ -362,7 +362,7 @@ function deleteRecord(store, record_id) {
 
     storeRecord = _storeToMap(store)
 
-    record_id = Array.isArray(record_id && typeof record_id != "string") ? record_id : [record_id]
+    record_id = Array.isArray(record_id) ? record_id : [record_id]
 
     record_id.map(x => storeRecord.store.delete(x))
 
@@ -455,7 +455,7 @@ export function evaluate(record, condition) {
 
         let propertyID = k
         let values = condition?.[k]
-        values = (Array.isArray(values) && typeof values != "string") ? values : [values]
+        values = Array.isArray(values) ? values : [values]
 
         // handle and & or
         if (propertyID == "$and") {
@@ -555,6 +555,11 @@ function _extractCondition(record, propertyID, value) {
 
     return c
 }
+
+
+
+
+
 
 
 

@@ -322,13 +322,199 @@ function setFailed(record, error) {
 
 
 
+// ----------------------------------------------------------------------
+// ItemList
+// ----------------------------------------------------------------------
+
+
+export class ItemList extends Thing {
+    constructor(records) {
+        super()
+        this.record_type = "ItemList"
+        if (records) {
+            this.add(records)
+        }
+    }
+
+
+    get itemListElement() {
+        let itemListElements = h.getValues(this.record, "itemListElement")
+        itemListElements = itemListElements || []
+        itemListElements = itemListElements.filter(x => x)
+        itemListElements.sort((a, b) => h.getValue(a, "position") < h.getValue(b, 'position'))
+        return itemListElements
+    }
+
+    set itemListElement(value) {
+        value = value || []
+        this.record = h.setValues(this.record, 'itemListElement', value)
+    }
+
+    prepend(item) {
+        this.record = insertItem(this.record, item, 0)
+    }
+    append(item) {
+        this.record = insertItem(this.record, item, this.itemListElement.length)
+    }
+    add(item) {
+        this.record = insertItem(this.record, item, this.itemListElement.length)
+    }
+    insert(item, position) {
+        this.record = insertItem(this.record, item, position)
+    }
+    delete(position) {
+        this.record = removeItem(this.record, position)
+    }
+
+    // static
+    static prepend(record, item) {
+        return insertItem(record, item, 0)
+    }
+    static append(record, item) {
+        returninsertItem(record, item, itemlistElements.length)
+    }
+    static add(record, item) {
+        returninsertItem(record, item, itemlistElements.length)
+    }
+    static insert(record, item, position) {
+        return insertItem(record, item, position)
+    }
+    static delete(record, position) {
+        return removeItem(record, position)
+    }
+
+}
+
+
+function toListItem(value) {
+
+    if (h.getValue(value, '@type') != "ListItem") {
+        value = {
+            "@type": "ListItem",
+            "@id": uuidv4(),
+            "item": value
+        }
+    }
+    return value
+}
+
+function insertItem(itemList, item, position) {
+
+
+    if (Array.isArray(item)) {
+        for (let i = 0; i < item.lemgth; i++) {
+            itemList = insertItem(itemList, item[i], position)
+            position += 1
+        }
+        return itemList
+    }
+
+
+    let listItems = h.getValues(itemList, 'itemListElement')
+    listItems = Array.isArray(listItems) ? listItems : [listItems]
+    listItems = listItems.filter(x => x)
+
+    item = toListItem(item)
+
+    if (!position && position != 0) {
+        position = listItems.length
+    }
+
+    let previousItem = listItems.find(x => h.getValue(x, "position") == position - 1)
+    let nextItem = listItems.find(x => h.getValue(x, "position") == position)
+
+    console.log('pr', previousItem)
+    console.log('ni', nextItem)
+
+    // Increment positions
+    listItems.filter(x => h.getValue(x, "position") >= position).forEach(x => h.setValue(x, "position", (h.getValue(x, "position") || 0) + 1))
+
+    // Set previous, next items
+    item = h.setValue(item, 'position', position)
+        console.log('p', position, h.getValue(item.position))
+
+    item.previousItem = null
+    item.nextItem = null
+    if (previousItem) {
+        previousItem.nextItem = { "@id": item?.['@id'] }
+        item.previousItem = { "@id": previousItem?.["@id"] }
+    }
+    if (nextItem) {
+        nextItem.previousItem = { "@id": item?.['@id'] }
+        item.nextItem = { "@id": nextItem?.["@id"] }
+    }
+
+    // Add item
+    listItems.push(item)
+
+    // Sort items
+    listItems.sort((a, b) => h.getValue(a, "position") < h.getValue(b, "position"))
+
+    //
+    itemList = h.setValues(itemList, 'itemListElement', listItems)
+    itemList = h.setValue(itemList, 'numberOfItems', listItems.length)
+    return itemList
+
+}
+
+function removeItem(itemList, position) {
+
+    let listItems = h.getValues(itemList, 'itemListElement')
+    listItems = listItems.filter(x => x)
+
+    let item = listItems.find(x => h.getValue(x, "position") == position)
+    let previousItem = listItems.find(x => h.getValue(x, "position") == position - 1)
+    let nextItem = listItems.find(x => h.getValue(x, "position") == position + 1)
+
+
+
+    // Remove item
+    listItems = listItems.filter(x => h.getValue(x, "position") != position)
+
+    // Decrement positions
+    listItems.filter(x => h.getValue(x, "position") > position).forEach(x => h.setValue(x, "position", h.getValue(x, "position") - 1))
+
+    // Set previous, next items
+
+    if (previousItem) {
+        previousItem.nextItem = null
+        if (nextItem) {
+            previousItem.nextItem = { "@id": nextItem?.['@id'] }
+        }
+    }
+    if (nextItem) {
+        nextItem.previousItem = null
+        if (previousItem) {
+            nextItem.previousItem = { "@id": previousItem?.['@id'] }
+        }
+    }
+
+    // Sort items
+    listItems.sort((a, b) => h.getValue(a, "position") < h.getValue(b, "position"))
+
+    //
+    itemList = h.setValues(itemList, 'itemListElement', listItems)
+    itemList = h.setValue(itemList, 'numberOfItems', listItems.length)
+    return itemList
+
+}
+
+
+
+
+
+// ----------------------------------------------------------------------
+// 
+// ----------------------------------------------------------------------
+
 
 export default {
     Thing,
     Action,
     WebAPI,
     WebSite,
-    WebPage
+    WebPage,
+    ItemList
 
 }
 

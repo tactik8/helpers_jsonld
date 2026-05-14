@@ -19,11 +19,7 @@ npm test
 ## Build
 for packaging:
 ```
-npx @vercel/ncc build src/index.js -m -o dist
-```
-
-```
-npx esbuild src/index.js --bundle --minify --platform=node --format=esm --outfile=dist/index.js
+npm run build
 ```
 
 
