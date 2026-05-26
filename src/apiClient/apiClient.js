@@ -1,7 +1,6 @@
 
-import * as thing from './things.js'
 
-import * as things from './things.js'
+import * as things from '../things/things.js'
 
 
 export class ApiClient {
@@ -45,9 +44,9 @@ export default {
 
 async function apiGet(headers, baseUrl, path, params) {
 
-    let action = new thing.Action()
+    let action = new things.Action()
     action.name = "API Get"
-    action.instrument = new thing.WebAPI(baseUrl)
+    action.instrument = new things.WebAPI(baseUrl)
 
     action.object = params
 
@@ -99,9 +98,9 @@ async function apiGet(headers, baseUrl, path, params) {
 
 async function apiPost(headers, baseUrl, path, data) {
 
-    let action = new thing.Action()
+    let action = new things.Action()
     action.name = "API Post"
-    action.instrument = new thing.WebAPI(baseUrl)
+    action.instrument = new things.WebAPI(baseUrl)
 
     try {
 
@@ -140,9 +139,9 @@ async function apiPost(headers, baseUrl, path, data) {
 
 async function apiDelete(headers, baseUrl, path, params) {
 
-    let action = new thing.Action()
+    let action = new things.Action()
     action.name = "API Get"
-    action.instrument = new thing.WebAPI(baseUrl)
+    action.instrument = new things.WebAPI(baseUrl)
 
     try {
 

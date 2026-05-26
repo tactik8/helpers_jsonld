@@ -1,5 +1,5 @@
 
-import  * as thing from '../src/things.js';
+import  * as thinga from '../src/things/things.js';
 
 describe('Thing Classes', () => {
   
@@ -7,7 +7,7 @@ describe('Thing Classes', () => {
   test('Should produce record', async () => {
     
 
-    let t = new thing.Thing()
+    let t = new thinga.Thing()
 
     t.name = "Some thing"
 

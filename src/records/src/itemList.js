@@ -8,7 +8,7 @@ export function getItemList(noOfItems=5) {
     let record_type = "Thing"
      
 
-    let record_id = "https://www.testrecord.com/itemlist/" + uuidv4()
+    let record_id = "https://www.testrecord.com/" + uuidv4() + "#" + record_type
 
     let record = {
         "@type": record_type,

@@ -1,11 +1,10 @@
 import { records} from '../records.js'
 
+export function getWebpage(name=0) {
 
-export function getPerson(name=0) {
 
-
-    let record_type = "Person"
-     if (!Number.isNaN(name)) {
+    let record_type = "WebPage"
+    if (!Number.isNaN(name)) {
         name = record_type + String(name)
     }
 
@@ -15,10 +14,7 @@ export function getPerson(name=0) {
         "@type": record_type,
         "@id": record_id,
         "name": name,
-        "givenName": "givenName_" + name,
-        "familyName": "familyName_" + name,
-        "email": name + "@testrecord.com",
-        "address": records.address()
+        "url": "https://www.testrecord.com"
     }
 
    

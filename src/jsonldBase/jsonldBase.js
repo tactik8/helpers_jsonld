@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import dot from './dotHelpers.js'
-import * as recordIDHelpers from './recordIdHelpers.js'
+import dot from '../dotHelpers/dotHelpers.js'
+import * as recordIDHelpers from '../recordIdHelpers/recordIdHelpers.js'
 
 /**
  * Database for storing jsonld records
@@ -59,7 +59,13 @@ export class DB {
 
     }
 
-    //
+    // Static
+
+    static clean(value, baseUrl) {
+        return clean(value, baseUrl)
+    }
+
+
     static flatten(value) {
         return flatten(value)
     }
@@ -71,9 +77,31 @@ export class DB {
         return getValues(record, propertyID)
     }
 
+    static setValue(record, propertyID, value) {
+        return setValue(record, propertyID, value)
+    }
+
+    static setValues(record, propertyID, values) {
+        return setValues(record, propertyID, values)
+    }
+
+    static addValue(record, propertyID, value) {
+        return addValue(record, propertyID, value)
+    }
+
+    static addValues(record, propertyID, values) {
+        return addValues(record, propertyID, values)
+    }
+
     static get dot() {
         return dot
     }
+
+    static simplify(value){
+        return simplify(value)
+    }
+
+
 
 }
 
@@ -87,7 +115,11 @@ export default {
     getValues,
     setValue,
     setValues,
-    setTempID
+    addValue,
+    addValues,
+    setTempID,
+    clean,
+    simplify
 }
 
 
@@ -181,7 +213,7 @@ export function clean(value, baseUrl) {
 
     try {
         JSON.parse(JSON.stringify(value))
-    } catch (err){
+    } catch (err) {
 
     }
 
@@ -193,29 +225,29 @@ export function clean(value, baseUrl) {
     let replacements = []
 
     // Get combinations of replacer, replacees
-    for(let f of flatRecords){
+    for (let f of flatRecords) {
 
         // Ensure id not array
         f['@id'] = Array.isArray(f?.['@id']) ? f?.['@id'][0] : f?.['@id']
 
         // Validate id, skip if ok
-        if(recordIDHelpers.validate(f) == true){
+        if (recordIDHelpers.validate(f) == true) {
             continue
         }
-        
+
 
         // Get standard id
         let newID = recordIDHelpers.getStandardID(f, baseUrl)
 
-        if(newID && f?.['@id'] != newID){
+        if (newID && f?.['@id'] != newID) {
             let r = {
                 "replacer": newID,
                 "replacee": f?.['@id']
             }
             replacements.push(r)
-        }  
+        }
 
-        if(!newID && f?.['@id'].startsWith('_:')){
+        if (!newID && f?.['@id'].startsWith('_:')) {
             let r = {
                 "replacer": recordIDHelpers.getGenericRecordID(baseUrl),
                 "replacee": f?.['@id']
@@ -225,8 +257,8 @@ export function clean(value, baseUrl) {
 
     }
 
-   
-    
+
+
     // Execute replacement
     value = replaceIds(value, replacements)
 
@@ -257,6 +289,25 @@ export function setValue(record, propertyID, value) {
     dot.set(record, propertyID, value)
     return record
 }
+
+export function addValue(record, propertyID, value) {
+
+    value = toArray(value)
+
+    let currentValues = getValues(record, propertyID)
+
+    let newValues = currentValues.concat(value)
+
+    record = dot.set(record, propertyID, newValues)
+
+    return record
+}
+
+export function addValues(record, propertyID, values) {
+
+    return addValue(record, propertyID, values)
+}
+
 
 export function getValues(record, propertyID) {
     let values = dot.get(record, propertyID)
@@ -829,3 +880,34 @@ function _storeToOriginal(storeRecord) {
 
 
 
+
+
+export function simplify(value) {
+
+    if (Array.isArray(value)) {
+
+        if (value.length == 1) {
+            return simplify(value[0])
+        }
+        if (value.length == 0) {
+            return undefined
+        }
+
+        return value.map(x => simplify(x))
+    }
+
+    if (value?.['@type'] || value?.['@id']) {
+        for (let k of Object.keys(value)) {
+
+            value[k] = simplify(value?.[k])
+
+            if (value?.[k] === undefined) {
+                delete value[k]
+            } 
+        }
+        return value
+
+    }
+
+    return value
+}

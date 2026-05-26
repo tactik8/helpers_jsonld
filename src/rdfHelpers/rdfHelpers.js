@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import * as dot from './dotHelpers.js'
+import * as dot from '../dotHelpers/dotHelpers.js'
 
 
 

@@ -1,5 +1,5 @@
 
-import recordIdHelpers, { get, set, validate } from '../src/recordIdHelpers.js'
+import recordIdHelpers, { get, set, validate } from '../src/recordIdHelpers/recordIdHelpers.js'
 import { v4 as uuidv4 } from 'uuid';
 
 

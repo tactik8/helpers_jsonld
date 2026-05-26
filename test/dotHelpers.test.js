@@ -1,6 +1,6 @@
 
-import dot from '../src/dotHelpers.js';
-import { get, set } from '../src/dotHelpers.js';
+import dot from '../src/dotHelpers/dotHelpers.js';
+import { get, set } from '../src/dotHelpers/dotHelpers.js';
 
 
 

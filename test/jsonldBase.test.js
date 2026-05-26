@@ -1,11 +1,9 @@
 // test/helpers.test.js
 
-import { DB } from '../src/jsonldBase.js';
+import { DB } from '../src/jsonldBase/jsonldBase.js';
 
 describe('Record Helpers', () => {
   
-  
-
 
   test('DB should allow storing and retrieving a value', async () => {
     

@@ -1,9 +1,9 @@
 
 import { v4 as uuidv4 } from 'uuid';
 
-import * as idhelper from './recordIdHelpers.js'
+import * as idhelper from './recordIdHelpers/recordIdHelpers.js'
 
-import * as h from './jsonldBase.js'
+import * as h from './jsonldBase/jsonldBase.js'
 
 export class Thing {
     constructor(value) {

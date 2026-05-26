@@ -23,6 +23,22 @@ npm run build
 ```
 
 
+## Funcionalities
+
+### helpers.records
+Provides pre-made records, useful for testing purposes
+
+- helpers.records.action
+- helpers.records.address
+- helpers.records.article
+- helpers.records.image
+- helpers.records.itemList
+- helpers.records.person
+- helpers.records.product
+- helpers.records.thing
+
+
+
 ## How to use
 
 

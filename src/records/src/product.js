@@ -8,7 +8,7 @@ export function getProduct(name=0) {
         name = record_type + String(name)
     }
 
-    let record_id = "https://www.testrecord.com/" + name
+    let record_id = "https://www.testrecord.com/" + name + "#" + record_type
 
     let record = {
         "@type": record_type,
