@@ -56,6 +56,9 @@ export class ItemList extends Thing {
     delete(position) {
         this.record = removeItem(this.record, position)
     }
+    replace(replacer, replacee) {
+        this.record = replaceItem(this.record, replacer, replacee)
+    }
 
     // static
     static prepend(record, item) {
@@ -72,6 +75,9 @@ export class ItemList extends Thing {
     }
     static delete(record, position) {
         return removeItem(record, position)
+    }
+    static replace(record, replacer, replacee) {
+        this.record = replaceItem(record, replacer, replacee)
     }
 
 }
@@ -208,8 +214,6 @@ function insertItem(itemList, item, position) {
     let previousItem = listItems.find(x => h.getValue(x, "position") == position - 1)
     let nextItem = listItems.find(x => h.getValue(x, "position") == position)
 
-    console.log('pr', previousItem)
-    console.log('ni', nextItem)
 
     // Increment positions
     listItems.filter(x => h.getValue(x, "position") >= position).forEach(x => h.setValue(x, "position", (h.getValue(x, "position") || 0) + 1))
@@ -286,3 +290,30 @@ function removeItem(itemList, position) {
 
 
 
+function replaceItem(itemList, replacer, replacee){
+
+    let r = h.record_type(replacee)
+    
+    if(r != "ListItem"){
+        replacee = searchByItem(itemList, replacee)
+    }
+
+    // Remove current record
+    itemList = removeItem(itemList, replacee)
+
+    // Add new record
+    itemList = insertItem(itemList, replacer, replacee?.position)
+
+    return itemList
+}
+
+
+function searchByItem(itemList, item){
+
+    let listItems = h.getValues(itemList, 'itemListElement')
+    listItems = listItems.filter(x => x)
+
+    let listItem = listItems.find(x => x?.['@id'] == item?.["@id"])
+
+    return listItem
+}

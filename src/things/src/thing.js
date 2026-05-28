@@ -6,12 +6,15 @@ import * as idhelper from '../../recordIdHelpers/recordIdHelpers.js'
 import * as h from '../../jsonldBase/jsonldBase.js'
 
 
+import { getProperties} from './_properties.js'
+
 export class Thing {
     constructor(value) {
         this._isThingClass = true
         this._record = value || {}
         this.record_type = "Thing"
         this.record_id = idhelper.get(this.record, this.baseUrl)
+        
     }
 
     toString() {
@@ -60,6 +63,11 @@ export class Thing {
         this._record = h.setValue(this._record, "@id", value)
     }
 
+    get properties(){
+        return getProperties(this.record_type)
+    }
+
+
     get name() {
         return h.getValue(this._record, "name")
     }
@@ -105,6 +113,8 @@ export class Thing {
     }
 
 
+
+
     // Static
 
     static get baseUrl() {
@@ -113,6 +123,11 @@ export class Thing {
 
     static set baseUrl(value) {
         process.env.baseUrl = value
+    }
+
+
+    static getProperties(record_type){
+        return getProperties(record_type)
     }
 
     static getValue(record, propertyID) {
@@ -155,6 +170,7 @@ function classToRecord(value) {
         for (let k of Object.keys(value)) {
             value[k] = classToRecord(value[k])
         }
+
     }
 
     return value
@@ -163,3 +179,9 @@ function classToRecord(value) {
 
 
 
+function addPotentialAction(record, potentialAction){
+
+
+
+
+}

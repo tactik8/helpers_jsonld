@@ -1,7 +1,7 @@
 
 
 import { Thing } from './src/thing.js'
-import { Action } from './src/action.js'
+import { Action, UpdateAction, AddAction, InsertAction, AppendAction, PrependAction, DeleteAction, ReplaceAction } from './src/action.js'
 import { ItemList } from './src/itemList.js'
 
 
@@ -20,6 +20,13 @@ export const things = {
 export default {
     Thing,
     Action,
+    UpdateAction, 
+    AddAction, 
+    InsertAction, 
+    AppendAction, 
+    PrependAction, 
+    DeleteAction, 
+    ReplaceAction,
     WebAPI,
     WebSite,
     WebPage,

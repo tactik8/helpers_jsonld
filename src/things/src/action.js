@@ -181,13 +181,101 @@ function setFailed(record, error) {
 
 
 
-function getPPS(record){
+function getPPS(record) {
 
     let pps = []
-    for(let k of Object.keys(record)){
-        if(k.includes('-input')){
+    for (let k of Object.keys(record)) {
+        if (k.includes('-input')) {
             let p = record[k]
         }
     }
 
 }
+
+
+
+export class UpdateAction extends Action {
+    constructor(name, object) {
+        super(name, object)
+        this.record_type = "UpdateAction"
+    }
+
+    get targetCollection(){
+         return h.getValues(this._record, "targetCollection")  
+    }
+
+    set targetCollection(value){
+        this._record = h.setValues(this._record, "targetCollection", value)
+    }
+
+    get toLocation(){
+         return h.getValues(this._record, "toLocation")  
+    }
+
+    set toLocation(value){
+        this._record = h.setValues(this._record, "toLocation", value)
+    }
+}
+
+
+export class AddAction extends UpdateAction {
+    constructor(name, object) {
+        super(name, object)
+        this.record_type = "AddAction"
+    }
+
+}
+
+
+export class DeleteAction extends UpdateAction {
+    constructor(name, object) {
+        super(name, object)
+        this.record_type = "DeleteAction"
+    }
+
+}
+
+export class ReplaceAction extends UpdateAction {
+    constructor(name, object) {
+        super(name, object)
+        this.record_type = "ReplaceAction"
+    }
+
+    get replacer(){
+         return h.getValues(this._record, "replacer")  
+    }
+
+    set replacer(value){
+        this._record = h.setValues(this._record, "replacer", value)
+    }
+
+    get replacee(){
+         return h.getValues(this._record, "replacee")  
+    }
+
+    set replacee(value){
+        this._record = h.setValues(this._record, "replacee", value)
+    }
+}
+
+export class InsertAction extends UpdateAction {
+    constructor(name, object) {
+        super(name, object)
+        this.record_type = "InsertAction"
+    }
+}
+
+export class AppendAction extends UpdateAction {
+    constructor(name, object) {
+        super(name, object)
+        this.record_type = "AppendAction"
+    }
+}
+
+export class PrependAction extends UpdateAction {
+    constructor(name, object) {
+        super(name, object)
+        this.record_type = "PrependAction"
+    }
+}
+
