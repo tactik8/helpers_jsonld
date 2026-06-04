@@ -665,7 +665,7 @@ export class SearchAction extends UpdateAction {
         results.forEach(x => itemList.add(x))
 
         this.setCompleted()
-        this.setValue('result', itemList.record)
+        this.result = itemList.record
 
 
     }
