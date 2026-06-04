@@ -575,56 +575,56 @@ export class SearchAction extends UpdateAction {
     }
 
     get filter() {
-        q = new URLSearchParams(this.query)
+        let q = new URLSearchParams(this.query)
         return q.get("filter")
     }
 
     set filter(value) {
-        q = new URLSearchParams(this.query)
+        let q = new URLSearchParams(this.query)
         q.set("filter", value)
         this.query = q.toString()
     }
 
     get limit() {
-        q = new URLSearchParams(this.query)
+        let q = new URLSearchParams(this.query)
         return q.get("limit")
     }
 
     set limit(value) {
-        q = new URLSearchParams(this.query)
+        let q = new URLSearchParams(this.query)
         q.set("limit", value)
         this.query = q.toString()
     }
 
     get offset() {
-        q = new URLSearchParams(this.query)
+        let q = new URLSearchParams(this.query)
         return q.get("offset")
     }
 
     set offset(value) {
-        q = new URLSearchParams(this.query)
+        let q = new URLSearchParams(this.query)
         q.set("offset", value)
         this.query = q.toString()
     }
 
     get orderBy() {
-        q = new URLSearchParams(this.query)
+        let q = new URLSearchParams(this.query)
         return q.get("orderBy")
     }
 
     set orderBy(value) {
-        q = new URLSearchParams(this.query)
+        let q = new URLSearchParams(this.query)
         q.set("orderBy", value)
         this.query = q.toString()
     }
 
     get orderDirection() {
-        q = new URLSearchParams(this.query)
+        let q = new URLSearchParams(this.query)
         return q.get("orderDirection")
     }
 
     set orderDirection(value) {
-        q = new URLSearchParams(this.query)
+        let q = new URLSearchParams(this.query)
         q.set("orderDirection", value)
         this.query = q.toString()
     }
