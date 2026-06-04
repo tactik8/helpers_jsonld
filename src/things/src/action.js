@@ -629,6 +629,17 @@ export class SearchAction extends UpdateAction {
         this.query = q.toString()
     }
 
+    get tenantID() {
+        let q = new URLSearchParams(this.query)
+        return q.get("tenantID")
+    }
+
+    set tenantID(value) {
+        let q = new URLSearchParams(this.query)
+        q.set("tenantID", value)
+        this.query = q.toString()
+    }
+
 
     get target(){
         return h.getValue(this._record, "target") || ""
