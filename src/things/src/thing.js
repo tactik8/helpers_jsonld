@@ -5,8 +5,9 @@ import * as idhelper from '../../recordIdHelpers/recordIdHelpers.js'
 
 import * as h from '../../jsonldBase/jsonldBase.js'
 
+import { addPotentialActions } from './_potentialActions.js';
 
-import { getProperties} from './_properties.js'
+import { getProperties } from './_properties.js'
 
 export class Thing {
     constructor(value) {
@@ -14,7 +15,7 @@ export class Thing {
         this._record = value || {}
         this.record_type = "Thing"
         this.record_id = idhelper.get(this.record, this.baseUrl)
-        
+
     }
 
     toString() {
@@ -63,7 +64,7 @@ export class Thing {
         this._record = h.setValue(this._record, "@id", value)
     }
 
-    get properties(){
+    get properties() {
         return getProperties(this.record_type)
     }
 
@@ -113,6 +114,9 @@ export class Thing {
     }
 
 
+    addPotentialActions() {
+        this._record = addPotentialActions(this._record)
+    }
 
 
     // Static
@@ -126,7 +130,7 @@ export class Thing {
     }
 
 
-    static getProperties(record_type){
+    static getProperties(record_type) {
         return getProperties(record_type)
     }
 
@@ -147,6 +151,9 @@ export class Thing {
         return h.flatten(value)
     }
 
+    static addPotentialActions(record) {
+        return addPotentialActions(record)
+    }
 }
 
 
@@ -179,7 +186,7 @@ function classToRecord(value) {
 
 
 
-function addPotentialAction(record, potentialAction){
+function addPotentialAction(record, potentialAction) {
 
 
 

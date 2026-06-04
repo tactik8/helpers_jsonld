@@ -108,6 +108,8 @@ export class DB {
 
 export default {
     DB,
+    record_type, 
+    record_id,
     evaluate,
     expand,
     flatten,
@@ -120,6 +122,20 @@ export default {
     setTempID,
     clean,
     simplify
+}
+
+
+
+export function record_type(record){
+
+    return getValue(record, '@type')
+
+}
+
+export function record_id(record){
+
+    return getValue(record, '@id')
+
 }
 
 

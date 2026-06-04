@@ -18,7 +18,7 @@ export class ItemList extends Thing {
         }
     }
 
-    toString(){
+    toString() {
         let content = `ItemList ${this.name || this.record_id} (${this.length})`
         return content
     }
@@ -37,7 +37,7 @@ export class ItemList extends Thing {
         this.record = h.setValues(this.record, 'itemListElement', value)
     }
 
-    length(){
+    length() {
         return this.itemListElement.length()
     }
 
@@ -58,6 +58,17 @@ export class ItemList extends Thing {
     }
     replace(replacer, replacee) {
         this.record = replaceItem(this.record, replacer, replacee)
+    }
+    move(item, position) {
+        this.record = moveItem(this.record, item, position)
+    }
+
+    moveUp(item) {
+        this.record = moveItemUp(this.record, item)
+    }
+
+    moveDown(item) {
+        this.record = moveItemDown(this.record, item)
     }
 
     // static
@@ -80,11 +91,22 @@ export class ItemList extends Thing {
         this.record = replaceItem(record, replacer, replacee)
     }
 
+    static move(record, item, position) {
+        this.record = moveItem(record, item, position)
+    }
+
+    static moveUp(record, item) {
+        this.record = moveItemUp(record, item)
+    }
+
+    static moveDown(record, item) {
+        this.record = moveItemDown(record, item)
+    }
 }
 
 
 
-function clean(value){
+function clean(value) {
 
     value.itemListElement = value.itemListElement || []
     value.itemListElement = Array.isArray(value?.itemListElement) ? value.itemListElement : [value.itemListElement]
@@ -98,14 +120,14 @@ function clean(value){
 }
 
 
-function getFirstItem(value){
+function getFirstItem(value) {
 
-    
+
     let result
 
     let items = h.getValues(value, 'itemListElement')
 
-    if(items.length ==0){
+    if (items.length == 0) {
         return undefined
     }
 
@@ -113,10 +135,10 @@ function getFirstItem(value){
     // ---------------------------------
     // Strategy1. Based on position
     // ---------------------------------
-   
+
     // filter non empty position
     result = getFirstItemByPosition(value)
-    if(result){
+    if (result) {
         return result
     }
 
@@ -126,7 +148,7 @@ function getFirstItem(value){
 
     // find item with previousItem empty or not in list
     result = getFirstItemBypreviousItem(value)
-    if(result){
+    if (result) {
         return result
     }
 
@@ -139,16 +161,16 @@ function getFirstItem(value){
 }
 
 
-function getFirstItemByPosition(value){
+function getFirstItemByPosition(value) {
 
     let listItems = h.getValues(itemList, 'itemListElement')
 
     // filter non empty position
-    let t = listItems.filter(x => h.getValue(x, 'position') && h.getValue(x, 'position') !=0 )
+    let t = listItems.filter(x => h.getValue(x, 'position') && h.getValue(x, 'position') != 0)
 
     // sort and return first one
-    if(t.length > 0){
-        t.sort((a,b) => h.getValue(a, 'position') < h.getValue(b, 'position'))
+    if (t.length > 0) {
+        t.sort((a, b) => h.getValue(a, 'position') < h.getValue(b, 'position'))
         return t[0]
     }
 
@@ -158,7 +180,7 @@ function getFirstItemByPosition(value){
 }
 
 
-function getFirstItemBypreviousItem(value){
+function getFirstItemBypreviousItem(value) {
 
     let listItems = h.getValues(itemList, 'itemListElement')
 
@@ -168,7 +190,7 @@ function getFirstItemBypreviousItem(value){
 
     let orphans = listItems.filter(x => record_ids.includes(h.getValue(x, 'previousItem')?.["@id"]) == false)
 
-    if(orphans.length ==1){
+    if (orphans.length == 1) {
         return orphans[0]
     }
 
@@ -220,7 +242,7 @@ function insertItem(itemList, item, position) {
 
     // Set previous, next items
     item = h.setValue(item, 'position', position)
-        console.log('p', position, h.getValue(item.position))
+    console.log('p', position, h.getValue(item.position))
 
     item.previousItem = null
     item.nextItem = null
@@ -290,13 +312,11 @@ function removeItem(itemList, position) {
 
 
 
-function replaceItem(itemList, replacer, replacee){
+function replaceItem(itemList, replacer, replacee) {
 
     let r = h.record_type(replacee)
-    
-    if(r != "ListItem"){
-        replacee = searchByItem(itemList, replacee)
-    }
+
+    replacee = getItem(itemList, replacee)
 
     // Remove current record
     itemList = removeItem(itemList, replacee)
@@ -308,12 +328,64 @@ function replaceItem(itemList, replacer, replacee){
 }
 
 
-function searchByItem(itemList, item){
+function moveItem(itemList, item, position) {
+
+    item = getItem(item)
+
+    itemList = removeItem(itemList, item)
+
+    itemList = insertItem(itemList, item, position)
+
+    return itemList
+}
+
+function moveItemUp(itemList, item) {
+
+    item = getItem(itemList, item)
+
+    let position = item?.position > 0 ? item.position - 1 : 0
+
+    return moveItem(itemList, item, position)
+
+}
+
+function moveItemDown(itemList, item) {
+
+    item = getItem(itemList, item)
+
+    let position = (item.position || 0) + 1
+
+    return moveItem(itemList, item, position)
+
+}
+
+function duplicateItem(itemlist, item) {
+    item = getItem(itemList, item)
+    let position = (item.position || 0) + 1
+    return insertItem(itemList, item, position)
+
+}
+
+
+
+function getItem(itemList, item) {
+
 
     let listItems = h.getValues(itemList, 'itemListElement')
     listItems = listItems.filter(x => x)
 
-    let listItem = listItems.find(x => x?.['@id'] == item?.["@id"])
 
-    return listItem
+    let r = h.record_type(item)
+
+    if (r != "ListItem") {
+        return listItems.find(x => x?.item?.['@id'] == item?.["@id"])
+    } else {
+        return listItems.find(x => x?.['@id'] == item?.["@id"])
+    }
+
+
+
+
+
+
 }

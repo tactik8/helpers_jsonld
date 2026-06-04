@@ -14,12 +14,6 @@ export * from './src/itemList.js'
 export const things = {
     Thing,
     Action,
-    ItemList
-}
-
-export default {
-    Thing,
-    Action,
     UpdateAction, 
     AddAction, 
     InsertAction, 
@@ -31,5 +25,6 @@ export default {
     WebSite,
     WebPage,
     ItemList
-
 }
+
+export default things

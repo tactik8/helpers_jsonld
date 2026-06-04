@@ -22,3 +22,24 @@ export { records } from './records/records.js'
 
 export default { ...helpers, ...things, ...apiClient, ...rdf, ...recordIDHelpers, ...dataHelpers, records };
 
+function test(){
+
+
+    let a = new things.Action()
+
+    a.object = {
+        "@type": "Thing",
+        "number": 4
+    }
+
+    a.addMinValue('object.number', 5)
+
+    console.log('dd', JSON.stringify(a.record, null, 4))
+
+    let r = a.test()
+
+    console.log('r', r)
+
+}
+
+//test()

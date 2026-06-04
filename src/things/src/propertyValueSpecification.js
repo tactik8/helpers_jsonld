@@ -100,10 +100,11 @@ export class PropertyValueSpecification extends Thing {
         return validateValue(this.record, value)
     }
 
+    static test(pps, value){
+        return validateValue(pps, value)
+    }
 
 }
-
-
 
 function validateValue(value, pps) {
 

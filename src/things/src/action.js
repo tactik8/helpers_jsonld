@@ -109,6 +109,73 @@ export class Action extends Thing {
     }
 
 
+    // Conditions
+
+    addMinValue(property, value) {
+        this._record = addMinValue(this._record, property, value)
+    }
+    addMaxValue(property, value) {
+        this._record = addMaxValue(this._record, property, value)
+    }
+
+    addMinLength(property, value) {
+        this._record = addMinLength(this._record, property, value)
+    }
+
+    addMaxLength(property, value) {
+        this._record = addMaxLength(this._record, property, value)
+    }
+
+    addDefaultValue(property, value) {
+        this._record = addDefaultValue(this._record, property, value)
+    }
+
+    addValueRequired(property, value) {
+        this._record = addValueRequired(this._record, property, value)
+    }
+
+    addValuePattern(property, value) {
+        this._record = addValuePattern(this._record, property, value)
+    }
+    addDefaultValue(property, value) {
+        this._record = addDefaultValue(this._record, property, value)
+    }
+    addMultipleValues(property, value) {
+        this._record = addMultipleValues(this._record, property, value)
+    }
+    addValueRequired(property, value) {
+        this._record = addValueRequired(this._record, property, value)
+    }
+    addStepValue(property, value) {
+        this._record = addStepValue(this._record, property, value)
+    }
+
+
+
+
+    testConditions() {
+        return testConditions(this._record)
+    }
+
+    getInputconditions() {
+        return getPVSInput(this._record)
+    }
+    addInputCondition(key, condition) {
+        this._record = h.addValues(k + '-input', condition)
+    }
+
+    getOutputConditions() {
+        return getPVSOutput(this._record)
+    }
+    addOutputCondition(key, condition) {
+        this._record = h.addValues(k + '-output', condition)
+    }
+
+
+    test() {
+        return testConditions(this._record)
+    }
+
 
     // Static
     static setPotential(record) {
@@ -140,6 +207,50 @@ export class Action extends Thing {
         return h.getValue(record?.record || record, actionStatus) == "FailedActionStatus"
     }
 
+
+    static addMinValue(record, property, value) {
+        this._record = addMinValue(record, property, value)
+    }
+    static addMaxValue(record, property, value) {
+        this._record = addMaxValue(record, property, value)
+    }
+
+    static addMinLength(record, property, value) {
+        this._record = addMinLength(record, property, value)
+    }
+
+    static addMaxLength(record, property, value) {
+        this._record = addMaxLength(record, property, value)
+    }
+
+    static addDefaultValue(record, property, value) {
+        this._record = addDefaultValue(record, property, value)
+    }
+
+    static addValueRequired(record, property, value) {
+        this._record = addValueRequired(record, property, value)
+    }
+
+    static addValuePattern(record, property, value) {
+        this._record = addValuePattern(record, property, value)
+    }
+    static addDefaultValue(record, property, value) {
+        this._record = addDefaultValue(record, property, value)
+    }
+    static addMultipleValues(record, property, value) {
+        this._record = addMultipleValues(record, property, value)
+    }
+    static addValueRequired(record, property, value) {
+        this._record = addValueRequired(record, property, value)
+    }
+    static addStepValue(record, property, value) {
+        this._record = addStepValue(record, property, value)
+    }
+
+
+    static test(record) {
+        return testConditions(record)
+    }
 }
 
 function setPotential(record) {
@@ -179,20 +290,187 @@ function setFailed(record, error) {
 }
 
 
+// Conditions
+
+function getPVSInput(record, propertyID) {
 
 
-function getPPS(record) {
 
-    let pps = []
-    for (let k of Object.keys(record)) {
-        if (k.includes('-input')) {
-            let p = record[k]
+    if (propertyID) {
+        if (propertyID.endsWith('-input') == false) {
+            propertyID = propertyID + '-input'
         }
+
+        let result = record?.[propertyID]
+        result = Array.isArray(result) ? result[0] : result
+        return result
+
     }
+
+
+    let results = []
+
+    for (let k in Object.keys(record)) {
+
+
+        if (k.endsWith('-input')) {
+            k = k.replace('-input', '')
+            results.push({ k: record?.[k] })
+        }
+
+    }
+    return results
+
+}
+
+function setPVSInput(record, propertyID, pvs) {
+
+    if (propertyID.endsWith('-input') == false) {
+        propertyID = propertyID + '-input'
+    }
+
+    record[propertyID] = pvs
+
+    return record
 
 }
 
 
+function getPVSOutput(record, propertyID) {
+
+
+
+    if (propertyID) {
+        if (propertyID.endsWith('-output') == false) {
+            propertyID = propertyID + '-output'
+        }
+
+        let result = record?.[propertyID]
+        result = Array.isArray(result) ? result[0] : result
+        return result
+
+    }
+
+
+    let results = []
+
+    for (let k in Object.keys(record)) {
+
+
+        if (k.endsWith('-output')) {
+            k = k.replace('-output', '')
+            results.push({ k: record?.[k] })
+        }
+
+    }
+    return results
+
+}
+
+function setPVSOutput(record, pps) {
+
+    if (propertyID.endsWith('-output') == false) {
+        propertyID = propertyID + '-output'
+    }
+
+    record[propertyID] = pvs
+
+    return record
+
+}
+
+function addValuePattern(record, propertyID, value) {
+
+    let pvs = getPVSInput(record, propertyID) || new PropertyValueSpecification()
+    pvs.valuePattern = value
+    record = setPVSInput(record, propertyID, pvs)
+    return record
+}
+
+function addMultipleValues(record, propertyID, value) {
+
+    let pvs = getPVSInput(record, propertyID) || new PropertyValueSpecification()
+    pvs.multipleValues = value
+    record = setPVSInput(record, propertyID, pvs)
+    return record
+}
+
+function addStepValue(record, propertyID, value) {
+
+    let pvs = getPVSInput(record, propertyID) || new PropertyValueSpecification()
+    pvs.stepValue = value
+    record = setPVSInput(record, propertyID, pvs)
+    return record
+}
+function addMinValue(record, propertyID, value) {
+
+    let pvs = getPVSInput(record, propertyID) || new PropertyValueSpecification()
+    pvs.minValue = value
+    record = setPVSInput(record, propertyID, pvs)
+    return record
+}
+
+function addMaxValue(record, propertyID, value) {
+
+    let pvs = getPVSInput(record, propertyID) || new PropertyValueSpecification()
+    pvs.maxValue = value
+    record = setPVSInput(pvs.record)
+    return record
+}
+function addMinLength(record, propertyID, value) {
+
+    let pvs = getPVSInput(record, propertyID) || new PropertyValueSpecification()
+    pvs.valueMinLength = value
+    record = setPVSInput(record, propertyID, pvs)
+    return record
+}
+
+function addMaxLength(record, propertyID, value) {
+
+    let pvs = getPVSInput(record, propertyID) || new PropertyValueSpecification()
+    pvs.valueMaxLength = value
+    record = setPVSInput(record, propertyID, pvs)
+    return record
+}
+
+function addDefaultValue(record, propertyID, value) {
+
+    let pvs = getPVSInput(record, propertyID) || new PropertyValueSpecification()
+    pvs.defaultValue = value
+    record = setPVSInput(record, propertyID, pvs)
+    return record
+}
+
+function addValueRequired(record, propertyID, value) {
+
+    let pvs = getPVSInput(record, propertyID) || new PropertyValueSpecification()
+    pvs.valueRequired = value
+    record = setPVSInput(record, propertyID, pvs)
+    return record
+}
+
+
+
+
+function testConditions(record) {
+
+    let pps = getPVSInput(record)
+
+    for (let k of Object.keys(pps)) {
+        if (PropertyValueSpecification.test(pps[k], record?.[k]) == false) {
+            return false
+        }
+
+    }
+    return true
+
+}
+
+
+
+
+
+// 
 
 export class UpdateAction extends Action {
     constructor(name, object) {
@@ -200,19 +478,19 @@ export class UpdateAction extends Action {
         this.record_type = "UpdateAction"
     }
 
-    get targetCollection(){
-         return h.getValues(this._record, "targetCollection")  
+    get targetCollection() {
+        return h.getValues(this._record, "targetCollection")
     }
 
-    set targetCollection(value){
+    set targetCollection(value) {
         this._record = h.setValues(this._record, "targetCollection", value)
     }
 
-    get toLocation(){
-         return h.getValues(this._record, "toLocation")  
+    get toLocation() {
+        return h.getValues(this._record, "toLocation")
     }
 
-    set toLocation(value){
+    set toLocation(value) {
         this._record = h.setValues(this._record, "toLocation", value)
     }
 }
@@ -241,19 +519,19 @@ export class ReplaceAction extends UpdateAction {
         this.record_type = "ReplaceAction"
     }
 
-    get replacer(){
-         return h.getValues(this._record, "replacer")  
+    get replacer() {
+        return h.getValues(this._record, "replacer")
     }
 
-    set replacer(value){
+    set replacer(value) {
         this._record = h.setValues(this._record, "replacer", value)
     }
 
-    get replacee(){
-         return h.getValues(this._record, "replacee")  
+    get replacee() {
+        return h.getValues(this._record, "replacee")
     }
 
-    set replacee(value){
+    set replacee(value) {
         this._record = h.setValues(this._record, "replacee", value)
     }
 }
