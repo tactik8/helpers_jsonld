@@ -5,6 +5,9 @@ import * as idhelper from '../../recordIdHelpers/recordIdHelpers.js'
 
 import * as h from '../../jsonldBase/jsonldBase.js'
 
+import * as things from '../../things/things.js'
+
+
 import { Thing } from './thing.js'
 
 import { PropertyValueSpecification } from './propertyValueSpecification.js'
@@ -555,5 +558,117 @@ export class PrependAction extends UpdateAction {
         super(name, object)
         this.record_type = "PrependAction"
     }
+}
+
+export class SearchAction extends UpdateAction {
+    constructor(name, object) {
+        super(name, object)
+        this.record_type = "SearchAction"
+    }
+
+    get query() {
+        return h.getValue(this._record, "query") || ""
+    }
+
+    set query(value) {
+        return h.setValue(this._record, "query", value)
+    }
+
+    get filter() {
+        q = new URLSearchParams(this.query)
+        return q.get("filter")
+    }
+
+    set filter(value) {
+        q = new URLSearchParams(this.query)
+        q.set("filter", value)
+        this.query = q.toString()
+    }
+
+    get limit() {
+        q = new URLSearchParams(this.query)
+        return q.get("limit")
+    }
+
+    set limit(value) {
+        q = new URLSearchParams(this.query)
+        q.set("limit", value)
+        this.query = q.toString()
+    }
+
+    get offset() {
+        q = new URLSearchParams(this.query)
+        return q.get("offset")
+    }
+
+    set offset(value) {
+        q = new URLSearchParams(this.query)
+        q.set("offset", value)
+        this.query = q.toString()
+    }
+
+    get orderBy() {
+        q = new URLSearchParams(this.query)
+        return q.get("orderBy")
+    }
+
+    set orderBy(value) {
+        q = new URLSearchParams(this.query)
+        q.set("orderBy", value)
+        this.query = q.toString()
+    }
+
+    get orderDirection() {
+        q = new URLSearchParams(this.query)
+        return q.get("orderDirection")
+    }
+
+    set orderDirection(value) {
+        q = new URLSearchParams(this.query)
+        q.set("orderDirection", value)
+        this.query = q.toString()
+    }
+
+
+    get target(){
+        return h.getValue(this._record, "target") || ""
+    }
+    set target(value){
+        return h.setValue(this._record, "target", value)
+    }
+
+
+    async execute(){
+
+        let url = new URL(this.target)
+        url.search = this.query || ""
+
+        let options = {
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': 'Bearer YOUR_TOKEN_HERE',
+                'Custom-Header': 'MyValue'
+                }
+            }
+        let response = await fetch(url, options)
+
+        if (!response.ok) {
+            this.setFailed(response.statusText)
+        }
+
+        let results = await response.json()
+
+        results = Array.isArray(results) ? results : [results]
+        results = results.map(x => x)
+
+        let itemList = new things.ItemList()
+        results.forEach(x => itemList.add(x))
+
+        this.setCompleted()
+        this.setValue('result', itemList.record)
+
+
+    }
+
 }
 
