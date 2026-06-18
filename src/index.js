@@ -41,7 +41,7 @@ function test(){
 
     console.log('r', record)
 
-    let results = helpers.expand()
+    let results = helpers.expand(records, record)
 
 }
 

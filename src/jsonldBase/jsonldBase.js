@@ -97,7 +97,7 @@ export class DB {
         return dot
     }
 
-    static simplify(value){
+    static simplify(value) {
         return simplify(value)
     }
 
@@ -108,7 +108,7 @@ export class DB {
 
 export default {
     DB,
-    record_type, 
+    record_type,
     record_id,
     evaluate,
     expand,
@@ -126,13 +126,13 @@ export default {
 
 
 
-export function record_type(record){
+export function record_type(record) {
 
     return getValue(record, '@type')
 
 }
 
-export function record_id(record){
+export function record_id(record) {
 
     return getValue(record, '@id')
 
@@ -854,20 +854,21 @@ function _storeToMap(store) {
     }
 
     // Return storeRecord  if already a map
-    
+
     if (store instanceof Map) {
         return {
             store: store,
             storeIsMapFlag: true
         }
-
-        // Convert to map
-        store = store || []
-        store = Array.isArray(store) ? store : store
-        let newStore = new Map()
-        store.forEach(x => newStore.set(x?.['@id'], x))
-        store = newStore
     }
+
+    // Convert to map
+    store = store || []
+    store = Array.isArray(store) ? store : store
+    let newStore = new Map()
+    store.forEach(x => newStore.set(x?.['@id'], x))
+    store = newStore
+
 
     let storeRecord = {
         store: store,
@@ -921,7 +922,7 @@ export function simplify(value) {
 
             if (value?.[k] === undefined) {
                 delete value[k]
-            } 
+            }
         }
         return value
 
