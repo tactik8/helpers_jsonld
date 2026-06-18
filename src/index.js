@@ -37,7 +37,7 @@ function test(){
     }
 
 
-    let record = helpers.flatten(record)
+    let records = helpers.flatten(record)
 
     console.log('r', record)
 
@@ -45,4 +45,4 @@ function test(){
 
 }
 
-test()
+//test()
