@@ -25,21 +25,24 @@ export default { ...helpers, ...things, ...apiClient, ...rdf, ...recordIDHelpers
 function test(){
 
 
-    let a = new things.Action()
-
-    a.object = {
+    let record = {
         "@type": "Thing",
-        "number": 4
+        "@id": "https://www.test.com/thing1",
+        "name": "thing1",
+        "other": {
+            "@type": "Thing",
+            "@id": "https://www.test.com/thing2",
+            "name": "thing2"
+        }
     }
 
-    a.addMinValue('object.number', 5)
 
-    console.log('dd', JSON.stringify(a.record, null, 4))
+    let record = helpers.flatten(record)
 
-    let r = a.test()
+    console.log('r', record)
 
-    console.log('r', r)
+    let results = helpers.expand()
 
 }
 
-//test()
+test()

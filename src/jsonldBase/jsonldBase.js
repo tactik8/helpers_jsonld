@@ -854,6 +854,7 @@ function _storeToMap(store) {
     }
 
     // Return storeRecord  if already a map
+    
     if (store instanceof Map) {
         return {
             store: store,
@@ -864,15 +865,16 @@ function _storeToMap(store) {
         store = store || []
         store = Array.isArray(store) ? store : store
         let newStore = new Map()
-        store.map(x => newStore.set(x?.['@id'], x))
+        store.forEach(x => newStore.set(x?.['@id'], x))
+        store = newStore
     }
 
     let storeRecord = {
-        store: newStore,
+        store: store,
         storeIsMapFlag: false
     }
 
-    return stoneRecord
+    return storeRecord
 
 }
 
