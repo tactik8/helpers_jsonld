@@ -23,7 +23,7 @@ npm run build
 ```
 
 
-## Funcionalities
+## Functionalities
 
 ### helpers.records
 Provides pre-made records, useful for testing purposes
