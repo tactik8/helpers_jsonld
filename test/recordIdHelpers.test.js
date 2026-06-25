@@ -1,6 +1,6 @@
 
 import recordIdHelpers, { get, set, validate } from '../src/recordIdHelpers/recordIdHelpers.js'
-import { v4 as uuidv4 } from 'uuid';
+import { randomUUID } from 'crypto';
 
 
 // Mock uuid to have predictable results for generic IDs
