@@ -1,7 +1,7 @@
 
 # Installation
 ```
-npm install github:tactik8/jsonldHelpers_v1
+npm install github:tactik8/helpers_jsonld
 ```
 
 
@@ -60,7 +60,7 @@ record = helpers.clean(record, baseUrl)
 ### Flatten records
 
 ```
-import * as helpers from 'jsonldHelpers' 
+import * as helpers from 'helpers_jsonld' 
 
 // Flatten record
 let record = {...}
@@ -74,7 +74,7 @@ let records = helpers.flatten(record)
 
 
 ```
-import * as helpers from 'jsonldHelpers' 
+import * as helpers from 'helpers_jsonld' 
 
 let record = {...}
 
@@ -90,7 +90,7 @@ let dedupedRecords = db.records
 ### Use as database (in memory)
 ```
 
-import * as helpers from 'jsonldHelpers' 
+import * as helpers from 'helpers_jsonld' 
 
 
 let db = new helpers.DB()
@@ -111,7 +111,7 @@ db.delete('someRecordId')
 
 ```
 
-import * as helpers from 'jsonldHelpers' 
+import * as helpers from 'helpers_jsonld' 
 
 let c = {
     "@type": "Thing"

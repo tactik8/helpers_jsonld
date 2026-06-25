@@ -1,6 +1,6 @@
 
 
-import { v4 as uuidv4 } from "uuid"
+import { randomUUID } from 'crypto';
 
 export default {
     get,
@@ -182,7 +182,7 @@ export function getGenericRecordID(baseUrl) {
     baseUrl = standardizeUrl(baseUrl)
 
     if(!baseUrl){
-        return "_:" + uuidv4()
+        return "_:" + randomUUID()
     }
 
 
@@ -190,7 +190,7 @@ export function getGenericRecordID(baseUrl) {
         baseUrl = baseUrl + '/'
     }
 
-    let record_id = standardizeUrl(baseUrl) + uuidv4()
+    let record_id = standardizeUrl(baseUrl) + randomUUID()
 
     return record_id
 
@@ -218,7 +218,7 @@ function getIdBasedOnUrl(record_type, urls) {
     let url = urls?.[0]
 
     if (!url) {
-        return "_:" + uuuidv4()
+        return "_:" + urandomUUID()
     }
 
 
@@ -256,7 +256,7 @@ function getIdBasedOnDomain(record_type, urls) {
     let url = urls?.[0]
 
     if (!url) {
-        return "_:" + uuidv4()
+        return "_:" + randomUUID()
     }
 
 

@@ -1,5 +1,5 @@
 import { records} from '../records.js'
-import { v4 as uuidv4 } from 'uuid';
+import { randomUUID } from 'crypto';
 
 
 export function getItemList(noOfItems=5) {
@@ -8,7 +8,7 @@ export function getItemList(noOfItems=5) {
     let record_type = "Thing"
      
 
-    let record_id = "https://www.testrecord.com/" + uuidv4() + "#" + record_type
+    let record_id = "https://www.testrecord.com/" + randomUUID() + "#" + record_type
 
     let record = {
         "@type": record_type,
@@ -46,7 +46,7 @@ function getListItem(item, position=0){
 
     let record = {
         "@type": "ListItem",
-        "@id": "https://www.testrecord.com/listitem/"  + uuidv4(),
+        "@id": "https://www.testrecord.com/listitem/"  + randomUUID(),
         "item": item,
         "position": position,
         "previousItem": "",

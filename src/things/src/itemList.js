@@ -1,5 +1,5 @@
 
-import { v4 as uuidv4 } from 'uuid';
+import { randomUUID } from 'crypto';
 
 
 import * as idhelper from '../../recordIdHelpers/recordIdHelpers.js'
@@ -204,7 +204,7 @@ function toListItem(value) {
     if (h.getValue(value, '@type') != "ListItem") {
         value = {
             "@type": "ListItem",
-            "@id": uuidv4(),
+            "@id": randomUUID(),
             "item": value
         }
     }

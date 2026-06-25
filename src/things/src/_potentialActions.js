@@ -1,4 +1,5 @@
-import { v4 as uuidv4 } from 'uuid';
+import { randomUUID } from 'crypto';
+
 import * as h from '../../jsonldBase/jsonldBase.js'
 
 
@@ -48,7 +49,7 @@ export function addPotentialActions(record, baseUrl) {
 function addAction(record, action_type, name, baseUrl) {
     let action = {
         "@type": action_type,
-        "@id": uuidv4(),
+        "@id": randomUUID(),
         "name": name,
         "actionStatus": "PotentialActionStatus",
         "object": { "@id": h.record_id(record) },

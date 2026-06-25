@@ -1,4 +1,5 @@
-import { v4 as uuidv4 } from 'uuid';
+import { randomUUID } from 'crypto';
+
 
 import dot from '../dotHelpers/dotHelpers.js'
 import * as recordIDHelpers from '../recordIdHelpers/recordIdHelpers.js'
@@ -751,7 +752,7 @@ export function setTempID(value) {
     }
 
     for (let k of Object.keys(value)) {
-        value['@id'] = value?.["@id"] || "_:" + uuidv4()
+        value['@id'] = value?.["@id"] || "_:" + randomUUID();
         value[k] = assignId(value[k])
     }
     return value
@@ -775,7 +776,7 @@ function assignId(value) {
     }
 
     for (let k of Object.keys(value)) {
-        value['@id'] = value?.["@id"] || "_:" + uuidv4()
+        value['@id'] = value?.["@id"] || "_:" + randomUUID();
         value[k] = assignId(value[k])
     }
     return value
