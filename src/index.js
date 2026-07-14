@@ -1,9 +1,10 @@
-import jsonldBase, * as helpers from './jsonldBase/jsonldBase.js';
+import jsonldBase, * as baseHelpers from './jsonldBase/jsonldBase.js';
 import * as dot from './dotHelpers/dotHelpers.js';
 import * as things from './things/things.js'
 import * as apiClient from './apiClient/apiClient.js'
 import * as rdf from './rdfHelpers/rdfHelpers.js'
 import * as recordIDHelpers from './recordIdHelpers/recordIdHelpers.js'
+import * as transformHelpers from './transformHelpers/transformHelpers.js'
 import { dataHelpers } from './dataHelpers/dataHelpers.js'
 
 import { records  }  from './records/records.js'
@@ -14,13 +15,18 @@ export * from './dotHelpers/dotHelpers.js'
 export * from './things/things.js'
 export * from './apiClient/apiClient.js'
 export * from './rdfHelpers/rdfHelpers.js'
+export * from './transformHelpers/transformHelpers.js'
+
+
 export { records } from './records/records.js'
+export { transformHelpers} from './transformHelpers/transformHelpers.js'
 
 
+export const _h = { ...baseHelpers, ...things, ...apiClient, ...rdf, ...recordIDHelpers, ...dataHelpers, ...transformHelpers, records };
 
+export const helpers = _h
 
-
-export default { ...helpers, ...things, ...apiClient, ...rdf, ...recordIDHelpers, ...dataHelpers, records };
+export default _h
 
 function test(){
 

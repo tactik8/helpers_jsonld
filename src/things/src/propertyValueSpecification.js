@@ -1,6 +1,6 @@
 
 
-import { randomUUID } from 'crypto';
+const randomUUID = globalThis.crypto.randomUUID
 
 
 import * as idhelper from '../../recordIdHelpers/recordIdHelpers.js'
@@ -22,77 +22,77 @@ export class PropertyValueSpecification extends Thing {
         return h.getValue(this._record, "valueRequired")
     }
     set valueRequired(value) {
-        this._record = h.setValue(this._record, "valueRequired", value)
+        this._record = Thing.setValue(this._record, "valueRequired", value)
     }
 
     get defaultValue() {
         return h.getValue(this._record, "defaultValue")
     }
     set defaultValue(value) {
-        this._record = h.setValue(this._record, "defaultValue", value)
+        this._record = Thing.setValue(this._record, "defaultValue", value)
     }
 
     get valueName() {
         return h.getValue(this._record, "valueName")
     }
     set valueName(value) {
-        this._record = h.setValue(this._record, "valueName", value)
+        this._record = Thing.setValue(this._record, "valueName", value)
     }
 
     get readonlyValue() {
         return h.getValue(this._record, "readonlyValue")
     }
     set readonlyValue(value) {
-        this._record = h.setValue(this._record, "readonlyValue", value)
+        this._record = Thing.setValue(this._record, "readonlyValue", value)
     }
 
     get multipleValues() {
         return h.getValue(this._record, "multipleValues")
     }
     set multipleValues(value) {
-        this._record = h.setValue(this._record, "multipleValues", value)
+        this._record = Thing.setValue(this._record, "multipleValues", value)
     }
 
     get valueMinLength() {
         return h.getValue(this._record, "valueMinLength")
     }
     set valueMinLength(value) {
-        this._record = h.setValue(this._record, "valueMinLength", value)
+        this._record = Thing.setValue(this._record, "valueMinLength", value)
     }
 
     get valueMaxLength() {
         return h.getValue(this._record, "valueMaxLength")
     }
     set valueMaxLength(value) {
-        this._record = h.setValue(this._record, "valueMaxLength", value)
+        this._record = Thing.setValue(this._record, "valueMaxLength", value)
     }
 
     get valuePattern() {
         return h.getValue(this._record, "valuePattern")
     }
     set valuePattern(value) {
-        this._record = h.setValue(this._record, "valuePattern", value)
+        this._record = Thing.setValue(this._record, "valuePattern", value)
     }
 
     get minValue() {
         return h.getValue(this._record, "minValue")
     }
     set minValue(value) {
-        this._record = h.setValue(this._record, "minValue", value)
+        this._record = Thing.setValue(this._record, "minValue", value)
     }
 
     get maxValue() {
         return h.getValue(this._record, "maxValue")
     }
     set maxValue(value) {
-        this._record = h.setValue(this._record, "maxValue", value)
+        this._record = Thing.setValue(this._record, "maxValue", value)
     }
 
     get stepValue() {
         return h.getValue(this._record, "stepValue")
     }
     set stepValue(value) {
-        this._record = h.setValue(this._record, "stepValue", value)
+        this._record = Thing.setValue(this._record, "stepValue", value)
     }
 
 

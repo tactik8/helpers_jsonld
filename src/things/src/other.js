@@ -1,6 +1,6 @@
 
 
-import { randomUUID } from 'crypto';
+const randomUUID = globalThis.crypto.randomUUID
 
 
 import * as idhelper from '../../recordIdHelpers/recordIdHelpers.js'

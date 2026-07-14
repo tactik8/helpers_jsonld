@@ -1,9 +1,9 @@
 import { records } from '../records.js'
 
-export function getProduct(name = 0) {
+export function getPostalAddress(name = 0) {
 
 
-    let record_type = "Product"
+    let record_type = "PostalAddress"
     if (!Number.isNaN(name)) {
         name = record_type + String(name)
     }
@@ -11,14 +11,14 @@ export function getProduct(name = 0) {
     let record_id = "https://www.testrecord.com/" + name + "#" + record_type
 
     let record = {
+
         "@type": record_type,
         "@id": record_id,
-        "name": name,
-        "description": "Product description",
-        "gtin": "5901234123457",
-        "mpn": "mpn_id_" + name,
-        "sku": "sku_id_" + name,
-        "category": "Category 1",
+        "addressLocality": "Seattle",
+        "addressRegion": "WA",
+        "postalCode": "98052",
+        "streetAddress": "20341 Whitworth Institute 405 N. Whitworth",
+        "extendedAddress": "Suite 123"
     }
 
 

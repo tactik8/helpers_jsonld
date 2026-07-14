@@ -7,7 +7,7 @@ const PROPERTIES_DB = {
         "parent": "",
         "properties": ["additionalType", "alternateName", "description", "disambiguatingDescription", "identifier", "image", "mainEntityOfPage", "name", "owner", "potentialAction", "sameAs", "subjectOf", "url"]
     },
-     "CreativeWork": {
+    "CreativeWork": {
         "parent": "Thing",
         "properties": ["about", "accessMode", "accessModeSufficient", "accessibilityAPI", "accessibilityControl", "accessibilityFeature", "accessibilityHazard", "accessibilitySummary", "accountablePerson", "acquireLicensePage", "aggregateRating", "alternativeHeadline", "archivedAt", "assesses", "associatedMedia", "audience"]
     },
@@ -42,6 +42,79 @@ const PROPERTIES_DB = {
     "ReplaceAction": {
         "parent": "UpdateAction",
         "properties": ["replacer", "replacee"]
+    },
+     "ProductGroup": {
+        "parent": "Product",
+        "properties": ["hasVariant", "productGroupID", "variesBy"]
+    },
+    "Product": {
+        "parent": "Thing",
+        "properties": [
+            "additionalType",
+            "aggregateRating",
+            "amazonAsin",
+            "asin",
+            "audience",
+            "award",
+            "brand",
+            "category",
+            "color",
+            "countryOfAssembly",
+            "countryOfOrigin",
+            "countryOfLastProcessing",
+            "depth",
+            "description",
+            "disambiguatingDescription",
+            "funding",
+            "gsin",
+            "gtin",
+            "gtin12",
+            "gtin13",
+            "gtin14",
+            "gtin8",
+            "hasAdultConsideration",
+            "hasCertification",
+            "hasEnergyConsumptionDetails",
+            "hasMeasurement",
+            "hasMerchantReturnPolicy",
+            "height",
+            "identifier",
+            "image",
+            "isAccessoryOrSparePartFor",
+            "isConsumableFor",
+            "isRelatedTo",
+            "isSimilarTo",
+            "isVariantOf",
+            "itemCondition",
+            "keywords",
+            "logo",
+            "mainEntityOfPage",
+            "manufacturer",
+            "material",
+            "model",
+            "mpn",
+            "name",
+            "nsn",
+            "offers",
+            "pattern",
+            "patterned",
+            "productID",
+            "productionDate",
+            "purchaseDate",
+            "releaseDate",
+            "review",
+            "reviews",
+            "sameAs",
+            "scannable",
+            "size",
+            "sku",
+            "slogan",
+            "subjectOf",
+            "url",
+            "useByDate",
+            "weight",
+            "width"
+        ]
     }
 
 

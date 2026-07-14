@@ -1,5 +1,4 @@
-import { randomUUID } from 'crypto';
-
+const randomUUID = globalThis.crypto.randomUUID
 
 import dot from '../dotHelpers/dotHelpers.js'
 import * as recordIDHelpers from '../recordIdHelpers/recordIdHelpers.js'

@@ -1,6 +1,6 @@
 
 
-import { randomUUID } from 'crypto';
+const randomUUID = globalThis.crypto.randomUUID
 
 export default {
     get,

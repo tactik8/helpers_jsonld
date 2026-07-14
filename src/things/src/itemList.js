@@ -1,5 +1,5 @@
 
-import { randomUUID } from 'crypto';
+const randomUUID = globalThis.crypto.randomUUID
 
 
 import * as idhelper from '../../recordIdHelpers/recordIdHelpers.js'
@@ -34,7 +34,7 @@ export class ItemList extends Thing {
 
     set itemListElement(value) {
         value = value || []
-        this.record = h.setValues(this.record, 'itemListElement', value)
+        this.record = Thing.setValues(this.record, 'itemListElement', value)
     }
 
     length() {
@@ -238,10 +238,10 @@ function insertItem(itemList, item, position) {
 
 
     // Increment positions
-    listItems.filter(x => h.getValue(x, "position") >= position).forEach(x => h.setValue(x, "position", (h.getValue(x, "position") || 0) + 1))
+    listItems.filter(x => h.getValue(x, "position") >= position).forEach(x => Thing.setValue(x, "position", (h.getValue(x, "position") || 0) + 1))
 
     // Set previous, next items
-    item = h.setValue(item, 'position', position)
+    item = Thing.setValue(item, 'position', position)
     console.log('p', position, h.getValue(item.position))
 
     item.previousItem = null
@@ -262,8 +262,8 @@ function insertItem(itemList, item, position) {
     listItems.sort((a, b) => h.getValue(a, "position") < h.getValue(b, "position"))
 
     //
-    itemList = h.setValues(itemList, 'itemListElement', listItems)
-    itemList = h.setValue(itemList, 'numberOfItems', listItems.length)
+    itemList = Thing.setValues(itemList, 'itemListElement', listItems)
+    itemList = Thing.setValue(itemList, 'numberOfItems', listItems.length)
     return itemList
 
 }
@@ -283,7 +283,7 @@ function removeItem(itemList, position) {
     listItems = listItems.filter(x => h.getValue(x, "position") != position)
 
     // Decrement positions
-    listItems.filter(x => h.getValue(x, "position") > position).forEach(x => h.setValue(x, "position", h.getValue(x, "position") - 1))
+    listItems.filter(x => h.getValue(x, "position") > position).forEach(x => Thing.setValue(x, "position", h.getValue(x, "position") - 1))
 
     // Set previous, next items
 
@@ -304,8 +304,8 @@ function removeItem(itemList, position) {
     listItems.sort((a, b) => h.getValue(a, "position") < h.getValue(b, "position"))
 
     //
-    itemList = h.setValues(itemList, 'itemListElement', listItems)
-    itemList = h.setValue(itemList, 'numberOfItems', listItems.length)
+    itemList = Thing.setValues(itemList, 'itemListElement', listItems)
+    itemList = Thing.setValue(itemList, 'numberOfItems', listItems.length)
     return itemList
 
 }

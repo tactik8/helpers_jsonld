@@ -1,5 +1,4 @@
 
-
 const randomUUID = globalThis.crypto.randomUUID
 
 
@@ -12,12 +11,13 @@ import { CreativeWork } from './creativeWork.js'
 
 
 
-export class WebSite extends CreativeWork {
+export class WebPage extends CreativeWork {
     constructor(url) {
         super()
         this.record_type = "WebSite"
         this.url = url
     }
+
 
     get breadcrumb() {
         return h.getValues(this._record, "breadcrumb")
@@ -116,6 +116,7 @@ export class WebSite extends CreativeWork {
     }
 
     // Static
+
     static getWPHeader(record) {
         return getWebPart("WPHeader", record)
     }

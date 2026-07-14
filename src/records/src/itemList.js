@@ -1,5 +1,5 @@
 import { records} from '../records.js'
-import { randomUUID } from 'crypto';
+const randomUUID = globalThis.crypto.randomUUID
 
 
 export function getItemList(noOfItems=5) {
