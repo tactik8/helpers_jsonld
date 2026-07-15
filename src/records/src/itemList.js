@@ -8,7 +8,7 @@ export function getItemList(noOfItems=5) {
     let record_type = "Thing"
      
 
-    let record_id = "https://www.testrecord.com/" + randomUUID() + "#" + record_type
+    let record_id = "https://www.testrecord.com/" + globalThis.crypto.randomUUID() + "#" + record_type
 
     let record = {
         "@type": record_type,
@@ -46,7 +46,7 @@ function getListItem(item, position=0){
 
     let record = {
         "@type": "ListItem",
-        "@id": "https://www.testrecord.com/listitem/"  + randomUUID(),
+        "@id": "https://www.testrecord.com/listitem/"  + globalThis.crypto.randomUUID(),
         "item": item,
         "position": position,
         "previousItem": "",

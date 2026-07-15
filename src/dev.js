@@ -32,6 +32,9 @@ function test(){
 
     console.log(p.toString())
 
+
+    let i = _h.records.itemList()
+    console.log(i)
 }
 
 test()

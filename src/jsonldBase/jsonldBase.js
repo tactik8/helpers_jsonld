@@ -751,7 +751,7 @@ export function setTempID(value) {
     }
 
     for (let k of Object.keys(value)) {
-        value['@id'] = value?.["@id"] || "_:" + randomUUID();
+        value['@id'] = value?.["@id"] || "_:" + globalThis.crypto.randomUUID();
         value[k] = assignId(value[k])
     }
     return value
@@ -775,7 +775,7 @@ function assignId(value) {
     }
 
     for (let k of Object.keys(value)) {
-        value['@id'] = value?.["@id"] || "_:" + randomUUID();
+        value['@id'] = value?.["@id"] || "_:" + globalThis.crypto.randomUUID();
         value[k] = assignId(value[k])
     }
     return value

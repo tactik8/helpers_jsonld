@@ -204,7 +204,7 @@ function toListItem(value) {
     if (h.getValue(value, '@type') != "ListItem") {
         value = {
             "@type": "ListItem",
-            "@id": randomUUID(),
+            "@id": globalThis.crypto.randomUUID(),
             "item": value
         }
     }

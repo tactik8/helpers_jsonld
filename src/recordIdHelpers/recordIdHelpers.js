@@ -182,7 +182,7 @@ export function getGenericRecordID(baseUrl) {
     baseUrl = standardizeUrl(baseUrl)
 
     if(!baseUrl){
-        return "_:" + randomUUID()
+        return "_:" + globalThis.crypto.randomUUID()
     }
 
 
@@ -190,7 +190,7 @@ export function getGenericRecordID(baseUrl) {
         baseUrl = baseUrl + '/'
     }
 
-    let record_id = standardizeUrl(baseUrl) + randomUUID()
+    let record_id = standardizeUrl(baseUrl) + globalThis.crypto.randomUUID()
 
     return record_id
 
@@ -218,7 +218,7 @@ function getIdBasedOnUrl(record_type, urls) {
     let url = urls?.[0]
 
     if (!url) {
-        return "_:" + urandomUUID()
+        return "_:" + globalThis.crypto.randomUUID()
     }
 
 
@@ -256,7 +256,7 @@ function getIdBasedOnDomain(record_type, urls) {
     let url = urls?.[0]
 
     if (!url) {
-        return "_:" + randomUUID()
+        return "_:" + globalThis.crypto.randomUUID()
     }
 
 

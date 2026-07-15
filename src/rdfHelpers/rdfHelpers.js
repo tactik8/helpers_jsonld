@@ -147,7 +147,7 @@ export function toRDF(value, annotation) {
             // handle annotation
             let annotation = value?.['@annotation']
             if (annotation && typeof annotation == "object") {
-                annotation['@id'] = annotation?.['@id'] || "_:" + randomUUID()
+                annotation['@id'] = annotation?.['@id'] || "_:" + globalThis.crypto.randomUUID()
                 let annoRDFs = Object.keys(annotation).map(k => _toRDF(annotation['@id'], k, annotation[k]))
                 results = results.concat(annoRDFs)
                 annotation = annotation?.['@id']
@@ -161,7 +161,7 @@ export function toRDF(value, annotation) {
         if (typeof value == "object") {
 
             // set @id
-            value['@id'] = value?.['@id'] || '_:' + randomUUID()
+            value['@id'] = value?.['@id'] || '_:' + globalThis.crypto.randomUUID()
 
             // 
             let newRdf = { subject: subject, predicate: predicate, object: value?.['@id'], label }
@@ -274,7 +274,7 @@ function flattenJson(value) {
             for (let v of subValues) {
                 if (typeof v == "object") {
 
-                    v['@id'] = v?.['@id'] || '_:' + randomUUID()
+                    v['@id'] = v?.['@id'] || '_:' + globalThis.crypto.randomUUID()
                     newValues.push({ "@id": v?.['@id'] })
                     results = results.concat(flattenJson(v))
 

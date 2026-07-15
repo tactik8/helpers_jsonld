@@ -49,7 +49,7 @@ export function addPotentialActions(record, baseUrl) {
 function addAction(record, action_type, name, baseUrl) {
     let action = {
         "@type": action_type,
-        "@id": randomUUID(),
+        "@id": globalThis.crypto.randomUUID(),
         "name": name,
         "actionStatus": "PotentialActionStatus",
         "object": { "@id": h.record_id(record) },
