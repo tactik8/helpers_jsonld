@@ -10,6 +10,7 @@ import * as recordIDHelpers from '../recordIdHelpers/recordIdHelpers.js'
 export class DB {
     constructor() {
         this._store = new Map()
+        this._subscriptions = new Map()
     }
 
     *[Symbol.iterator]() {
@@ -56,6 +57,42 @@ export class DB {
 
     get record_ids() {
         return getRecordIDs(this._store)
+
+    }
+
+    // callbacks
+
+    subscribe(record_id, callbackFn){
+
+        if(!record_id || record_id == "*" || record_id == "all" ){
+            record_id = "all"
+        }
+        let ss = this._subscriptions.get(record_id) || []
+        if(!ss.includes(callbackFn)){
+            ss.push(callbackFn)
+            this._subscriptions.set(record_id, ss)
+        }
+        return
+    }
+
+    unsubscribe(record_id, callbackFn){
+
+        if(!record_id || record_id == "*" || record_id == "all" ){
+            record_id = "all"
+        }
+        let ss = this._subscriptions.get(record_id) || []
+        ss = ss.filter(x => x != callbackFn)
+        this._subscriptions.set(record_id, ss)
+        return
+    }
+
+    broadcast(record_id){
+        let record = this.get(record_id)
+        let ss = this._subscriptions.get(record_id) || []
+        ss = ss.concat(this._subscriptions.get('all') || [])
+        ss = [ ... new Set(ss)]
+
+        ss.forEach(x => x(record))
 
     }
 
