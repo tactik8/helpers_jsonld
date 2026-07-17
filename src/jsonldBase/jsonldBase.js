@@ -51,9 +51,9 @@ export class DB {
         return deleteRecord(this._store, value)
     }
 
-    getValue(record_id, propertyID){
+    getValue(record_id, propertyID, position){
         let record = this.get(record_id)
-        return getValue(record, propertyID)
+        return getValue(record, propertyID, position)
     }
     getValues(record_id, propertyID){
         let record = this.get(record_id)
@@ -134,15 +134,15 @@ export class DB {
         return flatten(value)
     }
 
-    static getValue(record, propertyID) {
-        return getValue(record, propertyID)
+    static getValue(record, propertyID, position) {
+        return getValue(record, propertyID, position)
     }
     static getValues(record, propertyID) {
         return getValues(record, propertyID)
     }
 
-    static setValue(record, propertyID, value) {
-        return setValue(record, propertyID, value)
+    static setValue(record, propertyID, value, position) {
+        return setValue(record, propertyID, value, position)
     }
 
     static setValues(record, propertyID, values) {
@@ -415,16 +415,19 @@ function toArray(value) {
 }
 
 
-export function getValue(record, propertyID) {
+export function getValue(record, propertyID, position) {
+    position = position || 0
     let values = dot.get(record, propertyID)
     values = toArray(values)
-    return values?.[0]
+    return values?.[position]
 }
 
-export function setValue(record, propertyID, value) {
-
+export function setValue(record, propertyID, value, position) {
+    position = position || 0
+    let values = getValues(record, propertyID)
     value = toArray(value)?.[0]
-    dot.set(record, propertyID, value)
+    values[position] = value
+    dot.set(record, propertyID, values)
     return record
 }
 
