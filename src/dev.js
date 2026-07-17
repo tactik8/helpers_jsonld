@@ -74,7 +74,7 @@ function test2() {
     db.set(record1)
 
     let r1 = db.getValue(record1?.['@id'], 'name', 0)
-    db.setValue(record1?.['@id'], 'name', 'bob', 0)
+    db.setValue(record1?.['@id'], 'name', 'bob')
     let r2 = db.getValue(record1?.['@id'], 'name', 0)
 
     console.log('ss', r1, r2)
