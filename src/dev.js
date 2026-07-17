@@ -73,7 +73,11 @@ function test2() {
     let db = new _h.DB()
     db.set(record1)
 
-    console.log(_h.eq(record1, record2))
+    let r1 = db.getValue(record1?.['@id'], 'name', 0)
+    db.setValue(record1?.['@id'], 'name', 'bob', 0)
+    let r2 = db.getValue(record1?.['@id'], 'name', 0)
+
+    console.log('ss', r1, r2)
 
 }
 
