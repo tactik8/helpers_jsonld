@@ -1017,7 +1017,7 @@ function _storeToMap(store) {
 
     // Convert to map
     store = store || []
-    store = Array.isArray(store) ? store : store
+    store = Array.isArray(store) ? store : [store]
     let newStore = new Map()
     store.forEach(x => newStore.set(x?.['@id'], x))
     store = newStore

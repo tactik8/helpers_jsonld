@@ -70,6 +70,9 @@ function test2() {
 
     }
 
+    let db = new _h.DB()
+    db.set(record1)
+
     console.log(_h.eq(record1, record2))
 
 }
