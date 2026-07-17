@@ -32,7 +32,15 @@ export class DB {
     }
 
     set(value) {
-        return postRecord(this._store, value)
+        if(Array.isArray(value)){
+            return value.map(x => this.set(x))
+        }
+        let currentRecord = getRecord(value?.['@id'])
+        let result = postRecord(this._store, value)
+        if(JSON.stringify(currentRecord) != JSON.stringify(value)){
+            this.broadcast(value?.['@id'])
+        }
+        return result
     }
 
     post(value) {
@@ -130,6 +138,10 @@ export class DB {
         return addValues(record, propertyID, values)
     }
 
+    static strip(value){
+        return strip(value)
+    }
+
     static get dot() {
         return dot
     }
@@ -147,6 +159,7 @@ export default {
     DB,
     record_type,
     record_id,
+    eq,
     evaluate,
     expand,
     flatten,
@@ -158,7 +171,8 @@ export default {
     addValues,
     setTempID,
     clean,
-    simplify
+    simplify,
+    strip
 }
 
 
@@ -254,7 +268,50 @@ export function testRecord(name, no = 0, depth = 1) {
 }
 
 
+export function eq(value1, value2){
 
+    if(value1 === undefined && value2 === undefined){
+        return true
+    }
+    if(value1 !== undefined && value2 === undefined){
+        return false
+    }
+    if(value1 === undefined && value2 !== undefined){
+        return false
+    }
+
+    if(value1 === null && value2 === null){
+        return true
+    }
+    if(value1 !== null && value2 === null){
+        return false
+    }
+    if(value1 === null && value2 !== null){
+        return false
+    }
+    
+    // Clean
+    value1 = clean(value1)
+    value2 = clean(value2)
+
+    // Strip child records
+    value1 = strip(value1)
+    value2 = strip(value2)
+
+
+    try {
+        value1 = JSON.stringify(value1,Object.keys(value1).sort(),0)  
+    } catch {}
+
+    try {
+        value2 = JSON.stringify(value2,Object.keys(value2).sort(),0)  
+    } catch {}
+
+
+
+    return value1 == value2
+    
+}
 
 
 /**
@@ -264,17 +321,28 @@ export function testRecord(name, no = 0, depth = 1) {
  */
 export function clean(value, baseUrl) {
 
+    if(Array.isArray(value) && value.length > 1){
+        return value.map(x => clean(x, baseUrl))
+    }
+
+    if(!value?.['@type'] || !value?.['@id']){
+        return value
+    }
+
     try {
         JSON.parse(JSON.stringify(value))
     } catch (err) {
 
     }
 
-
     value = setTempID(value)
 
     let flatRecords = flatten(value)
 
+    // Order keys
+    flatRecords = flatRecords.map(x => JSON.parse(JSON.stringify(x, Object.keys(x).sort(), 4)))
+
+    // 
     let replacements = []
 
     // Get combinations of replacer, replacees
@@ -309,8 +377,6 @@ export function clean(value, baseUrl) {
         }
 
     }
-
-
 
     // Execute replacement
     value = replaceIds(value, replacements)
@@ -713,7 +779,38 @@ export function expand(store, record) {
     return _expand(store, record, cache)
 }
 
+/**
+ * Reeplaces all children objects by @id
+ * @param {*} record 
+ * @returns 
+ */
+export function strip(record){
 
+    function _strip(record, maxLevel, currentLevel){
+        
+        if(Array.isArray(record)){
+            return record.map(x => _strip(x, maxLevel, currentLevel))
+        }
+
+        if(record?.['@type'] || record?.['@id']){
+
+            if(currentLevel > maxLevel){
+                return { "@id": record?.['@id'] }
+            } else {
+                let newRecord = {}
+                for(let k of Object.keys(record).sort()){
+                    newRecord[k] = _strip(record?.[k], maxLevel, currentLevel + 1)
+                }
+                return newRecord
+            }
+            
+        }
+        return record
+    }
+
+    return _strip(record, 0, 0)
+
+}
 
 
 export function flatten(record) {

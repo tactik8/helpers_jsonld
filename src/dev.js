@@ -3,10 +3,10 @@
 import { _h } from './index.js'
 
 
-function test(){
+function test() {
 
-    
-    
+
+
     let p = new _h.things.ProductGroup()
 
     p.name = "Some awesome product"
@@ -23,8 +23,8 @@ function test(){
 
     p.generateVariants(variants)
 
-    for(let v of p.hasVariant){
-        if(!v){
+    for (let v of p.hasVariant) {
+        if (!v) {
             continue
         }
         v.addOffer(122.1, 'CAD')
@@ -37,4 +37,42 @@ function test(){
     console.log(i)
 }
 
-test()
+function test2() {
+
+    let record1 = {
+        "@type": "Thing",
+        "@id": "https://www.test.com/thing1",
+        "name": "thing1",
+        "other": [
+            {
+           
+                    "@type": "Thing",
+                    "@id": "https://www.test.com/thing2",
+                    "name": "thing2",
+                   
+            }
+        ]
+
+    }
+    let record2 = {
+        "@type": "Thing",
+        "@id": "https://www.test.com/thing1",
+        "name": "thing1",
+        "other": [
+            {
+           
+                    "@type": "Thing",
+                    "@id": "https://www.test.com/thing2",
+                    "name": "thing3",
+                   
+            }
+        ]
+
+    }
+
+    console.log(_h.eq(record1, record2))
+
+}
+
+
+test2()
