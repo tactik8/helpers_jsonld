@@ -416,6 +416,8 @@ function toArray(value) {
 
 
 export function getValue(record, propertyID, position) {
+    position = Number(position)
+    if(isNaN(position)){ position = 0 }
     position = position || 0
     let values = dot.get(record, propertyID)
     values = toArray(values)
@@ -423,6 +425,8 @@ export function getValue(record, propertyID, position) {
 }
 
 export function setValue(record, propertyID, value, position) {
+    position = Number(position)
+    if(isNaN(position)){ position = 0 }
     position = position || 0
     let values = getValues(record, propertyID)
     value = toArray(value)?.[0]
