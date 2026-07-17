@@ -51,6 +51,25 @@ export class DB {
         return deleteRecord(this._store, value)
     }
 
+    getValue(record_id, propertyID){
+        let record = this.get(record_id)
+        return getValue(record, propertyID)
+    }
+    getValues(record_id, propertyID){
+        let record = this.get(record_id)
+        return getValues(record, propertyID)
+    }
+    setValue(record_id, propertyID, value){
+        let record = this.get(record_id)
+        if(!record){
+            record = {"@id": record_id}
+        }
+        record = JSON.parse(JSON.stringify(record))
+        record = setValue(record, propertyID, value)
+        return this.set(record)
+    }
+
+
     length() {
         return length(this._store)
     }
