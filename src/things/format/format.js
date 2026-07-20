@@ -52,9 +52,15 @@ export function getTitle2(record) {
 
     // Person
     if (record_type == "Person") {
-        if (email) {
-            return email
-        }
+        return email ?? ""
+    }
+
+    // Action
+     if (record_type == "Action") {
+        let status = _h.getValue('actionStatus')
+        status = status || ""
+        status = status.replace('ActionStatus', '')
+        return status ?? ""
     }
 
     // Other
