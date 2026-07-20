@@ -141,15 +141,11 @@ export class Action extends Thing {
     addValuePattern(property, value) {
         this._record = addValuePattern(this._record, property, value)
     }
-    addDefaultValue(property, value) {
-        this._record = addDefaultValue(this._record, property, value)
-    }
+   
     addMultipleValues(property, value) {
         this._record = addMultipleValues(this._record, property, value)
     }
-    addValueRequired(property, value) {
-        this._record = addValueRequired(this._record, property, value)
-    }
+  
     addStepValue(property, value) {
         this._record = addStepValue(this._record, property, value)
     }
