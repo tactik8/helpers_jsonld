@@ -2,7 +2,7 @@
 import { records} from '../records.js'
 
 
-export function getAction(name=0, depth = 0) {
+export function getAction(name=0, depth=0) {
 
 
     let record_type = "Action"
