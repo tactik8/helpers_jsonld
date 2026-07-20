@@ -70,7 +70,15 @@ function test2() {
 
     }
 
+
+    function callback(record){
+        console.log('trigger', record)
+    }
+
+
+
     let db = new _h.DB()
+    db.subscribe(record1?.["@id"], callback)
     db.set(record1)
 
     let r1 = db.getValue(record1?.['@id'], 'name', 0)

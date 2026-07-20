@@ -84,7 +84,6 @@ export class DB {
 
     get record_ids() {
         return getRecordIDs(this._store)
-
     }
 
     // callbacks

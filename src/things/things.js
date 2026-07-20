@@ -1,5 +1,5 @@
 
-
+import * as format from './format/format.js'
 import { Thing } from './src/thing.js'
 import { Action, UpdateAction, AddAction, InsertAction, AppendAction, PrependAction, DeleteAction, ReplaceAction } from './src/action.js'
 import { ItemList } from './src/itemList.js'
@@ -45,7 +45,8 @@ export const things = {
     UpdateAction,
     WebAPI,
     WebPage,
-    WebSite
+    WebSite,
+    format
 }
 
 export default things
