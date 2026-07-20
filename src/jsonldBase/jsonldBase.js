@@ -51,13 +51,13 @@ export class DB {
         return deleteRecord(this._store, value)
     }
 
-    getValue(record_id, propertyID, position){
+    getValue(record_id, propertyID, position, defaultValue){
         let record = this.get(record_id)
-        return getValue(record, propertyID, position)
+        return getValue(record, propertyID, position, defaultValue)
     }
-    getValues(record_id, propertyID){
+    getValues(record_id, propertyID, defaultValue){
         let record = this.get(record_id)
-        return getValues(record, propertyID)
+        return getValues(record, propertyID, defaultValue)
     }
     setValue(record_id, propertyID, value){
         let record = this.get(record_id)
@@ -133,11 +133,11 @@ export class DB {
         return flatten(value)
     }
 
-    static getValue(record, propertyID, position) {
-        return getValue(record, propertyID, position)
+    static getValue(record, propertyID, position, defaultValue) {
+        return getValue(record, propertyID, position, defaultValue)
     }
-    static getValues(record, propertyID) {
-        return getValues(record, propertyID)
+    static getValues(record, propertyID, defaultValue) {
+        return getValues(record, propertyID, defaultValue)
     }
 
     static setValue(record, propertyID, value, position) {
@@ -409,17 +409,27 @@ export function clean(value, baseUrl) {
 
 function toArray(value) {
 
-    return Array.isArray(value) ? value : [value]
+    let result = Array.isArray(value) ? value : [value]
+
+    result = result.filter(x => x !== undefined)
+
+    return result
 
 }
 
 
-export function getValue(record, propertyID, position) {
+export function getValue(record, propertyID, position, defaultValue) {
     position = Number(position)
     if(isNaN(position)){ position = 0 }
     let values = dot.get(record, propertyID)
     values = toArray(values)
-    return values?.[position]
+    let value = values?.[position]
+
+    if(value === undefined && defaultValue !== undefined){
+        return defaultValue
+    }
+    return value
+
 }
 
 export function setValue(record, propertyID, value, position) {
@@ -452,9 +462,13 @@ export function addValues(record, propertyID, values) {
 }
 
 
-export function getValues(record, propertyID) {
+export function getValues(record, propertyID, defaultValue) {
     let values = dot.get(record, propertyID)
     values = toArray(values)
+    values = values.filter(x => x !== undefined)
+    if(values.length == 0 && defaultValue !== undefined){
+        return defaultValue
+    }
     return values
 }
 
