@@ -1,4 +1,4 @@
-import { _h } from '../../index.js'
+import { _h, helpers } from '../../index.js'
 import { getConversation } from '../../records/src/conversation.js'
 
 
@@ -24,6 +24,11 @@ export function getTitle1(record) {
             return values.join(' ')
         }
 
+    }
+
+    if (record_type == "ListItem") {
+        let item = helpers.getValue(record, 'item')
+        return getTitle1(item)
     }
 
     // Other
