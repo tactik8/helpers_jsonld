@@ -32,13 +32,13 @@ export class DB {
     }
 
     set(value) {
-        if (isArray(value)) {
-            return value.map(x => this.set(x))
-        }
-        let currentRecord = getRecord(this._store, record_id(value))
-        this._store = postRecord(this._store, value)
-        if (!isEqual(currentRecord, value)) {
-            this.broadcast(record_id(value))
+        let records = flatten(value)
+        for(let r of records){
+            let currentRecord = getRecord(this._store, record_id(r))
+            this._store = postRecord(this._store, r)
+            if (!isEqual(currentRecord, r)) {
+                this.broadcast(record_id(r))
+            }
         }
         return value
     }
