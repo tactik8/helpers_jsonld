@@ -95,8 +95,8 @@ export class ItemList extends Thing {
     static insert(record, item, position) {
         return insertItem(record, item, position)
     }
-    static delete(record, position) {
-        return removeItem(record, position)
+    static delete(record, id_or_position) {
+        return removeItem(record, id_or_position)
     }
     static replace(record, replacer, replacee) {
         return replaceItem(record, replacer, replacee)
@@ -426,7 +426,6 @@ function removeItem(itemList, position_or_item) {
         return itemList
     }
 
-
     itemList = clean(itemList)
 
     let itemListElements = h.getValues(itemList, 'itemListElement')
@@ -526,7 +525,7 @@ export function duplicateItem(itemlist, item) {
  */
 function getItem(itemList, itemToSearch) {
 
-    if (!itemList || !itemToSearch) {
+    if (!itemList || itemToSearch === undefined) {
         return undefined
     }
 

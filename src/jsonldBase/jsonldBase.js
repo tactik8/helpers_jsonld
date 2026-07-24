@@ -33,6 +33,7 @@ export class DB {
 
     set(value) {
         let records = flatten(value)
+        records = records.filter(x => Object.keys(x).length > 1)
         for(let r of records){
             let currentRecord = getRecord(this._store, record_id(r))
             this._store = postRecord(this._store, r)
