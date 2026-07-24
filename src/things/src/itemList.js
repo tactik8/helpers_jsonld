@@ -113,6 +113,10 @@ export class ItemList extends Thing {
     static moveDown(record, item) {
         return moveItemDown(record, item)
     }
+
+    static duplicate(record, item){
+        return duplicateItem(record, item)
+    }
 }
 
 
