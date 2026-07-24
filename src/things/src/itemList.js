@@ -359,7 +359,7 @@ function getFirstItemBypreviousItem(value) {
 
 function toListItem(value) {
 
-    if (h.getValue(value, '@type') != "ListItem") {
+    if (h.record_type(value) != "ListItem") {
         value = {
             "@type": "ListItem",
             "@id": globalThis.crypto.randomUUID(),
