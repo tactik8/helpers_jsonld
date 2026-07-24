@@ -506,7 +506,7 @@ function moveItemDown(itemList, item) {
 
 }
 
-export function duplicateItem(itemlist, item) {
+export function duplicateItem(itemList, item) {
     item = getItem(itemList, item)
     if(!item){
         return itemList
