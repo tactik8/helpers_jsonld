@@ -964,6 +964,9 @@ export function expand(store, record) {
         cache.set(newRecord?.['@id'], newRecord)
 
         for (let k of Object.keys(record)) {
+            if(k == "previousItem" || k == "nextItem"){
+                continue
+            }
             record[k] = _expand(storeRecord, record[k], cache)
         }
 
@@ -1018,7 +1021,7 @@ export function flatten(record) {
         let records = []
 
         if (Array.isArray(record)) {
-            records = record.map(x => flatten(x))
+            records = record.map(x => _flatten(x))
             records = records.flat()
             return records
         }
@@ -1029,6 +1032,12 @@ export function flatten(record) {
 
         for (let k of Object.keys(record)) {
             if (k == "@id") {
+                continue
+            }
+            if (k == "previousItem") {
+                continue
+            }
+            if (k == "nextItem") {
                 continue
             }
 
@@ -1042,7 +1051,7 @@ export function flatten(record) {
                 } else {
                     record[k].push(v)
                 }
-                records.push(flatten(v))
+                records.push(_flatten(v))
             }
         }
         records = [record].concat(records)
@@ -1054,12 +1063,9 @@ export function flatten(record) {
         return records
     }
 
-    try {
-        record = clone(record)
-    } catch (err) {
-
-    }
-
+   
+    record = clone(record)
+   
     return _flatten(record)
 
 }
