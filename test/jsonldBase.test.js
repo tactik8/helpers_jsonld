@@ -1,16 +1,17 @@
 // test/helpers.test.js
 
-import { DB } from '../src/jsonldBase/jsonldBase.js';
+
+import { _h} from '../src/index.js'
+
 
 describe('Record Helpers', () => {
   
 
   test('DB should allow storing and retrieving a value', async () => {
     
-    let db = new DB()
+    let db = new _h.DB()
 
     let record1 = {
-      "@context": "https://schema.org/",
       "@type": "Thing",
       "@id": "https://testcase.com/thing1",
       "name": "thing1",
@@ -22,6 +23,7 @@ describe('Record Helpers', () => {
     let record_id = record1?.['@id']
     let result = db.get('https://testcase.com/thing1')
 
+    console.log('r', result)
     expect(db.length()).toBe(1)
     expect(result).toHaveProperty('@id', record_id);
     expect(result.url).toBeDefined();

@@ -32,46 +32,46 @@ export class DB {
     }
 
     set(value) {
-        if(Array.isArray(value)){
+        if (isArray(value)) {
             return value.map(x => this.set(x))
         }
-        let currentRecord = getRecord(value?.['@id'])
-        let result = postRecord(this._store, value)
-        if(JSON.stringify(currentRecord) != JSON.stringify(value)){
-            this.broadcast(value?.['@id'])
+        let currentRecord = getRecord(this._store, record_id(value))
+        this._store = postRecord(this._store, value)
+        if (!isEqual(currentRecord, value)) {
+            this.broadcast(record_id(value))
         }
-        return result
+        return value
     }
 
     post(value) {
-        return postRecord(this._store, value)
+        return this.set(value)
     }
 
     delete(record_id) {
-        return deleteRecord(this._store, value)
+        this._store = deleteRecord(this._store, record_id)
     }
 
-    getValue(record_id, propertyID, position, defaultValue){
+    getValue(record_id, propertyID, position, defaultValue) {
         let record = this.get(record_id)
         return getValue(record, propertyID, position, defaultValue)
     }
-    getValues(record_id, propertyID, defaultValue){
+    getValues(record_id, propertyID, defaultValue) {
         let record = this.get(record_id)
         return getValues(record, propertyID, defaultValue)
     }
-    setValue(record_id, propertyID, value){
+    setValue(record_id, propertyID, value) {
         let record = this.get(record_id)
-        if(!record){
-            record = {"@id": record_id}
+        if (!record) {
+            record = { "@id": record_id }
         }
-        record = JSON.parse(JSON.stringify(record))
+        record = clone(record)
         record = setValue(record, propertyID, value)
         return this.set(record)
     }
 
 
     length() {
-        return length(this._store)
+        return this._store.size
     }
 
     get records() {
@@ -88,22 +88,22 @@ export class DB {
 
     // callbacks
 
-    subscribe(record_id, callbackFn){
+    subscribe(record_id, callbackFn) {
 
-        if(!record_id || record_id == "*" || record_id == "all" ){
+        if (!record_id || record_id == "*" || record_id == "all") {
             record_id = "all"
         }
         let ss = this._subscriptions.get(record_id) || []
-        if(!ss.includes(callbackFn)){
+        if (!ss.includes(callbackFn)) {
             ss.push(callbackFn)
             this._subscriptions.set(record_id, ss)
         }
         return
     }
 
-    unsubscribe(record_id, callbackFn){
+    unsubscribe(record_id, callbackFn) {
 
-        if(!record_id || record_id == "*" || record_id == "all" ){
+        if (!record_id || record_id == "*" || record_id == "all") {
             record_id = "all"
         }
         let ss = this._subscriptions.get(record_id) || []
@@ -112,11 +112,11 @@ export class DB {
         return
     }
 
-    broadcast(record_id){
+    broadcast(record_id) {
         let record = this.get(record_id)
         let ss = this._subscriptions.get(record_id) || []
         ss = ss.concat(this._subscriptions.get('all') || [])
-        ss = [ ... new Set(ss)]
+        ss = [... new Set(ss)]
 
         ss.forEach(x => x(record))
 
@@ -156,7 +156,7 @@ export class DB {
         return addValues(record, propertyID, values)
     }
 
-    static strip(value){
+    static strip(value) {
         return strip(value)
     }
 
@@ -164,11 +164,25 @@ export class DB {
         return dot
     }
 
+    static ref(record) {
+        return ref(record)
+    }
+
     static simplify(value) {
         return simplify(value)
     }
 
+    static isJsonld(record) {
+        return isJsonld(record)
+    }
 
+    static isValid(record) {
+        return isValid(record)
+    }
+
+    static isArray(value) {
+        return isArray(value)
+    }
 
 }
 
@@ -189,22 +203,98 @@ export default {
     addValues,
     setTempID,
     clean,
+    ref,
     simplify,
     strip
 }
 
 
 
+/**
+ * Returns @id from record or return string
+ * @param {*} record_or_id 
+ */
+function _utilGetId(record_or_id) {
+    let value = record_id(record_or_id) || record_or_id
+    value = isArray(value) ? value[0] : value
+    return value
+}
+
+/**
+ * returns true if object is valid jsonld
+ * @param {*} record 
+ */
+export function isValid(record) {
+    return isJsonld(record)
+}
+
+/**
+ * Returns true if valid ojsonld object (returns false for arrays)
+ * @param {*} record 
+ */
+export function isJsonld(record) {
+    return record?.['@type'] || record?.['@id']
+}
+
+
+/**
+ * 
+ */
+export function isEqual(a, b) {
+
+    const sortedReplacer = (key, value) => {
+        if (value instanceof Object && !(value instanceof Array)) {
+            return Object.keys(value)
+                .sort()
+                .reduce((sorted, k) => {
+                    sorted[k] = value[k];
+                    return sorted;
+                }, {});
+        }
+        return value;
+    };
+
+
+    try {
+        a = JSON.stringify(a, sortedReplacer, 4)
+    } catch { }
+    try {
+        b = JSON.stringify(b, sortedReplacer, 4)
+    } catch { }
+
+    return a == b
+
+}
+
+/**
+ * Returns first @type
+ * @param {*} record 
+ * @returns 
+ */
 export function record_type(record) {
 
     return getValue(record, '@type')
 
 }
 
+/**
+ * Returns @id
+ * @param {*} record 
+ * @returns 
+ */
 export function record_id(record) {
-
     return getValue(record, '@id')
+}
 
+export function ref(record_or_id) {
+    if (!record_or_id) {
+        return undefined
+    }
+    let record_id = _utilGetId(record_or_id)
+    if (!record_id) {
+        return undefined
+    }
+    return { "@id": record_id }
 }
 
 
@@ -286,28 +376,28 @@ export function testRecord(name, no = 0, depth = 1) {
 }
 
 
-export function eq(value1, value2){
+export function eq(value1, value2) {
 
-    if(value1 === undefined && value2 === undefined){
+    if (value1 === undefined && value2 === undefined) {
         return true
     }
-    if(value1 !== undefined && value2 === undefined){
+    if (value1 !== undefined && value2 === undefined) {
         return false
     }
-    if(value1 === undefined && value2 !== undefined){
+    if (value1 === undefined && value2 !== undefined) {
         return false
     }
 
-    if(value1 === null && value2 === null){
+    if (value1 === null && value2 === null) {
         return true
     }
-    if(value1 !== null && value2 === null){
+    if (value1 !== null && value2 === null) {
         return false
     }
-    if(value1 === null && value2 !== null){
+    if (value1 === null && value2 !== null) {
         return false
     }
-    
+
     // Clean
     value1 = clean(value1)
     value2 = clean(value2)
@@ -318,17 +408,17 @@ export function eq(value1, value2){
 
 
     try {
-        value1 = JSON.stringify(value1,Object.keys(value1).sort(),0)  
-    } catch {}
+        value1 = JSON.stringify(value1, Object.keys(value1).sort(), 0)
+    } catch { }
 
     try {
-        value2 = JSON.stringify(value2,Object.keys(value2).sort(),0)  
-    } catch {}
+        value2 = JSON.stringify(value2, Object.keys(value2).sort(), 0)
+    } catch { }
 
 
 
     return value1 == value2
-    
+
 }
 
 
@@ -339,16 +429,16 @@ export function eq(value1, value2){
  */
 export function clean(value, baseUrl) {
 
-    if(Array.isArray(value) && value.length > 1){
+    if (Array.isArray(value) && value.length > 1) {
         return value.map(x => clean(x, baseUrl))
     }
 
-    if(!value?.['@type'] || !value?.['@id']){
+    if (!value?.['@type'] || !value?.['@id']) {
         return value
     }
 
     try {
-        JSON.parse(JSON.stringify(value))
+        clone(value)
     } catch (err) {
 
     }
@@ -407,6 +497,33 @@ export function clean(value, baseUrl) {
 // Utility
 // -----------------------------------------------------------------------
 
+export function clone(value) {
+
+    try {
+        value = structuredClone(value)
+        return value
+
+    } catch (err) {
+
+    }
+
+    return value
+}
+
+/**
+ * Returns true if array
+ * @param {*} value 
+ * @returns 
+ */
+export function isArray(value) {
+    return Array.isArray(value) && typeof value != "string"
+}
+
+/**
+ * Converts to array if not one already
+ * @param {*} value 
+ * @returns 
+ */
 function toArray(value) {
 
     let result = Array.isArray(value) ? value : [value]
@@ -418,14 +535,18 @@ function toArray(value) {
 }
 
 
+// -----------------------------------------------------------------------
+// Value methods
+// -----------------------------------------------------------------------
+
 export function getValue(record, propertyID, position, defaultValue) {
     position = Number(position)
-    if(isNaN(position)){ position = 0 }
+    if (isNaN(position)) { position = 0 }
     let values = dot.get(record, propertyID)
     values = toArray(values)
     let value = values?.[position]
 
-    if(value === undefined && defaultValue !== undefined){
+    if (value === undefined && defaultValue !== undefined) {
         return defaultValue
     }
     return value
@@ -434,8 +555,8 @@ export function getValue(record, propertyID, position, defaultValue) {
 
 export function setValue(record, propertyID, value, position) {
     position = Number(position)
-    if(isNaN(position)){ position = 0 }
-    
+    if (isNaN(position)) { position = 0 }
+
     let values = getValues(record, propertyID)
     value = toArray(value)?.[0]
     values[position] = value
@@ -466,7 +587,7 @@ export function getValues(record, propertyID, defaultValue) {
     let values = dot.get(record, propertyID)
     values = toArray(values)
     values = values.filter(x => x !== undefined)
-    if(values.length == 0 && defaultValue !== undefined){
+    if (values.length == 0 && defaultValue !== undefined) {
         return defaultValue
     }
     return values
@@ -481,18 +602,28 @@ export function setValues(record, propertyID, value) {
 
 
 // -----------------------------------------------------------------------
-// Array
+// DB
 // -----------------------------------------------------------------------
 
-
+/**
+ * Post a copy of the record to store
+ * @param {*} store 
+ * @param {*} value 
+ * @returns 
+ */
 function postRecord(store, value) {
 
-    // Assign Id
+    if (!value) {
+        return
+    }
+
+    value = clone(value)
+
+    // Assign Id. if missing or wrong
     value = assignId(value)
 
     // flatten
     value = flatten(value)
-
 
     // convert store to map
     let storeRecord = _storeToMap(store)
@@ -521,8 +652,16 @@ function postRecord(store, value) {
 
 }
 
+/**
+ * Retrieves a copy of the record from db
+ * @param {*} store 
+ * @param {*} record_or_id 
+ * @param {*} expandFlag 
+ * @returns 
+ */
+function getRecord(store, record_or_id, expandFlag = true) {
 
-function getRecord(store, record_id, expandFlag = true) {
+    let record_id = _utilGetId(record_or_id)
 
     // convert store to map
     let storeRecord = _storeToMap(store)
@@ -535,11 +674,21 @@ function getRecord(store, record_id, expandFlag = true) {
         record = expand(storeRecord, record)
     }
 
+    // Copy record 
+    record = clone(record)
+
+
     // Return
     return record;
 }
 
-
+/**
+ * Retrieves a copy of the records in db
+ * @param {*} store 
+ * @param {*} filters 
+ * @param {*} expandFlag 
+ * @returns 
+ */
 function getRecords(store, filters, expandFlag = true) {
 
     // convert store to map
@@ -557,6 +706,9 @@ function getRecords(store, filters, expandFlag = true) {
     }
 
 
+    // Clone record
+    records = clone(records)
+
     return records
 
 }
@@ -564,11 +716,11 @@ function getRecords(store, filters, expandFlag = true) {
 
 
 
+function deleteRecord(store, record_or_id) {
 
+    let record_id = _utilGetId(record_or_id)
 
-function deleteRecord(store, record_id) {
-
-    storeRecord = _storeToMap(store)
+    let storeRecord = _storeToMap(store)
 
     record_id = Array.isArray(record_id) ? record_id : [record_id]
 
@@ -584,13 +736,16 @@ function length(store) {
     return storeRecord.store.size
 }
 
-
+/**
+ * Get all record_ids from db
+ * @param {*} store 
+ * @returns 
+ */
 function getRecordIDs(store) {
-
 
     let records = getRecords(store)
 
-    let recordIDs = records.map(x => x?.['@id'])
+    let recordIDs = records.map(x => record_id(x))
 
     return recordIDs
 
@@ -659,6 +814,7 @@ function testCond() {
 //
 export function evaluate(record, condition) {
 
+    let conditions = []
     for (let k of Object.keys(condition)) {
 
         let propertyID = k
@@ -676,17 +832,19 @@ export function evaluate(record, condition) {
         }
 
         // Extract conditions
-        let conditions = []
+
         for (let v of values) {
             let c = _extractCondition(record, propertyID, v)
+            conditions.push(c)
         }
 
-        // test conditions
-        let result = conditions.every(x => testCondition(x.r, x.p, x.o, x.v))
 
-        return result
 
     }
+    // test conditions
+    let result = conditions.every(x => testCondition(x.r, x.p, x.o, x.v))
+
+    return result
 }
 
 
@@ -756,7 +914,7 @@ function _extractCondition(record, propertyID, value) {
         c = {
             r: record,
             p: propertyID,
-            o: Object.keys(v)?.[0],
+            o: Object.keys(value)?.[0],
             v: value?.[Object.keys(v)?.[0]]
         }
     }
@@ -822,26 +980,26 @@ export function expand(store, record) {
  * @param {*} record 
  * @returns 
  */
-export function strip(record){
+export function strip(record) {
 
-    function _strip(record, maxLevel, currentLevel){
-        
-        if(Array.isArray(record)){
+    function _strip(record, maxLevel, currentLevel) {
+
+        if (Array.isArray(record)) {
             return record.map(x => _strip(x, maxLevel, currentLevel))
         }
 
-        if(record?.['@type'] || record?.['@id']){
+        if (record?.['@type'] || record?.['@id']) {
 
-            if(currentLevel > maxLevel){
+            if (currentLevel > maxLevel) {
                 return { "@id": record?.['@id'] }
             } else {
                 let newRecord = {}
-                for(let k of Object.keys(record).sort()){
+                for (let k of Object.keys(record).sort()) {
                     newRecord[k] = _strip(record?.[k], maxLevel, currentLevel + 1)
                 }
                 return newRecord
             }
-            
+
         }
         return record
     }
@@ -890,13 +1048,13 @@ export function flatten(record) {
         records = records.flat()
 
         // Remove values with only @id
-        records = records.filter(x => Object.keys(x).pop('@id').length > 0)
+        records = records.filter(x => Object.keys(x).some(k => k !== '@id'))
 
         return records
     }
 
     try {
-        record = JSON.parse(JSON.stringify(record))
+        record = clone(record)
     } catch (err) {
 
     }

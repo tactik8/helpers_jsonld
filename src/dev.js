@@ -1,6 +1,6 @@
 
 
-import { _h } from './index.js'
+import { _h, helpers } from './index.js'
 
 
 function test() {
@@ -39,53 +39,27 @@ function test() {
 
 function test2() {
 
-    let record1 = {
+    
+    let itemList = {
+        "@type": "ItemList",
+        "@id": "https://www.test.com/itemlist1",
+        "itemListElement": []
+    }
+    
+
+    console.log('r', _h.things.ItemList.length(itemList))
+
+
+    let item = {
         "@type": "Thing",
-        "@id": "https://www.test.com/thing1",
-        "name": "thing1",
-        "other": [
-            {
-           
-                    "@type": "Thing",
-                    "@id": "https://www.test.com/thing2",
-                    "name": "thing2",
-                   
-            }
-        ]
-
-    }
-    let record2 = {
-        "@type": "Thing",
-        "@id": "https://www.test.com/thing1",
-        "name": "thing1",
-        "other": [
-            {
-           
-                    "@type": "Thing",
-                    "@id": "https://www.test.com/thing2",
-                    "name": "thing3",
-                   
-            }
-        ]
-
+        "@id": "https://www.tets.com/thing1",
+        "name": "thing1"
     }
 
+    itemList = _h.things.ItemList.append(itemList, item)
 
-    function callback(record){
-        console.log('trigger', record)
-    }
-
-
-
-    let db = new _h.DB()
-    db.subscribe(record1?.["@id"], callback)
-    db.set(record1)
-
-    let r1 = db.getValue(record1?.['@id'], 'name', 0)
-    db.setValue(record1?.['@id'], 'name', 'bob')
-    let r2 = db.getValue(record1?.['@id'], 'name', 0)
-
-    console.log('ss', r1, r2)
+    console.log('rr', _h.things.ItemList.length(itemList))
+    
 
 }
 
