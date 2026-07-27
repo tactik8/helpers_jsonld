@@ -58,9 +58,9 @@ function test2() {
     let db1 = new helpers.DB()
 
 
-    let f = helpers.flatten(l)
-
-    console.log('f', JSON.stringify(f, null, 4))
+    db1.post(l)
+   
+    console.log('f', JSON.stringify(db1.records, null, 4))
 
    
 

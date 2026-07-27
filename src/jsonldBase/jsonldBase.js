@@ -33,10 +33,10 @@ export class DB {
 
     set(value) {
         let records = flatten(value)
+
         for(let r of records){
             let currentRecord = getRecord(this._store, record_id(r))
 
-            
             this._store = postRecord(this._store, r)
             if (!isEqual(currentRecord, r)) {
                 this.broadcast(record_id(r))
@@ -293,7 +293,7 @@ export function record_id(record) {
 export function isRef(value){
    
     if(!value?.["@id"]){ return false}
-    return Object.keys(value).some(x => x!="@id")
+    return !Object.keys(value).some(x => x!="@id")
 }
 
 export function ref(record_or_id) {
@@ -646,7 +646,6 @@ function postRecord(store, value) {
 
         // Skip if value already exists and new value doesn't have properties
         // Prevents overwriting current record with simple link
-        let nbProperties = Object.keys(v).filter(x => !x.startsWith('@'))
         if (storeValue && isRef(v)) {
             continue
         }
