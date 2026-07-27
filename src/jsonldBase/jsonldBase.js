@@ -1067,7 +1067,7 @@ export function flatten(record) {
         records = records.flat()
 
         // Remove values with only @id
-        records = records.filter(x => Object.keys(x).some(k => k !== '@id'))
+        // records = records.filter(x => Object.keys(x).some(k => k !== '@id'))
 
         return records
     }
