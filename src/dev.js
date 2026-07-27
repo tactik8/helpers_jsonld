@@ -39,27 +39,20 @@ function test() {
 
 function test2() {
 
-    
-    let itemList = {
+
+
+    let l = {
         "@type": "ItemList",
-        "@id": "https://www.test.com/itemlist1",
-        "itemListElement": []
-    }
-    
-
-    console.log('r', _h.things.ItemList.length(itemList))
-
-
-    let item = {
-        "@type": "Thing",
-        "@id": "https://www.tets.com/thing1",
-        "name": "thing1"
+        "@id": "https://www.test.com/listRecord3"
     }
 
-    itemList = _h.things.ItemList.append(itemList, item)
+    let r = {
+        "@type": "WebPage",
+        "@id": "https://www.test.com/page1",
+        "utl": "https://www.test.com/page1"
+    }
 
-    console.log('rr', _h.things.ItemList.length(itemList))
-    
+    l = helpers.things.ItemList.append()
 
 }
 

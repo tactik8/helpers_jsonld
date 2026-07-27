@@ -24,7 +24,7 @@ export class DB {
     }
 
     toJSON() {
-        return JSON.stringify(this.records, null, 4)
+        return this.records
     }
 
     get(record_id) {
@@ -727,7 +727,7 @@ function deleteRecord(store, record_or_id) {
 
     record_id.map(x => storeRecord.store.delete(x))
 
-    return true
+    return store
 
 }
 

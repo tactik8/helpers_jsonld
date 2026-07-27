@@ -52,3 +52,8 @@ function test(){
 }
 
 //test()
+
+
+function extractUrlFromString(value){
+    
+}
