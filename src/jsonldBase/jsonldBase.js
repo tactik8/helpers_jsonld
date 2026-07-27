@@ -36,10 +36,7 @@ export class DB {
         for(let r of records){
             let currentRecord = getRecord(this._store, record_id(r))
 
-            // skip save if already exist and is only a ref
-            if(currentRecord && !isRef(r)){
-                continue
-            }
+            
             this._store = postRecord(this._store, r)
             if (!isEqual(currentRecord, r)) {
                 this.broadcast(record_id(r))
@@ -647,10 +644,10 @@ function postRecord(store, value) {
         // Compare with existing value
         let storeValue = storeRecord.store.get(v?.['@id'])
 
-        // Skip if value already exista and new value doesn't have properties
+        // Skip if value already exists and new value doesn't have properties
         // Prevents overwriting current record with simple link
         let nbProperties = Object.keys(v).filter(x => !x.startsWith('@'))
-        if (storeValue && nbProperties == 0) {
+        if (storeValue && isRef(v)) {
             continue
         }
 
