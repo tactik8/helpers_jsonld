@@ -27,8 +27,8 @@ export class DB {
         return this.records
     }
 
-    get(record_id) {
-        return getRecord(this._store, record_id, true)
+    get(record_id, expand=true) {
+        return getRecord(this._store, record_id, expand)
     }
 
     set(value) {

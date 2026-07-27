@@ -49,10 +49,20 @@ function test2() {
     let r = {
         "@type": "WebPage",
         "@id": "https://www.test.com/page1",
-        "utl": "https://www.test.com/page1"
+        "url": "https://www.test.com/page1"
     }
 
-    l = helpers.things.ItemList.append()
+    l = helpers.things.ItemList.append(l, r)
+
+
+    let db1 = new helpers.DB()
+
+
+    let f = helpers.flatten(l)
+
+    console.log('f', JSON.stringify(f, null, 4))
+
+   
 
 }
 
