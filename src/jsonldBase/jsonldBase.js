@@ -33,9 +33,13 @@ export class DB {
 
     set(value) {
         let records = flatten(value)
-        records = records.filter(x => Object.keys(x).length > 1)
         for(let r of records){
             let currentRecord = getRecord(this._store, record_id(r))
+
+            // skip save if already exist and is only a ref
+            if(currentRecord && !isRef(r)){
+                continue
+            }
             this._store = postRecord(this._store, r)
             if (!isEqual(currentRecord, r)) {
                 this.broadcast(record_id(r))
@@ -285,6 +289,14 @@ export function record_type(record) {
  */
 export function record_id(record) {
     return getValue(record, '@id')
+}
+
+
+
+export function isRef(value){
+   
+    if(!value?.["@id"]){ return false}
+    return Object.keys(value).some(x => x!="@id")
 }
 
 export function ref(record_or_id) {
