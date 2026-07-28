@@ -55,14 +55,11 @@ function test2() {
     l = helpers.things.ItemList.append(l, r)
 
 
-    let db1 = new helpers.DB()
+    console.log(l.itemListElement.length)
 
+   l = helpers.things.ItemList.duplicate(l, r)
 
-    db1.post(l)
-   
-    console.log('f', JSON.stringify(db1.records, null, 4))
-
-   
+    console.log(l.itemListElement.length)
 
 }
 

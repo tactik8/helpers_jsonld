@@ -515,7 +515,7 @@ export function duplicateItem(itemList, listItem) {
     item = helpers.clone(item)
     item['@id'] = "_:" + globalThis.crypto.randomUUID()
     item = helpers.setValue(item, 'name', helpers.getValue(item, 'name', 0, '') + '_copy')
-    let position = getPosition(item) + 1
+    let position = getPosition(item, 0) + 1
     return insertItem(itemList, item, position)
 
 }
