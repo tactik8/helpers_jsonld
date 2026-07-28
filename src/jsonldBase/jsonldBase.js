@@ -207,7 +207,8 @@ export default {
     clean,
     ref,
     simplify,
-    strip
+    strip,
+    clone
 }
 
 
