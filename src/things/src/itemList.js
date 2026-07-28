@@ -507,13 +507,13 @@ function moveItemDown(itemList, item) {
 }
 
 export function duplicateItem(itemList, listItem) {
-    listItem = getItem(itemList, item)
+    listItem = getItem(itemList, listItem)
     if(!listItem){
         return itemList
     }
     let item = helpers.getValue(listItem, 'item')
     item = clone(item)
-    item['@id'] = item?.['@id'] + globalThis.crypto.randomUUID()
+    item['@id'] = "_:" + globalThis.crypto.randomUUID()
     item = setValue(item, 'name', helpers.getValue(item, 'name', 0, '') + '_copy')
     let position = getPosition(item) + 1
     return insertItem(itemList, item, position)
