@@ -527,16 +527,16 @@ export function duplicateItem(itemList, listItem) {
 
     const regex = /copy\d+$/i;
     if (regex.test(name)) {
-        const regex = /_copy(\d+)$/i;
+        const regex1 = /_copy(\d+)$/i;
 
         function getCopyNumber(str) {
-            const match = str.match(regex);
+            const match = str.match(regex1);
             return match ? parseInt(match[1], 10) : null;
         }
-        const regex = /\s*[-_]?_copy\d+$/i;
+        const regex2 = /\s*[-_]?_copy\d+$/i;
 
         function getOriginalName(str) {
-            return str.replace(regex, "").trim();
+            return str.replace(regex2, "").trim();
         }
 
         let n = getCopyNumber(name) ?? 0
