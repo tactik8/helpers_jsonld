@@ -75,15 +75,15 @@ export class ItemList extends Thing {
 
     // static
 
-    static clean(record){
+    static clean(record) {
         return clean(record)
     }
 
-    static length(record){
+    static length(record) {
         return getLength(record)
     }
 
-    static getItem(record, item){
+    static getItem(record, item) {
         return getItem(record, item)
     }
 
@@ -118,7 +118,7 @@ export class ItemList extends Thing {
         return moveItemDown(record, item)
     }
 
-    static duplicate(record, item){
+    static duplicate(record, item) {
         return duplicateItem(record, item)
     }
 }
@@ -191,7 +191,7 @@ export function sort(itemList) {
  */
 export function ensureListItems(itemList) {
 
-    let itemListElements = h.getValues(itemList,'itemListElement')
+    let itemListElements = h.getValues(itemList, 'itemListElement')
 
     // Convert items to listItems
     itemListElements = itemListElements.map(x => toListItem(x))
@@ -463,7 +463,7 @@ function replaceItem(itemList, replacer, replacee) {
 
     replacee = getItem(itemList, replacee)
 
-    if(!replacee){
+    if (!replacee) {
         return itemList
     }
 
@@ -494,7 +494,7 @@ function moveItemUp(itemList, item) {
 
     item = getItem(itemList, item)
 
-    let position = getPosition(item, 0) -1
+    let position = getPosition(item, 0) - 1
 
     return moveItem(itemList, item, position)
 
@@ -512,13 +512,42 @@ function moveItemDown(itemList, item) {
 
 export function duplicateItem(itemList, listItem) {
     listItem = getItem(itemList, listItem)
-    if(!listItem){
+    if (!listItem) {
         return itemList
     }
     let item = helpers.getValue(listItem, 'item')
     item = helpers.clone(item)
+
+    // Set new record_id
     item['@id'] = "_:" + globalThis.crypto.randomUUID()
-    item = helpers.setValue(item, 'name', helpers.getValue(item, 'name', 0, '') + '_copy')
+
+    // Ste new name
+    let name = helpers.getValue(item, 'name', 0, '')
+    let newName = ''
+
+    const regex = /copy\d+$/i;
+    if (regex.test(name)) {
+        const regex = /_copy(\d+)$/i;
+
+        function getCopyNumber(str) {
+            const match = str.match(regex);
+            return match ? parseInt(match[1], 10) : null;
+        }
+        const regex = /\s*[-_]?_copy\d+$/i;
+
+        function getOriginalName(str) {
+            return str.replace(regex, "").trim();
+        }
+
+        let n = getCopyNumber(name) ?? 0
+        let baseName = getOriginalName(name)
+        newName = baseName + "_copy" + String(n+1)
+
+    } else {
+        newName = name + "_copy"
+    }
+
+    item = helpers.setValue(item, 'name', newName)
     let position = getPosition(item, 0) + 1
     return insertItem(itemList, item, position)
 
@@ -541,7 +570,7 @@ function getItem(itemList, itemToSearch) {
 
     // Case 0. itemToSearch is a number, search by position
     let p = Number(itemToSearch)
-    if(!isNaN(p)){
+    if (!isNaN(p)) {
         let result = listItems.find(x => getPosition(x) == p)
         return result
     }
