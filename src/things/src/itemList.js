@@ -560,7 +560,7 @@ export function duplicateItem(itemList, listItem) {
     newItem['@id'] = "_:" + globalThis.crypto.randomUUID()
 
     // Ste new name
-    let name = helpers.getValue(newItem, 'name') || ""
+    let name = helpers.getValue(item, 'name') || ""
     let newName = ''
 
     let items = helpers.getValues(itemList, 'itemListElement')
@@ -572,7 +572,7 @@ export function duplicateItem(itemList, listItem) {
 
     newItem = helpers.setValue(newItem, 'name', newName)
     let position = getPosition(item, 0) + 1
-    return insertItem(itemList, item, position)
+    return insertItem(itemList, newItem, position)
 
 }
 
