@@ -525,18 +525,18 @@ export function duplicateItem(itemList, listItem) {
     newItem['@id'] = "_:" + globalThis.crypto.randomUUID()
 
     // Ste new name
-    let name = helpers.getValue(newItem, 'name', 0, '')
+    let name = helpers.getValue(newItem, 'name') || ""
     let newName = ''
 
     const regex = /copy\d+$/i;
     if (regex.test(name)) {
-        const regex1 = /_copy(\d+)$/i;
+        const regex1 = /copy(\d+)$/i;
 
         function getCopyNumber(str) {
             const match = str.match(regex1);
             return match ? parseInt(match[1], 10) : null;
         }
-        const regex2 = /\s*[-_]?_copy\d+$/i;
+        const regex2 = /\s*[-_]?copy\d+$/i;
 
         function getOriginalName(str) {
             return str.replace(regex2, "").trim();
@@ -544,7 +544,7 @@ export function duplicateItem(itemList, listItem) {
 
         let n = getCopyNumber(name) ?? 0
         let baseName = getOriginalName(name)
-        newName = baseName + "_copy" + String(n+1)
+        newName = baseName + "copy" + String(n+1)
 
     } else {
         newName = name + "_copy"
@@ -552,7 +552,6 @@ export function duplicateItem(itemList, listItem) {
 
     newItem = helpers.setValue(newItem, 'name', newName)
     let position = getPosition(item, 0) + 1
-    console.log('pppp', position)
     return insertItem(itemList, item, position)
 
 }
