@@ -83,6 +83,10 @@ export class ItemList extends Thing {
         return getLength(record)
     }
 
+    static getItem(record, item){
+        return getItem(record, item)
+    }
+
     static prepend(record, item) {
         return insertItem(record, item, 0)
     }
