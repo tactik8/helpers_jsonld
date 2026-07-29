@@ -118,6 +118,16 @@ export class ItemList extends Thing {
         return moveItemDown(record, item)
     }
 
+    static moveBefore(record, itemToMove, item) {
+        return moveItemBefore(record, itemToMove, item)
+    }
+
+    static moveAfter(record, itemToMove, item) {
+        return moveItemAfter(record, itemToMove, item)
+    }
+
+
+
     static duplicate(record, item) {
         return duplicateItem(record, item)
     }
@@ -512,6 +522,31 @@ function moveItemDown(itemList, item) {
     return moveItem(itemList, item, position)
 
 }
+
+function moveItemBefore(itemList, itemToMove, item) {
+
+    itemToMove = getItem(itemList, itemToMove)
+    item = getItem(itemList, item)
+
+    let position = getPosition(item, 0)
+
+    return moveItem(itemList, itemToMove, position)
+
+}
+
+function moveItemAfter(itemList, itemToMove, item) {
+
+    itemToMove = getItem(itemList, itemToMove)
+    item = getItem(itemList, item)
+
+    let position = getPosition(item, 0) + 1
+
+    return moveItem(itemList, itemToMove, position)
+
+}
+
+
+
 
 export function duplicateItem(itemList, listItem) {
     listItem = getItem(itemList, listItem)
