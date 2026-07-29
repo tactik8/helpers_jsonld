@@ -562,12 +562,13 @@ export function duplicateItem(itemList, listItem) {
     // Ste new name
     let name = helpers.getValue(item, 'name') || ""
     let newName = ''
+    newName = name.split('_copy')[0]
 
     let items = helpers.getValues(itemList, 'itemListElement')
-    items = items.filter(x => (helpers.getValue(x, 'item.name') || "").includes('_copy'))
-
+    items = items.filter(x => (helpers.getValue(x, 'item.name') || "").includes(newName))
     
-    newName = name.split('_copy')[0] + '_copy' + String(items.length)
+    
+    newName = newName + '_copy' + String(items.length || "" )
     
 
     newItem = helpers.setValue(newItem, 'name', newName)
