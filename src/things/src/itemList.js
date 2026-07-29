@@ -376,9 +376,12 @@ function toListItem(value) {
 function insertItem(itemList, item, position) {
 
 
+
     if (!itemList || !item || position === undefined) {
         return itemList
     }
+
+    console.log('pp')
 
     if (isNaN(position)) {
         return itemList
@@ -481,7 +484,7 @@ function replaceItem(itemList, replacer, replacee) {
 
 function moveItem(itemList, item, position) {
 
-    item = getItem(item)
+    item = getItem(itemList, item)
 
     itemList = removeItem(itemList, item)
 
@@ -516,13 +519,13 @@ export function duplicateItem(itemList, listItem) {
         return itemList
     }
     let item = helpers.getValue(listItem, 'item')
-    item = helpers.clone(item)
+    let newItem = helpers.clone(item)
 
     // Set new record_id
-    item['@id'] = "_:" + globalThis.crypto.randomUUID()
+    newItem['@id'] = "_:" + globalThis.crypto.randomUUID()
 
     // Ste new name
-    let name = helpers.getValue(item, 'name', 0, '')
+    let name = helpers.getValue(newItem, 'name', 0, '')
     let newName = ''
 
     const regex = /copy\d+$/i;
@@ -547,8 +550,9 @@ export function duplicateItem(itemList, listItem) {
         newName = name + "_copy"
     }
 
-    item = helpers.setValue(item, 'name', newName)
+    newItem = helpers.setValue(newItem, 'name', newName)
     let position = getPosition(item, 0) + 1
+    console.log('pppp', position)
     return insertItem(itemList, item, position)
 
 }
@@ -586,8 +590,10 @@ function getItem(itemList, itemToSearch) {
     }
 
     // Case 2. itemToSearch is an itemList record
+
     let r = h.record_type(itemToSearch)
     if (r == "ListItem") {
+
         return listItems.find(x => h.record_id(x) == h.record_id(itemToSearch))
     }
 

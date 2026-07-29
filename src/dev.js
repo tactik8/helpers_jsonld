@@ -41,7 +41,28 @@ function test2() {
 
 
 
-    let l = {
+    let l = helpers.records.ItemList(5)
+
+    let i = l.itemListElement[0]
+
+    let items 
+
+
+    items = l.itemListElement.map(x => x.position + " - " + x.item.name)
+
+    console.log(items)
+    
+
+
+    l = helpers.things.ItemList.moveDown(l, i)
+
+    items = l.itemListElement.map(x => x.position + " - " + x.item.name)
+
+    console.log(items)
+
+    return
+
+    let l2 = {
         "@type": "ItemList",
         "@id": "https://www.test.com/listRecord3"
     }
@@ -52,14 +73,14 @@ function test2() {
         "url": "https://www.test.com/page1"
     }
 
-    l = helpers.things.ItemList.append(l, r)
+    l2 = helpers.things.ItemList.append(l, r)
 
 
-    console.log(l.itemListElement.length)
+    console.log(l2.itemListElement.length)
 
-   l = helpers.things.ItemList.duplicate(l, r)
+   l2 = helpers.things.ItemList.duplicate(l, r)
 
-    console.log(l.itemListElement.length)
+    console.log(l2.itemListElement.length)
 
 }
 
