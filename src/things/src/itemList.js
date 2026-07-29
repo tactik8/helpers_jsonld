@@ -563,27 +563,12 @@ export function duplicateItem(itemList, listItem) {
     let name = helpers.getValue(newItem, 'name') || ""
     let newName = ''
 
-    const regex = /copy\d+$/i;
-    if (regex.test(name)) {
-        const regex1 = /copy(\d+)$/i;
+    let items = helpers.getValues(itemList, 'itemListElement')
+    items = items.filter(x => (helpers.getValue(x, 'item.name') || "").includes('_copy'))
 
-        function getCopyNumber(str) {
-            const match = str.match(regex1);
-            return match ? parseInt(match[1], 10) : null;
-        }
-        const regex2 = /\s*[-_]?copy\d+$/i;
-
-        function getOriginalName(str) {
-            return str.replace(regex2, "").trim();
-        }
-
-        let n = getCopyNumber(name) ?? 0
-        let baseName = getOriginalName(name)
-        newName = baseName + "copy" + String(n+1)
-
-    } else {
-        newName = name + "_copy"
-    }
+    
+    let newName = name.split('_copy')[0] + '_copy' + String(items.length)
+    
 
     newItem = helpers.setValue(newItem, 'name', newName)
     let position = getPosition(item, 0) + 1
