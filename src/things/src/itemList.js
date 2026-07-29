@@ -567,7 +567,7 @@ export function duplicateItem(itemList, listItem) {
     items = items.filter(x => (helpers.getValue(x, 'item.name') || "").includes('_copy'))
 
     
-    let newName = name.split('_copy')[0] + '_copy' + String(items.length)
+    newName = name.split('_copy')[0] + '_copy' + String(items.length)
     
 
     newItem = helpers.setValue(newItem, 'name', newName)
