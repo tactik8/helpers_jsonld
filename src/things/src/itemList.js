@@ -613,6 +613,7 @@ function getItem(itemList, itemToSearch) {
         return result
     }
 
+   
 
     // Case 1. itemToSearch is a string, an id to search
     if (typeof itemToSearch == "string") {
@@ -625,8 +626,8 @@ function getItem(itemList, itemToSearch) {
 
     // Case 2. itemToSearch is an itemList record
 
-    let r = h.record_type(itemToSearch)
-    if (r == "ListItem") {
+     let r = h.record_type(itemToSearch)
+    if (!r || r == "ListItem") {
 
         return listItems.find(x => h.record_id(x) == h.record_id(itemToSearch))
     }

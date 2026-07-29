@@ -44,6 +44,7 @@ function test2() {
     let l = helpers.records.ItemList(5)
 
     let i = l.itemListElement[0]
+    i = {"@id": i['@id']}
 
     let items 
 
@@ -54,7 +55,7 @@ function test2() {
     
 
 
-    l = helpers.things.ItemList.moveDown(l, i)
+    l = helpers.things.ItemList.move(l, [i], 2)
 
     items = l.itemListElement.map(x => x.position + " - " + x.item.name)
 
