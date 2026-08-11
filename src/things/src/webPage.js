@@ -118,35 +118,35 @@ export class WebPage extends CreativeWork {
     // Static
 
     static getWPHeader(record) {
-        return getWebPart("WPHeader", record)
+        return getWebPart(record, "WPHeader",)
     }
 
     static getWPFooter(record) {
-        return getWebPart("WPFooter", record)
+        return getWebPart(record, "WPFooter")
     }
 
     static getWPSideBar(record) {
-        return getWebPart("WPSideBar", record)
+        return getWebPart(record, "WPSideBar")
     }
 
     static getTable(record){
-        return getWebPart("Table", record)
+        return getWebPart(record, "Table")
     }
 
     static setWPHeader(record, value) {
-        return setWebPart("WPHeader", record, value)
+        return setWebPart(record, "WPHeader", value)
     }
 
     static setWPFooter(record, value) {
-        return setWebPart("WPFooter", record, value)
+        return setWebPart(record, "WPFooter", value)
     }
 
     static setWPSideBar(record, value) {
-        return setWebPart("WPSideBar", record, value)
+        return setWebPart(record, "WPSideBar", value)
     }
 
     static setTable(record, value){
-        return setWebPart("Table", record, value)
+        return setWebPart(record, "Table", value)
     }
 
     static addHeaderLink(record, url, name) {
@@ -165,7 +165,7 @@ export class WebPage extends CreativeWork {
 
 
 
-function getWebPart(partType, record) {
+function getWebPart(record, partType) {
 
     let parts = h.getValues(record, 'hasPart')
 
@@ -180,7 +180,7 @@ function getWebPart(partType, record) {
 
 }
 
-function setWebPart(partType, record, value) {
+function setWebPart(record, partType, value) {
 
     let part = getWebPart(record, partType)
     
@@ -199,7 +199,7 @@ function addHeaderLink(record, url, name) {
         "url": url
     }
 
-    let header = getWebPart("WPHeader", record)
+    let header = getWebPart(record, "WPHeader")
 
     record = h.addValue(header, 'hasPart', newLink)
 
@@ -215,7 +215,7 @@ function addFooterLink(record, url, name) {
         "url": url
     }
 
-    let footer = getWebPart("WPFooter", record)
+    let footer = getWebPart(record, "WPFooter")
 
     record = h.addValue(footer, 'hasPart', newLink)
 
