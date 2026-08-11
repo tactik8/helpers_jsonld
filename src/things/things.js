@@ -13,8 +13,9 @@ import { Offer} from './src/offer.js'
 import { Product} from './src/product.js'
 import { ProductGroup } from './src/productGroup.js'
 import { PropertyValue} from './src/propertyValue.js'
-
-import { WebSite, WebPage, WebAPI } from './src/other.js'
+import { WebSite} from './src/webSite.js'
+import { WebPage} from './src/webPage.js'
+import {   WebAPI } from './src/other.js'
 
 export * from './src/thing.js'
 export * from './src/action.js'
