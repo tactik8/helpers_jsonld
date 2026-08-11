@@ -71,6 +71,7 @@ export class WebPage extends CreativeWork {
 
     // Web specific shortcuts
     get WPHeader() {
+        this.record = ensureWebPart(this.record, 'WPHeader')
         return getWebPart("WPHeader", this.record)
     }
     
@@ -79,6 +80,7 @@ export class WebPage extends CreativeWork {
     }
 
     get WPFooter() {
+        this.record = ensureWebPart(this.record, 'WPFooter')
         return getWebPart("WPFooter", this.record)
     }
 
@@ -87,6 +89,7 @@ export class WebPage extends CreativeWork {
     }
 
     get WPSideBar() {
+        this.record = ensureWebPart(this.record, 'WPSideBar')
         return getWebPart("WPSideBar", this.record)
     }
     
@@ -104,10 +107,12 @@ export class WebPage extends CreativeWork {
 
     // Shortcuts for adding links to header and footer
     addHeaderLink(url, name) {
+        this.record = ensureWebPart(this.record, 'WPHeader')
         this.record = addHeaderLink(this.record, url, name)
     }
 
     addFooterLink(url, name) {
+        this.record = ensureWebPart(this.record, 'WPFooter')
         this.record = addFooterLink(this.record, url, name)
     }
 
@@ -164,6 +169,21 @@ export class WebPage extends CreativeWork {
 
 
 
+
+function ensureWebPart(record, partType) {
+
+    let parts = h.getValues(record, 'hasPart')
+
+    let part = parts.find(x => h.getValue(x, '@type') == partType)
+
+    if (!part) {
+        part = { "@type": partType, "hasPart": [] }
+        record = h.addValue(record, 'hasPart', part)
+    }
+
+    return record
+
+}
 
 function getWebPart(record, partType) {
 
