@@ -14,7 +14,7 @@ import { CreativeWork } from './creativeWork.js'
 export class WebPage extends CreativeWork {
     constructor(url) {
         super()
-        this.record_type = "WebSite"
+        this.record_type = "WebPage"
         this.url = url
     }
 
