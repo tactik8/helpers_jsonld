@@ -2,22 +2,18 @@
 
 import { _h, helpers } from './index.js'
 
-
+import * as t from './jsonldBase/jsonldBase.js'
 function test() {
 
-    let webpage = new helpers.things.WebPage()
+    
+    let record = _h.records.thing()
 
-    webpage.addHeaderLink('/', 'home')
-    webpage.addHeaderLink('/components', 'components')
-    webpage.addHeaderLink('/data', 'data')
-    webpage.addHeaderLink('/tests', 'tests')
+    record = _h.setAdditionalProperty(record, 'para1', 'value1')
 
-    webpage.addFooterLink('/', 'home')
-    webpage.addFooterLink('/components', 'components')
-    webpage.addFooterLink('/data', 'data')
-    webpage.addFooterLink('/tests', 'tests')
+    console.log('r', record)
 
-    console.log(JSON.stringify(webpage.record))
+
+
 }
 
 test()

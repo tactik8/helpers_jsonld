@@ -28,32 +28,3 @@ export const helpers = _h
 
 export default _h
 
-function test(){
-
-
-    let record = {
-        "@type": "Thing",
-        "@id": "https://www.test.com/thing1",
-        "name": "thing1",
-        "other": {
-            "@type": "Thing",
-            "@id": "https://www.test.com/thing2",
-            "name": "thing2"
-        }
-    }
-
-
-    let records = helpers.flatten(record)
-
-    console.log('r', record)
-
-    let results = helpers.expand(records, record)
-
-}
-
-//test()
-
-
-function extractUrlFromString(value){
-    
-}

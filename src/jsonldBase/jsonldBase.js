@@ -1,4 +1,3 @@
-const randomUUID = globalThis.crypto.randomUUID
 
 import dot from '../dotHelpers/dotHelpers.js'
 import * as recordIDHelpers from '../recordIdHelpers/recordIdHelpers.js'
@@ -27,14 +26,14 @@ export class DB {
         return this.records
     }
 
-    get(record_id, expand=true) {
+    get(record_id, expand = true) {
         return getRecord(this._store, record_id, expand)
     }
 
     set(value) {
         let records = flatten(value)
 
-        for(let r of records){
+        for (let r of records) {
             let currentRecord = getRecord(this._store, record_id(r))
 
             this._store = postRecord(this._store, r)
@@ -126,6 +125,10 @@ export class DB {
 
     // Static
 
+    static randomUUID() {
+        return randomUUID()
+    }
+
     static clean(value, baseUrl) {
         return clean(value, baseUrl)
     }
@@ -185,6 +188,12 @@ export class DB {
     static isArray(value) {
         return isArray(value)
     }
+    static setAdditionalProperty(record, propertyID, value, unitText) {
+        return setAdditionalProperty(record, propertyID, value, unitText)
+    }
+    static getAdditionalProperty(record, propertyID) {
+        return getAdditionalProperty(record, propertyID)
+    }
 
 }
 
@@ -194,6 +203,8 @@ export default {
     record_type,
     record_id,
     eq,
+    setAdditionalProperty,
+    getAdditionalProperty,
     evaluate,
     expand,
     flatten,
@@ -208,7 +219,9 @@ export default {
     ref,
     simplify,
     strip,
-    clone
+    clone,
+    randomUUID
+    
 }
 
 
@@ -291,10 +304,10 @@ export function record_id(record) {
 
 
 
-export function isRef(value){
-   
-    if(!value?.["@id"]){ return false}
-    return !Object.keys(value).some(x => x!="@id")
+export function isRef(value) {
+
+    if (!value?.["@id"]) { return false }
+    return !Object.keys(value).some(x => x != "@id")
 }
 
 export function ref(record_or_id) {
@@ -382,6 +395,31 @@ export function testRecord(name, no = 0, depth = 1) {
     }
 
     return no == 0 ? records[0] : records
+
+
+}
+
+
+export function randomUUID() {
+    // Use native Web Crypto / Node.js 16.7+ API if available
+    if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+        return crypto.randomUUID();
+    }
+
+    // Cryptographically secure byte generator fallback
+    const getRandomByte = () => {
+        if (typeof crypto !== 'undefined' && typeof crypto.getRandomValues === 'function') {
+            return crypto.getRandomValues(new Uint8Array(1))[0];
+        }
+        return Math.floor(Math.random() * 256);
+    };
+
+    // Generate UUID v4 (xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx)
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (char) => {
+        const randomHex = getRandomByte() % 16;
+        const value = char === 'x' ? randomHex : (randomHex & 0x3) | 0x8;
+        return value.toString(16);
+    });
 
 
 }
@@ -610,6 +648,38 @@ export function setValues(record, propertyID, value) {
     return record
 }
 
+
+
+
+// -----------------------------------------------------------------------
+// Additional property
+// -----------------------------------------------------------------------
+
+
+function getAdditionalProperty(record, propertyID) {
+
+    let pvs = getValues(record, 'additionalProperty')
+    let pv = pvs.find(x => getValue(x, "propertyID") == propertyID)
+    let value = getValue(pv, 'value')
+    return value
+}
+
+function setAdditionalProperty(record, propertyID, value, unitText) {
+
+    let pvs = getValues(record, 'additionalProperty')
+    pvs = pvs.filter(x => getValue(x, "propertyID") != propertyID)
+
+
+    let pv = {
+        "@type": "PropertyValue",
+        "@id": randomUUID(),
+        "propertyID": propertyID,
+        "value": value
+    }
+    record = addValue(record, 'additionalProperty', pv)
+    return record
+
+}
 
 
 // -----------------------------------------------------------------------
@@ -973,7 +1043,7 @@ export function expand(store, record) {
         cache.set(newRecord?.['@id'], newRecord)
 
         for (let k of Object.keys(record)) {
-            if(k == "previousItem" || k == "nextItem"){
+            if (k == "previousItem" || k == "nextItem") {
                 continue
             }
             record[k] = _expand(storeRecord, record[k], cache)
@@ -1072,9 +1142,9 @@ export function flatten(record) {
         return records
     }
 
-   
+
     record = clone(record)
-   
+
     return _flatten(record)
 
 }
@@ -1097,7 +1167,7 @@ export function setTempID(value) {
     }
 
     for (let k of Object.keys(value)) {
-        value['@id'] = value?.["@id"] || "_:" + globalThis.crypto.randomUUID();
+        value['@id'] = value?.["@id"] || "_:" + randomUUID();
         value[k] = assignId(value[k])
     }
     return value
@@ -1121,7 +1191,7 @@ function assignId(value) {
     }
 
     for (let k of Object.keys(value)) {
-        value['@id'] = value?.["@id"] || "_:" + globalThis.crypto.randomUUID();
+        value['@id'] = value?.["@id"] || "_:" + randomUUID();
         value[k] = assignId(value[k])
     }
     return value
