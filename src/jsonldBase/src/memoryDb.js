@@ -343,7 +343,7 @@ function getRecordIDs(store) {
 
     let records = getRecords(store)
 
-    let recordIDs = records.map(x => record_id(x))
+    let recordIDs = records.map(x => h.record_id(x))
 
     return recordIDs
 

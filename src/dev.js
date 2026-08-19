@@ -7,11 +7,12 @@ import { _h } from '../src/index.js'
 function test() {
 
 
-      const input = { name: ['Alice'], empty: undefined, details: { role: ['Admin'] } };
-         const output = _h.simplify(input);
+     let record = _h.records.thing()
 
-         console.log('o', output)
-}
+     let record_id = _h.record_id(record)
+console.log('r', record_id)
+    }
+
 
 test()
 
