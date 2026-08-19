@@ -25,10 +25,8 @@
   "author": "Tactik8",
   "license": "ISC",
   "type": "module",
-  "dependencies": {
-  },
   "devDependencies": {
     "esbuild": "^0.25.0",
-    "jest": "^30.3.0"
+    "jest": "^30.4.2"
   }
 }

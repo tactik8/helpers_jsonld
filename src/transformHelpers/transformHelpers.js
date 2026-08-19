@@ -1,10 +1,12 @@
 
 
-import * as markdownTransform from './src/markdownTransform.js'
-import * as yamlTransform from './src/yamlTransform.js'
+import * as markdownTransform from './src/markdown/markdownTransform.js'
+import * as yamlTransform from './src/yaml/yamlTransform.js'
+import { designTokenHelpers } from './src/designToken/designToken.js'
 
 export const transformHelpers = {
     markdown: markdownTransform,
-    yaml: yamlTransform
+    yaml: yamlTransform,
+    designToken: designTokenHelpers
 }
 

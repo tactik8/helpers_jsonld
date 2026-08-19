@@ -1,6 +1,6 @@
 const randomUUID = globalThis.crypto.randomUUID
 
-import * as h from '../../jsonldBase/jsonldBase.js'
+import { _h as h}  from '../../index.js'
 
 
 /**

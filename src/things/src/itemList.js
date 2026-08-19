@@ -4,7 +4,7 @@ const randomUUID = globalThis.crypto.randomUUID
 
 import * as idhelper from '../../recordIdHelpers/recordIdHelpers.js'
 
-import * as h from '../../jsonldBase/jsonldBase.js'
+import { _h as h}  from '../../index.js'
 
 import { Thing } from './thing.js'
 import { getItemList } from '../../records/src/itemList.js'
@@ -390,8 +390,6 @@ function insertItem(itemList, item, position) {
     if (!itemList || !item || position === undefined) {
         return itemList
     }
-
-    console.log('pp')
 
     if (isNaN(position)) {
         return itemList

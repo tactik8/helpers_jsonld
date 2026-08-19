@@ -9,13 +9,14 @@ import { CreativeWork } from './src/creativeWork.js'
 
 import { Message } from './src/message.js'
 
-import { Offer} from './src/offer.js'
-import { Product} from './src/product.js'
+import { Offer } from './src/offer.js'
+import { Product } from './src/product.js'
 import { ProductGroup } from './src/productGroup.js'
-import { PropertyValue} from './src/propertyValue.js'
-import { WebSite} from './src/webSite.js'
-import { WebPage} from './src/webPage.js'
-import {   WebAPI } from './src/other.js'
+import { PropertyValue } from './src/propertyValue.js'
+import { WebSite } from './src/webSite.js'
+import { WebPage } from './src/webPage.js'
+import { WebAPI } from './src/other.js'
+import { BrandDesign } from './src/brandDesign.js'
 
 export * from './src/thing.js'
 export * from './src/action.js'
@@ -30,6 +31,7 @@ export const things = {
     Action,
     AddAction,
     AppendAction,
+    BrandDesign,
     Conversation,
     CreativeWork,
     DeleteAction,

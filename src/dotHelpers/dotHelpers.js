@@ -1,13 +1,14 @@
 
 
 
-export default {
+
+export const dotHelpers = {
     get,
     set,
     flatten,
     expand
 };
-
+export default dotHelpers
 
 /**
  * Gets a value based on dot notation.

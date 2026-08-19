@@ -1,0 +1,119 @@
+{
+  "color": {
+    "brand": {
+      "primary": {
+        "$value": "#0052FF",
+        "$type": "color",
+        "$description": "Primary brand color used for key actions and main accents."
+      },
+      "secondary": {
+        "$value": "#121A26",
+        "$type": "color",
+        "$description": "Secondary brand color used for dark backgrounds and emphasis."
+      }
+    },
+    "neutral": {
+      "surface": {
+        "$value": "#FFFFFF",
+        "$type": "color",
+        "$description": "Base card and container surface."
+      },
+      "text": {
+        "primary": {
+          "$value": "#0F172A",
+          "$type": "color",
+          "$description": "High contrast body text."
+        },
+        "secondary": {
+          "$value": "#475569",
+          "$type": "color",
+          "$description": "Lower contrast secondary text and labels."
+        }
+      }
+    },
+    "feedback": {
+      "danger": {
+        "$value": "#E11D48",
+        "$type": "color",
+        "$description": "Destructive actions and system errors."
+      }
+    }
+  },
+  "typography": {
+    "family": {
+      "sans": {
+        "$value": ["Inter", "-apple-system", "sans-serif"],
+        "$type": "fontFamily",
+        "$description": "Primary sans-serif font stack."
+      }
+    },
+    "heading-lg": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{typography.family.sans}",
+        "fontWeight": 700,
+        "fontSize": "32px",
+        "lineHeight": 1.2,
+        "letterSpacing": "-0.02em"
+      },
+      "$description": "Large page titles."
+    },
+    "body-md": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{typography.family.sans}",
+        "fontWeight": 400,
+        "fontSize": "16px",
+        "lineHeight": 1.5,
+        "letterSpacing": "0em"
+      },
+      "$description": "Standard readable paragraph text."
+    }
+  },
+  "spacing": {
+    "scale": {
+      "sm": {
+        "$value": "8px",
+        "$type": "dimension",
+        "$description": "Tight padding and small gaps."
+      },
+      "md": {
+        "$value": "16px",
+        "$type": "dimension",
+        "$description": "Standard component padding."
+      },
+      "lg": {
+        "$value": "24px",
+        "$type": "dimension",
+        "$description": "Container padding and wide gaps."
+      }
+    }
+  },
+  "border": {
+    "radius": {
+      "sm": {
+        "$value": "4px",
+        "$type": "dimension",
+        "$description": "Small rounding for checkboxes and tags."
+      },
+      "md": {
+        "$value": "8px",
+        "$type": "dimension",
+        "$description": "Standard radius for buttons and input fields."
+      }
+    }
+  },
+  "shadow": {
+    "elevation-md": {
+      "$value": {
+        "color": "rgba(15, 23, 42, 0.08)",
+        "offsetX": "0px",
+        "offsetY": "4px",
+        "blur": "12px",
+        "spread": "0px"
+      },
+      "$type": "shadow",
+      "$description": "Medium depth shadow for cards and dropdown menus."
+    }
+  }
+}

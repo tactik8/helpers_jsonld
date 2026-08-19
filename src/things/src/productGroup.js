@@ -5,7 +5,7 @@ import { records } from '../../records/records.js'
 
 import * as idhelper from '../../recordIdHelpers/recordIdHelpers.js'
 
-import * as h from '../../jsonldBase/jsonldBase.js'
+import { _h as h}  from '../../index.js'
 import { Thing } from './thing.js'
 
 import { Product } from './product.js'

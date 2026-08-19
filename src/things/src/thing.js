@@ -1,9 +1,12 @@
 
-const randomUUID = globalThis.crypto.randomUUID
+
+
+import { _h as h}  from '../../index.js'
+
+
 
 import * as idhelper from '../../recordIdHelpers/recordIdHelpers.js'
 
-import * as h from '../../jsonldBase/jsonldBase.js'
 
 import { addPotentialActions } from './_potentialActions.js';
 
@@ -81,7 +84,11 @@ export class Thing {
     }
 
     set record(value) {
-        this._record = value._isThingClass == true ? value._record : value
+        if(!value){
+            this._record = {}
+            return
+        }
+        this._record = value?._isThingClass == true ? value._record : value
         Object.keys(this._record).forEach(k => this._record[k] = recordToClass(this._record?.[k]))
     }
 

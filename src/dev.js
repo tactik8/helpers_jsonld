@@ -1,19 +1,19 @@
 
 
-import { _h, helpers } from './index.js'
 
-import * as t from './jsonldBase/jsonldBase.js'
+import { _h } from '../src/index.js'
+
+
 function test() {
 
-    
-    let record = _h.records.thing()
 
-    record = _h.setAdditionalProperty(record, 'para1', 'value1')
+      const input = { name: ['Alice'], empty: undefined, details: { role: ['Admin'] } };
+         const output = _h.simplify(input);
 
-    console.log('r', record)
-
-
-
+         console.log('o', output)
 }
 
 test()
+
+
+
