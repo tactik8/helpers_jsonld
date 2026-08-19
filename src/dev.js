@@ -6,13 +6,12 @@ import { _h } from '../src/index.js'
 
 function test() {
 
+    let action = new _h.Action()
 
-     let record = _h.records.thing()
+    action.setCompleted(undefined)
 
-     let record_id = _h.record_id(record)
-console.log('r', record_id)
-    }
-
+    let z = action.record
+}
 
 test()
 

@@ -167,7 +167,7 @@ export function simplify(value) {
             return value
         }
 
-        if (typeof value == "object" && Object.keys(value).length > 0) {
+        if (value && typeof value == "object" && Object.keys(value).length > 0) {
 
             let newValue = {}
             for (let k of Object.keys(value)) {
@@ -188,6 +188,7 @@ export function simplify(value) {
     }
 
     value = h.clone(value)
+
     let result = _simplify(value)
     return result
 }
