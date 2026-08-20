@@ -73,6 +73,10 @@ export class ItemList extends Thing {
         this.record = moveItemDown(this.record, item)
     }
 
+    upsert(item){
+        this.record = upsertItem(this.record, item)
+    }
+
     // static
 
     static clean(record) {
@@ -126,7 +130,9 @@ export class ItemList extends Thing {
         return moveItemAfter(record, itemToMove, item)
     }
 
-
+    static upsert(record, item){
+        return upsertItem(record, item)
+    }
 
     static duplicate(record, item) {
         return duplicateItem(record, item)
@@ -543,6 +549,64 @@ function moveItemAfter(itemList, itemToMove, item) {
 
 }
 
+
+function prependItem(itemList, item){
+
+    let position = 0
+
+    itemList = insertItem(itemList, item, position)
+
+    return itemList
+}
+
+function appendItem(itemList, item){
+
+    let position = getLength(this.record)
+
+    itemList = insertItem(itemList, item, position)
+
+    return itemList
+}
+
+/**
+ * Finds listItem with same item.@id and replace item
+ * @param {*} itemList 
+ * @param {*} item 
+ * @returns 
+ */
+function updateItem(itemList, item){
+
+    
+    let listItem = getItem(itemList, item)
+
+    let position = getPosition(listItem)
+
+    itemList = removeItem(itemList, position)
+
+    itemList = insertItem(itemList, item, position)
+
+    return itemList
+
+}
+
+
+/**
+ * Finds listItem with same item.@id and replace item. Append if missing
+ * @param {*} itemList 
+ * @param {*} item 
+ * @returns 
+ */
+function upsertItem(itemList, item){
+
+    let currentItem = getItem(itemList, item)
+
+    if(currentItem){
+        return updateItem(itemList, currentItem, item)
+    } else {
+       return appendItem(itemList, item)
+    }
+    
+}
 
 
 
