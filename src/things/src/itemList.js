@@ -95,7 +95,7 @@ export class ItemList extends Thing {
         return insertItem(record, item, 0)
     }
     static append(record, item) {
-        return insertItem(record, item, getLength(record))
+        return appendItem(record, item)
     }
     static add(record, item) {
         return insertItem(record, item, getLength(record))
@@ -419,6 +419,14 @@ function insertItem(itemList, item, position) {
     item = toListItem(item)
     item = h.setValue(item, 'position', position)
 
+
+    // Handle empty array
+    if(itemListElements.length ==0){
+        itemList = h.setValues(itemList, 'itemListElement', [item])
+        itemList = h.setValue(itemList, 'numberOfItems', 1)
+        return itemList
+    }
+
     // Increment positions
     for (let i = 0; i < itemListElements.length; i++) {
         let p = getPosition(itemListElements[i])
@@ -561,7 +569,7 @@ function prependItem(itemList, item){
 
 function appendItem(itemList, item){
 
-    let position = getLength(this.record)
+    let position = getLength(itemList)
 
     itemList = insertItem(itemList, item, position)
 
