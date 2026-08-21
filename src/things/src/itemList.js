@@ -758,7 +758,6 @@ function sortListItems(listItems, orderBy, orderDirection) {
 
     // sort in inverse order of items
     for (let i = orderBy.length - 1; i >= 0; i--) {
-        console.log(orderBy[i], orderDirection[i])
         if (orderDirection?.[i] == -1 || orderDirection?.[i] == "desc") {
             listItems.sort((a, b) => h.getValue(a, orderBy[i]) < h.getValue(b, orderBy[i]) ? 1 : -1)
         } else {
