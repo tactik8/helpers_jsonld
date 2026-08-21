@@ -7,7 +7,12 @@ import { jsonldBase as h} from '../jsonldBase.js'
 
 
 
-//
+/**
+ * Returns true if record meets conditions
+ * @param {*} record 
+ * @param {*} condition 
+ * @returns 
+ */
 export function evaluate(record, condition) {
 
     let conditions = []

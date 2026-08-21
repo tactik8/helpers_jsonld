@@ -4,7 +4,7 @@ const randomUUID = globalThis.crypto.randomUUID
 
 import * as idhelper from '../../recordIdHelpers/recordIdHelpers.js'
 
-import { _h as h}  from '../../index.js'
+import { _h as h } from '../../index.js'
 
 import { Thing } from './thing.js'
 import { getItemList } from '../../records/src/itemList.js'
@@ -73,7 +73,7 @@ export class ItemList extends Thing {
         this.record = moveItemDown(this.record, item)
     }
 
-    upsert(item){
+    upsert(item) {
         this.record = upsertItem(this.record, item)
     }
 
@@ -130,12 +130,16 @@ export class ItemList extends Thing {
         return moveItemAfter(record, itemToMove, item)
     }
 
-    static upsert(record, item){
+    static upsert(record, item) {
         return upsertItem(record, item)
     }
 
     static duplicate(record, item) {
         return duplicateItem(record, item)
+    }
+
+    static search(record, filter, limit, offset, orderBy, orderDirection) {
+        return search(record, filter, limit, offset, orderBy, orderDirection)
     }
 }
 
@@ -421,7 +425,7 @@ function insertItem(itemList, item, position) {
 
 
     // Handle empty array
-    if(itemListElements.length ==0){
+    if (itemListElements.length == 0) {
         itemList = h.setValues(itemList, 'itemListElement', [item])
         itemList = h.setValue(itemList, 'numberOfItems', 1)
         return itemList
@@ -558,7 +562,7 @@ function moveItemAfter(itemList, itemToMove, item) {
 }
 
 
-function prependItem(itemList, item){
+function prependItem(itemList, item) {
 
     let position = 0
 
@@ -567,7 +571,7 @@ function prependItem(itemList, item){
     return itemList
 }
 
-function appendItem(itemList, item){
+function appendItem(itemList, item) {
 
     let position = getLength(itemList)
 
@@ -582,9 +586,9 @@ function appendItem(itemList, item){
  * @param {*} item 
  * @returns 
  */
-function updateItem(itemList, item){
+function updateItem(itemList, item) {
 
-    
+
     let listItem = getItem(itemList, item)
 
     let position = getPosition(listItem)
@@ -604,16 +608,16 @@ function updateItem(itemList, item){
  * @param {*} item 
  * @returns 
  */
-function upsertItem(itemList, item){
+function upsertItem(itemList, item) {
 
     let currentItem = getItem(itemList, item)
 
-    if(currentItem){
+    if (currentItem) {
         return updateItem(itemList, currentItem, item)
     } else {
-       return appendItem(itemList, item)
+        return appendItem(itemList, item)
     }
-    
+
 }
 
 
@@ -636,8 +640,8 @@ export function duplicateItem(itemList, listItem) {
 
     let listItems = helpers.getValues(itemList, 'itemListElement')
     listItems = listItems.filter(x => (helpers.getValue(x, 'item.name') || "").includes(newName))
-    newName = newName + '_copy' + String(listItems.length || "" )
-    
+    newName = newName + '_copy' + String(listItems.length || "")
+
 
     newItem = helpers.setValue(newItem, 'name', newName)
     let position = getPosition(listItem, 0) + 1
@@ -667,7 +671,7 @@ function getItem(itemList, itemToSearch) {
         return result
     }
 
-   
+
 
     // Case 1. itemToSearch is a string, an id to search
     if (typeof itemToSearch == "string") {
@@ -680,7 +684,7 @@ function getItem(itemList, itemToSearch) {
 
     // Case 2. itemToSearch is an itemList record
 
-     let r = h.record_type(itemToSearch)
+    let r = h.record_type(itemToSearch)
     if (!r || r == "ListItem") {
 
         return listItems.find(x => h.record_id(x) == h.record_id(itemToSearch))
@@ -698,5 +702,110 @@ export function getItemByPosition(itemList, position) {
     }
 
 
+
+}
+
+// ---------------------------------------------------------------------------
+// ListItems methods
+// ---------------------------------------------------------------------------
+
+
+
+function filterListItems(listItems, filter) {
+
+    listItems = h.toArray(listItems)
+    if (!listItems || listItems.length == 0) {
+        return []
+    }
+
+    listItems = listItems.filter(x => h.evaluate(x, filter))
+    return listItems
+}
+
+
+/**
+ * Returns listItems sorted
+ * @param {*} record 
+ * @param {*} orderBy 
+ * @param {*} orderDirection 
+ */
+function sortListItems(listItems, orderBy, orderDirection) {
+
+
+    if (!listItems) {
+        return []
+    }
+
+    if (listItems.length < 2) {
+        return listItems
+    }
+
+    // Sort items
+    if (typeof orderBy == 'string') {
+        orderBy = orderBy.split(',')
+        orderBy = orderBy.map(x => x.trim())
+    }
+    orderBy = h.toArray(orderBy)
+    orderBy = orderBy.filter(x => x !== undefined)
+
+    if (typeof orderDirection == 'string') {
+        orderDirection = orderDirection.split(',')
+        orderDirection = orderDirection.map(x => x.trim())
+        orderDirection = orderDirection.map(x => Number(x))
+    }
+    orderDirection = h.toArray(orderDirection)
+    orderDirection = orderDirection.filter(x => x !== undefined)
+
+    // sort in inverse order of items
+    for (let i = orderBy.length - 1; i >= 0; i--) {
+        console.log(orderBy[i], orderDirection[i])
+        if (orderDirection?.[i] == -1 || orderDirection?.[i] == "desc") {
+            listItems.sort((a, b) => h.getValue(a, orderBy[i]) < h.getValue(b, orderBy[i]) ? 1 : -1)
+        } else {
+            listItems.sort((a, b) => h.getValue(a, orderBy[i]) > h.getValue(b, orderBy[i]) ? 1 : -1)
+        }
+    }
+
+    return listItems
+
+}
+
+
+/**
+ * Returns listItems corresponding 
+ * @param {*} record 
+ * @param {*} filter 
+ * @param {*} limit 
+ * @param {*} offset 
+ * @param {*} orderBy 
+ * @param {*} orderDirection 
+ */
+function search(record, filter, limit, offset, orderBy, orderDirection) {
+
+    let listItems = h.getValues(record, 'itemListElement')
+
+    limit = Number(limit)
+    limit = isNaN(limit) ? undefined : limit
+
+    offset = Number(offset)
+    offset = isNaN(offset) ? undefined : offset
+
+    if (filter) {
+        listItems = filterListItems(listItems, filter)
+    }
+
+    if (orderBy) {
+        listItems = sortListItems(listItems, orderBy, orderDirection)
+    }
+
+    if (offset) {
+        listItems = listItems.slice(offset)
+    }
+
+    if (limit) {
+        listItems = listItems.slice(0, limit)
+    }
+
+    return listItems
 
 }

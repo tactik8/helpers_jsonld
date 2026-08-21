@@ -84,3 +84,35 @@ export function _utilGetId(record_or_id) {
     value = h.isArray(value) ? value[0] : value
     return value ?? undefined
 }
+
+/**
+ * 
+ * @param {*} value 
+ */
+export function toString(value){
+
+
+    if(Array.isArray(value)){
+        let content = `Array (${value.length})\n--------------------------\n`
+        value.forEach(x => content += toString(x) + '\n')
+        return content
+    }
+
+    if(h.record_type(value) == "ListItem"){
+        return `${h.getValue(value, 'position')} - ${h.getValue(value, 'item.name') || h.getValue(value, 'item.@id')}`
+    }
+
+    if(h.record_type(value) == "ItemList"){
+        let listItems = h.getValues(value, 'itemListElement')
+          let content = `ItemList${h.getValue(value, 'name') || h.getValue(value, '@id')} (${listItems.length})\n--------------------------\n`
+        listItems.forEach(x => content += toString(x) + '\n')
+        return content
+    }
+
+    if(h.record_type(value) == "Action"){
+         return `${h.getValue(value, 'name')} ${h.getValue(value, 'name') || h.getValue(value, '@id')} - ${h.getValue(value, 'actionStatus')}`
+    }
+
+    return h.getValue(value, 'name') || h.getValue(value, '@id')
+
+}
