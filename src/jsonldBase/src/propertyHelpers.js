@@ -52,7 +52,7 @@ export function getValue(record, propertyID, position, defaultValue) {
     let values = dot.get(record, propertyID)
     values = h.toArray(values)
     let value = values?.[position]
-    
+
     return value ?? defaultValue
 
 }
@@ -140,53 +140,101 @@ export function setAdditionalProperty(record, propertyID, value, unitText) {
 // -----------------------------------------------------------------------
 
 
-export function actionStatus(record){
+export function actionStatus(record) {
     return h.getValue(record, 'actionStatus')
 }
 
-export function contentUrl(record){
+export function contentUrl(record) {
     return h.getValue(record, 'contentUrl')
 }
 
-export function description(record){
+export function description(record) {
     return h.getValue(record, 'description')
 }
 
-export function email(record){
+export function email(record) {
     return h.getValue(record, 'email')
 }
 
-export function item(record){
+export function item(record) {
     return h.getValue(record, 'item')
 }
 
 
-export function name(record){
+export function name(record) {
     return h.getValue(record, 'name')
 }
 
-export function position(record){
+export function position(record) {
     return h.getValue(record, 'position')
 }
 
-export function text(record){
+export function text(record) {
     return h.getValue(record, 'text')
 }
 
-export function url(record){
+export function url(record) {
     return h.getValue(record, 'url')
 }
 
-export function itemListElement(record){
+export function itemListElement(record) {
     return h.getValues(record, 'itemListElement')
 }
 
-export function items(record){
-    let values =  h.getValues(record, 'itemListElement')
+export function items(record) {
+    let values = h.getValues(record, 'itemListElement')
     values = values.map(x => h.getValue(x, 'item'))
     return values
 }
 
-export function numberOfitems(record){
+export function numberOfitems(record) {
     return h.getValue(record, 'numberOfitems')
+}
+
+export function isPotential(record) {
+    return h.getValue(record, 'actionStatus') == "PotentialActionStatus"
+}
+export function isActive(record) {
+    return h.getValue(record, 'actionStatus') == "ActiveActionStatus"
+}
+export function isCompleted(record) {
+    return h.getValue(record, 'actionStatus') == "CompletedActionStatus"
+}
+export function isFailed(record) {
+    return h.getValue(record, 'actionStatus') == "FailedActionStatus"
+}
+
+
+export function setPotential(record) {
+    record = h.setValue(record, 'actionStatus', 'PotentialActionStatus')
+    record = h.setValue(record, 'startTime', undefined)
+    record = h.setValue(record, 'endTime', undefined)
+    record = h.setValue(record, 'error', undefined)
+    return record
+}
+
+export function setActive(record) {
+    record = h.setValue(record, 'actionStatus', 'ActiveActionStatus')
+    record = h.setValue(record, 'startTime', h.getValue(record, 'startTime') ?? new Date())
+    record = h.setValue(record, 'endTime', undefined)
+    record = h.setValue(record, 'error', undefined)
+    return record
+}
+
+export function setCompleted(record, result) {
+    record = h.setValue(record, 'actionStatus', 'CompletedActionStatus')
+    record = h.setValue(record, 'startTime', h.getValue(record, 'startTime') ?? new Date())
+    record = h.setValue(record, 'endTime', h.getValue(record, 'endTime') ?? new Date())
+    record = h.setValue(record, 'error', undefined)
+    record = h.setValue(record, 'error', result ?? h.getValue(record, 'result'))
+    return record
+}
+
+export function setFailed(record, error) {
+    record = h.setValue(record, 'actionStatus', 'FailedActionStatus')
+    record = h.setValue(record, 'startTime', h.getValue(record, 'startTime') ?? new Date())
+    record = h.setValue(record, 'endTime', h.getValue(record, 'endTime') ?? new Date())
+    record = h.setValue(record, 'error', String(error))
+    record = h.setValue(record, 'result', undefined)
+    return record
 }
