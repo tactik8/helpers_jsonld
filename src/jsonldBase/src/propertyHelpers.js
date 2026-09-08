@@ -160,9 +160,6 @@ export function item(record){
     return h.getValue(record, 'item')
 }
 
-export function itemListElement(record){
-    return h.getValues(record, 'itemListElement')
-}
 
 export function name(record){
     return h.getValue(record, 'name')
@@ -178,4 +175,18 @@ export function text(record){
 
 export function url(record){
     return h.getValue(record, 'url')
+}
+
+export function itemListElement(record){
+    return h.getValues(record, 'itemListElement')
+}
+
+export function items(record){
+    let values =  h.getValues(record, 'itemListElement')
+    values = values.map(x => h.getValue(x, 'item'))
+    return values
+}
+
+export function numberOfitems(record){
+    return h.getValue(record, 'numberOfitems')
 }
