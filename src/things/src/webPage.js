@@ -15,9 +15,12 @@ export class WebPage extends CreativeWork {
     constructor(url) {
         super()
         this.record_type = "WebPage"
-        this.url = url
+        if(url){
+            this.url = url
+        }
     }
 
+   
 
     get breadcrumb() {
         return h.getValues(this._record, "breadcrumb")

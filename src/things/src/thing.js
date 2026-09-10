@@ -2,7 +2,7 @@
 
 
 import { _h as h}  from '../../index.js'
-
+import { dataHelpers} from '../../dataHelpers/dataHelpers.js'
 
 
 import * as idhelper from '../../recordIdHelpers/recordIdHelpers.js'
@@ -124,6 +124,17 @@ export class Thing {
     set url(value) {
         this._record = Thing.setValue(this._record, "url", value)
         this.record_id = idhelper.get(this._record, this.baseUrl)
+    }
+
+    get cleanUrl() {
+        let url = h.getValue(this._record, "url")
+        url = dataHelpers.url.clean(value)
+        return url
+    }
+    set cleanUrl(value) {
+        url = dataHelpers.url.clean(value)
+        this.url = url
+        
     }
 
     get description() {

@@ -8,10 +8,11 @@ function test() {
 
 
     
-    let a = new _h.things.Action()
+    let a = new _h.things.WebPage("https://www.test.com")
 
 
-    console.log('a', a)
+
+    console.log('a', a.record)
 }
 
 test()

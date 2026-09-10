@@ -2,6 +2,8 @@
 
 const randomUUID = globalThis.crypto.randomUUID
 
+import { dataHelpers} from '../dataHelpers/dataHelpers.js'
+
 export default {
     get,
     set,
@@ -39,12 +41,18 @@ export function get(value, baseUrl) {
     }
 
     let record_types = getRecordTypes(value)
+
+    record_types = record_types.filter(x => typeof x == 'string')
+    record_types = record_types.map(x => x.toLowerCase())
+
+
     for (let record_type of record_types) {
+
 
         let idType = standards?.[record_type]
 
         if (idType == "url") {
-            return getIdBasedOnUrl(value?.['@type'], getUrls(value))
+            return getIdBasedOnUrl(record_type, getUrls(value))
         }
 
         if (idType == "domain") {
@@ -77,7 +85,7 @@ export function getStandardID(value, baseUrl) {
         let idType = standards?.[record_type]
 
         if (idType == "url") {
-            return getIdBasedOnUrl(value?.['@type'], getUrls(value))
+            return getIdBasedOnUrl(record_type, getUrls(value))
         }
 
         if (idType == "domain") {
@@ -199,8 +207,7 @@ export function getGenericRecordID(baseUrl) {
 
 function getIdBasedOnUrl(record_type, urls) {
 
-
-    // Format record_type
+   // Format record_type
     if (!record_type || typeof record_type != "string") {
         return undefined
     }
@@ -208,26 +215,22 @@ function getIdBasedOnUrl(record_type, urls) {
 
 
     // Standardize urls
-    if (Array.isArray(urls) && typeof urls != "string") {
+    if (!(Array.isArray(urls) && typeof urls != "string")) {
         urls = [urls]
     }
-    urls = urls.map(x => standardizeUrl(x))
+
+    urls = urls.map(x => dataHelpers.url.clean(x))
     urls = urls.filter(x => x)
 
     // Get first valid url
     let url = urls?.[0]
 
+
     if (!url) {
         return "_:" + globalThis.crypto.randomUUID()
     }
-
-
-    //
-    if(!url.endsWith('/')){
-        url = url + '/'
-    }
-
-    let record_id = url + "@" + record_type
+   
+    let record_id = url + "#" + record_type
 
     return record_id
 
@@ -246,10 +249,11 @@ function getIdBasedOnDomain(record_type, urls) {
 
 
     // Standardize urls
-    if (Array.isArray(urls) && typeof urls != "string") {
+    if (!(Array.isArray(urls) && typeof urls != "string")) {
         urls = [urls]
     }
     urls = urls.map(x => getDomain(x))
+    urls = urls.map(x => 'https://' + x)
     urls = urls.filter(x => x)
 
     // Get first valid url
@@ -264,7 +268,7 @@ function getIdBasedOnDomain(record_type, urls) {
      if(!url.endsWith('/')){
         url = url + '/'
     }
-    let record_id = url + "@" + record_type
+    let record_id = url + "#" + record_type
 
     return record_id
 
