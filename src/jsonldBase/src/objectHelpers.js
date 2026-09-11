@@ -129,6 +129,13 @@ export function clone(value) {
 export function merge(item1, item2, skipDuplicates = true) {
 
 
+    item1 = (h.isArray(item1) && item1.length ==1) ? item1[0] : item1
+    item2 = (h.isArray(item2) && item1.length ==2) ? item2[0] : item2
+
+    item1 = item1?? {}
+    item2 = item2?? {}
+    
+
     let keys = []
     keys = keys.concat(Object.keys(item1))
     keys = keys.concat(Object.keys(item2))
