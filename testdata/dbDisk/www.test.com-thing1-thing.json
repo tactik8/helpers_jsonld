@@ -1,0 +1,9 @@
+{
+    "@type": [
+        "Thing"
+    ],
+    "@id": "https://www.test.com/thing1#thing",
+    "name": [
+        "Thing1"
+    ]
+}

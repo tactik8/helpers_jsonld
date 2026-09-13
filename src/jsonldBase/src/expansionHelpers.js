@@ -192,3 +192,47 @@ export function simplify(value) {
     let result = _simplify(value)
     return result
 }
+
+
+/**
+ * Returns all jsonld children of the record(s)
+ * @param {*} record 
+ */
+export function getChildren(record){
+
+    function _getChildren(record, level){
+        if(h.isArray(record)){
+            let results = []
+            for(let x of record){
+                let r = _getChildren(x, level)
+                results = results.concat(r)
+            }
+            return results
+        }
+
+        // Handle not jsonld
+        if(!(record?.['@id'] || record?.['@type'])){
+            return []
+        }
+
+        //
+        let result = []
+        if(level > 0){
+            result.push(record)
+        }
+        for(let k of Object.keys(record)){
+            
+            result = result.concat(_getChildren(record[k], level + 1))
+        }
+
+        result = result.filter(x => x)
+
+        return result
+    }
+
+    return _getChildren(record, 0)
+
+
+}
+
+

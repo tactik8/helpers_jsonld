@@ -11,6 +11,7 @@ import * as propertyHelpers from './src/propertyHelpers.js'
 import * as utilitiesHelpers from './src/utilitiesHelpers.js'
 import * as listHelpers from './src/listHelpers.js'
 import * as toStringHelpers from './src/toStringHelpers.js'
+import * as databaseHelpers from './src/databaseHelpers.js'
 
 export const jsonldBase = { 
   dot, 
@@ -23,7 +24,8 @@ export const jsonldBase = {
   ...propertyHelpers,
   ...utilitiesHelpers,
   ...listHelpers,
-  ...toStringHelpers
+  ...toStringHelpers,
+  ...databaseHelpers
 }
 
 

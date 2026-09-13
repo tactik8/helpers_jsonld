@@ -6,16 +6,17 @@ import * as rdf from './rdfHelpers/rdfHelpers.js'
 import * as recordIDHelpers from './recordIdHelpers/recordIdHelpers.js'
 import * as transformHelpers from './transformHelpers/transformHelpers.js'
 import { dataHelpers } from './dataHelpers/dataHelpers.js'
+import { diskHelpers} from './diskHelpers/diskHelpers.js'
 
 import { records  }  from './records/records.js'
-
 
 
 export { records } from './records/records.js'
 export { transformHelpers} from './transformHelpers/transformHelpers.js'
 
 
-export const _h = { ...jsonldBase, ...things, ...apiClient, ...rdf, ...recordIDHelpers, ...dataHelpers, ...transformHelpers, records };
+
+export const _h = { ...jsonldBase, ...things, ...apiClient, ...rdf, ...recordIDHelpers, ...dataHelpers, ...transformHelpers, records, disk: diskHelpers };
 
 export const helpers = _h
 
