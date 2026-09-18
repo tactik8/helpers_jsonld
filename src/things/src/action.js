@@ -38,19 +38,19 @@ export class Action extends Thing {
     }
 
     setPotential() {
-        this._record = setPotential(this._record)
+        this.record = setPotential(this.record)
     }
 
     setActive() {
-        this._record = setActive(this._record)
+        this.record = setActive(this.record)
     }
 
     setCompleted(result) {
-        this._record = setCompleted(this._record, result)
+        this.record = setCompleted(this.record, result)
     }
 
     setFailed(error) {
-        this._record = setFailed(this._record, error)
+        this.record = setFailed(this.record, error)
     }
 
     get isPotential() {
@@ -68,123 +68,123 @@ export class Action extends Thing {
 
 
     get object() {
-        return h.getValues(this._record, "object")
+        return h.getValues(this.record, "object")
     }
     set object(value) {
-        this._record = Thing.setValues(this._record, "object", value)
+        this.record = Thing.setValues(this.record, "object", value)
     }
 
     get instrument() {
-        return h.getValues(this._record, "instrument")
+        return h.getValues(this.record, "instrument")
     }
     set instrument(value) {
-        this._record = Thing.setValues(this._record, "instrument", value)
+        this.record = Thing.setValues(this.record, "instrument", value)
     }
 
     get agent() {
-        return h.getValues(this._record, "agent")
+        return h.getValues(this.record, "agent")
     }
     set agent(value) {
-        this._record = Thing.setValues(this._record, "agent", value)
+        this.record = Thing.setValues(this.record, "agent", value)
     }
 
     get result() {
-        return h.getValues(this._record, "result")
+        return h.getValues(this.record, "result")
     }
     set result(value) {
-        this._record = Thing.setValues(this._record, "result", value)
+        this.record = Thing.setValues(this.record, "result", value)
     }
 
     get actionStatus() {
-        return h.getValue(this._record, "actionStatus")
+        return h.getValue(this.record, "actionStatus")
     }
     set actionStatus(value) {
-        this._record = Thing.setValue(this._record, "actionStatus", value)
+        this.record = Thing.setValue(this.record, "actionStatus", value)
     }
 
     get startTime() {
-        return h.getValue(this._record, "startTime")
+        return h.getValue(this.record, "startTime")
     }
     set startTime(value) {
-        this._record = Thing.setValue(this._record, "startTime", value)
+        this.record = Thing.setValue(this.record, "startTime", value)
     }
 
     get endTime() {
-        return h.getValue(this._record, "endTime")
+        return h.getValue(this.record, "endTime")
     }
     set endTime(value) {
-        this._record = Thing.setValue(this._record, "endTime", value)
+        this.record = Thing.setValue(this.record, "endTime", value)
     }
 
     get error() {
-        return h.getValue(this._record, "error")
+        return h.getValue(this.record, "error")
     }
     set error(value) {
-        this._record = Thing.setValue(this._record, "error", value)
+        this.record = Thing.setValue(this.record, "error", value)
     }
 
 
     // Conditions
 
     addMinValue(property, value) {
-        this._record = addMinValue(this._record, property, value)
+        this.record = addMinValue(this.record, property, value)
     }
     addMaxValue(property, value) {
-        this._record = addMaxValue(this._record, property, value)
+        this.record = addMaxValue(this.record, property, value)
     }
 
     addMinLength(property, value) {
-        this._record = addMinLength(this._record, property, value)
+        this.record = addMinLength(this.record, property, value)
     }
 
     addMaxLength(property, value) {
-        this._record = addMaxLength(this._record, property, value)
+        this.record = addMaxLength(this.record, property, value)
     }
 
     addDefaultValue(property, value) {
-        this._record = addDefaultValue(this._record, property, value)
+        this.record = addDefaultValue(this.record, property, value)
     }
 
     addValueRequired(property, value) {
-        this._record = addValueRequired(this._record, property, value)
+        this.record = addValueRequired(this.record, property, value)
     }
 
     addValuePattern(property, value) {
-        this._record = addValuePattern(this._record, property, value)
+        this.record = addValuePattern(this.record, property, value)
     }
 
     addMultipleValues(property, value) {
-        this._record = addMultipleValues(this._record, property, value)
+        this.record = addMultipleValues(this.record, property, value)
     }
 
     addStepValue(property, value) {
-        this._record = addStepValue(this._record, property, value)
+        this.record = addStepValue(this.record, property, value)
     }
 
 
 
 
     testConditions() {
-        return testConditions(this._record)
+        return testConditions(this.record)
     }
 
     getInputconditions() {
-        return getPVSInput(this._record)
+        return getPVSInput(this.record)
     }
     addInputCondition(key, condition) {
-        this._record = h.addValues(k + '-input', condition)
+        this.record = h.addValues(k + '-input', condition)
     }
 
     getOutputConditions() {
-        return getPVSOutput(this._record)
+        return getPVSOutput(this.record)
     }
     addOutputCondition(key, condition) {
-        this._record = h.addValues(k + '-output', condition)
+        this.record = h.addValues(k + '-output', condition)
     }
 
 
     test() {
-        return testConditions(this._record)
+        return testConditions(this.record)
     }
 
 
@@ -220,42 +220,38 @@ export class Action extends Thing {
 
 
     static addMinValue(record, property, value) {
-        this._record = addMinValue(record, property, value)
+        this.record = addMinValue(record, property, value)
     }
     static addMaxValue(record, property, value) {
-        this._record = addMaxValue(record, property, value)
+        this.record = addMaxValue(record, property, value)
     }
 
     static addMinLength(record, property, value) {
-        this._record = addMinLength(record, property, value)
+        this.record = addMinLength(record, property, value)
     }
 
     static addMaxLength(record, property, value) {
-        this._record = addMaxLength(record, property, value)
+        this.record = addMaxLength(record, property, value)
     }
 
     static addDefaultValue(record, property, value) {
-        this._record = addDefaultValue(record, property, value)
+        this.record = addDefaultValue(record, property, value)
     }
 
     static addValueRequired(record, property, value) {
-        this._record = addValueRequired(record, property, value)
+        this.record = addValueRequired(record, property, value)
     }
 
     static addValuePattern(record, property, value) {
-        this._record = addValuePattern(record, property, value)
+        this.record = addValuePattern(record, property, value)
     }
-    static addDefaultValue(record, property, value) {
-        this._record = addDefaultValue(record, property, value)
-    }
+   
     static addMultipleValues(record, property, value) {
-        this._record = addMultipleValues(record, property, value)
+        this.record = addMultipleValues(record, property, value)
     }
-    static addValueRequired(record, property, value) {
-        this._record = addValueRequired(record, property, value)
-    }
+  
     static addStepValue(record, property, value) {
-        this._record = addStepValue(record, property, value)
+        this.record = addStepValue(record, property, value)
     }
 
 
@@ -490,19 +486,19 @@ export class UpdateAction extends Action {
     }
 
     get targetCollection() {
-        return h.getValues(this._record, "targetCollection")
+        return h.getValues(this.record, "targetCollection")
     }
 
     set targetCollection(value) {
-        this._record = Thing.setValues(this._record, "targetCollection", value)
+        this.record = Thing.setValues(this.record, "targetCollection", value)
     }
 
     get toLocation() {
-        return h.getValues(this._record, "toLocation")
+        return h.getValues(this.record, "toLocation")
     }
 
     set toLocation(value) {
-        this._record = Thing.setValues(this._record, "toLocation", value)
+        this.record = Thing.setValues(this.record, "toLocation", value)
     }
 }
 
@@ -531,19 +527,19 @@ export class ReplaceAction extends UpdateAction {
     }
 
     get replacer() {
-        return h.getValues(this._record, "replacer")
+        return h.getValues(this.record, "replacer")
     }
 
     set replacer(value) {
-        this._record = Thing.setValues(this._record, "replacer", value)
+        this.record = Thing.setValues(this.record, "replacer", value)
     }
 
     get replacee() {
-        return h.getValues(this._record, "replacee")
+        return h.getValues(this.record, "replacee")
     }
 
     set replacee(value) {
-        this._record = Thing.setValues(this._record, "replacee", value)
+        this.record = Thing.setValues(this.record, "replacee", value)
     }
 }
 
@@ -575,11 +571,11 @@ export class SearchAction extends UpdateAction {
     }
 
     get query() {
-        return h.getValue(this._record, "query") || ""
+        return h.getValue(this.record, "query") || ""
     }
 
     set query(value) {
-        return Thing.setValue(this._record, "query", value)
+        return Thing.setValue(this.record, "query", value)
     }
 
     get filter() {
@@ -650,10 +646,10 @@ export class SearchAction extends UpdateAction {
 
 
     get target() {
-        return h.getValue(this._record, "target") || ""
+        return h.getValue(this.record, "target") || ""
     }
     set target(value) {
-        return Thing.setValue(this._record, "target", value)
+        return Thing.setValue(this.record, "target", value)
     }
 
 

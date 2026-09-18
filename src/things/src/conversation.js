@@ -36,10 +36,16 @@ export class Conversation extends CreativeWork {
     }
 
     get messages() {
-        return getMessages(this.record)
+        let messages = this.getValues('hasPart').filter(x => h.record_type(x) == "Message")
+        messages.sort((a, b) => {
+            let dateA = new Date(h.getValue(a, "dateSent") || h.getValue(a, "dateCreated") || h.getValue(a, "dateReceived"))
+            let dateB = new Date(h.getValue(b, "dateSent") || h.getValue(b, "dateCreated") || h.getValue(b, "dateReceived"))
+            return dateA - dateB
+        })
+        return messages
     }
     set messages(value) {
-        this.record = Thing.setValues(this.record, "hasPart", value)
+        this.setValues('hasPart', value)
     }
 
     get firstMessage(){ 
@@ -66,7 +72,8 @@ export class Conversation extends CreativeWork {
     }
 
     newMessage(sender, recipient, subject, text, dateSent, dateReceived){
-        this.record = newMessage(this.record, sender, recipient, subject, text, dateSent, dateReceived)
+        let message = new Message(sender, recipient, subject, text, dateSent, dateReceived)
+        this.messages = this.messages.push(message)
     }
 
 
@@ -120,7 +127,7 @@ function newMessage(conversationRecord, sender, recipient, subject, text, dateSe
     let messages = getMessages(conversationRecord)
     messages.push(message.record)
     messages = sortMessages(messages)
-    conversationRecord = Thing.setValues(conversationRecord, "hasPart", messages)
+    conversationRecord = h.setValues(conversationRecord, "hasPart", messages)
     return conversationRecord
 
 }

@@ -1,6 +1,6 @@
 
 
-import * as things from '../things/things.js'
+import {things} from '../things/things.js'
 
 
 export class ApiClient {
