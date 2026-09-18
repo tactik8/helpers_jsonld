@@ -22,6 +22,7 @@ import { timeStamp } from 'console';
 export class Conversation extends CreativeWork {
     constructor(record) {
         super()
+        this._defaultRecordType = "Conversation"
         
         
         if(record?.['@type'] == "Conversation"){
@@ -31,17 +32,17 @@ export class Conversation extends CreativeWork {
         }
     }
 
+    test(){
+        return "This is a test"
+    }
+
     toString(){
         return toString(this.record)
     }
 
     get messages() {
         let messages = this.getValues('hasPart').filter(x => h.record_type(x) == "Message")
-        messages.sort((a, b) => {
-            let dateA = new Date(h.getValue(a, "dateSent") || h.getValue(a, "dateCreated") || h.getValue(a, "dateReceived"))
-            let dateB = new Date(h.getValue(b, "dateSent") || h.getValue(b, "dateCreated") || h.getValue(b, "dateReceived"))
-            return dateA - dateB
-        })
+        messages = Message.sort(messages)
         return messages
     }
     set messages(value) {

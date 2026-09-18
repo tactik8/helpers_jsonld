@@ -5,7 +5,7 @@ const randomUUID = globalThis.crypto.randomUUID
 
 import * as idhelper from '../../recordIdHelpers/recordIdHelpers.js'
 
-import { _h as h}  from '../../index.js'
+import { _h as h } from '../../index.js'
 import { Thing } from './thing.js'
 
 import { CreativeWork } from './creativeWork.js'
@@ -19,9 +19,9 @@ import { CreativeWork } from './creativeWork.js'
 export class Message extends CreativeWork {
     constructor(sender, recipient, subject, text, dateSent, dateReceived) {
         super()
-        
+        this._defaultRecordType = "Message"
 
-        if(sender?.['@type'] == "Message"){
+        if (sender?.['@type'] == "Message") {
             this.record = sender
         } else {
             this.record_type = "Message"
@@ -32,75 +32,75 @@ export class Message extends CreativeWork {
             this.dateSent = dateSent
             this.dateReceived = dateReceived
         }
-       
+
     }
 
-    toString(){
+    toString() {
         return toString(this.record)
     }
 
     get bccRecipient() {
         return h.getValues(this._record, "bccRecipient")
-    }  
+    }
     set bccRecipient(value) {
-        this._record = Thing.setValues(this._record, "bccRecipient",  toContactPoint(value))
+        this._record = Thing.setValues(this._record, "bccRecipient", toContactPoint(value))
     }
 
     get ccRecipient() {
         return h.getValues(this._record, "ccRecipient")
-    }  
+    }
     set ccRecipient(value) {
         this._record = Thing.setValues(this._record, "ccRecipient", toContactPoint(value))
     }
 
     get dateRead() {
         return h.getValue(this._record, "dateRead")
-    }  
+    }
     set dateRead(value) {
         this._record = Thing.setValue(this._record, "dateRead", value)
     }
 
     get dateReceived() {
         return h.getValue(this._record, "dateReceived")
-    }  
+    }
     set dateReceived(value) {
         this._record = Thing.setValue(this._record, "dateReceived", value)
     }
 
     get dateSent() {
         return h.getValue(this._record, "dateSent")
-    }  
+    }
     set dateSent(value) {
         this._record = Thing.setValue(this._record, "dateSent", value)
     }
 
     get messageAttachment() {
         return h.getValues(this._record, "messageAttachment")
-    }  
+    }
     set messageAttachment(value) {
         this._record = Thing.setValues(this._record, "messageAttachment", value)
     }
 
     get recipient() {
         return h.getValues(this._record, "recipient")
-    }  
+    }
     set recipient(value) {
         this._record = Thing.setValues(this._record, "recipient", toContactPoint(value))
     }
 
     get sender() {
         return h.getValue(this._record, "sender")
-    }  
+    }
     set sender(value) {
-        this._record = Thing.setValue(this._record, "sender",  toContactPoint(value))
+        this._record = Thing.setValue(this._record, "sender", toContactPoint(value))
     }
 
     get toRecipient() {
         return h.getValues(this._record, "toRecipient")
-    }  
+    }
     set toRecipient(value) {
-        this._record = Thing.setValues(this._record, "toRecipient",  toContactPoint(value))
-    }   
+        this._record = Thing.setValues(this._record, "toRecipient", toContactPoint(value))
+    }
 
 
     // Shortcurts for common properties
@@ -119,59 +119,86 @@ export class Message extends CreativeWork {
     }
 
     // Schema conversion methods for Gmail and Outlook formats
-    get gmail(){
+    get gmail() {
         return toGmail(this.record)
     }
 
-    set gmail(value){
+    set gmail(value) {
         this.record = fromGmail(value)
     }
 
-    get outlook(){
+    get outlook() {
         return toOutlook(this.record)
     }
-    
-    set outlook(value){
+
+    set outlook(value) {
         this.record = fromOutlook(value)
     }
 
 
     // static
 
-    static toString(messageRecord){
+    static toString(messageRecord) {
         return toString(messageRecord)
     }
 
-    static fromGmail(gmailMessage){
+    static fromGmail(gmailMessage) {
         return fromGmail(gmailMessage)
     }
 
-    static toGmail(message){
+    static toGmail(message) {
         return toGmail(message)
     }
 
-    static fromOutlook(outlookMessage){
+    static fromOutlook(outlookMessage) {
         return fromOutlook(outlookMessage)
     }
 
-    static toOutlook(message){
+    static toOutlook(message) {
         return toOutlook(message)
+    }
+
+    static lt(a, b) {
+        a = a?.record || a
+        b = b?.record || b
+        let dateA = new Date(h.getValue(a, "dateSent") || h.getValue(a, "dateCreated") || h.getValue(a, "dateReceived"))
+        let dateB = new Date(h.getValue(b, "dateSent") || h.getValue(b, "dateCreated") || h.getValue(b, "dateReceived"))
+        return dateA < dateB
+    }
+
+    static gt(a, b) {
+        a = a?.record || a
+        b = b?.record || b
+        let dateA = new Date(h.getValue(a, "dateSent") || h.getValue(a, "dateCreated") || h.getValue(a, "dateReceived"))
+        let dateB = new Date(h.getValue(b, "dateSent") || h.getValue(b, "dateCreated") || h.getValue(b, "dateReceived"))
+        return dateA > dateB
+    }
+
+    static sort(messages) {
+        messages.sort((a, b) => {
+            a = a?.record || a
+            b = b?.record || b
+            let dateA = new Date(h.getValue(a, "dateSent") || h.getValue(a, "dateCreated") || h.getValue(a, "dateReceived"))
+            let dateB = new Date(h.getValue(b, "dateSent") || h.getValue(b, "dateCreated") || h.getValue(b, "dateReceived"))
+            return dateA.getTime() - dateB.getTime()
+        })
+        return messages
     }
 
 }
 
 
-function toString(messageRecord){
+function toString(messageRecord) {
 
-    if(!messageRecord){
+    if (!messageRecord) {
         return ""
     }
-    
-    if(Array.isArray(messageRecord) && messageRecord.length > 1){
+
+    if (Array.isArray(messageRecord) && messageRecord.length > 1) {
         return messageRecord.map(m => toString(m)).join("\n")
     }
-    
-    if(Array.isArray(messageRecord) && messageRecord.length == 1){
+
+    if (Array.isArray(messageRecord) && messageRecord.length == 1) {
         messageRecord = messageRecord[0]
     }
 
@@ -182,53 +209,53 @@ function toString(messageRecord){
     let recipients = h.getValues(messageRecord, "recipient")
     let recipientString = recipients.map(r => r?.email || r?.name || "")
     recipientString = formatText(recipientString, 25)
-    
+
     let subject = (h.getValue(messageRecord, "headline") || "")
-    if(subject.length > 20){
+    if (subject.length > 20) {
         subject = formatText(subject, 30)
     }
 
-    let date = h.getValue(messageRecord, "dateSent")|| h.getValue(messageRecord, "dateReceived") || ""
-    
+    let date = h.getValue(messageRecord, "dateSent") || h.getValue(messageRecord, "dateReceived") || ""
+
     let dateString = ""
     try {
         dateString = new Intl.DateTimeFormat('en-US').format(date)
-    } catch(err){
+    } catch (err) {
     }
 
     let result = `${senderString} | ${recipientString} | ${subject} | ${dateString}`
 
-    return result    
+    return result
 
 }
 
 
 function formatText(text, maxLength = 100) {
 
-    if(!text){
+    if (!text) {
         return ""
     }
 
     // If text is an array, join the elements into a single string
-    if(Array.isArray(text) && text.length > 1){
+    if (Array.isArray(text) && text.length > 1) {
         let r = text.join(', ')
-        if(r.length > maxLength){
+        if (r.length > maxLength) {
             let endString = `... [${text.length}]`
             r = r.slice(0, maxLength - endString.length) + endString
         }
         return r
     }
 
-    if(Array.isArray(text) && text.length == 0){
+    if (Array.isArray(text) && text.length == 0) {
         return ""
     }
 
-    if(Array.isArray(text) && text.length == 1){
+    if (Array.isArray(text) && text.length == 1) {
         text = text[0]
     }
 
     // If text is a string, truncate it if it's too long
-    if(typeof text === 'string' && text.length > maxLength){
+    if (typeof text === 'string' && text.length > maxLength) {
         return `${text.slice(0, maxLength - 3)}...`
     }
 
@@ -238,30 +265,30 @@ function formatText(text, maxLength = 100) {
 
 
 
-function toContactPoint(value){
-    if(!value){
+function toContactPoint(value) {
+    if (!value) {
         return []
     }
-    if(Array.isArray(value)){
+    if (Array.isArray(value)) {
         return value.map(x => toContactPoint(x))
     }
-    
-    if(typeof value == "string"){
 
-        if(value.includes("@")){
-            return {"@type": "ContactPoint", "email": value}
+    if (typeof value == "string") {
+
+        if (value.includes("@")) {
+            return { "@type": "ContactPoint", "email": value }
         }
-        else{
-            return {"@type": "Person", "name": value}
+        else {
+            return { "@type": "Person", "name": value }
         }
     }
 
     return value
 
-}   
+}
 
 
-function fromGmail(gmailMessage){
+function fromGmail(gmailMessage) {
     let message = new Message()
 
     message.sender = gmailMessage.sender
@@ -274,7 +301,7 @@ function fromGmail(gmailMessage){
     return message
 }
 
-function toGmail(message){
+function toGmail(message) {
     let gmailMessage = {}
 
     gmailMessage.sender = message.sender
@@ -287,7 +314,7 @@ function toGmail(message){
     return gmailMessage
 }
 
-function fromOutlook(outlookMessage){
+function fromOutlook(outlookMessage) {
     let message = new Message()
 
     message.record_id = "https://www.outlook.com/message/" + message.id
@@ -301,7 +328,7 @@ function fromOutlook(outlookMessage){
     return message
 }
 
-function toOutlook(message){
+function toOutlook(message) {
     let outlookMessage = {}
 
     outlookMessage.sender = message.sender
