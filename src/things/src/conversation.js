@@ -22,9 +22,12 @@ import { timeStamp } from 'console';
 export class Conversation extends CreativeWork {
     constructor(record) {
         super()
-        this.record_type = "Conversation"
+        
+        
         if(record?.['@type'] == "Conversation"){
             this.record = record
+        } else {
+            this.record_type = "Conversation"
         }
     }
 
@@ -33,10 +36,10 @@ export class Conversation extends CreativeWork {
     }
 
     get messages() {
-        return getMessages(this._record)
+        return getMessages(this.record)
     }
     set messages(value) {
-        this._record = Thing.setValues(this._record, "hasPart", value)
+        this.record = Thing.setValues(this.record, "hasPart", value)
     }
 
     get firstMessage(){ 
@@ -55,15 +58,15 @@ export class Conversation extends CreativeWork {
 
     // Helper methods
     add(sender, recipient, subject, text, dateSent, dateReceived){
-        return newMessage(this._record, sender, recipient, subject, text, dateSent, dateReceived)
+        this.record = newMessage(this.record, sender, recipient, subject, text, dateSent, dateReceived)
     }
 
     addMessage(sender, recipient, subject, text, dateSent, dateReceived){
-        return newMessage(this._record, sender, recipient, subject, text, dateSent, dateReceived)
+        this.record = newMessage(this.record, sender, recipient, subject, text, dateSent, dateReceived)
     }
 
     newMessage(sender, recipient, subject, text, dateSent, dateReceived){
-        return newMessage(this._record, sender, recipient, subject, text, dateSent, dateReceived)
+        this.record = newMessage(this.record, sender, recipient, subject, text, dateSent, dateReceived)
     }
 
 
@@ -110,6 +113,7 @@ function toString(conversationRecord){
 
 
 function newMessage(conversationRecord, sender, recipient, subject, text, dateSent, dateReceived){
+
     
     let message = new Message(sender, recipient, subject, text, dateSent, dateReceived)
     
@@ -117,7 +121,7 @@ function newMessage(conversationRecord, sender, recipient, subject, text, dateSe
     messages.push(message.record)
     messages = sortMessages(messages)
     conversationRecord = Thing.setValues(conversationRecord, "hasPart", messages)
-    return message
+    return conversationRecord
 
 }
 

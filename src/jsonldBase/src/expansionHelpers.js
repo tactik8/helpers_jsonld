@@ -48,7 +48,7 @@ export function expand(store, record) {
 }
 
 /**
- * Reeplaces all children objects by @id
+ * Replaces all children objects by @id
  * @param {*} record 
  * @returns 
  */
@@ -180,6 +180,9 @@ export function simplify(value) {
 
                
             }
+
+            newValue['@id'] = h.toArray(newValue?.['@id'])?.[0]
+
             return newValue
 
         }

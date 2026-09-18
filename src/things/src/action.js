@@ -4,7 +4,7 @@ const randomUUID = globalThis.crypto.randomUUID
 
 import * as idhelper from '../../recordIdHelpers/recordIdHelpers.js'
 
-import { _h as h}  from '../../index.js'
+import { _h as h } from '../../index.js'
 
 import * as things from '../../things/things.js'
 
@@ -16,10 +16,21 @@ import { PropertyValueSpecification } from './propertyValueSpecification.js'
 export class Action extends Thing {
     constructor(name, object) {
         super()
-        this.name = name
-        this.object = object
-        this.record_type = "Action"
-        this.setActive()
+
+        // If record provided instead of name
+        if (typeof name != "string" ) {
+            this.record = name
+        } else {
+            if(name){
+                this.name = name
+            }
+            if(object){
+                this.object = object
+            }
+            this.record_type = this.record_type || "Action"
+        }
+     
+
     }
 
     toString() {
@@ -141,11 +152,11 @@ export class Action extends Thing {
     addValuePattern(property, value) {
         this._record = addValuePattern(this._record, property, value)
     }
-   
+
     addMultipleValues(property, value) {
         this._record = addMultipleValues(this._record, property, value)
     }
-  
+
     addStepValue(property, value) {
         this._record = addStepValue(this._record, property, value)
     }
@@ -638,15 +649,15 @@ export class SearchAction extends UpdateAction {
     }
 
 
-    get target(){
+    get target() {
         return h.getValue(this._record, "target") || ""
     }
-    set target(value){
+    set target(value) {
         return Thing.setValue(this._record, "target", value)
     }
 
 
-    async execute(){
+    async execute() {
 
         let url = new URL(this.target)
         url.search = this.query || ""
@@ -656,8 +667,8 @@ export class SearchAction extends UpdateAction {
                 'Accept': 'application/json',
                 'Authorization': 'Bearer YOUR_TOKEN_HERE',
                 'Custom-Header': 'MyValue'
-                }
             }
+        }
         let response = await fetch(url, options)
 
         if (!response.ok) {

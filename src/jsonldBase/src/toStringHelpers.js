@@ -1,3 +1,4 @@
+import { jsonldBase as h } from '../jsonldBase.js'
 
 /**
  * 
@@ -10,6 +11,8 @@ export function exportToString(value) {
 
         return arrayToString(value)
     }
+
+
 
     if (h.record_type(value) == "ListItem") {
         return listItemToString(value)
@@ -31,7 +34,7 @@ export function exportToString(value) {
 function arrayToString(value) {
 
     let content = `Array (${value.length})\n--------------------------\n`
-    value.forEach(x => content += toString(x) + '\n')
+    value.forEach(x => content += exportToString(x) + '\n')
     return content
 
 
@@ -52,6 +55,6 @@ function itemListToString(value) {
 
 function actionToString(value) {
 
-    return `${h.getValue(value, 'name')} ${h.getValue(value, 'name') || h.getValue(value, '@id')} - ${h.getValue(value, 'actionStatus')}`
+    return `${h.getValue(value, 'name') || h.getValue(value, '@id')} - ${h.getValue(value, 'actionStatus')}`
 
 }

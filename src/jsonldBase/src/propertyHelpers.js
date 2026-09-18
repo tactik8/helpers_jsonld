@@ -47,6 +47,9 @@ export function ref(record_or_id) {
 
 
 export function getValue(record, propertyID, position, defaultValue) {
+
+    record = record?.record || record
+
     position = Number(position)
     if (isNaN(position)) { position = 0 }
     let values = dot.get(record, propertyID)
@@ -58,6 +61,9 @@ export function getValue(record, propertyID, position, defaultValue) {
 }
 
 export function setValue(record, propertyID, value, position) {
+
+    record = record?.record || record
+
     position = Number(position)
     if (isNaN(position)) { position = 0 }
 
@@ -69,6 +75,8 @@ export function setValue(record, propertyID, value, position) {
 }
 
 export function addValue(record, propertyID, value) {
+
+    record = record?.record || record
 
     value = h.toArray(value)
 
@@ -83,11 +91,15 @@ export function addValue(record, propertyID, value) {
 
 export function addValues(record, propertyID, values) {
 
+    record = record?.record || record
+
     return h.addValue(record, propertyID, values)
 }
 
 
 export function getValues(record, propertyID, defaultValue) {
+    record = record?.record || record
+
     let values = dot.get(record, propertyID)
     values = h.toArray(values)
     values = values.filter(x => x !== undefined)
@@ -98,6 +110,7 @@ export function getValues(record, propertyID, defaultValue) {
 }
 
 export function setValues(record, propertyID, value) {
+    record = record?.record || record
     value = h.toArray(value)
     dot.set(record, propertyID, value)
     return record

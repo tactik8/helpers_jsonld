@@ -1,0 +1,22 @@
+[
+    {
+        "@id": "_:fff46f74-3077-46ef-aef5-152763444718",
+        "@type": "Thing",
+        "name": "bob1"
+    },
+    {
+        "@id": "_:f061ad15-3674-49df-806d-324f8ae24fe8",
+        "@type": "Thing",
+        "name": "bob1"
+    },
+    {
+        "@id": "_:8d1c7799-2eec-45c4-ab26-5a94c89635d3",
+        "@type": "Thing",
+        "name": "bob1"
+    },
+    {
+        "@id": "_:1047a29d-d1e9-4db4-b021-827afefc0a7b",
+        "@type": "Thing",
+        "name": "bob1"
+    }
+]

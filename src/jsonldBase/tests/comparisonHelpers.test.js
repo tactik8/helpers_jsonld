@@ -1,4 +1,5 @@
 import { eq, isEqual } from '../src/comparisonHelpers.js';
+import { jsonldBase as h } from '../jsonldBase.js'
 
 describe('comparisonHelpers', () => {
   describe('eq', () => {
@@ -27,4 +28,66 @@ describe('comparisonHelpers', () => {
       expect(isEqual({ a: 1 }, { a: 2 })).toBe(false);
     });
   });
+  describe('getHash', () => {
+    const record1Full = {
+      "@type": "Thing",
+      "@id": "https://www.test.com/thing1#thing",
+      "name": "Thing1",
+      "other": {
+        "@type": "Thing",
+        "@id": "https://www.test.com/thing11#thing",
+        "name": "Thing11"
+      }
+    }
+    const record1Stripped = {
+      "@type": "Thing",
+      "@id": "https://www.test.com/thing1#thing",
+      "name": "Thing1",
+      "other": {
+        "@id": "https://www.test.com/thing11#thing"
+      }
+    }
+
+    const record2Full = {
+      "@type": "Thing",
+      "@id": "https://www.test.com/thing2#thing",
+      "name": "Thing2",
+      "other": {
+        "@type": "Thing",
+        "@id": "https://www.test.com/thing22#thing",
+        "name": "Thing22"
+      }
+    }
+      const record2Stripped = {
+      "@type": "Thing",
+      "@id": "https://www.test.com/thing2#thing",
+      "name": "Thing2",
+      "other": {
+        "@id": "https://www.test.com/thing22#thing"
+      }
+    }
+
+    it('compare same object ', () => {
+      
+      let a = h.getHash(record1Stripped)
+      let b = h.getHash(record1Stripped)
+      expect(a).toEqual(b);
+    });
+
+    it('compare same object with different depths', () => {
+      
+      let a = h.getHash(record1Full)
+      let b = h.getHash(record1Stripped)
+      expect(a).toEqual(b);
+    });
+    it('compare different object', () => {
+      
+      let a = h.getHash(record1Stripped)
+      let b = h.getHash(record2Stripped)
+      expect(a).not.toEqual(b);
+    });
+
+  });
+
+
 });

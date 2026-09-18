@@ -19,11 +19,12 @@ import { CreativeWork } from './creativeWork.js'
 export class Message extends CreativeWork {
     constructor(sender, recipient, subject, text, dateSent, dateReceived) {
         super()
-        this.record_type = "Message"
+        
 
         if(sender?.['@type'] == "Message"){
-            this.record = sender.record
+            this.record = sender
         } else {
+            this.record_type = "Message"
             this.sender = sender
             this.recipient = recipient
             this.headline = subject
@@ -136,6 +137,7 @@ export class Message extends CreativeWork {
 
 
     // static
+
     static toString(messageRecord){
         return toString(messageRecord)
     }

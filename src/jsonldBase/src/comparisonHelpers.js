@@ -4,7 +4,7 @@ import { dotHelpers as dot } from '../../dotHelpers/dotHelpers.js'
 
 import { jsonldBase as h } from '../jsonldBase.js'
 
-
+import * as he from './expansionHelpers.js'
 
 
 
@@ -305,3 +305,80 @@ export function ge(a, b) {
     return a >= b
 
 }
+
+
+/**
+ * Returns has for object (only the parent if includeChildren==false (default))
+ * @param {} o 
+ * @param {boolean} [includeChildren=false] 
+ * @returns 
+ */
+export function getHash(o, includeChildren = false) {
+
+
+    // Simplify
+    o = he.simplify(o)
+
+    // Keep only parent
+    if (includeChildren == false) {
+        o = he.strip(o)
+    }
+
+
+    const c = (v) => v && typeof v === 'object' && !Array.isArray(v)
+        ? Object.keys(v).sort().reduce((a, k) => ({ ...a, [k]: c(v[k]) }), {})
+        : Array.isArray(v) ? v.map(c) : v;
+    const s = JSON.stringify(c(o));
+    const n = globalThis.process?.versions?.node && globalThis.require?.('crypto');
+    if (n) return n.createHash('sha256').update(s).digest('hex');
+    let h = 5381, i = s.length;
+    while (i) h = (h * 33) ^ s.charCodeAt(--i);
+    return (h >>> 0).toString(16);
+};
+
+
+/**
+ * Returns has for object (only the parent)
+ * @param {} o 
+ * @returns 
+ */
+export function getHashNested(o) {
+    return getHash(o, true)
+};
+
+
+
+
+export function getDiff(obj1, obj2) {
+    if (obj1 === obj2) return null; // No difference
+
+    // If either isn't an object (or is null), return the target value
+    if (typeof obj1 !== 'object' || obj1 === null || typeof obj2 !== 'object' || obj2 === null) {
+        return obj2;
+    }
+
+    const diff = {};
+
+    // Check keys in obj1 (handles changes and deletions)
+    for (const key in obj1) {
+        if (obj1.hasOwnProperty(key)) {
+            if (!obj2.hasOwnProperty(key)) {
+                diff[key] = { removed: obj1[key] };
+            } else {
+                const nestedDiff = getDiff(obj1[key], obj2[key]);
+                if (nestedDiff !== null) {
+                    diff[key] = nestedDiff;
+                }
+            }
+        }
+    }
+
+    // Check keys in obj2 (handles additions)
+    for (const key in obj2) {
+        if (obj2.hasOwnProperty(key) && !obj1.hasOwnProperty(key)) {
+            diff[key] = { added: obj2[key] };
+        }
+    }
+
+    return Object.keys(diff).length > 0 ? diff : null;
+};
