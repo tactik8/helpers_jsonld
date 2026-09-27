@@ -1,100 +1,99 @@
 
 
-const randomUUID = globalThis.crypto.randomUUID
 
-
-import * as idhelper from '../../recordIdHelpers/recordIdHelpers.js'
-
-import { _h as h}  from '../../index.js'
+import { jsonldBase as h } from '../../jsonldBase/jsonldBase.js'
 
 import { Thing } from './thing.js'
 
 
 
 export class CreativeWork extends Thing {
-    constructor() {
+    constructor(name_or_record) {
         super()
-        this.record_type = "Message"
+        this._defaultRecordType = "CreativeWork"
+
+        this._loadRecord(name_or_record)
+        this._setValueIfString('name', name_or_record)
     }
 
     get about() {
-        return h.getValues(this._record, "about")
-    }  
+        return this.getValues("about")
+    }
     set about(value) {
-        this._record = Thing.setValues(this._record, "about", value)
+        return this.setValues("about", value)
     }
 
     get abstract() {
-        return h.getValues(this._record, "abstract")
-    }  
+        return this.getValues("abstract")
+    }
     set abstract(value) {
-        this._record = Thing.setValues(this._record, "abstract", value)
-    }   
+        return this.setValues("abstract", value)
+    }
 
     get author() {
-        return h.getValues(this._record, "author")
+        return this.getValues("author")
     }
     set author(value) {
-        this._record = Thing.setValues(this._record, "author", value)
+        return this.setValues("author", value)
     }
 
     get comment() {
-        return h.getValues(this._record, "comment")
+        return this.getValues("comment")
     }
     set comment(value) {
-        this._record = Thing.setValues(this._record, "comment", value)
+        return this.setValues("comment", value)
     }
 
     get contributor() {
-        return h.getValues(this._record, "contributor")
+        return this.getValues("contributor")
     }
     set contributor(value) {
-        this._record = Thing.setValues(this._record, "contributor", value)
+        return this.setValues("contributor", value)
     }
 
     get creator() {
-        return h.getValues(this._record, "creator")
+        return this.getValues("creator")
     }
     set creator(value) {
-        this._record = Thing.setValues(this._record, "creator", value)
+        return this.setValues("creator", value)
     }
 
     get dateCreated() {
-        return h.getValues(this._record, "dateCreated")
+        return this.getValues("dateCreated")
     }
     set dateCreated(value) {
-        this._record = Thing.setValues(this._record, "dateCreated", value)
+        return this.setValues("dateCreated", value)
     }
 
     get dateModified() {
-        return h.getValues(this._record, "dateModified")
+        return this.getValues("dateModified")
     }
     set dateModified(value) {
-        this._record = Thing.setValues(this._record, "dateModified", value)
-    }   
+        return this.setValues("dateModified", value)
+    }
 
     get datePublished() {
-        return h.getValues(this._record, "datePublished")
+        return this.getValues("datePublished")
     }
     set datePublished(value) {
-        this._record = Thing.setValues(this._record, "datePublished", value)
+        return this.setValues("datePublished", value)
     }
 
     get editor() {
-        return h.getValues(this._record, "editor")
+        return this.getValues("editor")
     }
     set editor(value) {
-        this._record = Thing.setValues(this._record, "editor", value)
+        return this.setValues("editor", value)
     }
 
-   
+
 
     get hasPart() {
-        return h.getValues(this._record, "hasPart")
+        return this.getValues("hasPart")
     }
     set hasPart(value) {
-        this._record = Thing.setValues(this._record, "hasPart", value)
-    }   
+        return this.setValues("hasPart", value)
+    }
 
     /**
      * Gets or sets the headline of the creative work.
@@ -102,67 +101,67 @@ export class CreativeWork extends Thing {
      * @returns {string} The headline of the creative work.
      */
     get headline() {
-        return h.getValue(this._record, "headline")
+        return this.getValue("headline")
     }
     set headline(value) {
-        this._record = Thing.setValue(this._record, "headline", value)
-    }   
+        return this.setValue("headline", value)
+    }
 
     get inLanguage() {
-        return h.getValues(this._record, "inLanguage")
-    }       
+        return this.getValues("inLanguage")
+    }
     set inLanguage(value) {
-        this._record = Thing.setValues(this._record, "inLanguage", value)
+        return this.setValues("inLanguage", value)
     }
 
     get isPartOf() {
-        return h.getValues(this._record, "isPartOf")
-    }       
+        return this.getValues("isPartOf")
+    }
     set isPartOf(value) {
-        this._record = Thing.setValues(this._record, "isPartOf", value)
-    }   
+        return this.setValues("isPartOf", value)
+    }
 
     get keywords() {
-        return h.getValues(this._record, "keywords")
-    }    
+        return this.getValues("keywords")
+    }
     set keywords(value) {
-        this._record = Thing.setValues(this._record, "keywords", value)
-    }       
+        return this.setValues("keywords", value)
+    }
 
     get offers() {
-        return h.getValues(this._record, "offers")
-    }       
+        return this.getValues("offers")
+    }
     set offers(value) {
-        this._record = Thing.setValues(this._record, "offers", value)
-    }   
-    
+        return this.setValues("offers", value)
+    }
+
     get provider() {
-        return h.getValues(this._record, "provider")
-    }       
+        return this.getValues("provider")
+    }
     set provider(value) {
-        this._record = Thing.setValues(this._record, "provider", value)
+        return this.setValues("provider", value)
     }
 
     get publisher() {
-        return h.getValues(this._record, "publisher")
+        return this.getValues("publisher")
     }
     set publisher(value) {
-        this._record = Thing.setValues(this._record, "publisher", value)
+        return this.setValues("publisher", value)
     }
 
     get review() {
-        return h.getValues(this._record, "review")
-    }       
+        return this.getValues("review")
+    }
     set review(value) {
-        this._record = Thing.setValues(this._record, "review", value)
+        return this.setValues("review", value)
     }
 
     get sourceOrganization() {
-        return h.getValues(this._record, "sourceOrganization")
-    }       
+        return this.getValues("sourceOrganization")
+    }
     set sourceOrganization(value) {
-        this._record = Thing.setValues(this._record, "sourceOrganization", value)
-    }   
+        return this.setValues("sourceOrganization", value)
+    }
 
     /**
      * Gets or sets the text of the creative work.
@@ -170,45 +169,45 @@ export class CreativeWork extends Thing {
      * @returns {string} The text of the creative work.
      */
     get text() {
-        return h.getValue(this._record, "text")
+        return this.getValue("text")
     }
     set text(value) {
-        this._record = Thing.setValue(this._record, "text", value)
-    }   
+        return this.setValue("text", value)
+    }
 
-    get thumbnail(){
-        return h.getValues(this._record, "thumbnail")
+    get thumbnail() {
+        return this.getValues("thumbnail")
     }
     set thumbnail(value) {
-        this._record = Thing.setValues(this._record, "thumbnail", value)
+        return this.setValues("thumbnail", value)
     }
 
-    get thumbnailUrl(){
-        return h.getValues(this._record, "thumbnailUrl")
+    get thumbnailUrl() {
+        return this.getValues("thumbnailUrl")
     }
     set thumbnailUrl(value) {
-        this._record = Thing.setValues(this._record, "thumbnailUrl", value)
+        return this.setValues("thumbnailUrl", value)
     }
 
     get version() {
-        return h.getValues(this._record, "version")
+        return this.getValues("version")
     }
     set version(value) {
-        this._record = Thing.setValues(this._record, "version", value)
+        return this.setValues("version", value)
     }
 
     get video() {
-        return h.getValues(this._record, "video")
+        return this.getValues("video")
     }
     set video(value) {
-        this._record = Thing.setValues(this._record, "video", value)
+        return this.setValues("video", value)
     }
 
     get wordCount() {
-        return h.getValues(this._record, "wordCount")
+        return this.getValues("wordCount")
     }
     set wordCount(value) {
-        this._record = Thing.setValues(this._record, "wordCount", value)
+        return this.setValues("wordCount", value)
     }
 
 

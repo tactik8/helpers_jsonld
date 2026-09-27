@@ -1,17 +1,10 @@
 
-const randomUUID = globalThis.crypto.randomUUID
 
-import { records } from '../../records/records.js'
+import { jsonldBase as h } from '../../jsonldBase/jsonldBase.js'
 
-import * as idhelper from '../../recordIdHelpers/recordIdHelpers.js'
-
-import { _h as h}  from '../../index.js'
 import { Thing } from './thing.js'
 
 import { Product } from './product.js'
-import { Message } from './message.js'
-import { timeStamp } from 'console';
-import things from '../things.js';
 
 
 /**
@@ -20,12 +13,13 @@ import things from '../things.js';
  * 
  */
 export class ProductGroup extends Product {
-    constructor(record) {
+    constructor(name_or_record) {
         super()
-        this.record_type = "ProductGroup"
-        if (record?.['@type'] == "ProductGroup") {
-            this.record = record
-        }
+        this._defaultRecordType = "ProductGroup"
+
+        this._loadRecord(name_or_record)
+        this._setValueIfString('name', name_or_record)
+
     }
 
     toString() {
@@ -33,35 +27,35 @@ export class ProductGroup extends Product {
     }
 
     get hasVariant() {
-        return h.getValues(this._record, 'hasVariant')
+        return this.getValues('hasVariant')
     }
     set hasVariant(value) {
-        this._record = Thing.setValues(this._record, 'hasVariant', value)
+        return this.setValues( 'hasVariant', value)
     }
 
     get productGroupID() {
-        return h.getValue(this._record, 'productGroupID')
+        return this.getValue( 'productGroupID')
     }
     set productGroupID(value) {
-        this._record = Thing.setValues(this._record, 'productGroupID', value)
+        return this.setValues( 'productGroupID', value)
     }
 
     get variesBy() {
-        return h.getValues(this._record, 'variesBy')
+        return this.getValues( 'variesBy')
     }
     set variesBy(value) {
-        this._record = Thing.setValues(this._record, 'variesBy', value)
+        return this.setValues( 'variesBy', value)
     }
 
 
     // methods
     addVariant(product) {
-        this._record = addVariant(this._record, product)
+        this.record = addVariant(this.record, product)
     }
 
 
     generateVariants(propertyValues) {
-        this._record = generateVariants(this._record, propertyValues)
+        this.record = generateVariants(this.record, propertyValues)
     }
 
 
@@ -87,7 +81,7 @@ function toString(record) {
 
     let variants = h.getValues(record, 'hasVariant')
     for(let v of variants){
-        content += " - " + things.Product.toString(v) + '\n'
+        content += " - " + Product.toString(v) + '\n'
     }
 
     return content
@@ -133,7 +127,7 @@ function generateVariants(productGroup, propertyValues) {
 
     // iterate
 
-    let properties = things.Thing.getProperties('Product')
+    let properties = Thing.getProperties('Product')
 
     for (let c of combinations) {
 
@@ -159,7 +153,7 @@ function generateVariants(productGroup, propertyValues) {
                 product = h.setValue(product, k, c[k])
 
             } else {
-                product = things.Thing.addAdditionalProperty(product, k, c[k])
+                product = Thing.addAdditionalProperty(product, k, c[k])
             }
 
         }

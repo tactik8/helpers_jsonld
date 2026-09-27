@@ -1,20 +1,14 @@
 
 
-import { _h as h } from '../../index.js'
-import { dataHelpers } from '../../dataHelpers/dataHelpers.js'
+import { jsonldBase as h } from '../../jsonldBase/jsonldBase.js'
 
 
 import * as idhelper from '../../recordIdHelpers/recordIdHelpers.js'
-
-
 import { addPotentialActions } from './_potentialActions.js';
-
 import { getProperties } from './_properties.js'
-
 import { things } from '../things.js'
 import { records } from '../../records/records.js'
-
-import { transformHelpers } from '../../index.js'
+import { transformHelpers } from '../../transformHelpers/transformHelpers.js'
 
 
 export class Base {
@@ -40,9 +34,7 @@ export class Base {
 
 
         // Process initial input if jsonld record
-        if (x_or_record?.["@type"] || x_or_record?.["@id"]) {
-            this.record = x_or_record
-        }
+        this._loadRecord(x_or_record)
 
 
     }
@@ -109,7 +101,35 @@ export class Base {
     }
 
 
+    // Sets the value only if is a string
+   _setValueIfNotNull(propertyID, value){
+        if(h.isNotNull(value)){
+            this.setValue(propertyID, value)
+        }
+    }
 
+    _setValueIfString(propertyID, value){
+        if(h.isNotNull(value) && typeof value == 'string'){
+            this.setValue(propertyID, value)
+        }
+    }
+
+    _setValueIfNumber(propertyID, value){
+        if(h.isNotNull(value) && !isNaN(value)){
+            this.setValue(propertyID, value)
+        }
+    }
+
+    _setValueIfRecordType(record_type, propertyID, value){
+        if(h.isNotNull(value) && h.record_type(value) == record_type){
+            this.setValue(propertyID, value)
+        }
+    }
+    _setValueIfNotRecordType(record_type, propertyID, value){
+        if(h.isNotNull(value) && h.record_type(value)  && h.record_type(value) != record_type){
+            this.setValue(propertyID, value)
+        }
+    }
 
     // -----------------------------------------------------------------
     // Getter / setter
@@ -140,6 +160,8 @@ export class Base {
         process.env.baseUrl = value
     }
 
+
+
     /**
      * Returns jsonld object, decomposing class instances
      */
@@ -167,6 +189,31 @@ export class Base {
        return this.#setRecord(value)
     }
 
+    get ref(){
+        return {"@id": this.record_id}
+    }
+
+    set ref(value){
+        this.record_id = value?.["@id"] || value?.record_id || value
+    }
+
+
+    /**
+     * Loads record if same default record type
+     * @param {*} value 
+     * @returns 
+     */
+    _loadRecord(value){
+
+        let record_type = h.record_type(value)
+
+        if(record_type && record_type == this._defaultRecordType){
+            this.record = value
+            return true
+        }
+        return false
+
+    }
 
 
     #setRecord(value){
@@ -211,7 +258,7 @@ export class Base {
      * Returns first @type value
      */
     get record_type() {
-        return this.getValue("@type")
+        return this.getValue("@type") || this._defaultRecordType
     }
 
     /**

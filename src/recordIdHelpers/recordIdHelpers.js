@@ -4,13 +4,17 @@ const randomUUID = globalThis.crypto.randomUUID
 
 import { dataHelpers} from '../dataHelpers/dataHelpers.js'
 
-export default {
+
+export const recordIdHelpers = {
     get,
     set,
     validate,
     getGenericRecordID,
     getStandardID
 };
+
+
+export default recordIdHelpers
 
 
 

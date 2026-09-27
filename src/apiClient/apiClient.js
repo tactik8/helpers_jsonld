@@ -2,11 +2,54 @@
 
 import {things} from '../things/things.js'
 
+import { dataHelpers} from '../dataHelpers/dataHelpers.js'
 
+
+
+/**
+ * @fileoverview Helpers to fetch (get, post, etc) to an API endpoint.
+ * @module dataHelpers
+ */
+
+
+
+/**
+ * Helpers to fetch (get, post, etc) to an API endpoint.
+ * @class 
+ */
 export class ApiClient {
+    /**
+     * 
+     * @param {*} baseUrl - The base url for the api (https://www.test.com/api)
+     */
     constructor(baseUrl) {
-        this.baseUrl = baseUrl
+        this._baseUrl 
         this._headers
+        this._databaseID
+        this._tenantID
+        this.baseUrl = baseUrl
+    }
+
+
+    get baseUrl(){
+        return this._baseUrl
+    }
+    set baseUrl(value){
+        this._baseUrl = value
+    }
+
+    get databaseID(){
+        return this._databaseID
+    }
+    set databaseID(value){
+        this._databaseID = value
+    }
+
+    get tenantID(){
+        return this.tenantID
+    }
+    set tenantID(value){
+        this.tenantID = value
     }
 
     get headers(){
@@ -55,13 +98,12 @@ async function apiGet(headers, baseUrl, path, params) {
     try {
 
 
-
         params = JSON.parse(JSON.stringify(params || {}, null, 4))
 
         params.filter = JSON.stringify(params?.filter || {}, null, 4)
 
 
-        let url = appendPath(baseUrl, path, params)
+        let url = dataHelpers.url.getUrl(baseUrl, path, params)
 
         let baseHeaders = {
           
@@ -104,7 +146,7 @@ async function apiPost(headers, baseUrl, path, data) {
 
     try {
 
-        let url = appendPath(baseUrl, path, {})
+        let url = dataHelpers.url.getUrl(baseUrl, path, {})
 
         let baseHeaders = {
             "Content-Type": "application/json"
@@ -149,7 +191,7 @@ async function apiDelete(headers, baseUrl, path, params) {
 
         params.filter = JSON.stringify(params?.filter || {}, null, 4)
 
-        let url = appendPath(baseUrl, path, params)
+        let url = dataHelpers.url.getUrl(baseUrl, path, params)
 
         let baseHeaders = {}
 
@@ -260,20 +302,3 @@ async function apiTest(headers, baseUrl, path){
 
 
 
-
-function appendPath(baseUrl, path, params) {
-    const url = new URL(baseUrl);
-    path = path || ""
-    url.pathname = (url.pathname + "/" + path).replace(/\/+/g, "/");
-
-    if(url.pathname.endsWith('/')){
-        url.pathname = url.pathname.slice(0, url.pathname.length -1)
-    }
-
-    if(params){
-        url.search = new URLSearchParams(params).toString();
-    }
-
-    console.log('pp', url.href)
-    return url.href;
-}

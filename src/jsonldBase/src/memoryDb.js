@@ -28,6 +28,10 @@ export class DB {
         return getRecord(this._store, record_id, expand)
     }
 
+    search(filter={}, expand=true){
+        return getRecords(this._store, filter, expand)
+    }
+
     set(value) {
         let records = h.flatten(value)
 

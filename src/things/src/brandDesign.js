@@ -2,14 +2,9 @@
  * BrandDesign custome record for w3c design token
  */
 
-import { _h as h}  from '../../index.js'
-
-import * as dot from '../../dotHelpers/dotHelpers.js'
-
-const randomUUID = globalThis.crypto.randomUUID
+import { jsonldBase as h } from '../../jsonldBase/jsonldBase.js'
 
 import { Thing } from './thing.js'
-import { helpers } from '../../index.js'
 
 import { transformHelpers } from '../../transformHelpers/transformHelpers.js'
 
@@ -316,7 +311,7 @@ function getPath(basePath, path, p) {
 
 function toString(record) {
 
-    return `${helpers.record_type(record)} for ${helpers.getValue(record, url)}
+    return `${h.record_type(record)} for ${h.getValue(record, url)}
     
     `
 

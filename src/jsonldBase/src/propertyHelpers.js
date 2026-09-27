@@ -34,6 +34,15 @@ export function isRef(value) {
 }
 
 export function ref(record_or_id) {
+
+    // Check if thing object
+    if(record_or_id?._isThingClass == true){
+        return record.ref
+    }
+
+    //
+
+
     if (!record_or_id) {
         return undefined
     }
@@ -48,8 +57,12 @@ export function ref(record_or_id) {
 
 export function getValue(record, propertyID, position, defaultValue) {
 
-    record = record?.record || record
+    // Check if thing object
+    if(record?._isThingClass == true){
+        return record.getValue(propertyID, position)
+    }
 
+    //
     position = Number(position)
     if (isNaN(position)) { position = 0 }
     let values = dot.get(record, propertyID)
@@ -62,8 +75,12 @@ export function getValue(record, propertyID, position, defaultValue) {
 
 export function setValue(record, propertyID, value, position) {
 
-    record = record?.record || record
+    // Check if thing object
+    if(record?._isThingClass == true){
+        return record.setValue(propertyID, value, position)
+    }
 
+    //
     position = Number(position)
     if (isNaN(position)) { position = 0 }
 
@@ -71,12 +88,19 @@ export function setValue(record, propertyID, value, position) {
     value = h.toArray(value)?.[0]
     values[position] = value
     dot.set(record, propertyID, values)
+
+
     return record
 }
 
 export function addValue(record, propertyID, value) {
 
-    record = record?.record || record
+    // Check if thing object
+    if(record?._isThingClass == true){
+        return record.addValue(propertyID, value)
+    }
+
+    //
 
     value = h.toArray(value)
 
@@ -91,15 +115,24 @@ export function addValue(record, propertyID, value) {
 
 export function addValues(record, propertyID, values) {
 
-    record = record?.record || record
+    // Check if thing object
+    if(record?._isThingClass == true){
+        return record.addValue(propertyID, values)
+    }
 
+    //
     return h.addValue(record, propertyID, values)
 }
 
 
 export function getValues(record, propertyID, defaultValue) {
-    record = record?.record || record
+    
+    // Check if thing object
+    if(record?._isThingClass == true){
+        return record.getValues(propertyID, values)
+    }
 
+    //
     let values = dot.get(record, propertyID)
     values = h.toArray(values)
     values = values.filter(x => x !== undefined)
@@ -110,7 +143,14 @@ export function getValues(record, propertyID, defaultValue) {
 }
 
 export function setValues(record, propertyID, value) {
-    record = record?.record || record
+
+    // Check if thing object
+    if(record?._isThingClass == true){
+        return record.getValues(propertyID, values)
+    }
+
+    //
+    record = record?._isThingClass == true || record
     value = h.toArray(value)
     dot.set(record, propertyID, value)
     return record

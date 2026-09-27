@@ -1,18 +1,10 @@
 
-const randomUUID = globalThis.crypto.randomUUID
 
-import { records } from '../../records/records.js'
+import { jsonldBase as h } from '../../jsonldBase/jsonldBase.js'
 
-import * as idhelper from '../../recordIdHelpers/recordIdHelpers.js'
-
-import { _h as h}  from '../../index.js'
 import { Thing } from './thing.js'
 
-import { CreativeWork } from './creativeWork.js'
-import { Message } from './message.js'
-import { timeStamp } from 'console';
-import { Offer } from './offer.js';
-import things from '../things.js';
+
 
 
 /**
@@ -21,12 +13,14 @@ import things from '../things.js';
  * 
  */
 export class PropertyValue extends Thing {
-    constructor(record) {
+    constructor(propertyID_or_record, value) {
         super()
-        this.record_type = "PropertyValue"
-        if (record?.['@type'] == "PropertyValue") {
-            this.record = record
-        }
+        this._defaultRecordType = "PropertyValue"
+
+        this._loadRecord(propertyID_or_record)
+        this._setValueIfString('propertyID', propertyID_or_record)
+        this._setValueIfNotNull('value', value)
+
     }
 
     toString() {
@@ -34,45 +28,45 @@ export class PropertyValue extends Thing {
     }
 
     get propertyID() {
-        return h.getValues(this._record, 'propertyID')
+        return h.getValues('propertyID')
     }
     set propertyID(value) {
-        this._record = Thing.setValues(this._record, 'propertyID', value)
+        return this.setValues('propertyID', value)
     }
 
     get value() {
-        return h.getValues(this._record, 'value')
+        return h.getValues('value')
     }
     set value(value) {
-        this._record = Thing.setValues(this._record, 'value', value)
+        return this.setValues('value', value)
     }
 
     get unitCode() {
-        return h.getValues(this._record, 'unitCode')
+        return h.getValues('unitCode')
     }
     set unitCode(value) {
-        this._record = Thing.setValues(this._record, 'unitCode', value)
+        return this.setValues('unitCode', value)
     }
 
     get unitText() {
-        return h.getValues(this._record, 'unitText')
+        return h.getValues('unitText')
     }
     set unitText(value) {
-        this._record = Thing.setValues(this._record, 'unitText', value)
+        return this.setValues('unitText', value)
     }
 
     get minValue() {
-        return h.getValues(this._record, 'minValue')
+        return h.getValues('minValue')
     }
     set minValue(value) {
-        this._record = Thing.setValues(this._record, 'minValue', value)
+        return this.setValues('minValue', value)
     }
 
     get maxValue() {
-        return h.getValues(this._record, 'maxValue')
+        return h.getValues('maxValue')
     }
     set maxValue(value) {
-        this._record = Thing.setValues(this._record, 'maxValue', value)
+        return this.setValues('maxValue', value)
     }
 
 }

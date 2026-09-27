@@ -1,18 +1,14 @@
 
-const randomUUID = globalThis.crypto.randomUUID
 
-import { records } from '../../records/records.js'
 
-import * as idhelper from '../../recordIdHelpers/recordIdHelpers.js'
+import { jsonldBase as h } from '../../jsonldBase/jsonldBase.js'
 
-import { _h as h}  from '../../index.js'
 import { Thing } from './thing.js'
 
 import { CreativeWork } from './creativeWork.js'
-import { Message } from './message.js'
-import { timeStamp } from 'console';
+
+
 import { Offer } from './offer.js';
-import things from '../things.js';
 
 
 /**
@@ -21,12 +17,14 @@ import things from '../things.js';
  * 
  */
 export class Product extends CreativeWork {
-    constructor(record) {
+    constructor(name_or_record) {
         super()
-        this.record_type = "Product"
-        if (record?.['@type'] == "Product") {
-            this.record = record
-        }
+        this._defaultRecordType = "Product"
+
+        this._loadRecord(name_or_record)
+        this._setValueIfString('name', name_or_record)
+
+
     }
 
     toString() {
@@ -34,178 +32,178 @@ export class Product extends CreativeWork {
     }
 
     get additionalProperty() {
-        return h.getValues(this._record, 'additionalProperty')
+        return this.getValues('additionalProperty')
     }
     set additionalProperty(value) {
-        this._record = Thing.setValues(this._record, 'additionalProperty', value)
+        return this.setValues( 'additionalProperty', value)
     }
 
     get aggregateRating() {
-        return h.getValues(this._record, 'aggregateRating')
+        return this.getValues('aggregateRating')
     }
     set aggregateRating(value) {
-        this._record = Thing.setValues(this._record, 'aggregateRating', value)
+        return this.setValues( 'aggregateRating', value)
     }
 
     get asin() {
-        return h.getValue(this._record, 'asin')
+        return this.getValue('asin')
     }
     set asin(value) {
-        this._record = Thing.setValues(this._record, 'asin', value)
+        return this.setValues( 'asin', value)
     }
 
     get audience() {
-        return h.getValues(this._record, 'audience')
+        return this.getValues('audience')
     }
     set audience(value) {
-        this._record = Thing.setValues(this._record, 'audience', value)
+        return this.setValues( 'audience', value)
     }
 
     get brand() {
-        return h.getValue(this._record, 'brand')
+        return this.getValue('brand')
     }
     set brand(value) {
-        this._record = Thing.setValues(this._record, 'brand', value)
+        return this.setValues( 'brand', value)
     }
 
     get category() {
-        return h.getValues(this._record, 'category')
+        return this.getValues('category')
     }
     set category(value) {
-        this._record = Thing.setValues(this._record, 'category', value)
+        return this.setValues( 'category', value)
     }
 
     get color() {
-        return h.getValue(this._record, 'color')
+        return this.getValue('color')
     }
     set color(value) {
-        this._record = Thing.setValues(this._record, 'color', value)
+        return this.setValues( 'color', value)
     }
 
     get depth() {
-        return h.getValue(this._record, 'depth')
+        return this.getValue('depth')
     }
     set depth(value) {
-        this._record = Thing.setValues(this._record, 'depth', value)
+        return this.setValues( 'depth', value)
     }
 
     get gtin() {
-        return h.getValue(this._record, 'gtin')
+        return this.getValue('gtin')
     }
     set gtin(value) {
-        this._record = Thing.setValues(this._record, 'gtin', value)
+        return this.setValues( 'gtin', value)
     }
 
     get height() {
-        return h.getValue(this._record, 'height')
+        return this.getValue('height')
     }
     set height(value) {
-        this._record = Thing.setValues(this._record, 'height', value)
+        return this.setValues( 'height', value)
     }
 
     get image() {
-        return h.getValue(this._record, 'image')
+        return this.getValue('image')
     }
     set image(value) {
-        this._record = Thing.setValues(this._record, 'image', value)
+        return this.setValues( 'image', value)
     }
 
 
     get keywords() {
-        return h.getValues(this._record, 'keywords')
+        return this.getValues('keywords')
     }
     set keywords(value) {
-        this._record = Thing.setValues(this._record, 'keywords', value)
+        return this.setValues( 'keywords', value)
     }
 
     get manufacturer() {
-        return h.getValue(this._record, 'manufacturer')
+        return this.getValue('manufacturer')
     }
     set manufacturer(value) {
-        this._record = Thing.setValues(this._record, 'manufacturer', value)
+        return this.setValues( 'manufacturer', value)
     }
 
     get model() {
-        return h.getValue(this._record, 'model')
+        return this.getValue('model')
     }
     set model(value) {
-        this._record = Thing.setValues(this._record, 'model', value)
+        return this.setValues( 'model', value)
     }
 
     get mpn() {
-        return h.getValue(this._record, 'mpn')
+        return this.getValue('mpn')
     }
     set mpn(value) {
-        this._record = Thing.setValues(this._record, 'mpn', value)
+        return this.setValues( 'mpn', value)
     }
 
     get negativeNotes() {
-        return h.getValues(this._record, 'negativeNotes')
+        return this.getValues('negativeNotes')
     }
     set negativeNotes(value) {
-        this._record = Thing.setValues(this._record, 'negativeNotes', value)
+        return this.setValues( 'negativeNotes', value)
     }
 
     get offers() {
-        return h.getValues(this._record, 'offers')
+        return this.getValues('offers')
     }
     set offers(value) {
-        this._record = Thing.setValues(this._record, 'offers', value)
+        return this.setValues( 'offers', value)
     }
 
     get positiveNotes() {
-        return h.getValues(this._record, 'positiveNotes')
+        return this.getValues('positiveNotes')
     }
     set positiveNotes(value) {
-        this._record = Thing.setValues(this._record, 'positiveNotes', value)
+        return this.setValues( 'positiveNotes', value)
     }
 
     get productID() {
-        return h.getValue(this._record, 'productID')
+        return this.getValue('productID')
     }
     set productID(value) {
-        this._record = Thing.setValues(this._record, 'productID', value)
+        return this.setValues( 'productID', value)
     }
 
     get review() {
-        return h.getValues(this._record, 'review')
+        return this.getValues('review')
     }
     set review(value) {
-        this._record = Thing.setValues(this._record, 'review', value)
+        return this.setValues( 'review', value)
     }
 
     get size() {
-        return h.getValue(this._record, 'size')
+        return this.getValue('size')
     }
     set size(value) {
-        this._record = Thing.setValues(this._record, 'size', value)
+        return this.setValues( 'size', value)
     }
 
     get sku() {
-        return h.getValue(this._record, 'sku')
+        return this.getValue('sku')
     }
     set sku(value) {
-        this._record = Thing.setValues(this._record, 'sku', value)
+        return this.setValues( 'sku', value)
     }
 
     get weight() {
-        return h.getValue(this._record, 'weight')
+        return this.getValue('weight')
     }
     set weight(value) {
-        this._record = Thing.setValues(this._record, 'weight', value)
+        return this.setValues( 'weight', value)
     }
 
     get width() {
-        return h.getValue(this._record, 'width')
+        return this.getValue('width')
     }
     set width(value) {
-        this._record = Thing.setValues(this._record, 'width', value)
+        return this.setValues( 'width', value)
     }
 
 
     // methods
     addOffer(price, priceCurrency = "CAD") {
-        this._record = Thing.addValue(this._record, 'offers', (new things.Offer(price, priceCurrency)))
+        this._record = this.addValue('offers', (new Offer(price, priceCurrency)))
     }
 
 
@@ -239,7 +237,7 @@ function toString(record) {
 
 function addOffer(product, offer_record_or_price, price_currency) {
 
-    let offer = new things.Offer(offer_record_or_price, price_currency)
+    let offer = new Offer(offer_record_or_price, price_currency)
 
     offer.itemOffered = { "@id": product?.['@id'] }
 

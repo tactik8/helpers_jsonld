@@ -1,56 +1,32 @@
 
 
 
-import { _h as h } from '../../index.js'
+import { jsonldBase as h } from '../../jsonldBase/jsonldBase.js'
 import { dataHelpers } from '../../dataHelpers/dataHelpers.js'
-
 
 import * as idhelper from '../../recordIdHelpers/recordIdHelpers.js'
 
 
-import { addPotentialActions } from './_potentialActions.js';
 
-import { getProperties } from './_properties.js'
-
-import { things } from '../things.js'
-import { records } from '../../records/records.js'
-
-import { transformHelpers } from '../../index.js'
 
 import { Base } from './_base.js'
 
 
 export class Thing extends Base {
     constructor(name_or_record) {
-        super(name_or_record)
+        super()
         this._defaultRecordType = "Thing"
 
-
-        if(typeof name_or_record == "string"){
-            this.name = name_or_record || this.name
-        }
-        
-
+        this._loadRecord(name_or_record)
+        this._setValueIfString('name', name_or_record)
+       
     }
 
 
-    get name() {
-        return this.getValue("name")
-    }
-    set name(value) {
-        return this.setValue("name", value)
-    }
 
-    get url() {
-        return this.getValue("url")
-    }
-    set url(value) {
-        this.setValue("url", value)
-        this.record_id = idhelper.get(this.record, this.baseUrl)
-    }
 
     get cleanUrl() {
-        let url = h.getValue(this.record, "url")
+        let url = this.getValue(this.record, "url")
         url = dataHelpers.url.clean(value)
         return url
     }
@@ -60,6 +36,9 @@ export class Thing extends Base {
 
     }
 
+
+    // Properties
+
     get description() {
         return this.getValue("description")
     }
@@ -68,7 +47,7 @@ export class Thing extends Base {
     }
 
     get sameAs() {
-        return h.getValue("sameAs")
+        return this.getValue("sameAs")
     }
     set sameAs(value) {
         return this.setValue("sameAs", value)
@@ -76,11 +55,42 @@ export class Thing extends Base {
 
 
     get hasPart() {
-        return h.getValues("hasPart")
+        return this.getValues("hasPart")
     }
     set hasPart(value) {
         return this.setValues("hasPart", value)
     }
+
+
+    get image() {
+        return this.getValue("image")
+    }
+    set image(value) {
+        return this.setValue("image", value)
+    }
+
+    /**
+     * The name of the item.
+     * @type {string}
+     */
+    get name() {
+        return this.getValue("name")
+    }
+    /**
+     * The name of the item.
+     * @type {string}
+     */
+    set name(value) {
+        return this.setValue("name", value)
+    }
+
+    get owner() {
+        return this.getValues("owner")
+    }
+    set owner(value) {
+        return this.setValues("owner", value)
+    }
+
 
     get potentialAction() {
         return this.getValues("potentialAction")
@@ -91,6 +101,39 @@ export class Thing extends Base {
 
 
 
+    get sameAs() {
+        return this.getValues("sameAs")
+    }
+    set sameAs(value) {
+        return this.setValues("sameAs", value)
+    }
+
+
+
+    /**
+     * A CreativeWork or Event about this Thing.
+     */
+    get subjectOf() {
+        return this.getValues("subjectOf")
+    }
+    /**
+     * A CreativeWork or Event about this Thing.
+     */
+    set subjectOf(value) {
+        return this.setValues("subjectOf", value)
+    }
+
+
+
+
+    get url() {
+        return this.getValue("url")
+    }
+    set url(value) {
+        this.setValue("url", value)
+        this.record_id = idhelper.get(this.record, this.baseUrl)
+    }
+
 
     // --------------------------------------------------------------------------
     // Methods
@@ -100,13 +143,49 @@ export class Thing extends Base {
     // Methods
 
     addPotentialActions() {
-        this.record = addPotentialActions(this.record)
+      //  this.record = addPotentialActions(this.record)
     }
 
-    addAdditionalProperty(propertyID, value) {
-        this.record = addPropertyValue(this.record, "additionalProperty", propertyID, value)
+    setAdditionalProperty(propertyID, value) {
+
+        // Remove current
+        let records = this.getValues("additionalProperty")
+        records = records.filter(x => x?.propertyID != propertyID)
+        
+
+        // Create new
+        let pv = {"@type": "PropertyValue", "@id": h.randomUUID()}
+        pv.propertyID = propertyID
+        pv.value = value
+        records.push(pv)
+
+        // Save in record
+        this.setValues('additionalProperty', records)
+
+        return
+
     }
 
+    removeAdditionalProperty(propertyID){
+
+        let records = this.getValues("additionalProperty")
+        let r = records.find(x => x?.propertyID == propertyID)
+
+        if(r){
+            records = records.filter(x => x?.propertyID != propertyID)
+            this.setValues('additionalProperty', records)
+        }
+        return
+    }
+
+
+    getAdditionalProperty(propertyID) {
+
+        let records = this.getValues("additionalProperty")
+        let r = records.find(x => x?.propertyID == propertyID)
+
+        return r?.value 
+    }
 
 }
 

@@ -1,10 +1,5 @@
 
-const randomUUID = globalThis.crypto.randomUUID
-
-
-import * as idhelper from '../../recordIdHelpers/recordIdHelpers.js'
-
-import { _h as h}  from '../../index.js'
+import { jsonldBase as h } from '../../jsonldBase/jsonldBase.js'
 
 import { Thing } from './thing.js'
 import { CreativeWork } from './creativeWork.js'
@@ -12,63 +7,63 @@ import { CreativeWork } from './creativeWork.js'
 
 
 export class WebPage extends CreativeWork {
-    constructor(url) {
+    constructor(url_or_record) {
         super()
-        this.record_type = "WebPage"
-        if(url){
-            this.url = url
-        }
+        this._defaultRecordType = "WebPage"
+
+        this._loadRecord(url_or_record)
+        this._setValueIfString('url', url_or_record)
     }
 
    
 
     get breadcrumb() {
-        return h.getValues(this._record, "breadcrumb")
+        return this.getValues("breadcrumb")
     }
     set breadcrumb(value) {
-        this._record = Thing.setValues(this._record, "breadcrumb", value)
+        return this.setValues(this._record, "breadcrumb", value)
     }
     
     get mainContentOfPage() {
-        return h.getValues(this._record, "mainContentOfPage")
+        return this.getValues("mainContentOfPage")
     }
     set mainContentOfPage(value) {
-        this._record = Thing.setValues(this._record, "mainContentOfPage", value)
+        return this.setValues(this._record, "mainContentOfPage", value)
     }
     
     get primaryImageOfPage() {
-        return h.getValues(this._record, "primaryImageOfPage")
+        return this.getValues("primaryImageOfPage")
     }
     set primaryImageOfPage(value) {
-        this._record = Thing.setValues(this._record, "primaryImageOfPage", value)
+        return this.setValues(this._record, "primaryImageOfPage", value)
     }
     
     get relatedLink() {
-        return h.getValues(this._record, "relatedLink")
+        return this.getValues("relatedLink")
     }
     set relatedLink(value) {
-        this._record = Thing.setValues(this._record, "relatedLink", value)
+        return this.setValues(this._record, "relatedLink", value)
     }
     
     get reviewedBy() {
-        return h.getValues(this._record, "reviewedBy")
+        return this.getValues("reviewedBy")
     }
     set reviewedBy(value) {
-        this._record = Thing.setValues(this._record, "reviewedBy", value)
+        return this.setValues(this._record, "reviewedBy", value)
     }
 
     get significantLink() {
-        return h.getValues(this._record, "significantLink")
+        return this.getValues("significantLink")
     }
     set significantLink(value) {
-        this._record = Thing.setValues(this._record, "significantLink", value)
+        return this.setValues(this._record, "significantLink", value)
     }
 
     get specialty() {
-        return h.getValues(this._record, "specialty")
+        return this.getValues("specialty")
     }
     set specialty(value) {
-        this._record = Thing.setValues(this._record, "specialty", value)
+        return this.setValues(this._record, "specialty", value)
     }
 
 

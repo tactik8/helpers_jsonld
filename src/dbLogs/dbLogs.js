@@ -1,13 +1,29 @@
 import { diskHelpers } from '../diskHelpers/diskHelpers.js'
 
-//import {jsonldBase as _h} from '../jsonldBase/jsonldBase.js'
+import {jsonldBase as h} from '../jsonldBase/jsonldBase.js'
+import { things} from '../things/things.js'
 
-import { _h } from '../index.js'
 
+
+/**
+ * @fileoverview Tools to read write log records to disk
+ * @module dbLogs
+ */
+
+
+/**
+ * Creates a new DbLogs instance to read/write logs to disk.
+ * @class
+ */
 export class DbLogs {
+
+    /**
+     * DbLogs instance
+     * @param {*} dbpath 
+     */
     constructor(dbpath) {
 
-        this._objectID = _h.randomUUID()
+        this._objectID = h.randomUUID()
         this._isInit = false
 
         this.dbpath = dbpath || './testdata/dblogs'
@@ -22,7 +38,7 @@ export class DbLogs {
 
     toString(){
 
-        let content = _h.exportToString(this.indexDB)
+        let content = h.exportToString(this.indexDB)
         return content
 
     }
@@ -64,7 +80,7 @@ export class DbLogs {
         record_id = record_id?.record_id || record_id?.['@id'] || record_id
 
         // Check if action exists
-        let indexAction = _h.find(this.indexDB, { "@id": record_id })
+        let indexAction = h.find(this.indexDB, { "@id": record_id })
 
         if (!indexAction) {
             return undefined
@@ -74,7 +90,7 @@ export class DbLogs {
         let actionContent = await diskHelpers.load(this.dbpath, filename)
         try {
             let actionRecord = JSON.parse(actionContent ?? {})
-            let action = new _h.things.Action(actionRecord)
+            let action = new things.Action(actionRecord)
             return action
         } catch (err) {
             console.log('DbLogs Error get', record_id, actionContent, err)
@@ -89,11 +105,11 @@ export class DbLogs {
 
         // Convert to action object if not one
         if (!action?._isThingClass) {
-            action = new _h.things.Action(action)
+            action = new things.Action(action)
         }
 
         // Store to object instance db
-        this.objectDB[_h.record_id(action)] = action
+        this.objectDB[h.record_id(action)] = action
 
         // Set callback
         action.addListener(this.eventCallback.bind(this), this._objectID, true)
@@ -108,7 +124,7 @@ export class DbLogs {
 
 
         // Remove current action
-        this.indexDB = this.indexDB.filter(x => _h.record_id(action) != x?.["@id"])
+        this.indexDB = this.indexDB.filter(x => h.record_id(action) != x?.["@id"])
 
         // Add new action
         this.indexDB.push(simplifiedAction(action))
@@ -127,7 +143,7 @@ export class DbLogs {
     async search(filter) {
 
         // Search from indexDB for speed
-        let summaryActions = _h.filter(this.indexDB, filter ?? {})
+        let summaryActions = h.filter(this.indexDB, filter ?? {})
 
         // Retrieve actual records
         let actions = []
@@ -146,10 +162,10 @@ export class DbLogs {
         console.log('callback')
         let actionRecord = eventAction?.result[0] ?? eventAction?.result
 
-        let actionID = _h.record_id(actionRecord)
+        let actionID = h.record_id(actionRecord)
 
         // Retrieve current action from db
-        let action = this.objectDB?.[actionID] || new _h.things.Action()
+        let action = this.objectDB?.[actionID] || new things.Action()
         action.record = actionRecord
 
         console.log('cb', action)
@@ -184,7 +200,7 @@ function simplifiedAction(action) {
 
     action = action?.record || action
 
-    action = _h.strip(action)
+    action = h.strip(action)
 
     return action
 }

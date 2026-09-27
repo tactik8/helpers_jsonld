@@ -1,11 +1,6 @@
 
 
-const randomUUID = globalThis.crypto.randomUUID
-
-
-import * as idhelper from '../../recordIdHelpers/recordIdHelpers.js'
-
-import { _h as h}  from '../../index.js'
+import { jsonldBase as h } from '../../jsonldBase/jsonldBase.js'
 
 import { Thing } from './thing.js'
 import { CreativeWork } from './creativeWork.js'
@@ -13,59 +8,61 @@ import { CreativeWork } from './creativeWork.js'
 
 
 export class WebSite extends CreativeWork {
-    constructor(url) {
+    constructor(url_or_record) {
         super()
-        this.record_type = "WebSite"
-        this.url = url
+        this._defaultRecordType = "WebSite"
+
+        this._loadRecord(url_or_record)
+        this._setValueIfString('url', url_or_record)
     }
 
     get breadcrumb() {
-        return h.getValues(this._record, "breadcrumb")
+        return this.getValues("breadcrumb")
     }
     set breadcrumb(value) {
-        this._record = Thing.setValues(this._record, "breadcrumb", value)
+        return this.setValues("breadcrumb", value)
     }
-    
+
     get mainContentOfPage() {
-        return h.getValues(this._record, "mainContentOfPage")
+        return this.getValues("mainContentOfPage")
     }
     set mainContentOfPage(value) {
-        this._record = Thing.setValues(this._record, "mainContentOfPage", value)
+        return this.setValues("mainContentOfPage", value)
     }
-    
+
     get primaryImageOfPage() {
-        return h.getValues(this._record, "primaryImageOfPage")
+        return this.getValues("primaryImageOfPage")
     }
     set primaryImageOfPage(value) {
-        this._record = Thing.setValues(this._record, "primaryImageOfPage", value)
+        return this.setValues("primaryImageOfPage", value)
     }
-    
+
     get relatedLink() {
-        return h.getValues(this._record, "relatedLink")
+        return this.getValues("relatedLink")
     }
     set relatedLink(value) {
-        this._record = Thing.setValues(this._record, "relatedLink", value)
+        return this.setValues("relatedLink", value)
     }
-    
+
     get reviewedBy() {
-        return h.getValues(this._record, "reviewedBy")
+        return this.getValues("reviewedBy")
     }
     set reviewedBy(value) {
-        this._record = Thing.setValues(this._record, "reviewedBy", value)
+        return this.setValues("reviewedBy", value)
     }
 
     get significantLink() {
-        return h.getValues(this._record, "significantLink")
+        return this.getValues("significantLink")
     }
     set significantLink(value) {
-        this._record = Thing.setValues(this._record, "significantLink", value)
+        return this.setValues("significantLink", value)
     }
 
     get specialty() {
-        return h.getValues(this._record, "specialty")
+        return this.getValues("specialty")
     }
     set specialty(value) {
-        this._record = Thing.setValues(this._record, "specialty", value)
+        return this.setValues("specialty", value)
     }
 
 
@@ -73,7 +70,7 @@ export class WebSite extends CreativeWork {
     get WPHeader() {
         return getWebPart("WPHeader", this.record)
     }
-    
+
     set WPHeader(value) {
         this.record = setWebPart("WPHeader", this.record, value)
     }
@@ -89,16 +86,16 @@ export class WebSite extends CreativeWork {
     get WPSideBar() {
         return getWebPart("WPSideBar", this.record)
     }
-    
+
     set WPSideBar(value) {
         this.record = setWebPart("WPSideBar", this.record, value)
     }
 
-    get Table(){
+    get Table() {
         return getWebPart("Table", this.record)
     }
 
-    set Table(value){
+    set Table(value) {
         this.record = setWebPart("Table", this.record, value)
     }
 
@@ -128,7 +125,7 @@ export class WebSite extends CreativeWork {
         return getWebPart("WPSideBar", record)
     }
 
-    static getTable(record){
+    static getTable(record) {
         return getWebPart("Table", record)
     }
 
@@ -144,7 +141,7 @@ export class WebSite extends CreativeWork {
         return setWebPart("WPSideBar", record, value)
     }
 
-    static setTable(record, value){
+    static setTable(record, value) {
         return setWebPart("Table", record, value)
     }
 
@@ -182,9 +179,9 @@ function getWebPart(partType, record) {
 function setWebPart(partType, record, value) {
 
     let part = getWebPart(record, partType)
-    
+
     record = Thing.setValue(part, "hasPart", value)
-    
+
     return record
 
 }

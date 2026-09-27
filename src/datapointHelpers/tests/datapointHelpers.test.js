@@ -55,11 +55,11 @@ describe('Datapoint helpers', () => {
             let v11 = "test11"
 
 
-            let dp1 = dp.get(o1, p1, v11, { confidence: 0.5 })
+            let dp1 = dp.getDatapoint(o1, p1, v11, { confidence: 0.5 })
 
             let r
 
-            r = dp.c(dp1)
+            r = dp.getConfidence(dp1)
             expect(r).toBe(0.5);
 
 
@@ -78,11 +78,11 @@ describe('Datapoint helpers', () => {
             let v11 = "test11"
             let v12 = "test12"
 
-            let refDP = dp.get(o1, p1, v12, { confidence: 0.6, observationDate: "2025-01-01" })
-            let sameDP = dp.get(o1, p1, v12, { confidence: 0.6, observationDate: "2025-01-01" })
-            let smallerDP = dp.get(o1, p1, v11, { confidence: 0.5, observationDate: "2025-01-01" })
-            let biggerDP = dp.get(o1, p1, v12, { confidence: 0.7, observationDate: "2025-01-01" })
-            let diffDP = dp.get(o2, p1, v12, { confidence: 0.6, observationDate: "2025-01-01" })
+            let refDP = dp.getDatapoint(o1, p1, v12, { confidence: 0.6, observationDate: "2025-01-01" })
+            let sameDP = dp.getDatapoint(o1, p1, v12, { confidence: 0.6, observationDate: "2025-01-01" })
+            let smallerDP = dp.getDatapoint(o1, p1, v11, { confidence: 0.5, observationDate: "2025-01-01" })
+            let biggerDP = dp.getDatapoint(o1, p1, v12, { confidence: 0.7, observationDate: "2025-01-01" })
+            let diffDP = dp.getDatapoint(o2, p1, v12, { confidence: 0.6, observationDate: "2025-01-01" })
 
 
             it('Comparison - same', () => {
@@ -90,19 +90,19 @@ describe('Datapoint helpers', () => {
 
                 let r
 
-                r = dp.isSameObject(refDP, sameDP)
+                r = dp.sameObject(refDP, sameDP)
                 expect(r).toBe(true);
 
-                r = dp.isSameObject(refDP, smallerDP)
+                r = dp.sameObject(refDP, smallerDP)
                 expect(r).toBe(true);
 
-                r = dp.isSameObject(refDP, smallerDP)
+                r = dp.sameObject(refDP, smallerDP)
                 expect(r).toBe(true);
 
-                r = dp.isSameObject(refDP, biggerDP)
+                r = dp.sameObject(refDP, biggerDP)
                 expect(r).toBe(true);
 
-                r = dp.isSameObject(refDP, diffDP)
+                r = dp.sameObject(refDP, diffDP)
                 expect(r).toBe(false);
 
             })
@@ -217,11 +217,11 @@ describe('Datapoint helpers', () => {
             let v11 = "test11"
             let v12 = "test12"
 
-            let refDP = dp.get(o1, p1, v12, { observationDate: new Date('2025-01-01') })
-            let sameDP = dp.get(o1, p1, v12, { observationDate: new Date('2025-01-01') })
-            let smallerDP = dp.get(o1, p1, v11, { observationDate: new Date('2023-01-01') })
-            let biggerDP = dp.get(o1, p1, v12, { observationDate: new Date('2026-01-01') })
-            let diffDP = dp.get(o2, p1, v12, { observationDate: new Date('2025-01-01') })
+            let refDP = dp.getDatapoint(o1, p1, v12, { observationDate: new Date('2025-01-01') })
+            let sameDP = dp.getDatapoint(o1, p1, v12, { observationDate: new Date('2025-01-01') })
+            let smallerDP = dp.getDatapoint(o1, p1, v11, { observationDate: new Date('2023-01-01') })
+            let biggerDP = dp.getDatapoint(o1, p1, v12, { observationDate: new Date('2026-01-01') })
+            let diffDP = dp.getDatapoint(o2, p1, v12, { observationDate: new Date('2025-01-01') })
 
 
             it('Comparison - same', () => {
@@ -229,19 +229,19 @@ describe('Datapoint helpers', () => {
 
                 let r
 
-                r = dp.isSameObject(refDP, sameDP)
+                r = dp.sameObject(refDP, sameDP)
                 expect(r).toBe(true);
 
-                r = dp.isSameObject(refDP, smallerDP)
+                r = dp.sameObject(refDP, smallerDP)
                 expect(r).toBe(true);
 
-                r = dp.isSameObject(refDP, smallerDP)
+                r = dp.sameObject(refDP, smallerDP)
                 expect(r).toBe(true);
 
-                r = dp.isSameObject(refDP, biggerDP)
+                r = dp.sameObject(refDP, biggerDP)
                 expect(r).toBe(true);
 
-                r = dp.isSameObject(refDP, diffDP)
+                r = dp.sameObject(refDP, diffDP)
                 expect(r).toBe(false);
 
             })

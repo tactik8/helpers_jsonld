@@ -1,5 +1,5 @@
+import { jsonldBase as h } from '../../jsonldBase/jsonldBase.js'
 
-import { _h as h } from '../../index.js'
 
 
 
@@ -21,8 +21,8 @@ export function getDatapoints(propertyID, value, metadata){
 
     let d = {
         "@type": "DataPoint",
-        "@id": h.randomUUID(),
-        ""
+        "@id": h.randomUUID()
+        
     }
 
 }

@@ -1,18 +1,11 @@
 
 
-const randomUUID = globalThis.crypto.randomUUID
+import { jsonldBase as h } from '../../jsonldBase/jsonldBase.js'
 
-import { records} from '../../records/records.js'
-
-import * as idhelper from '../../recordIdHelpers/recordIdHelpers.js'
-
-import { _h as h}  from '../../index.js'
 import { Thing } from './thing.js'
 
 import { CreativeWork } from './creativeWork.js'
 import { Message } from './message.js'
-import { timeStamp } from 'console';
-
 
 /**
  * Represents a message in the system.

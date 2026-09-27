@@ -1,5 +1,5 @@
 
-import dot from '../dotHelpers/dotHelpers.js'
+import {dotHelpers} from '../dotHelpers/dotHelpers.js'
 
 import * as comparisonHelpers from './src/comparisonHelpers.js'
 import * as conditionHelpers from './src/conditionHelpers.js'
@@ -13,8 +13,14 @@ import * as listHelpers from './src/listHelpers.js'
 import * as toStringHelpers from './src/toStringHelpers.js'
 import * as databaseHelpers from './src/databaseHelpers.js'
 
+/**
+ * @fileoverview Helpers methods to work with JSON-LD records
+ * @module jsonldBase
+ */
+
+
 export const jsonldBase = { 
-  dot, 
+  dot: dotHelpers, 
   ...comparisonHelpers, 
   ...conditionHelpers, 
   ...expansionHelpers, 

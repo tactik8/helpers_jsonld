@@ -1,159 +1,167 @@
+import * as arrayHelpers from './array/arrayHelpers.js'
+import * as dateHelpers from './date/dateHelpers.js'
+import * as nullHelpers from './null/nullHelpers.js'
+import * as numberHelpers from './number/numberHelpers.js'
+import * as objectHelpers from './object/objectHelpers.js'
+import * as stringHelpers from './string/stringHelpers.js'
+import * as urlHelpers from './url/urlHelpers.js'
+
+
+
+/**
+ * @fileoverview Helpers to identify and convert dataTypes. 
+ * @module dataHelpers
+ */
+
 
 
 
 export const dataHelpers = {
 
-    "url": {
-        clean: cleanUrl,
-        domain: getDomain,
-        params: {
-            get: getUrlParams,
-            set: setUrlParams
-        },
-    }
+  isNull: nullHelpers.isNull,
+  isNotNull: nullHelpers.isNotNull,
+  isArray: arrayHelpers.isArray,
+  toArray: arrayHelpers.toArray,
+  isDate: dateHelpers.isDate,
+  toDate: dateHelpers.toDate,
+  isObject: objectHelpers.isObject,
+  isNumber: numberHelpers.isNumber,
+  toNumber: numberHelpers.toNumber,
+  isString: stringHelpers.isString,
+  toString: stringHelpers.toString,
+  isUrl: urlHelpers.isUrl,
+  toUrl: urlHelpers.toUrl,
+
+  array: arrayHelpers,
+  date: dateHelpers,
+  null: nullHelpers,
+  number: numberHelpers,
+  object: objectHelpers,
+  string: stringHelpers,
+  url: urlHelpers,
+  getDataType: getDataType,
+  getType: getDataType,
+  getJsonSchema
 }
 
 
 export default dataHelpers
 
 
+/**
+ * Returns the datatype of the value
+ * @param {*} value 
+ */
+function getDataType(value) {
 
-// ----------------------------------------
-// URL
-// ----------------------------------------
-
-function cleanUrlOLD(urlString, baseUrl) {
-    try {
-        // 1. Create URL object to normalize
-        const url = new URL(urlString, baseUrl);
-
-        // 2. Sort search parameters to avoid duplication (optional but recommended)
-        url.searchParams.sort();
-
-        // 3. Return the string representation
-        return url.toString();
-        
-    } catch (error) {
-        return null; // or handle error as needed
-    }
-}
-
-export function cleanUrl(inputUrl, options = {}) {
-  const {
-    removeTracking = true,
-    stripWww = false,
-    removeTrailingSlash = true,
-    lowercasePath = false,
-    allowedQueryParams = []
-  } = options;
-
-  try {
-    const parsed = new URL(inputUrl);
-
-    // 1. Lowercase scheme and hostname
-    parsed.protocol = parsed.protocol.toLowerCase();
-    parsed.hostname = parsed.hostname.toLowerCase();
-
-    // 2. Optionally remove 'www.' prefix
-    if (stripWww && parsed.hostname.startsWith('www.')) {
-      parsed.hostname = parsed.hostname.slice(4);
-    }
-
-    // 3. Remove standard default ports
-    if (
-      (parsed.protocol === 'http:' && parsed.port === '80') ||
-      (parsed.protocol === 'https:' && parsed.port === '443')
-    ) {
-      parsed.port = '';
-    }
-
-    // 4. Handle pathname formatting
-    let pathname = parsed.pathname;
-
-    // Remove duplicate slashes (e.g., //path///to -> /path/to)
-    pathname = pathname.replace(/\/+/g, '/');
-
-    if (lowercasePath) {
-      pathname = pathname.toLowerCase();
-    }
-
-    // Remove trailing slash if path is longer than root '/'
-    if (removeTrailingSlash && pathname.length > 1 && pathname.endsWith('/')) {
-      pathname = pathname.slice(0, -1);
-    }
-
-    parsed.pathname = pathname;
-
-    // 5. Clean query parameters
-    if (removeTracking) {
-      const trackingPrefixes = ['utm_', 'fbclid', 'gclid', 'msclkid', 'mc_eid', '_hsenc', 'ref', 'source'];
-      
-      const keys = Array.from(parsed.searchParams.keys());
-      for (const key of keys) {
-        const isTracking = trackingPrefixes.some(prefix => 
-          key.toLowerCase().startsWith(prefix)
-        );
-
-        const isAllowed = allowedQueryParams.includes(key);
-
-        if (isTracking && !isAllowed) {
-          parsed.searchParams.delete(key);
-        }
-      }
-    }
-
-    // 6. Sort remaining query parameters for consistency
-    parsed.searchParams.sort();
-
-    return parsed.toString();
-  } catch (err) {
-    throw new Error(`Invalid URL provided: ${inputUrl}`);
+  // Check if undefined
+  if (nullHelpers.isNull(value)) {
+    return 'undefined'
   }
+
+  // String
+  if (typeof value == "string") {
+
+    // Case: url
+    if (urlHelpers.isValid(value)) {
+      return 'url string'
+    }
+
+    // Case: date as string
+    if (dateHelpers.clean(value)) {
+      return 'date string'
+    }
+
+    // Case: number as string
+    if (numberHelpers.clean(value) !== undefined) {
+      return 'number string'
+    }
+
+    // Case json as string
+    if (value.includes('[') || value.includes('{') || value.includes('"')) {
+      try {
+        let r = JSON.parse(value)
+        return 'json string'
+      } catch { }
+    }
+
+
+    // Case: other string
+    return 'string'
+
+  }
+
+  // Array
+  if (arrayHelpers.isValid(value)) {
+    let subs = value.map(x => getDataType(x))
+    subs = [... new Set(subs)]
+    return `array of [${subs.join('|')}]`
+  }
+
+  // Object
+  if (objectHelpers.isValid(value)) {
+
+
+    // Case: jsonld
+    if (value?.["@type"] || value?.['@id']) {
+      return `jsonld ${value?.['@type'] ?? ""}`
+    }
+
+    // Case: other
+    return 'object'
+  }
+
 }
 
 
-function getDomain(url) {
-    try {
-        let domain = new URL(url).hostname;
-        domain = domain.replaceAll('www.', '')
-        return domain
-    } catch (e) {
-        return null; // Handle invalid URLs
-    }
-}
+function getJsonSchema(value) {
+
+  function _getJsonSchema(value, depth = 0) {
 
 
-function getUrlParams(url) {
+    // Init schema record
+    let schema = {}
 
-    try {
-        const myUrl = new URL(url);
-
-        // Convert all parameters to a plain object
-        const params = Object.fromEntries(myUrl.searchParams);
-
-        return params
-
-    } catch (e) {
-        return null; // Handle invalid URLs
+    // Add top level info
+    if (depth == 0) {
+      schema['$schema'] = "https://json-schema.org/draft/2020-12/schema"
+      schema.title = value?.['@type'] || ""
     }
 
-}
-
-function setUrlParams(url, params) {
-    function getUrlParams(url) {
-
-        try {
-            const myUrl = new URL(url);
-
-            for(let k of Object.keys(params)){
-                myUrl.searchParams.set(k, params[k]);
-            }
-          
-            return myUrl.toString()
-
-        } catch (e) {
-            return null; // Handle invalid URLs
-        }
+    // string
+    if (dataHelpers.isString(value)) {
+      schema['type'] = "string"
+      return schema
 
     }
+
+    // Object
+    if (dataHelpers.isObject(value)) {
+      schema['type'] = "object"
+      schema.properties = {}
+
+      for (let k of Object.keys(value)) {
+        schema.properties[k] = _getJsonSchema(value[k], depth + 1)
+      }
+      return schema
+
+    }
+
+    // Number
+    if (dataHelpers.isNumber(value)) {
+      schema['type'] = "number"
+      return schema
+    }
+
+    // Array
+    // todo: add support for varied data types 
+    if (dataHelpers.isArray(value)) {
+      schema['type'] = "array"
+      schema.items = _getJsonSchema(value?.[0], depth + 1)
+      return schema
+    }
+  }
+
+  return _getJsonSchema(value, 0)
+
 }

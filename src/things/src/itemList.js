@@ -1,23 +1,20 @@
 
-const randomUUID = globalThis.crypto.randomUUID
 
 
-import * as idhelper from '../../recordIdHelpers/recordIdHelpers.js'
 
-import { _h as h } from '../../index.js'
+import { jsonldBase as h } from '../../jsonldBase/jsonldBase.js'
 
 import { Thing } from './thing.js'
-import { getItemList } from '../../records/src/itemList.js'
-import { helpers } from '../../index.js'
 
 
 export class ItemList extends Thing {
-    constructor(records) {
+    constructor(name_or_record) {
         super()
-        this.record_type = "ItemList"
-        if (records) {
-            this.add(records)
-        }
+        this._defaultRecordType = "ItemList"
+
+        this._loadRecord(name_or_record)
+        this._setValueIfString('name', name_or_record)
+       
     }
 
     toString() {
@@ -27,7 +24,7 @@ export class ItemList extends Thing {
 
 
     get itemListElement() {
-        let itemListElements = h.getValues(this.record, "itemListElement")
+        let itemListElements = this.getValues( "itemListElement")
         itemListElements = itemListElements || []
         itemListElements = itemListElements.filter(x => x)
         itemListElements.sort((a, b) => getPosition(a, 0) - getPosition(b, 0))
@@ -36,7 +33,7 @@ export class ItemList extends Thing {
 
     set itemListElement(value) {
         value = value || []
-        this.record = Thing.setValues(this.record, 'itemListElement', value)
+        return this.setValues(this.record, 'itemListElement', value)
     }
 
     length() {
@@ -216,7 +213,7 @@ export function ensureListItems(itemList) {
     // Convert items to listItems
     itemListElements = itemListElements.map(x => toListItem(x))
 
-    itemList = helpers.setValues(itemList, 'itemListElement', itemListElements)
+    itemList = h.setValues(itemList, 'itemListElement', itemListElements)
 
     return itemList
 
@@ -627,23 +624,23 @@ export function duplicateItem(itemList, listItem) {
     if (!listItem) {
         return itemList
     }
-    let item = helpers.getValue(listItem, 'item')
-    let newItem = helpers.clone(item)
+    let item = h.getValue(listItem, 'item')
+    let newItem = h.clone(item)
 
     // Set new record_id
     newItem['@id'] = "_:" + globalThis.crypto.randomUUID()
 
     // Ste new name
-    let name = helpers.getValue(item, 'name') || ""
+    let name = h.getValue(item, 'name') || ""
     let newName = ''
     newName = name.split('_copy')[0]
 
-    let listItems = helpers.getValues(itemList, 'itemListElement')
-    listItems = listItems.filter(x => (helpers.getValue(x, 'item.name') || "").includes(newName))
+    let listItems = h.getValues(itemList, 'itemListElement')
+    listItems = listItems.filter(x => (h.getValue(x, 'item.name') || "").includes(newName))
     newName = newName + '_copy' + String(listItems.length || "")
 
 
-    newItem = helpers.setValue(newItem, 'name', newName)
+    newItem = h.setValue(newItem, 'name', newName)
     let position = getPosition(listItem, 0) + 1
     return insertItem(itemList, newItem, position)
 

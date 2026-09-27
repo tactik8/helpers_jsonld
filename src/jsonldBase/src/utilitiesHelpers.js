@@ -34,6 +34,49 @@ export function randomUUID() {
 
 
 
+export function getDataType(value){
+
+    if(isNull(value)){
+        return "Undefined"
+    }
+
+    if(isArray(value)){
+        return "Array"
+    }
+
+    if(isJsonld(value)){
+        return "Jsonld"
+    }
+
+
+    let d = toDate(value)
+    if(isDate(d)){
+        return 'Date'
+    }
+
+    let n = toNumber(value)
+    if(isNumber(n)){
+        return "Number"
+    }
+
+    
+
+    if(isObject(value)){
+        return "Object"
+    }
+
+    if(isString(value)){
+        return 'String"'
+    }
+
+    if(isBoolean(value)){
+        return "Boolean"
+    }
+
+    return 'Undefined'
+
+}
+
 
 /**
  * Returns true if record or property is undefined or null
@@ -44,17 +87,22 @@ export function randomUUID() {
 export function isNull(record, propertyID = undefined) {
 
 
-    if (record == undefined || record == null) {
+    if (record === undefined || record === null) {
         return true
     }
 
+    if(typeof record == "string" && record.length == 0){
+        return true
+    }
+
+
     // Evalue record as not null if no propertyID given
-    if (propertyID == undefined || propertyID == null) {
+    if (propertyID === undefined || propertyID === null) {
         return false
     }
 
     // 
-    let values = getValues(record, propertyID)
+    let values = h.getValues(record, propertyID)
 
     return values.length == 0
 
@@ -72,11 +120,28 @@ export function isNotNull(record, propertyID = undefined) {
 }
 
 
+export function isBoolean(value){
+    if(value === true || value === false){
+        return true
+    }
+    return false
+}
+
+
+
 /**
  * Return true if value is anumber
  * @param {*} value 
  */
 export function isNumber(value) {
+
+    if(isNull(value)){
+        return false
+    }
+
+    if(value === ""){
+        return false
+    }
 
     value = Number(value)
     return !isNaN(value)
@@ -99,6 +164,9 @@ export function isNotNumber(value) {
  * @returns 
  */
 export function toNumber(value) {
+    if(isNull(value)){
+        return undefined
+    }
     value = Number(value)
 
     if (!isNaN(value)) {
@@ -113,6 +181,9 @@ export function toNumber(value) {
  * @param {*} value 
  */
 export function isString(value) {
+    if(isNull(value)){
+        return false
+    }
     return typeof value == 'string'
 }
 
@@ -129,7 +200,7 @@ export function isNotString(value) {
  * @param {*} value 
  */
 export function toString(value){
-    if(value == undefined || value == null){
+    if(isNull(value)){
         return ""
     }
 
@@ -166,6 +237,13 @@ export function toString(value){
  * @returns 
  */
 export function isDate(value) {
+    if(isNull(value)){
+        return false
+    }
+     if(value === ""){
+        return false
+    }
+   
     return value instanceof Date && !Number.isNaN(value.getTime());
 }
 
@@ -179,16 +257,79 @@ export function isNotDate(value) {
 }
 
 export function toDate(value) {
+    if(isNull(value)){
+        return undefined
+    }
 
-    if (isDate(value)) {
+    if(isDate(value) == true){
         return value
     }
+
+
+    if(!isNaN(Number(value))){
+        return undefined
+    }
+
+    const timestamp = Date.parse(value);
+    if(!isNaN(timestamp) == false){
+        return undefined
+    }
+
+
 
     value = new Date(value)
     value = isDate(value) ? value : undefined
 
     return value
 
+}
+
+
+/**
+ * Return true if object
+ * @param {*} value 
+ */
+export function isObject(value){
+
+    if(isNull(value)){
+        return false
+    }
+
+    if(isString(value)== true){
+        return false
+    }
+
+    if(isDate(value) == true){
+        return false
+    }
+
+    if(isNumber(value) == true){
+        return false
+    }
+
+    let keys = Object.keys(value)
+    return keys.length > 0
+
+
+}
+
+
+/**
+ * Return true if object
+ * @param {*} value 
+ */
+export function isJsonld(value){
+
+    if(isNull(value)){
+        return false
+    }
+
+    if(value?.['@id'] || value?.["@type"]){
+        return true
+    }
+
+
+    return false
 }
 
 
@@ -199,6 +340,9 @@ export function toDate(value) {
  * @returns 
  */
 export function isArray(value) {
+    if(isNull(value)){
+        return false
+    }
     return Array.isArray(value) && typeof value != "string"
 }
 
@@ -208,6 +352,9 @@ export function isArray(value) {
  * @returns 
  */
 export function toArray(value) {
+    if(isNull(value)){
+        return []
+    }
 
     value = isArray(value) ? value : [value]
 

@@ -5,6 +5,14 @@ import fs from 'fs/promises';
 import path from 'path';
 
 
+/**
+ * @fileoverview Helpers methods to read / write data to disk
+ * @module dotHelpers
+ */
+
+
+
+
 export const diskHelpers = {
 
     load: loadTextFile,

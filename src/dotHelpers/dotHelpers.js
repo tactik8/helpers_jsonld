@@ -1,7 +1,18 @@
 
 
 
+/**
+ * @fileoverview Helpers methods to read / write data to records using dot notation
+ * @module dotHelpers
+ */
 
+/**
+ * Collection of Schema.org class constructors, formatting tools, and instantiation utilities.
+ * 
+ * @namespace dot
+ * @type {Object}
+ * @property {*} get Retrieves a value from a record.
+ */
 export const dotHelpers = {
     get,
     set,

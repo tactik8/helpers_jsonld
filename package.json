@@ -28,5 +28,8 @@
   "devDependencies": {
     "esbuild": "^0.25.0",
     "jest": "^30.4.2"
+  },
+  "dependencies": {
+    "check-imports": "^1.0.8"
   }
 }

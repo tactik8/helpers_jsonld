@@ -5,6 +5,17 @@
 import { _h } from '../index.js'
 
 
+/**
+ * @fileoverview Tools to read write JSON-LD records to disk.
+ * @module dbDisk
+ */
+
+
+
+/**
+ * Creates a new DbDisk instance to read/write JSON-LD records to disk.
+ * @class
+ */
 export class DbDisk {
     constructor(directoryPath) {
 

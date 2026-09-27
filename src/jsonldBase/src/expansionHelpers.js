@@ -12,7 +12,7 @@ export function expand(store, record) {
 
         let storeRecord = h._storeToMap(store)
 
-        if (Array.isArray(record)) {
+        if (h.isArray(record)) {
             return record.map(x => _expand(storeRecord, x, cache))
         }
 
@@ -20,12 +20,14 @@ export function expand(store, record) {
             return record
         }
 
+        // Check in cache
         let newRecord = cache.get(record?.['@id'])
         if (newRecord) {
-            return { "@id": newRecord?.["@id"] }
+            return newRecord
+            //todo: why did it do this?? return { "@id": newRecord?.["@id"] }
         }
 
-
+        // Check in storeRecord
         newRecord = h.getRecord(storeRecord, record?.['@id'], false)
         record = newRecord || record
 
@@ -37,7 +39,6 @@ export function expand(store, record) {
             }
             record[k] = _expand(storeRecord, record[k], cache)
         }
-
 
         return record
 
@@ -88,10 +89,13 @@ export function flatten(record) {
 
         let records = []
 
-        if (Array.isArray(record)) {
-            records = record.map(x => _flatten(x))
-            records = records.flat()
-            return records
+        if (h.isArray(record)) {
+            let results = []
+            for(let r of record){
+                results = results.concat(_flatten(r))
+            }
+           
+            return results
         }
 
         if (!record?.['@id'] && !record?.['@type']) {
@@ -110,7 +114,7 @@ export function flatten(record) {
             }
 
             let values = record[k]
-            values = Array.isArray(values) ? values : [values]
+            values = h.toArray(values)
 
             record[k] = []
             for (let v of values) {
@@ -119,14 +123,11 @@ export function flatten(record) {
                 } else {
                     record[k].push(v)
                 }
-                records.push(_flatten(v))
+                records = records.concat(_flatten(v))
             }
         }
         records = [record].concat(records)
-        records = records.flat()
-
-        // Remove values with only @id
-        // records = records.filter(x => Object.keys(x).some(k => k !== '@id'))
+       
 
         return records
     }

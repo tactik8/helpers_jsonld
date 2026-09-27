@@ -1,11 +1,8 @@
 
 
-const randomUUID = globalThis.crypto.randomUUID
 
 
-import * as idhelper from '../../recordIdHelpers/recordIdHelpers.js'
-
-import { _h as h } from '../../index.js'
+import { jsonldBase as h } from '../../jsonldBase/jsonldBase.js'
 import { Thing } from './thing.js'
 
 import { CreativeWork } from './creativeWork.js'
@@ -40,66 +37,66 @@ export class Message extends CreativeWork {
     }
 
     get bccRecipient() {
-        return h.getValues(this._record, "bccRecipient")
+        return this.getValues( "bccRecipient")
     }
     set bccRecipient(value) {
-        this._record = Thing.setValues(this._record, "bccRecipient", toContactPoint(value))
+        return this.setValues("bccRecipient", toContactPoint(value))
     }
 
     get ccRecipient() {
-        return h.getValues(this._record, "ccRecipient")
+        return this.getValues("ccRecipient")
     }
     set ccRecipient(value) {
-        this._record = Thing.setValues(this._record, "ccRecipient", toContactPoint(value))
+        return this.setValues("ccRecipient", toContactPoint(value))
     }
 
     get dateRead() {
-        return h.getValue(this._record, "dateRead")
+        return this.getValue( "dateRead")
     }
     set dateRead(value) {
-        this._record = Thing.setValue(this._record, "dateRead", value)
+        return this.setValue("dateRead", value)
     }
 
     get dateReceived() {
-        return h.getValue(this._record, "dateReceived")
+        return this.getValue( "dateReceived")
     }
     set dateReceived(value) {
-        this._record = Thing.setValue(this._record, "dateReceived", value)
+        return this.setValue("dateReceived", value)
     }
 
     get dateSent() {
-        return h.getValue(this._record, "dateSent")
+        return this.getValue("dateSent")
     }
     set dateSent(value) {
-        this._record = Thing.setValue(this._record, "dateSent", value)
+        return this.setValue("dateSent", value)
     }
 
     get messageAttachment() {
-        return h.getValues(this._record, "messageAttachment")
+        return this.getValues( "messageAttachment")
     }
     set messageAttachment(value) {
-        this._record = Thing.setValues(this._record, "messageAttachment", value)
+        return this.setValues("messageAttachment", value)
     }
 
     get recipient() {
-        return h.getValues(this._record, "recipient")
+        return this.getValues( "recipient")
     }
     set recipient(value) {
-        this._record = Thing.setValues(this._record, "recipient", toContactPoint(value))
+        return this.setValues("recipient", toContactPoint(value))
     }
 
     get sender() {
-        return h.getValue(this._record, "sender")
+        return this.getValue( "sender")
     }
     set sender(value) {
-        this._record = Thing.setValue(this._record, "sender", toContactPoint(value))
+        return this.setValue("sender", toContactPoint(value))
     }
 
     get toRecipient() {
-        return h.getValues(this._record, "toRecipient")
+        return this.getValues( "toRecipient")
     }
     set toRecipient(value) {
-        this._record = Thing.setValues(this._record, "toRecipient", toContactPoint(value))
+        return this.setValues("toRecipient", toContactPoint(value))
     }
 
 

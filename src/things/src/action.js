@@ -1,35 +1,19 @@
 
-const randomUUID = globalThis.crypto.randomUUID
 
-
-import * as idhelper from '../../recordIdHelpers/recordIdHelpers.js'
-
-import { _h as h } from '../../index.js'
-
-import * as things from '../../things/things.js'
-
-
+import { jsonldBase as h } from '../../jsonldBase/jsonldBase.js'
 import { Thing } from './thing.js'
 
+import { ItemList } from './itemList.js'
 import { PropertyValueSpecification } from './propertyValueSpecification.js'
 
 export class Action extends Thing {
-    constructor(name, object) {
+    constructor(name_or_record, object) {
         super()
+        this._defaultRecordType = "Action"
 
-        // If record provided instead of name
-        if (typeof name != "string" ) {
-            this.record = name
-        } else {
-            if(name){
-                this.name = name
-            }
-            if(object){
-                this.object = object
-            }
-            this.record_type = this.record_type || "Action"
-        }
-     
+        this._loadRecord(name_or_record)
+        this._setValueIfString('name', name_or_record)
+        this._setValueIfNotNull('object', object)
 
     }
 
@@ -38,89 +22,88 @@ export class Action extends Thing {
     }
 
     setPotential() {
-        this.record = setPotential(this.record)
+        this.record = h.setPotential(this.record)
     }
 
     setActive() {
-        this.record = setActive(this.record)
+        this.record = h.setActive(this.record)
     }
 
     setCompleted(result) {
-        this.record = setCompleted(this.record, result)
+        this.record = h.setCompleted(this.record, result)
     }
 
     setFailed(error) {
-        this.record = setFailed(this.record, error)
+        this.record = h.setFailed(this.record, error)
     }
 
     get isPotential() {
-        return this.actionStatus == "PotentialActionStatus"
+        return h.isPotential(this.record)
     }
     get isActive() {
-        return this.actionStatus == "ActiveActionStatus"
+        return h.isActive(this.record)
     }
     get isCompleted() {
-        return this.actionStatus == "CompletedActionStatus"
+        return h.isCompleted(this.record)
     }
     get isFailed() {
-        return this.actionStatus == "FailedActionStatus"
+        return h.isFailed(this.record)
     }
 
 
     get object() {
-        return h.getValues(this.record, "object")
+        return this.getValues( "object")
     }
     set object(value) {
-        this.record = Thing.setValues(this.record, "object", value)
+        return
     }
-
     get instrument() {
-        return h.getValues(this.record, "instrument")
+        return this.getValues( "instrument")
     }
     set instrument(value) {
-        this.record = Thing.setValues(this.record, "instrument", value)
+        return this.setValues( "instrument", value)
     }
 
     get agent() {
-        return h.getValues(this.record, "agent")
+        return this.getValues( "agent")
     }
     set agent(value) {
-        this.record = Thing.setValues(this.record, "agent", value)
+        return this.setValues( "agent", value)
     }
 
     get result() {
-        return h.getValues(this.record, "result")
+        return this.getValues( "result")
     }
     set result(value) {
-        this.record = Thing.setValues(this.record, "result", value)
+        return this.setValues("result", value)
     }
 
     get actionStatus() {
-        return h.getValue(this.record, "actionStatus")
+        return this.getValue( "actionStatus")
     }
     set actionStatus(value) {
-        this.record = Thing.setValue(this.record, "actionStatus", value)
+        return this.setValue( "actionStatus", value)
     }
 
     get startTime() {
-        return h.getValue(this.record, "startTime")
+        return this.getValue( "startTime")
     }
     set startTime(value) {
-        this.record = Thing.setValue(this.record, "startTime", value)
+        return this.setValue( "startTime", value)
     }
 
     get endTime() {
-        return h.getValue(this.record, "endTime")
+        return this.getValue( "endTime")
     }
     set endTime(value) {
-        this.record = Thing.setValue(this.record, "endTime", value)
+        return this.setValue( "endTime", value)
     }
 
     get error() {
-        return h.getValue(this.record, "error")
+        return this.getValue( "error")
     }
     set error(value) {
-        this.record = Thing.setValue(this.record, "error", value)
+        return this.setValue( "error", value)
     }
 
 
@@ -172,14 +155,14 @@ export class Action extends Thing {
         return getPVSInput(this.record)
     }
     addInputCondition(key, condition) {
-        this.record = h.addValues(k + '-input', condition)
+        this.record = this.addValues(key + '-input', condition)
     }
 
     getOutputConditions() {
         return getPVSOutput(this.record)
     }
     addOutputCondition(key, condition) {
-        this.record = h.addValues(k + '-output', condition)
+        this.record = this.addValues(key + '-output', condition)
     }
 
 
@@ -190,110 +173,74 @@ export class Action extends Thing {
 
     // Static
     static setPotential(record) {
-        return setPotential(record)
+        return h.setPotential(record)
     }
 
     static setActive(record) {
-        return setActive(record)
+        return h.setActive(record)
     }
 
     static setCompleted(record, result) {
-        return setCompleted(record, result)
+        return h.setCompleted(record, result)
     }
 
     static setFailed(record, error) {
-        return setFailed(record, error)
+        return h.setFailed(record, error)
     }
 
     static isPotential(record) {
-        return h.getValue(record?.record || record, actionStatus) == "PotentialActionStatus"
+        return h.isPotential(record)
     }
     static isActive(record) {
-        return h.getValue(record?.record || record, actionStatus) == "ActiveActionStatus"
+        return h.isActive(record)
     }
     static isCompleted(record) {
-        return h.getValue(record?.record || record, actionStatus) == "CompletedActionStatus"
+        return h.isCompleted(record)
     }
     static isFailed(record) {
-        return h.getValue(record?.record || record, actionStatus) == "FailedActionStatus"
+        return h.isFailed(record)
     }
 
 
     static addMinValue(record, property, value) {
-        this.record = addMinValue(record, property, value)
+        return addMinValue(record, property, value)
     }
     static addMaxValue(record, property, value) {
-        this.record = addMaxValue(record, property, value)
+        return addMaxValue(record, property, value)
     }
 
     static addMinLength(record, property, value) {
-        this.record = addMinLength(record, property, value)
+        return addMinLength(record, property, value)
     }
 
     static addMaxLength(record, property, value) {
-        this.record = addMaxLength(record, property, value)
+        return addMaxLength(record, property, value)
     }
 
     static addDefaultValue(record, property, value) {
-        this.record = addDefaultValue(record, property, value)
+        return addDefaultValue(record, property, value)
     }
 
     static addValueRequired(record, property, value) {
-        this.record = addValueRequired(record, property, value)
+        return addValueRequired(record, property, value)
     }
 
     static addValuePattern(record, property, value) {
-        this.record = addValuePattern(record, property, value)
+        return addValuePattern(record, property, value)
     }
    
     static addMultipleValues(record, property, value) {
-        this.record = addMultipleValues(record, property, value)
+        return addMultipleValues(record, property, value)
     }
   
     static addStepValue(record, property, value) {
-        this.record = addStepValue(record, property, value)
+        return addStepValue(record, property, value)
     }
 
 
     static test(record) {
         return testConditions(record)
     }
-}
-
-function setPotential(record) {
-    record = record?.record || record
-    Thing.setValue(record, 'actionStatus', 'PotentialActionStatus')
-    Thing.setValue(record, 'timeStart', undefined)
-    Thing.setValue(record, 'timeEnd', undefined)
-    Thing.setValues(record, 'result', undefined)
-    Thing.setValue(record, 'error', undefined)
-    return record
-}
-
-function setActive(record) {
-    record = record?.record || record
-    Thing.setValue(record, 'actionStatus', 'ActiveActionStatus')
-    Thing.setValue(record, 'timeStart', new Date())
-    Thing.setValue(record, 'timeEnd', undefined)
-    return record
-}
-
-function setCompleted(record, result) {
-    record = record?.record || record
-    Thing.setValue(record, 'actionStatus', 'CompletedActionStatus')
-    Thing.setValue(record, 'timeStart', h.getValue(record, 'timeStart') || new Date())
-    Thing.setValue(record, 'timeEnd', new Date())
-    Thing.setValues(record, 'result', result)
-    return record
-}
-
-function setFailed(record, error) {
-    record = record?.record || record
-    Thing.setValue(record, 'actionStatus', 'FailedActionStatus')
-    Thing.setValue(record, 'timeStart', h.getValue(record, 'timeStart') || new Date())
-    Thing.setValue(record, 'timeEnd', new Date())
-    Thing.setValue(record, 'error', error)
-    return record
 }
 
 
@@ -480,102 +427,134 @@ function testConditions(record) {
 // 
 
 export class UpdateAction extends Action {
-    constructor(name, object) {
-        super(name, object)
-        this.record_type = "UpdateAction"
+    constructor(name_or_record, object) {
+        super()
+        this._defaultRecordType = "UpdateAction"
+
+        this._loadRecord(name_or_record)
+        this._setValueIfString('name', name_or_record)
+        this._setValueIfNotNull('object', object)
     }
 
     get targetCollection() {
-        return h.getValues(this.record, "targetCollection")
+        return this.getValues(this.record, "targetCollection")
     }
 
     set targetCollection(value) {
-        this.record = Thing.setValues(this.record, "targetCollection", value)
+        this.record = this.setValues(this.record, "targetCollection", value)
     }
 
     get toLocation() {
-        return h.getValues(this.record, "toLocation")
+        return this.getValues(this.record, "toLocation")
     }
 
     set toLocation(value) {
-        this.record = Thing.setValues(this.record, "toLocation", value)
+        this.record = this.setValues(this.record, "toLocation", value)
     }
 }
 
 
 export class AddAction extends UpdateAction {
-    constructor(name, object) {
-        super(name, object)
-        this.record_type = "AddAction"
+    constructor(name_or_record, object) {
+        super()
+        this._defaultRecordType = "AddAction"
+
+        this._loadRecord(name_or_record)
+        this._setValueIfString('name', name_or_record)
+        this._setValueIfNotNull('object', object)
     }
 
 }
 
 
 export class DeleteAction extends UpdateAction {
-    constructor(name, object) {
-        super(name, object)
-        this.record_type = "DeleteAction"
+    constructor(name_or_record, object) {
+        super()
+        this._defaultRecordType = "DeleteAction"
+
+        this._loadRecord(name_or_record)
+        this._setValueIfString('name', name_or_record)
+        this._setValueIfNotNull('object', object)
     }
 
 }
 
 export class ReplaceAction extends UpdateAction {
-    constructor(name, object) {
-        super(name, object)
-        this.record_type = "ReplaceAction"
+    constructor(name_or_record, object) {
+        super()
+        this._defaultRecordType = "ReplaceAction"
+
+        this._loadRecord(name_or_record)
+        this._setValueIfString('name', name_or_record)
+        this._setValueIfNotNull('object', object)
     }
 
     get replacer() {
-        return h.getValues(this.record, "replacer")
+        return this.getValues(this.record, "replacer")
     }
 
     set replacer(value) {
-        this.record = Thing.setValues(this.record, "replacer", value)
+        this.record = this.setValues(this.record, "replacer", value)
     }
 
     get replacee() {
-        return h.getValues(this.record, "replacee")
+        return this.getValues(this.record, "replacee")
     }
 
     set replacee(value) {
-        this.record = Thing.setValues(this.record, "replacee", value)
+        this.record = this.setValues(this.record, "replacee", value)
     }
 }
 
 export class InsertAction extends UpdateAction {
-    constructor(name, object) {
-        super(name, object)
-        this.record_type = "InsertAction"
+    constructor(name_or_record, object) {
+        super()
+        this._defaultRecordType = "InsertAction"
+
+        this._loadRecord(name_or_record)
+        this._setValueIfString('name', name_or_record)
+        this._setValueIfNotNull('object', object)
     }
 }
 
 export class AppendAction extends UpdateAction {
-    constructor(name, object) {
-        super(name, object)
-        this.record_type = "AppendAction"
+    constructor(name_or_record, object) {
+        super()
+        this._defaultRecordType = "AppendAction"
+
+        this._loadRecord(name_or_record)
+        this._setValueIfString('name', name_or_record)
+        this._setValueIfNotNull('object', object)
     }
 }
 
 export class PrependAction extends UpdateAction {
-    constructor(name, object) {
-        super(name, object)
-        this.record_type = "PrependAction"
+   constructor(name_or_record, object) {
+        super()
+        this._defaultRecordType = "PrependAction"
+
+        this._loadRecord(name_or_record)
+        this._setValueIfString('name', name_or_record)
+        this._setValueIfNotNull('object', object)
     }
 }
 
 export class SearchAction extends UpdateAction {
-    constructor(name, object) {
-        super(name, object)
-        this.record_type = "SearchAction"
+    constructor(name_or_record, object) {
+        super()
+        this._defaultRecordType = "SearchAction"
+
+        this._loadRecord(name_or_record)
+        this._setValueIfString('name', name_or_record)
+        this._setValueIfNotNull('object', object)
     }
 
     get query() {
-        return h.getValue(this.record, "query") || ""
+        return this.getValue( "query") || ""
     }
 
     set query(value) {
-        return Thing.setValue(this.record, "query", value)
+        return this.setValue(this.record, "query", value)
     }
 
     get filter() {
@@ -646,10 +625,10 @@ export class SearchAction extends UpdateAction {
 
 
     get target() {
-        return h.getValue(this.record, "target") || ""
+        return this.getValue( "target") || ""
     }
     set target(value) {
-        return Thing.setValue(this.record, "target", value)
+        return this.setValue(this.record, "target", value)
     }
 
 
@@ -676,7 +655,7 @@ export class SearchAction extends UpdateAction {
         results = Array.isArray(results) ? results : [results]
         results = results.map(x => x)
 
-        let itemList = new things.ItemList()
+        let itemList = new ItemList()
         results.forEach(x => itemList.add(x))
 
         this.setCompleted()

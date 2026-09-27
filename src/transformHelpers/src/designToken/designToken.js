@@ -2,7 +2,7 @@
  * BrandDesign custome record for w3c design token
  */
 
-import { _h as helpers}  from '../../../index.js'
+import { jsonldBase as helpers } from '../../../jsonldBase/jsonldBase.js'
 
 import * as dot from '../../../dotHelpers/dotHelpers.js'
 import designTokenSample from "./designTokenSample.json" with { type: "json" };

@@ -1,4 +1,5 @@
-import { _h as h } from '../../index.js'
+import { jsonldBase as h } from '../../jsonldBase/jsonldBase.js'
+
 
 
 

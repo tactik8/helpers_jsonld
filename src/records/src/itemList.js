@@ -5,7 +5,7 @@ const randomUUID = globalThis.crypto.randomUUID
 export function getItemList(noOfItems=5) {
 
 
-    let record_type = "Thing"
+    let record_type = "ItemList"
      
 
     let record_id = "https://www.testrecord.com/" + globalThis.crypto.randomUUID() + "#" + record_type
@@ -25,8 +25,8 @@ export function getItemList(noOfItems=5) {
         let newItem = getListItem(records.thing(i), i)
 
         if(currentItem){
-            currentItem.nextItem = {"@type": newItem?.['@id'] }
-            newItem.previousItem = {"@type": currentItem?.['@id'] }
+            currentItem.nextItem = {"@id": newItem?.['@id'] }
+            newItem.previousItem = {"@id": currentItem?.['@id'] }
         }
 
         record.itemListElement.push(newItem)
