@@ -402,6 +402,7 @@ export function setPotential(record) {
     record = h.setValue(record, 'startTime', undefined)
     record = h.setValue(record, 'endTime', undefined)
     record = h.setValue(record, 'error', undefined)
+    record = h.setValue(record, 'result', undefined)
     return record
 }
 
@@ -410,6 +411,7 @@ export function setActive(record) {
     record = h.setValue(record, 'startTime', h.getValue(record, 'startTime') ?? new Date())
     record = h.setValue(record, 'endTime', undefined)
     record = h.setValue(record, 'error', undefined)
+    record = h.setValue(record, 'result', undefined)
     return record
 }
 
@@ -418,7 +420,7 @@ export function setCompleted(record, result) {
     record = h.setValue(record, 'startTime', h.getValue(record, 'startTime') ?? new Date())
     record = h.setValue(record, 'endTime', h.getValue(record, 'endTime') ?? new Date())
     record = h.setValue(record, 'error', undefined)
-    record = h.setValue(record, 'error', result ?? h.getValue(record, 'result'))
+    record = h.setValue(record, 'result', result ?? h.getValues(record, 'result'))
     return record
 }
 
