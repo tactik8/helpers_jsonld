@@ -48,10 +48,10 @@ export class ApiClient {
     }
 
     get tenantID(){
-        return this.tenantID
+        return this._tenantID
     }
     set tenantID(value){
-        this.tenantID = value
+        this._tenantID = value
     }
 
     get headers(){
