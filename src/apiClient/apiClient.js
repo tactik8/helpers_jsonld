@@ -198,6 +198,7 @@ async function apiPost(headers, baseUrl, path, data) {
         let response = await fetch(url, options)
 
         if (response.status >= 300) {
+            console.log(response.statusText)
             action.setFailed(response.statusText)
             return action
         }
@@ -209,6 +210,7 @@ async function apiPost(headers, baseUrl, path, data) {
         return action
 
     } catch (err) {
+        console.log(err)
         action.setFailed(String(err))
         return action
     }
