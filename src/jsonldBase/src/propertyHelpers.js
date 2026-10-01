@@ -2,7 +2,9 @@
 import { jsonldBase as h } from '../jsonldBase.js'
 
 import * as dot from '../../dotHelpers/dotHelpers.js'
+import { getRecord } from './memoryDb.js'
 
+let DEFAULT_LANGUAGE = "en-CA"
 
 
 /**
@@ -22,26 +24,35 @@ export function record_type(record) {
  * @returns 
  */
 export function record_id(record) {
-    return h.getValue(record, '@id')
+    return getValue(record, '@id')
 }
 
 
-
+/**
+ * Returns true if object is a ref (only @id as property)
+ * @param {*} value 
+ * @returns 
+ */
 export function isRef(value) {
 
     if (!value?.["@id"]) { return false }
     return !Object.keys(value).some(x => x != "@id")
 }
 
+
+/**
+ * Returns reference of a jsonld {"@id": ...}
+ * @param {*} record_or_id 
+ * @returns 
+ */
 export function ref(record_or_id) {
 
     // Check if thing object
-    if(record_or_id?._isThingClass == true){
+    if (record_or_id?._isThingClass == true) {
         return record.ref
     }
 
     //
-
 
     if (!record_or_id) {
         return undefined
@@ -54,108 +65,228 @@ export function ref(record_or_id) {
 }
 
 
+/**
+ * Return a value from record using dot notation. Returns position 0 if missing.
+ * Handles @language and @value
+ * @param {*} record 
+ * @param {*} propertyID 
+ * @param {*} position 
+ * @param {*} defaultValue 
+ * @param {*} language 
+ * @returns 
+ */
+export function getValue(record, propertyID, position, defaultValue, language) {
 
-export function getValue(record, propertyID, position, defaultValue) {
-
-    // Check if thing object
-    if(record?._isThingClass == true){
-        return record.getValue(propertyID, position)
-    }
+    let values = getValues(record, propertyID, defaultValue, language)
 
     //
     position = Number(position)
     if (isNaN(position)) { position = 0 }
-    let values = dot.get(record, propertyID)
-    values = h.toArray(values)
+
     let value = values?.[position]
 
     return value ?? defaultValue
 
 }
 
-export function setValue(record, propertyID, value, position) {
+/**
+ * Set value to a property. Creates path if missing. Handles dot notation.
+ * 
+ * @param {*} record 
+ * @param {*} propertyID 
+ * @param {*} value 
+ * @param {*} position 
+ * @returns 
+ */
+export function setValue(record, propertyID, value, position, language) {
 
-    // Check if thing object
-    if(record?._isThingClass == true){
-        return record.setValue(propertyID, value, position)
+    // If position specified, insert value in current values, creating missing values as null if required. 
+    if(position !== undefined){
+        let currentValues = h.getValues(record, propertyID)
+        while(currentValues.length -1 < position){
+            currentValues.push(null)
+        }
+        currentValues[position] = value
+        value = currentValues
     }
-
-    //
-    position = Number(position)
-    if (isNaN(position)) { position = 0 }
-
-    let values = h.getValues(record, propertyID)
-    value = h.toArray(value)?.[0]
-    values[position] = value
-    dot.set(record, propertyID, values)
-
-
-    return record
+    return setValues(record, propertyID, value, language)
 }
 
 export function addValue(record, propertyID, value) {
 
-    // Check if thing object
-    if(record?._isThingClass == true){
-        return record.addValue(propertyID, value)
-    }
+    return addValues(record, propertyID, value)
+}
 
-    //
-
-    value = h.toArray(value)
+/**
+ * Add values to a property, combining with existing values. 
+ * @param {*} record 
+ * @param {*} propertyID 
+ * @param {*} values 
+ * @returns 
+ */
+export function addValues(record, propertyID, values) {
 
     let currentValues = h.getValues(record, propertyID)
 
-    let newValues = currentValues.concat(value)
+    values = currentValues.concat(values)
 
-    record = dot.set(record, propertyID, newValues)
+    return setValues(record, propertyID, values)
 
-    return record
 }
 
-export function addValues(record, propertyID, values) {
 
-    // Check if thing object
-    if(record?._isThingClass == true){
-        return record.addValue(propertyID, values)
+
+/**
+ * Return the values of a dot notation property in a record
+ * Handles @language and @value
+ * @param {*} record 
+ * @param {*} propertyID 
+ * @param {*} defaultValue 
+ * @param {*} language 
+ * @returns 
+ */
+export function getValues(record, propertyID, defaultValue, language) {
+
+    // Error
+    if (record === undefined) {
+        return []
     }
 
-    //
-    return h.addValue(record, propertyID, values)
-}
+    // Error
+    if (propertyID === undefined || propertyID === null || propertyID == "") {
+        return []
+    }
 
 
-export function getValues(record, propertyID, defaultValue) {
+    // Check if thing object
+    record = record?.record || record
+    //if (record?._isThingClass == true) {
+    //    return record.getValues(propertyID, defaultValue, language)
+    //}
+
+
+    // prepare propertyID
+    let paths = propertyID.split('.')
+
+    // Iterate until the last path item
+    let runningValue = record
+    for (let i = 0; i < paths.length; i++) {
+
+        let [propertyID, position] = getPathFragment(paths[i])
+
+        // Get value at path and position  
+        if (propertyID) {
+            runningValue = runningValue?.[propertyID]
+            runningValue = h.toArray(runningValue)
+        }
+
+        // Filter for language (if @language tag)
+        runningValue = runningValue.filter(x => x?.['@language'] == language || x?.['@language'] == DEFAULT_LANGUAGE || x?.['@lannguage'] === undefined)
+
+        // Deal with @value
+        runningValue = runningValue.map(x => x?.['@value'] ?? x)
+        runningValue = h.toArray(runningValue)
+
+        // Deal with language
+        runningValue = runningValue.map(x => x?.[language] ?? x?.[DEFAULT_LANGUAGE] ?? x)
+        runningValue = h.toArray(runningValue)
+
+        // Get value at position (except if last path element)
+        if(i < paths.length -1){
+            runningValue = runningValue?.[position]
+        }
+    }
+
+    // Get final path property
+    let values = h.toArray(runningValue)
     
-    // Check if thing object
-    if(record?._isThingClass == true){
-        return record.getValues(propertyID, values)
-    }
-
-    //
-    let values = dot.get(record, propertyID)
-    values = h.toArray(values)
-    values = values.filter(x => x !== undefined)
     if (values.length == 0 && defaultValue !== undefined) {
         return defaultValue
     }
     return values
 }
 
-export function setValues(record, propertyID, value) {
+
+
+
+
+export function setValues(record, propertyID, value, language) {
+
+
 
     // Check if thing object
-    if(record?._isThingClass == true){
-        return record.getValues(propertyID, values)
-    }
+    record = record?.record || record
+    //if (record?._isThingClass == true) {
+    //    return record.setValues(propertyID, value, language)
+   // }
+
 
     //
-    record = record?._isThingClass == true || record
-    value = h.toArray(value)
-    dot.set(record, propertyID, value)
+
+    // prepare propertyID
+    let paths = propertyID.split('.')
+
+    // prepare propertyID
+    // Iterate
+    let runningValue = record || {}
+
+
+    for (let i = 0; i < paths.length - 1; i++) {
+
+        let [propertyID, position] = getPathFragment(paths[i])
+
+        // Deal with empty
+        runningValue[propertyID] = runningValue?.[propertyID] || []
+
+
+        let newRunningValue
+
+        // Deal with language and ensure it is an array
+        if (runningValue?.[propertyID]?.[language]) {
+            runningValue[propertyID][language] = h.toArray(runningValue?.[propertyID]?.[language])
+            newRunningValue = runningValue[propertyID][language]
+        } else if (runningValue?.[propertyID]?.[DEFAULT_LANGUAGE]) {
+            runningValue[propertyID][DEFAULT_LANGUAGE] = h.toArray(runningValue?.[propertyID]?.[DEFAULT_LANGUAGE])
+            newRunningValue = runningValue[propertyID][DEFAULT_LANGUAGE]
+        } else {
+            runningValue[propertyID] = h.toArray(runningValue?.[propertyID]) || []
+            newRunningValue = runningValue[propertyID]
+        }
+
+        // Ensure it exists and with sufficient numbers
+        while (newRunningValue.length - 1 < position) {
+            newRunningValue.push({ "@type": "Thing" })
+        }
+
+        // Get with correct position
+        runningValue = newRunningValue?.[position]
+    }
+
+    // Assign value
+    let [p, n] = getPathFragment(paths[paths.length - 1])
+
+    // Ensure array
+    runningValue[p] = h.toArray(value)
+
     return record
 }
 
+
+
+
+
+
+
+function getPathFragment(pathFragment) {
+
+    if (pathFragment === undefined) { return undefined, 0 }
+    let propertyID = pathFragment.split('[')?.[0]
+    let position = (pathFragment.split('[')?.[1] || "").split(']')?.[0]
+    position = Number(position)
+    position = isNaN(position) ? 0 : position
+
+    return [propertyID, position]
+}
 
 
 // -----------------------------------------------------------------------
@@ -192,6 +323,14 @@ export function setAdditionalProperty(record, propertyID, value, unitText) {
 // Short cut properties
 // -----------------------------------------------------------------------
 
+
+export function getAtValue(record) {
+    return h.getValues(record, '@value')
+}
+
+export function setAtValue(record, value) {
+    return h.setValues(record, '@value', value)
+}
 
 export function actionStatus(record) {
     return h.getValue(record, 'actionStatus')
@@ -290,4 +429,50 @@ export function setFailed(record, error) {
     record = h.setValue(record, 'error', String(error))
     record = h.setValue(record, 'result', undefined)
     return record
+}
+
+
+// images
+
+/**
+ * Returns the image url associated with a record (base or withing image nested record.)
+ * @param {*} record 
+ */
+export function getImageUrl(record){
+
+
+    if(h.record_type(record) == "ImageObject"){
+        return h.getValue(record, 'contentUrl') 
+    }
+
+    let imageUrl = h.getValue(record, 'image.contentUrl')
+
+    imageUrl = imageUrl ??  h.getValue(record, 'image.url') 
+
+    imageUrl = imageUrl ??  h.getValue(record, 'image')
+
+    imageUrl = typeof imageUrl == 'string' ? imageUrl : ""
+
+    return imageUrl
+
+}
+
+
+
+/**
+ * Returns the image url associated with a record (base or withing image nested record.)
+ * @param {*} record 
+ */
+export function getImageName(record){
+
+    let imageName = h.getValue(record, 'image.name')
+
+    imageName = imageName ??  h.getValue(record, 'image.name') 
+
+    imageName = imageName ??  h.record_id(record)
+
+    imageName = typeof imageName == 'string' ? imageName : ""
+    
+    return imageName
+
 }

@@ -116,12 +116,8 @@ function toString(conversationRecord){
 function newMessage(conversationRecord, sender, recipient, subject, text, dateSent, dateReceived){
 
     
-    let message = new Message(sender, recipient, subject, text, dateSent, dateReceived)
-    
-    let messages = getMessages(conversationRecord)
-    messages.push(message.record)
-    messages = sortMessages(messages)
-    conversationRecord = h.setValues(conversationRecord, "hasPart", messages)
+    let message = new Message(sender, recipient, subject, text, dateSent, dateReceived)    
+    conversationRecord = h.addValues(conversationRecord, "hasPart", message)
     return conversationRecord
 
 }

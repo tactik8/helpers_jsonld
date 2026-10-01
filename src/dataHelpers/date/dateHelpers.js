@@ -90,3 +90,34 @@ export function toDate(value) {
     return value
 
 }
+
+/**
+ * Returns formattted date (yyyy-mm-dd)
+ * @param {*} value 
+ * @returns 
+ */
+export function formatDate(value, includeTime=false){
+
+    value = toDate(value)
+    if(isDate(value)=== false){ return undefined }
+
+
+    const d = value
+    const yyyy = String(d.getFullYear()).padStart(4, '0');
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const dd = String(d.getDate()).padStart(2, '0');
+
+    let content =  `${yyyy}-${mm}-${dd}`
+
+    
+
+    if(includeTime == true ){
+        const thh = String(d.getHours()).padStart(2, 0)
+        const tmm = String(d.getMinutes()).padStart(2, 0)
+        const tss = String(d.getSeconds()).padStart(2, 0)
+        content = content + ` ${thh}:${tmm}:${tss}`
+    }
+
+
+    return content
+}

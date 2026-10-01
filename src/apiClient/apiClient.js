@@ -22,12 +22,14 @@ export class ApiClient {
      * 
      * @param {*} baseUrl - The base url for the api (https://www.test.com/api)
      */
-    constructor(baseUrl) {
+    constructor(baseUrl, databaseID, tenantID) {
         this._baseUrl 
         this._headers
-        this._databaseID
-        this._tenantID
+        this._databaseID 
+        this._tenantID 
         this.baseUrl = baseUrl
+        this.databaseID = databaseID
+        this.tenantID =tenantID
     }
 
 
@@ -60,14 +62,42 @@ export class ApiClient {
         this._headers= value
     }
 
+    /**
+     * Returns Action Thing object
+     * @param {*} path 
+     * @param {*} params 
+     * @returns 
+     */
     async get(path, params) {
         return await apiGet(this.headers, this.baseUrl, path, params)
     }
 
+     /**
+     * Return Action Thing object with post
+     * @param {*} path 
+     * @param {*} data 
+     * @returns 
+     */
     async post(path, data) {
-        return await apiGet(this.headers, this.baseUrl, path, data)
+        return await apiPost(this.headers, this.baseUrl, path, data)
     }
 
+    /**
+     * Return Action Thing object with patch
+     * @param {*} path 
+     * @param {*} data 
+     * @returns 
+     */
+    async patch(path, data) {
+        return await apiPatch(this.headers, this.baseUrl, path, data)
+    }
+
+     /**
+     * Return Action Thing object with delete
+     * @param {*} path 
+     * @param {*} data 
+     * @returns 
+     */
     async delete(path, params) {
         return await apiDelete(this.headers, this.baseUrl, path, params)
     }
@@ -84,7 +114,14 @@ export default {
     ApiClient
 }
 
-
+/**
+ * 
+ * @param {*} headers 
+ * @param {*} baseUrl 
+ * @param {*} path 
+ * @param {*} params 
+ * @returns 
+ */
 async function apiGet(headers, baseUrl, path, params) {
 
     let action = new things.Action()
@@ -177,6 +214,45 @@ async function apiPost(headers, baseUrl, path, data) {
     }
 }
 
+
+async function apiPatch(headers, baseUrl, path, data) {
+
+    let action = new things.Action()
+    action.name = "API Post"
+    action.instrument = new things.WebAPI(baseUrl)
+
+    try {
+
+        let url = dataHelpers.url.getUrl(baseUrl, path, {})
+
+        let baseHeaders = {
+            "Content-Type": "application/json"
+        }
+
+        let options = {
+            "headers": { ...(headers || {}), ...baseHeaders},
+            "method": "PATCH",
+            "body": JSON.stringify(data, null, 4)
+        }
+
+        let response = await fetch(url, options)
+
+        if (response.status >= 300) {
+            action.setFailed(response.statusText)
+            return action
+        }
+
+        let result = await response.json()
+
+        action.setCompleted(result)
+
+        return action
+
+    } catch (err) {
+        action.setFailed(String(err))
+        return action
+    }
+}
 
 
 async function apiDelete(headers, baseUrl, path, params) {

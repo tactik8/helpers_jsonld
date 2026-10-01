@@ -237,6 +237,7 @@ export function setPath(baseUrl, path) {
 
     path = path ?? ""
 
+
     let paths = []
 
     // Retrieve path from base path
@@ -249,14 +250,23 @@ export function setPath(baseUrl, path) {
         paths = paths.concat(p.split('/'))
     }
 
+   
+
+
+
     // Assemble new path
     paths = paths.filter(x => x != "")
     let fullPath = '/' + paths.join('/')
 
 
+    try {
     let url = new URL(fullPath, baseUrl)
 
     return url.toString()
 
+    } catch(err){
+        console.log(err, fullPath, baseUrl)
+        return undefined
+    }
 
 }

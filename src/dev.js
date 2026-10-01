@@ -1,7 +1,7 @@
 
 
 
-import { _h } from '../src/index.js'
+import { _h, helpers } from '../src/index.js'
 
 
 
@@ -86,7 +86,7 @@ async function test3() {
 
     let value = { "@type": "Thing", "@id": "https://www.test.com/thing#thing1", "name": "thing1" }
 
-    let item = {"id": "someid", "name": "bob", "other": "other1"}
+    let item = { "id": "someid", "name": "bob", "other": "other1" }
 
     let systemID = "https://www.test.com#WebAPI"
     let tableID = "product"
@@ -95,7 +95,8 @@ async function test3() {
 
     let df = new _h.things.DataFeed(systemID, tableID)
 
-    let di = df.add(item, recordID )
+    let di = df.add(item, recordID)
+
 
     console.log('di;', di.record)
 
@@ -108,14 +109,24 @@ async function test3() {
 }
 
 
-function test4(){
+function test4() {
 
 
-    let t = new _h.dot.
+   let record = _h.records.itemList(10, 1)
 
-    
-                
-    
+   let l = new _h.things.ItemList(record)
+
+   let elements = l.itemListElement.map(x => x.record)
+
+   let e = elements[0]
+
+   let item = e.item
+
+   console.log('e', e)
+   let name = _h.getValues(e, 'item.name')
+
+   console.log('e1', name)
+
 }
 
 

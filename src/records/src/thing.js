@@ -1,5 +1,6 @@
 import { records} from '../records.js'
 
+import { getImage} from './image.js'
 
 export function getThing(name=0, depth = 0) {
 
@@ -15,6 +16,7 @@ export function getThing(name=0, depth = 0) {
         "@type": record_type,
         "@id": record_id,
         "name": name,
+        "image": getImage(name),
         "hasPart": []
     }
 

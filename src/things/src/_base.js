@@ -208,9 +208,11 @@ export class Base {
         let record_type = h.record_type(value)
 
         if(record_type && record_type == this._defaultRecordType){
-            this.record = value
+            this.record = value?.record || value
             return true
         }
+
+        this.record_type = this._defaultRecordType
         return false
 
     }
@@ -554,8 +556,9 @@ function classToRecord(value) {
         }
 
 
-        if (value?.['_isThingClass'] == true) {
-            value = value._record
+        if (value?._record) {
+            let result = _classToRecord(value._record)
+            return result
         }
 
         if (value?.['@type'] || value?.['@id']) {

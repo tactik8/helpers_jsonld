@@ -165,7 +165,7 @@ export function expand(value){
 /**
  * Converts a dot notation string to array of path elements
  * @param {*} path 
- * @returns 
+ * @returns {[]} - returns an array of path elements and path positions
  */
 function _convertPathToArray(path) {
 

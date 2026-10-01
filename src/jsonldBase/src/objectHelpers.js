@@ -100,6 +100,77 @@ export function clean(value, baseUrl) {
     return value
 }
 
+
+
+/**
+ * Converts all nested values in record to @values objects
+ * @param {*} value 
+ */
+export function expandAtValue(value) {
+
+    function _expandAtValue(value, isValueAlready = false) {
+
+        // @value
+        let v = h.getAtValue(value)
+        if (v && v.length > 0) {
+            return h.setAtValue(value, _expandAtValue(v, true))
+        }
+
+        // Arrays
+        if (h.isArray(value)) {
+             return value.map(x => _expandAtValue(x, isValueAlready))
+        }
+
+        // object
+        if (h.isJsonld(value)) {
+            for (let k of Object.keys(value?.record || value)) {
+                value = h.setValues(value, k, _expandAtValue(h.getValues(value, k), false))
+            }
+            return value
+        }
+
+        // 
+        if (isValueAlready === false) {
+            return { "@value": value }
+        }
+
+        return value
+    }
+    return _expandAtValue(value, false)
+
+}
+
+/**
+ * Removes @value from record 
+ * @param {*} value 
+ */
+export function contractAtValue(value){
+
+    // @value
+    let v = h.getAtValue(value)
+        if (v && v.length > 0) {
+        return contractAtValue(h.getAtValue(value))
+    }
+
+    // array
+    if(h.isArray(value)){
+        return value.map(x => contractAtValue(x))
+    }
+
+    // Object
+    if(h.isJsonld(value)){
+
+        for(let k of Object.keys(value?.record || value)){
+            h.setValues(value, k, contractAtValue(h.getValues(value, k)))
+        }
+        return value
+    }
+
+    return value
+}
+
+
+
 // -----------------------------------------------------------------------
 // Utility
 // -----------------------------------------------------------------------
@@ -109,12 +180,12 @@ export function clone(value) {
     try {
         value = structuredClone(value)
         return value
-    } catch  {}
+    } catch { }
 
     try {
         value = JSON.parse(JSON.stringify(value))
         return value
-    } catch {}
+    } catch { }
 
     return value
 }
@@ -129,12 +200,12 @@ export function clone(value) {
 export function merge(item1, item2, skipDuplicates = true) {
 
 
-    item1 = (h.isArray(item1) && item1.length ==1) ? item1[0] : item1
-    item2 = (h.isArray(item2) && item1.length ==2) ? item2[0] : item2
+    item1 = (h.isArray(item1) && item1.length == 1) ? item1[0] : item1
+    item2 = (h.isArray(item2) && item1.length == 2) ? item2[0] : item2
 
-    item1 = item1?? {}
-    item2 = item2?? {}
-    
+    item1 = item1 ?? {}
+    item2 = item2 ?? {}
+
 
     let keys = []
     keys = keys.concat(Object.keys(item1))

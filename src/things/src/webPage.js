@@ -3,48 +3,72 @@ import { jsonldBase as h } from '../../jsonldBase/jsonldBase.js'
 
 import { Thing } from './thing.js'
 import { CreativeWork } from './creativeWork.js'
-
+import { ItemList } from './itemList.js'
 
 
 export class WebPage extends CreativeWork {
     constructor(url_or_record) {
         super()
         this._defaultRecordType = "WebPage"
+        this.website
 
         this._loadRecord(url_or_record)
         this._setValueIfString('url', url_or_record)
+
+        if(h.record_type(url_or_record) == "WebSite"){
+            this.website = url_or_record
+            let record = url_or_record.record || url_or_record
+            record = JSON.parse(JSON.stringify(record))
+            record['@type'] = 'WebPage'
+            this.record = record
+        }
     }
 
-   
+
 
     get breadcrumb() {
-        return this.getValues("breadcrumb")
+        return this.getValue("breadcrumb")
     }
     set breadcrumb(value) {
-        return this.setValues(this._record, "breadcrumb", value)
+        return this.setValue("breadcrumb", value)
     }
-    
+
+    addBreadcrumb(url, name) {
+
+        // Init bredcrumb if not done
+        let breadcrumb = this.breadcrumb || []
+        if (breadcrumb?.record_type != "BreadcrumbList") {
+            breadcrumb = new ItemList(breadcrumb)
+        }
+
+        // add 
+        breadcrumb.add({ "@type": "WebPage", url, name })
+        this.breadcrumb = breadcrumb
+
+        return
+    }
+
     get mainContentOfPage() {
         return this.getValues("mainContentOfPage")
     }
     set mainContentOfPage(value) {
         return this.setValues(this._record, "mainContentOfPage", value)
     }
-    
+
     get primaryImageOfPage() {
         return this.getValues("primaryImageOfPage")
     }
     set primaryImageOfPage(value) {
         return this.setValues(this._record, "primaryImageOfPage", value)
     }
-    
+
     get relatedLink() {
         return this.getValues("relatedLink")
     }
     set relatedLink(value) {
         return this.setValues(this._record, "relatedLink", value)
     }
-    
+
     get reviewedBy() {
         return this.getValues("reviewedBy")
     }
@@ -70,37 +94,37 @@ export class WebPage extends CreativeWork {
     // Web specific shortcuts
     get WPHeader() {
         this.record = ensureWebPart(this.record, 'WPHeader')
-        return getWebPart("WPHeader", this.record)
+        return getWebPart(this.record, "WPHeader" )
     }
-    
+
     set WPHeader(value) {
-        this.record = setWebPart("WPHeader", this.record, value)
+        this.record = setWebPart(this.record, "WPHeader",  value)
     }
 
     get WPFooter() {
         this.record = ensureWebPart(this.record, 'WPFooter')
-        return getWebPart("WPFooter", this.record)
+        return getWebPart(this.record, "WPFooter")
     }
 
     set WPFooter(value) {
-        this.record = setWebPart("WPFooter", this.record, value)
+        this.record = setWebPart(this.record, "WPFooter",  value)
     }
 
     get WPSideBar() {
         this.record = ensureWebPart(this.record, 'WPSideBar')
-        return getWebPart("WPSideBar", this.record)
+        return getWebPart(this.record, "WPSideBar")
     }
-    
+
     set WPSideBar(value) {
-        this.record = setWebPart("WPSideBar", this.record, value)
+        this.record = setWebPart(this.record, "WPSideBar",  value)
     }
 
-    get Table(){
-        return getWebPart("Table", this.record)
+    get Table() {
+        return getWebPart(this.record, "Table")
     }
 
-    set Table(value){
-        this.record = setWebPart("Table", this.record, value)
+    set Table(value) {
+        this.record = setWebPart(this.record,"Table",  value)
     }
 
     // Shortcuts for adding links to header and footer
@@ -130,7 +154,7 @@ export class WebPage extends CreativeWork {
         return getWebPart(record, "WPSideBar")
     }
 
-    static getTable(record){
+    static getTable(record) {
         return getWebPart(record, "Table")
     }
 
@@ -146,7 +170,7 @@ export class WebPage extends CreativeWork {
         return setWebPart(record, "WPSideBar", value)
     }
 
-    static setTable(record, value){
+    static setTable(record, value) {
         return setWebPart(record, "Table", value)
     }
 
@@ -201,13 +225,13 @@ function getWebPart(record, partType) {
 function setWebPart(record, partType, value) {
 
     let parts = h.getValues(record, "hasPart")
-    
+
     parts = parts.filter(x => h.record_type(x) != partType)
 
     parts.push(value)
-    
+
     record = h.setValues(record, "hasPart", parts)
-    
+
     return record
 
 }

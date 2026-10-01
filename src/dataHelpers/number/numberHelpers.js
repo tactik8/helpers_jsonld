@@ -1,3 +1,4 @@
+import { setValues } from '../../jsonldBase/src/propertyHelpers.js'
 import dataHelpers, { dataHelpers as h } from '../dataHelpers.js'
 
 
@@ -36,6 +37,24 @@ export function isValid(value){
 // -------------------------------------------------------------------------------------
 // 
 // -------------------------------------------------------------------------------------
+
+
+/**
+ * Returns a string with the correct number of decimals
+ * @param {*} value 
+ * @param {*} decimalsLength 
+ */
+export function formatDecimals(value, decimalsLength){
+
+    value = Number(value)
+    if(isNaN(value)){ return undefined }
+
+    if(decimalsLength !== undefined){
+        return value.toFixed(decimalsLength)
+    }
+
+    return value
+}
 
 
 /**

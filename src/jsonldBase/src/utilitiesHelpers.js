@@ -384,14 +384,21 @@ export function toSingle(value) {
  */
 export function _utilGetId(record_or_id) {
 
+    let value = record_or_id
     // error handling
-    if (record_or_id === undefined) { return undefined }
-    if (record_or_id === null) { return undefined }
+    if (value === undefined) { return undefined }
+    if (value === null) { return undefined }
 
+    // if array
+    if(h.isArray(value) && value.length == 1){
+        value = value[0]
+    }
 
-    //
-    let value = h.record_id(record_or_id) ?? record_or_id
-    value = h.isArray(value) ? value[0] : value
+    // string
+    if(h.isString(value)){
+        return value
+    }
+    value = h.record_id(value) 
     return value ?? undefined
 }
 

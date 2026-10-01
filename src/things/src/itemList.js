@@ -8,12 +8,15 @@ import { Thing } from './thing.js'
 
 
 export class ItemList extends Thing {
-    constructor(name_or_record) {
+    constructor(name_or_record_or_items) {
         super()
         this._defaultRecordType = "ItemList"
 
-        this._loadRecord(name_or_record)
-        this._setValueIfString('name', name_or_record)
+        this._loadRecord(name_or_record_or_items)
+        this._setValueIfString('name', name_or_record_or_items)
+        if(h.isArray(name_or_record_or_items)){
+            this.add(name_or_record_or_items)
+        }
        
     }
 
@@ -33,8 +36,18 @@ export class ItemList extends Thing {
 
     set itemListElement(value) {
         value = value || []
-        return this.setValues(this.record, 'itemListElement', value)
+        return this.setValues('itemListElement', value)
     }
+
+
+    get items(){
+        return this.itemListElement.map(x => h.getValue(x, 'item'))
+    }
+
+    set items(value){
+        return this.add(value)
+    }
+
 
     length() {
         return this.itemListElement.length

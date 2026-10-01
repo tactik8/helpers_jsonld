@@ -20,16 +20,19 @@
     "build:cjs": "esbuild src/index.js --bundle --packages=external --sourcemap --minify --platform=node --format=cjs --outfile=dist/index.cjs",
     "build:esm": "esbuild src/index.js --bundle --packages=external --sourcemap --minify --platform=node --format=esm --outfile=dist/index.js",
     "dev": "node src/dev.js",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "server": "nodemon ./server.js"
   },
   "keywords": [],
   "author": "Tactik8",
   "license": "ISC",
   "devDependencies": {
     "esbuild": "^0.25.0",
-    "jest": "^30.4.2"
+    "jest": "^30.4.2",
+    "nodemon": "^3.1.14"
   },
   "dependencies": {
-    "check-imports": "^1.0.8"
+    "check-imports": "^1.0.8",
+    "express": "^5.2.1"
   }
 }

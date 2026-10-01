@@ -25,7 +25,6 @@ describe('Things', () => {
                         "name": k
                     }
                     let t = things.toThing(record)
-                    console.log('k', k)
                     expect(t.name).toEqual(k);
                     expect(t.record_type).toEqual(k);
 
