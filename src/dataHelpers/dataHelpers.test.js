@@ -12,7 +12,7 @@ describe('URL Helpers ', () => {
 
             let value = 'https://www.test.com'
 
-            let expected = 'url string'
+            let expected = 'URL'
             
             let result = h.getDataType(value)
             
@@ -24,7 +24,7 @@ describe('URL Helpers ', () => {
 
             let value = ['https://www.test.com', 'https://www.test2.com']
 
-            let expected = 'array of [url string]'
+            let expected = 'Array'
             
             let result = h.getDataType(value)
             
@@ -36,7 +36,7 @@ describe('URL Helpers ', () => {
 
             let value = ['https://www.test.com', '2024-01-01']
 
-            let expected = 'array of [url string|date string]'
+            let expected = 'Array'
             
             let result = h.getDataType(value)
             
@@ -48,7 +48,7 @@ describe('URL Helpers ', () => {
 
             let value = { "@type": "Thing", "@id": "https://www.test.com/thing#thing1", "name": "thing1"}
 
-            let expected = 'jsonld Thing'
+            let expected = 'Thing'
             
             let result = h.getDataType(value)
             
@@ -60,7 +60,7 @@ describe('URL Helpers ', () => {
 
             let value = { "@type": "Thing", "@id": "https://www.test.com/thing#thing1", "name": "thing1"}
 
-            let expected = 'json string'
+            let expected = 'JSON'
             
             let result = h.getDataType(JSON.stringify(value))
             

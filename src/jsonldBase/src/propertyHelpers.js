@@ -65,6 +65,41 @@ export function ref(record_or_id) {
 }
 
 
+
+/**
+ * Returns list of properties (keys) for an object. If lis tof objects, returns all properties
+ * @param {*} record 
+ */
+export function keys(record){
+
+    return properties(record)
+
+}
+
+/**
+ * Returns list of properties (keys) for an object. If lis tof objects, returns all properties
+ * @param {*} record 
+ */
+export function properties(record){
+    if(!record){
+        return []
+    }
+
+    if(h.isArray(record)){
+        let k = []
+        for(let r of record){
+            k = k.concat(properties(r))
+        }
+        return [ ... new Set(k)]
+    }
+
+    let k = Object.keys(record?.record || record)
+
+    return k 
+}
+
+
+
 /**
  * Return a value from record using dot notation. Returns position 0 if missing.
  * Handles @language and @value

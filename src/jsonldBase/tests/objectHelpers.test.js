@@ -1,4 +1,4 @@
-import { isJsonld, isValid, clean, clone } from '../src/objectHelpers.js';
+import { isJsonld, isValid, clean, clone, patch } from '../src/objectHelpers.js';
 
 describe('objectHelpers', () => {
   describe('isJsonld & isValid', () => {
@@ -25,4 +25,29 @@ describe('objectHelpers', () => {
       expect(clean('text')).toBe('text');
     });
   });
+
+
+   describe('patch', () => {
+    it('patch', () => {
+
+      let t1 = {
+        "@type": "Thing",
+        "@id": "https://www.test.com/thign1#thing",
+        "name": "thing1"
+      }
+      let t2 = {
+        "@type": "Thing",
+        "@id": "https://www.test.com/thign1#thing",
+        "name": "thing1new"
+      }
+
+      t1 = patch(t1, t2)
+
+
+      expect(t1.name).toEqual(['thing1new']);
+    });
+  });
+
+
+
 });

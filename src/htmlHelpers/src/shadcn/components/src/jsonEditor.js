@@ -12,7 +12,7 @@
  * @param {string} [props.className='']
  * @param {string} [props.attrs='']
  */
-export function Button({ children = '', variant = 'default', size = 'default', className = '', attrs = '' } = {}) {
+function Button({ children = '', variant = 'default', size = 'default', className = '', attrs = '' } = {}) {
   const variants = {
     default: 'bg-primary text-primary-foreground hover:bg-primary/90 shadow',
     destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-sm',
@@ -44,7 +44,7 @@ export function Button({ children = '', variant = 'default', size = 'default', c
  * @param {string} [props.className='']
  * @param {string} [props.attrs='']
  */
-export function Badge({ children = '', variant = 'default', className = '', attrs = '' } = {}) {
+function Badge({ children = '', variant = 'default', className = '', attrs = '' } = {}) {
   const variants = {
     default: 'border-transparent bg-primary text-primary-foreground shadow hover:bg-primary/80',
     secondary: 'border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80',
@@ -69,7 +69,7 @@ export function Badge({ children = '', variant = 'default', className = '', attr
  * @param {string} [props.className='']
  * @param {string} [props.attrs='']
  */
-export function Card({ title = '', description = '', children = '', footer = '', className = '', attrs = '' } = {}) {
+function Card({ title = '', description = '', children = '', footer = '', className = '', attrs = '' } = {}) {
   return `
     <div class="rounded-xl border bg-card text-card-foreground shadow ${className}" ${attrs}>
       ${title || description ? `

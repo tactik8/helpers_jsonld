@@ -107,9 +107,10 @@ export function recordsToTable(record, properties, headers, options) {
     // Add position
     if (options?.showPosition !== false) {
       let position = h.getValue(li, "position");
-      rowData.push(
-        htmlValue.get(h.record_type(li), "position", position, options),
-      );
+      rowData.push({
+        align: "right",
+        value: htmlValue.get(h.record_type(li), "position", position, options),
+    });
     }
 
     // Add caption

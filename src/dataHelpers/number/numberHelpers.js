@@ -44,6 +44,15 @@ export function isValid(value){
  * @param {*} value 
  * @param {*} decimalsLength 
  */
+export function format(value, nbOfDecimals){
+    return formatDecimals(value, nbOfDecimals)
+}
+
+/**
+ * Returns a string with the correct number of decimals
+ * @param {*} value 
+ * @param {*} decimalsLength 
+ */
 export function formatDecimals(value, decimalsLength){
 
     value = Number(value)

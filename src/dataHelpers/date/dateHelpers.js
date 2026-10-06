@@ -29,6 +29,15 @@ export function isValid(value){
 }
 
 
+/**
+ * Returns formattted date (yyyy-mm-dd)
+ * @param {*} value 
+ * @returns 
+ */
+export function format(value, includeTime=false){
+    return formatDate(value, includeTime)
+}
+
 
 // -------------------------------------------------------------------------------------
 // 
@@ -65,7 +74,7 @@ export function isNotDate(value) {
  * @returns 
  */
 export function toDate(value) {
-    if(h.isNull(value)){
+    if(value === undefined){
         return undefined
     }
 
@@ -91,6 +100,11 @@ export function toDate(value) {
 
 }
 
+
+
+
+
+
 /**
  * Returns formattted date (yyyy-mm-dd)
  * @param {*} value 
@@ -98,6 +112,7 @@ export function toDate(value) {
  */
 export function formatDate(value, includeTime=false){
 
+    console.log('vv', value,toDate(value))
     value = toDate(value)
     if(isDate(value)=== false){ return undefined }
 
@@ -118,6 +133,6 @@ export function formatDate(value, includeTime=false){
         content = content + ` ${thh}:${tmm}:${tss}`
     }
 
-
+console.log('cc', content)
     return content
 }

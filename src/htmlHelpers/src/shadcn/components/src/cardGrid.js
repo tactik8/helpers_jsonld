@@ -1,17 +1,17 @@
 
 
 
-export function CardGrid({nbColumns, content}) {
+export function CardGrid({nbOfColumns, content}) {
   
     
-    let nbColumnsSM = String(nbColumns ?? 2)
-    let nbColumnsLG = String(nbColumns ?? 3)
-    let nbColumnsXL = String(nbColumns ?? 4)
-    nbColumns = String(nbColumns ?? 1)
+    let nbOfColumnsSM = String(nbOfColumns ?? 2)
+    let nbOfColumnsLG = String(nbOfColumns ?? 3)
+    let nbOfColumnsXL = String(nbOfColumns ?? 4)
+    nbOfColumns = String(nbOfColumns ?? 1)
 
 
   return `
-    <div class="grid grid-cols-${nbColumns} gap-6 sm:grid-cols-${nbColumnsSM} lg:grid-cols-${nbColumnsLG} xl:grid-cols-${nbColumnsXL}">
+    <div class="grid grid-cols-${nbOfColumns} gap-6 sm:grid-cols-${nbOfColumnsSM} lg:grid-cols-${nbOfColumnsLG} xl:grid-cols-${nbOfColumnsXL}">
       ${content}
     </div>
   `

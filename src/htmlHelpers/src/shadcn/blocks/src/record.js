@@ -7,7 +7,227 @@ import { components } from "../../components/components.js";
 import { things } from "../../../../../things/things.js";
 import { Media } from "./media.js";
 
+import * as hpv from "../../../formating/htmlPropertyValue.js";
+import { setValues } from "../../../../../jsonldBase/src/propertyHelpers.js";
+
 export function Record({
+  record,
+  properties,
+  className = "",
+  attrs = "",
+  expandAll = false,
+  depth = 0,
+  options,
+} = {}) {
+  // Get properties
+  properties = properties || Object.keys(record);
+
+  // Make data
+  let result = {
+    rows: [],
+  };
+
+
+
+
+
+  let recordContent = formatRecordForObject({
+    record,
+    properties,
+    className,
+    attrs,
+    expandAll,
+    depth: 0,
+    options,
+  });
+
+
+  // Assemble
+  let html = `
+
+        <div class="space-y-4 ${className || ""}" ${attrs || ""}>
+            <div class="flex-1">
+                ${Media({record, options}) || ""}
+            </div>
+            
+            <div class="flex-1">
+                ${recordContent || ""}
+            </div>
+            
+             <div class="flex-1">
+              <details>
+                <summary>JSON Editor</summary>
+                ${components.JsonEditor({
+                  initialData: record,
+                  endpoint: options.baseUrl,
+                })}
+              </details>
+            </div>
+        </div>
+
+    `;
+
+    return html
+
+
+}
+
+function formatRecordForObject({
+  record,
+  properties,
+  className = "",
+  attrs = "",
+  expandAll = false,
+  depth = 0,
+  options,
+}) {
+  // Get properties
+  properties = properties || Object.keys(record);
+
+  // Make data
+  let result = {
+    rows: [],
+  };
+
+  for (let k of Object.keys(record)) {
+    // Format value
+    let v = h.getValues(record, k);
+    v = h.isArray(v) && v.length == 1 ? v[0] : v;
+
+    //
+    let row = [];
+    result.rows.push(row);
+
+    // Add key
+    row.push(k + ":");
+
+    // add value
+
+    row.push(
+      formatRecordForGeneric({
+        record,
+        propertyID: k,
+        className,
+        attrs,
+        expandAll,
+        depth: depth + 1,
+        options,
+      }),
+    );
+  }
+
+  // Generate html
+  let html = components.Table(result);
+
+  return html;
+}
+
+function formatRecordForArray({
+  record,
+  propertyID,
+  className = "",
+  attrs = "",
+  expandAll = false,
+  depth = 0,
+  options,
+}) {
+  let values = h.getValues(record, propertyID);
+
+ 
+
+  let content = [];
+
+  for (let v of values) {
+    let r = h.clone(record);
+    r = h.setValue(r, propertyID, v);
+    content.push(
+      formatRecordForGeneric({
+        record: r,
+        propertyID,
+        className,
+        attrs,
+        expandAll,
+        depth: depth + 1,
+        options,
+      }),
+    );
+  }
+
+  return `
+        <ul>
+          ${content.map( x => `
+            <li>
+              ${x}
+            </li>
+            `
+          ).join('')}
+
+        </ul>
+     
+  
+  `;
+}
+
+function formatRecordForGeneric({
+  record,
+  propertyID,
+  className = "",
+  attrs = "",
+  expandAll = false,
+  depth = 0,
+  options,
+}) {
+  let v = h.getValues(record, propertyID);
+
+  let hpvRecord = hpv.getHtmlPropertyValue(
+    record,
+    propertyID,
+    options?.baseUrl,
+  );
+
+  if (h.isArray(v) && v.length == 1) {
+    v = v[0];
+  }
+
+  if (h.isArray(v) && v.length > 0) {
+    hpvRecord.htmlValue = `
+        <details> <summary>${hpvRecord.htmlValue}</summary>
+      
+          ${formatRecordForArray({ record: record, propertyID, className, attrs, expandAll, depth, options })}
+        </details>
+      `;
+  }
+
+  if (v?.["@id"]) {
+    hpvRecord.htmlValue = `
+        <details> <summary>${hpvRecord.htmlValue}</summary>
+      
+          ${formatRecordForObject({ record: v, propertyID: undefined, className, attrs, expandAll, depth, options })}
+        </details>
+      `;
+  }
+
+
+  if(v === undefined){
+    hpvRecord.htmlValue = ""
+  }
+
+  return hpvRecord.htmlValue
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+export function RecordOLD({
   record,
   className = "",
   attrs = "",

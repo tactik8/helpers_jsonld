@@ -274,6 +274,7 @@ export function postRecord(store, value) {
  */
 export function patchRecord(store, value, skipDuplicates = true) {
 
+
     value = h.clone(value)
 
     // Assign Id. if missing or wrong
@@ -291,14 +292,8 @@ export function patchRecord(store, value, skipDuplicates = true) {
         // Compare with existing value
         let storeValue = storeRecord.store.get(v?.['@id'])
 
-        // Skip if value already exists and new value doesn't have properties
-        // Prevents overwriting current record with simple link
-        if (storeValue && h.isRef(v)) {
-            continue
-        }
-
         // combine values
-        v = h.merge(v, storeValue, skipDuplicates)
+        v = h.patch(storeValue, v, skipDuplicates)
 
 
         // Store value

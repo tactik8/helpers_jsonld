@@ -20,25 +20,29 @@ export function Media({
   attrs,
 }) {
   if (h.record_type(record) == "VideoObject") {
+
+    let poster = h.getValue(record, 'thumbnailUrl')
     return `  
         
-            <div class="">
-                <video width="320" height="240" controls>
+
+                <video class="w-full h-auto max-w-full " controls loop poster="${poster}">
                     <source src="${h.getValue(record, "contentUrl")}" type="video/mp4">
                 
                 Your browser does not support the video tag.
                 </video>
-
-            </div>
-        `;
+           
+            
+        `
   }
 
   return `
         
-        
-            <div class="">
+                    <div class="block-media  ">
+
+          
                 ${components.ImageModal({ src: h.getImageUrl(record), alt: h.getImageName(record) })}
-            </div>
-        
+         
+                    </div>
+
         `;
 }

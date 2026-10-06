@@ -2,11 +2,13 @@ import { jsonldBase as h } from "../../../../../jsonldBase/jsonldBase.js";
 
 import * as dataConversion from "../../dataConversion/dataConversion.js";
 import { components } from "../../components/components.js";
+import { Media} from './media.js'
 import { things } from "../../../../../things/things.js";
 
 import * as htmlValue from "../../../formating/htmlValue.js";
 
 import { formatHelpers } from "../../../../../formatHelpers/formatHelpers.js";
+import { dataHelpers} from '../../../../../dataHelpers/dataHelpers.js'
 /**
  *
  * @param {*} param0
@@ -52,7 +54,7 @@ export function Cards({
   for (let i of h.getValues(itemList, "itemListElement")) {
     let item = h.getValue(i, "item");
 
-    tableContent += getCard({ url, item });
+    tableContent += getCard({ url, item, options });
   }
 
   tableContent = components.CardGrid({ content: tableContent, nbOfColumns });
@@ -88,18 +90,25 @@ function getCard({ url, item, options }) {
   // Get image content
   let imageUrl = h.getImageUrl(item);
   let imageName = h.getImageName(item);
-  let imageContent = imageUrl
-    ? components.ImageModal({ src: imageUrl, alt: imageName })
-    : "";
-
+ 
   // Set options
+
+  // make keywords 
+
+  let keywords = h.getValues(item, 'keywords')
+  keywords = keywords.map(x => `<a href="/?keywords=${x}">${x}</a>` )
+  let footerContent = components.Badges({text: keywords, variant: "secondary"})
+  
+  //
+
   let cardOptions = {
-    title: h.getValue(item, "name"),
-    url: h.getValue(item, "url"),
+    title:  h.getValue(item, "name"),
+    url: h.getRecordUrl(item, options?.baseUrl),
     description: h.getValue(item, "description"),
-    footer: htmlValue.get(h.record_type(item), "url", url),
+    footer: footerContent,
     image: h.getImageUrl(item),
     imageAlt: h.getImageName(item),
+    media: Media({ record: item, options })
   };
 
   let content = components.Card(cardOptions);

@@ -29,7 +29,7 @@ export function cardsPage({
   options,
 }) {
   content = content ?? "";
-  content += blocks.Cards({ url, records, offset, limit, options });
+  content += blocks.Cards({ url, records, offset, limit,  nbOfColumns: 3, options });
 
   let html = blankPage({
     website,

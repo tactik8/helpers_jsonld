@@ -13,7 +13,11 @@ import { isJsonld } from "../../../jsonldBase/src/objectHelpers.js";
  * @param { number } nbDecimals - the max nb of decimals 
  */
 export function get(record_or_record_type, propertyID, value, options, baseUrl, maxLength, nbDecimals) {
-  return formatValue({record_or_record_type, propertyID, value, options, baseUrl, maxLength, nbDecimals});
+
+    let record = record_or_record_type?.['@id'] ? record_or_record_type : undefined
+    let record_type = h.isString(record_or_record_type) ? record_or_record_type : undefined
+
+  return formatValue({record, record_type, propertyID, value, options, baseUrl, maxLength, nbDecimals});
 }
 
 
@@ -28,11 +32,10 @@ export function get(record_or_record_type, propertyID, value, options, baseUrl, 
  * @param { number } maxLength - the max length in characters for the title 
  * @returns {string} - the html a string 
  */
-export function getRecordLink({record_or_record_id, options, baseUrl, title, maxLength}){
+export function getRecordLink({record, record_id, options, baseUrl, title, maxLength}){
 
-    let record = record_or_record_id
-    if(dataHelpers.isString(record)){
-        record = {"@id": record}
+    if(dataHelpers.isString(record_id)){
+        record = {"@id": record_id}
     }
 
     options = options || {}
@@ -55,7 +58,7 @@ export function getRecordLink({record_or_record_id, options, baseUrl, title, max
  * @param {number} maxLength - the max length in char of the title
  * @param { string } baseUrl - base url for the href link 
  */
-export function formatValue({record_or_record_type, propertyID, value, options, maxLength, nbDecimals, baseUrl }) {
+export function formatValue({record, record_type, propertyID, value, options, maxLength, nbDecimals, baseUrl }) {
   //
 
     options = options || {}
@@ -63,9 +66,7 @@ export function formatValue({record_or_record_type, propertyID, value, options, 
     options.charLength = maxLength?? options?.charLength 
     options.decimalsLength = nbDecimals?? options?.decimalsLength 
 
-  let record_type = h.isString(record_or_record_type)
-    ? record_or_record_type
-    : h.record_type(record_or_record_type);
+    record_type = record_type ?? h.record_type(record);
 
   // @id
   if (propertyID == "@id") {
@@ -162,6 +163,7 @@ function _getUrl(url, name, options) {
 
 function _getRecordRefUrl(record, name, options) {
   let urlPath = encodeURIComponent(h.record_id(record));
+
   let url = dataHelpers.url.getUrl(options?.baseUrl, urlPath);
   name = name ?? h.record_id(record);
   name = dataHelpers.string.maxLengthMiddle(name, options?.charLength);

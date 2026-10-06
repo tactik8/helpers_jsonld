@@ -111,21 +111,34 @@ async function test3() {
 
 function test4() {
 
+    let db = new _h.DB()
 
-   let record = _h.records.itemList(10, 1)
+   let t1 = {
+    "@type": "Thing",
+    "@id": "thing1",
+    "name": "thing1",
+    "url": "https://www.test.com/thing/thing1"
+}
 
-   let l = new _h.things.ItemList(record)
+    db.set(t1)
 
-   let elements = l.itemListElement.map(x => x.record)
+    let t2 = {
+  
+    "@id": "thing1",
+    "name": "thing12"
+}
 
-   let e = elements[0]
+    db.patch(t2)
 
-   let item = e.item
+    let t3 = db.get('thing1')
 
-   console.log('e', e)
-   let name = _h.getValues(e, 'item.name')
 
-   console.log('e1', name)
+    console.log(t3)
+
+
+
+
+
 
 }
 
