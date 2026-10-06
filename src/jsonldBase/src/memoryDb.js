@@ -290,14 +290,14 @@ export function patchRecord(store, value, skipDuplicates = true) {
     for (let v of value) {
 
         // Compare with existing value
-        let storeValue = storeRecord.store.get(v?.['@id'])
+        let storeValue = storeRecord.store.get(h.record_id(v))
 
         // combine values
-        v = h.patch(storeValue, v, skipDuplicates)
+        v = h.patch(storeValue, v)
 
 
         // Store value
-        storeRecord.store.set(v?.['@id'], v)
+        storeRecord.store.set(h.record_id(v), v)
     }
 
     // Convert back to array if required

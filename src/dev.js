@@ -120,7 +120,10 @@ function test4() {
     "url": "https://www.test.com/thing/thing1"
 }
 
-    db.set(t1)
+    db.post(t1)
+
+    db.post(t1)
+
 
     let t2 = {
   
