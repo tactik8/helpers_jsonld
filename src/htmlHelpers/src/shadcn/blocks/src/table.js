@@ -118,7 +118,7 @@ function recordsToTable(itemList, properties, headers, options) {
     result.headers.splice(0, 0, "#");
   }
   // Add media
-  if (options.showPosition !== false) {
+  if (options.showMedia !== false) {
     result.headers.splice(1, 0, "Media");
   }
 
