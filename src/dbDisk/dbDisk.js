@@ -67,7 +67,7 @@ export class DbDisk {
             // Handle object
             let c = JSON.stringify(record, null, 4);
             let record_id = _h.record_id(record);
-            f = urlToFilename(record_id);
+            let f = urlToFilename(record_id);
             let r = await disk.save(this.path, f, c);
 
             action.setCompleted(record);
