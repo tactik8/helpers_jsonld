@@ -10,7 +10,10 @@ export class WebPage extends CreativeWork {
     constructor(url_or_record) {
         super()
         this._defaultRecordType = "WebPage"
+        this._html
+        this._jsonld
         this.website
+
 
         this._loadRecord(url_or_record)
         this._setValueIfString('url', url_or_record)
@@ -138,6 +141,24 @@ export class WebPage extends CreativeWork {
 
     domain() {
         return getDomain(this.url)
+    }
+
+
+    // Special methods
+    get html(){
+        return this._html
+    }
+
+    set html(value){
+        this._html = value
+    }
+
+    get jsonld(){
+        return this._jsonld
+    }
+
+    set jsonld(value){
+        this._jsonld = formatJsonld(value, this.url)
     }
 
     // Static
@@ -287,4 +308,127 @@ function getDomain(url) {
         return undefined
     }
 
+}
+
+
+
+
+function processHtml(record, html){
+
+
+    let jsonld = extractJsonLdFromHtml(html)
+
+
+
+
+
+}
+
+/**
+ * Returns jsonld 
+ * @param {*} value 
+ * @param {*} url 
+ */
+function formatJsonld(value, url){
+
+    let db = new h.DB()
+    db.post(value)
+    let records = db.records
+
+   
+    let recordIDSToReplace = []
+
+    //
+    let record_type = getJsonldMainType(value)
+
+    // Determine type of page
+    if(record_type == "Product"){
+        let productRecords = records.filter(x => h.record_type(x) == "Product")
+        let mainRecord = productRecords[0]
+        recordIDSToReplace.push({replacee: h.record_id(mainRecord), replacer: url + "#product"})
+
+        // set url
+        mainRecord = h.setValue(mainRecord, 'url', url)
+
+        // Brands
+        let brands = h.getValues(mainRecord, 'brand')
+        brands = brands.map(x => x?.["@type"] ? {"@type": "brand", name: x} : x)
+        mainRecord = h.setValues(mainRecord, 'brand', brands)
+
+        // Offers
+        let offerRecords = records.filter(x => h.record_type(x) == "Offer")
+        offerRecords = offerRecords.map(x => h.setValues(x, 'itemOffered', h.ref(mainRecord)))
+        mainRecord = h.setValues(mainRecord, 'offers', offerRecords)
+
+        // Reviews
+         let reviewRecords = records.filter(x => h.record_type(x) == "Review")
+        offerRecords = offerRecords.map(x => h.setValues(x, 'itemReviewed', h.ref(mainRecord)))
+        mainRecord = h.setValues(mainRecord, 'review', reviewRecords)
+
+        // agg rating
+        let aggregateRatingRecords = records.filter(x => h.record_type(x) == "AggregateRating")
+        aggregateRatingRecords = aggregateRatingRecords.map(x => h.setValues(x, 'itemReviewed', h.ref(mainRecord)))
+        mainRecord = h.setValues(mainRecord, 'aggregateRating', aggregateRatingRecords)
+
+        // Replace IDs
+        mainRecord = h.replaceIds(mainRecord, recordIDSToReplace)
+
+        return mainRecord
+    }
+
+
+
+    return value
+
+}
+
+
+function getJsonldMainType(value){
+
+    value = h.toArray(value)
+    
+    // Remove breadcrumblist
+    value = value.filter(x => h.record_type(x) != "BreadcrumbList")
+
+    // Case 1. One main parent
+    if(value.length ==1 && h.record_type(value[0] != "WebPage")){
+        return value[0]?.["@type"]
+    }
+
+    // Case 2. Main record is webpage
+    if(value.length ==1 && h.record_type(value[0] == "WebPage")){
+        value = h.getValues(value, 'mainEntity')
+    }
+
+    // Case 2. 
+    let productRecords = value.filter(x => h.record_type(x) == "Product")
+    if(productRecords.length ==1 ){
+        return "Product"
+    }
+
+    // Case 3. 
+
+
+}
+
+
+
+
+function extractJsonLdFromHtml(htmlString) {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(htmlString, 'text/html');
+  const scriptTags = doc.querySelectorAll('script[type="application/ld+json"]');
+  
+  const jsonLdData = [];
+
+  scriptTags.forEach((script) => {
+    try {
+      const parsed = JSON.parse(script.textContent.trim());
+      jsonLdData.push(parsed);
+    } catch (error) {
+      console.warn('Failed to parse a JSON-LD script tag:', error);
+    }
+  });
+
+  return jsonLdData;
 }

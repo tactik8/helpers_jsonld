@@ -106,6 +106,9 @@ export class Action extends Thing {
         return this.setValue( "error", value)
     }
 
+    addPart(subAction){
+        return this.addValues('hasPart', subAction)
+    }
 
     // Conditions
 

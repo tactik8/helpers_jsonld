@@ -2,124 +2,317 @@
  * Database to store jsonld records to disk
  */
 
-import { _h } from '../index.js'
+import { jsonldBase as _h } from '../jsonldBase/jsonldBase.js';
 
+import { things } from '../things/things.js';
+
+import { diskHelpers as disk } from '../diskHelpers/diskHelpers.js';
 
 /**
  * @fileoverview Tools to read write JSON-LD records to disk.
  * @module dbDisk
  */
 
-
-
 /**
  * Creates a new DbDisk instance to read/write JSON-LD records to disk.
+ * Does not flatten objects
  * @class
  */
 export class DbDisk {
-    constructor(directoryPath) {
-
-        this.path = directoryPath
-
-
+    /**
+     *
+     * @param {*} directoryPath - the directory wjhere to store records
+     * @param {*} flattenRecords - when true, flattens records
+     */
+    constructor(directoryPath, flattenRecords = true) {
+        this.path = directoryPath;
+        this.flattenRecords = flattenRecords;
+        this._isInitializedFlag = false;
     }
 
-
+    /**
+     * Add / replace record(s) to the database
+     * @param {*} record
+     * @returns
+     */
     async set(record) {
+        if (this.flattenRecords === true) {
+            return await this._set_flattened(record);
+        } else {
+            return await this._set(record);
+        }
+    }
 
-        let tempDB = new _h.DB()
+    async _set(record) {
+        let action = new things.Action('Saving record');
+        action.object = record;
 
-        tempDB.set(record)
-
-        for (let record of tempDB) {
-
-            let c = JSON.stringify(record, null, 4)
-            let record_id = _h.record_id(record)
-            f = urlToFilename(record_id)
-            let r = await _h.disk.save(this.path, f, c)
+        // hadle null
+        if (!record) {
+            action.setFailed('No record provided');
+            return action.record;
         }
 
-    }
-
-    async post(record) {
-        return this.set(record)
-    }
-
-    async get(record_id, expand = true) {
-
-        // Expand false
-        if (expand == false) {
-            if (_h.isArray(record_id)) {
-                let results = []
-                for (let r of record_id) {
-                    let c = await this._getRecord(r)
-                    results.push(c)
-                }
-                return results
-            } else {
-                return await this._getRecord(record_id)
+        // Handle array
+        if (h.isArray(record)) {
+            for (let r of record) {
+                let a = await this._set(r);
+                action.addPart(a);
             }
-        }
-
-
-        // 
-        let dbHelper = new _h.DatabaseHelper({ "@id": record_id })
-
-        while (dbHelper.isActive) {
-
-            let r = await this._getRecord(dbHelper.next)
-            r = r || { "@id": record_id }
-            dbHelper.add(r)
-            
-        }
-        return dbHelper.result
-
-
-
-    }
-
-
-    async _getRecord(record_id) {
-
-        f = urlToFilename(record_id)
-
-        let c = await _h.disk.load(this.path, f)
-
-        if (!c || c == "") {
-            return undefined
+            action.setCompleted(record);
+            return action.record;
         }
 
         try {
-            let r = JSON.parse(c)
-            r = _h.simplify(r)
-            return r
+            // Handle object
+            let c = JSON.stringify(record, null, 4);
+            let record_id = _h.record_id(record);
+            f = urlToFilename(record_id);
+            let r = await disk.save(this.path, f, c);
+
+            action.setCompleted(record);
+            return action.record;
         } catch (err) {
-            console.log('error')
-            return {}
+            action.setFailed(String(err));
+            return action.record;
         }
-
     }
 
+    async _set_flattened(record) {
+        let action = new things.Action('Saving record');
+        action.object = record;
 
+        // hadle null
+        if (!record) {
+            action.setFailed('No record provided');
+            return action.record;
+        }
+
+        // Set in tempDB to flatten
+        let tempDB = new _h.DB();
+        tempDB.set(record);
+
+        // Save records
+        for (let record of tempDB) {
+            let a = new things.Action('Saving record ' + _h.record_id(record));
+            try {
+                // Save record
+                let c = JSON.stringify(record, null, 4);
+                let record_id = _h.record_id(record);
+                f = urlToFilename(record_id);
+                let r = await disk.save(this.path, f, c);
+
+                a.setCompleted(record);
+                action.addPart(a);
+            } catch (err) {
+                a.setFailed(String(err));
+                action.addPart(a);
+            }
+        }
+
+        action.setCompleted(record);
+        return action.record;
+    }
+
+    /**
+     * Add / replace record(s) to the database (same as set)
+     * @param {*} record
+     * @returns
+     */
+    async post(record) {
+        return await this.set(record);
+    }
+
+    /**
+     * Get an individual record from the database
+     * @param {*} record_id
+     * @param {*} expand
+     * @returns
+     */
+    async get(record_id, expand = true) {
+        if (expand == false || this.flattenRecords == false) {
+            return await this._get(record_id);
+        } else {
+            return await this._getNested(record_id);
+        }
+    }
+
+    async _get(record_id) {
+        let action = new things.Action('Get record from db');
+        action.object = _h.ref(record_id);
+
+        // Handle array
+        if (_h.isArray(record_id)) {
+            let results = [];
+            for (let r of record_id) {
+                let a = await this._get(r);
+                action.addPart(a);
+                results = results.concat(_h.toArray(a.result));
+            }
+            action.setCompleted(results);
+            return action.record;
+        }
+
+        //
+        let f = urlToFilename(record_id);
+
+        let c = await disk.load(this.path, f);
+
+        if (!c || c == '') {
+            action.setFailed('No records found');
+            return action.record;
+        }
+
+        try {
+            let r = JSON.parse(c);
+            r = _h.simplify(r);
+            action.setCompleted(r);
+            return action.record;
+        } catch (err) {
+            action.setFailed(err);
+            return action.record;
+        }
+    }
+
+    async _getNested(record_id) {
+        let action = new things.Action('Get nested record');
+        action.object = _h.ref(record_id);
+
+        //
+        let dbHelper = new _h.DatabaseHelper({ '@id': record_id });
+
+        // Retrieve all children values
+        while (dbHelper.isActive) {
+            let next_id = dbHelper.next;
+            let a = await this._get(next_id);
+            action.addPart(a);
+            if (a?.result) {
+                _h.toArray(a.result).map((x) => dbHelper.add(x || _h.ref(x)));
+            } else {
+                dbHelper.add(_h.ref(next_id));
+            }
+        }
+
+        action.setCompleted(dbHelper.result);
+        return action.record;
+    }
+
+    /**
+     * Return all records
+     */
+    async getAll(expand = true) {
+        let action = new things.Action('Get all records');
+
+        // Get filenames
+        let filenames;
+        try {
+            filenames = await disk.dir.list(this.path);
+            filenames = _h.toArray(filenames);
+        } catch (err) {
+            action.setFailed(err);
+            return action.record;
+        }
+
+        let record_ids = record_ids.map((x) => filenameToUrl(x));
+
+        let a = await get(record_ids, expand);
+
+        action.addPart(a);
+
+        action.setCompleted(a.result);
+
+        return action.record;
+    }
+
+    /**
+     * Checks if a record exists
+     * @param {*} record_id
+     * @returns
+     */
     async exists(record_id) {
+        let r = await this.get(record_id, false);
 
-        let r = await this.get(record_id, false)
-        if(!r){
-            return false
-        }
-        if(Object.keys(r).length < 2){
-            return false
-        }
-        return true
-
+        return _h.isCompleted(r);
     }
 
+    /**
+     * Delete record
+     * @param {*} record_id 
+     * @returns 
+     */
+    async delete(record_id) {
+        let action = new things.Action('Delete record');
+        action.object = _h.ref(record_id);
 
+        // if null
+        if (!record_id) {
+            action.setCompleted();
+            return action.record;
+        }
+
+        // handle array
+        if (_h.isArray(record_id)) {
+            for (let r of record_id) {
+                let a = await this.delete(r);
+                action.addPart(a);
+            }
+            action.setCompleted();
+            return action.record;
+        }
+
+        // Ensure string (convert from ref if needed)
+        record_id = _h.toRecord_id(record_id);
+
+        // Delete file
+        try {
+            let filename = urlToFilename(record_id);
+            let r = await disk.file.delete(this.path, filename);
+            action.setCompleted();
+            return action.record;
+        } catch (err) {
+            console.log('err', err)
+            action.setFailed(err);
+            return action.record;
+        }
+    }
+
+    /**
+     * Remove all records from database
+     * @returns
+     */
     async purge() {
-        let r = await _h.disk.dir.delete(this.path)
-        return
-    }
+        let action = new things.Action('Purge database');
 
+        try {
+            let r = await disk.dir.delete(this.path);
+            action.setCompleted();
+            return action.record;
+        } catch (err) {
+            action.setFailed(err);
+            return action.record;
+        }
+
+        return;
+    }
+}
+
+/**
+ * Safely converts a URL into a 100% reversible filename.
+ */
+function urlToFilename(url) {
+    if (!url) return 'unnamed-file.json';
+    // URL-safe Base64 encoding
+    const encoded = Buffer.from(url).toString('base64url');
+    return `${encoded}.json`;
+}
+
+/**
+ * Exactly restores the original URL from a filename created by urlToFilenameLossless.
+ */
+function filenameToUrl(filename) {
+    if (!filename || filename === 'unnamed-file.json') return '';
+    const nameWithoutExt = filename.replace(/\.json$/, '');
+    return Buffer.from(nameWithoutExt, 'base64url').toString('utf-8');
 }
 
 /**
@@ -128,7 +321,7 @@ export class DbDisk {
  * @param {number} [maxLength=200] - Optional max character limit.
  * @returns {string} Safe filename string.
  */
-function urlToFilename(url, maxLength = 200) {
+function urlToFilenameOLD(url, maxLength = 200) {
     if (typeof url !== 'string' || !url.trim()) {
         return 'unnamed-file';
     }
@@ -149,8 +342,8 @@ function urlToFilename(url, maxLength = 200) {
 
     // 5. Clean up redundant, leading, and trailing characters
     result = result
-        .replace(/--+/g, '-')       // Collapse multiple hyphens
-        .replace(/\.\.+/g, '.')     // Collapse multiple dots
+        .replace(/--+/g, '-') // Collapse multiple hyphens
+        .replace(/\.\.+/g, '.') // Collapse multiple dots
         .replace(/^[-.]+|[-.]+$|\.$/g, ''); // Strip leading/trailing dots and hyphens
 
     // 6. Handle edge cases
@@ -169,6 +362,6 @@ function urlToFilename(url, maxLength = 200) {
         }
     }
 
-    result = result + '.json'
+    result = result + '.json';
     return result;
 }

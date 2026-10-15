@@ -100,6 +100,16 @@ export class Base {
         return this.#setRecord(h.setValues(this._record, propertyID, value))
     }
 
+    addValue(propertyID, value) {
+        this.#takeSnapshot()
+        return this.#setRecord(h.addValue(this._record, propertyID, value))
+    }
+
+    addValues(propertyID, value) {
+        this.#takeSnapshot()
+        return this.#setRecord(h.addValues(this._record, propertyID, value))
+    }
+
 
     // Sets the value only if is a string
    _setValueIfNotNull(propertyID, value){
@@ -521,6 +531,10 @@ export class Base {
 
     static addValue(record, propertyID, value) {
         return h.addValue(record, propertyID, recordToClass(value))
+    }
+
+    static addValues(record, propertyID, value) {
+        return h.addValues(record, propertyID, recordToClass(value))
     }
 
     static flatten(value) {

@@ -19,12 +19,43 @@ export function record_type(record) {
 }
 
 /**
- * Returns @id
+ * Returns @id. 
  * @param {*} record 
  * @returns 
  */
 export function record_id(record) {
+    
     return getValue(record, '@id')
+}
+
+/**
+ * Return @id value. If string, assumes it is id
+ * @param {*} record 
+ */
+export function toRecord_id(record){
+
+    if(typeof record == 'string'){
+        return record
+    }
+    return record_id(record) 
+}
+
+/**
+ * Return @id values in an array. If string, assumes it is id
+ * @param {*} record 
+ */
+export function toRecord_ids(record){
+
+    if(h.isArray(record)){
+        let results = []
+        record.foreach(x => { results = results.concat(toRecord_id(x)) } )
+        return results
+    }
+
+    if(typeof record == 'string'){
+        return [record]
+    }
+    return [record_id(record)]
 }
 
 
@@ -308,7 +339,44 @@ export function setValues(record, propertyID, value, language) {
 
 
 
+/**
+ * Inserts a value if not already present
+ * @param {*} record 
+ * @param {*} propertyID 
+ * @param {*} value 
+ */
+export function insertValue(record, propertyID, value){
 
+    if(hasValue(record, propertyID, value) == true){
+        return record
+    }
+
+    return addValue(record, propertyID, value)
+
+}
+
+
+/**
+ * Return true if record contains provided value
+ * @param {*} record 
+ * @param {*} propertyID 
+ * @param {*} value 
+ */
+export function hasValue(record, propertyID, value){
+
+    let values = getValues(record, propertyID)
+
+    if (values.length == 0 ) { return false }
+
+    for(let v of values){
+
+        if (h.isSame(v, value)) { return true } 
+
+    }
+
+    return false
+
+}
 
 
 

@@ -14,10 +14,10 @@ import { DbLogs } from './dbLogs/dbLogs.js';
 import { datapointHelpers } from './datapointHelpers/datapointHelpers.js';
 export { records } from './records/records.js'
 export { transformHelpers} from './transformHelpers/transformHelpers.js'
+import { DbDisk} from './dbDisk/dbDisk.js'
 
 
-
-export const _h = { ...jsonldBase, ...things, ...apiClient, ...rdf, ...recordIDHelpers, dataHelpers, ...transformHelpers, records, disk: diskHelpers, DbLogs: DbLogs, datapointHelpers: datapointHelpers, format: formatHelpers, html: htmlHelpers };
+export const _h = { ...jsonldBase, ...things, ...apiClient, ...rdf, ...recordIDHelpers, dataHelpers, ...transformHelpers, records, disk: diskHelpers, DbLogs: DbLogs, datapointHelpers: datapointHelpers, format: formatHelpers, html: htmlHelpers, DbDisk };
 
 export const helpers = _h
 

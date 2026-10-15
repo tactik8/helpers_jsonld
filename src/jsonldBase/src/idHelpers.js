@@ -4,6 +4,78 @@ import { jsonldBase as h} from '../jsonldBase.js'
 import * as recordIDHelpers from '../../recordIdHelpers/recordIdHelpers.js'
 
 
+/**
+ * Normalize record_ids and their references
+ * @param {*} value 
+ */
+export function normalizeRecordId(value, baseUrl){
+
+    // Step 1. Set temp ID if missing
+    value = setTempID(value)
+
+    // Gather list of normalized ids
+    let normalizedIDs = getNormalizedIDs(value, baseUrl)
+
+    // Repalce IDs
+    let normalizedValue = replaceIds(value, normalizedIDs)
+
+
+    //
+    return normalizedValue
+}
+
+/**
+ * Returns list of replacee / replacers 
+ * @param {*} value 
+ * @param {*} baseUrl 
+ * @returns 
+ */
+function getNormalizedIDs(value, baseUrl){
+    function _getNormalizedIDs(value, baseUrl){
+
+    baseUrl = baseUrl || 'https://www.test.com/'
+
+    // Deal with array
+    if(h.isArray(value)){
+        let results = []
+        for(let v of value){
+            results = results.concat(_getNormalizedIDs(v))
+        }
+        return results
+    }
+
+    // Deal with non object
+    if(h.isObject(value) == false){
+        return []
+    }
+
+    // Deal with object
+    let results = [{
+        'replacee': h.record_id(value),
+        'replacer': recordIDHelpers.get(value, baseUrl)
+    }]
+
+    for(let k of Object.keys(value)){
+        results = results.concat(_getNormalizedIDs(value[k], baseUrl))
+    }
+    return results
+}
+
+    let results = _getNormalizedIDs(value, baseUrl)
+
+    results = results.filter(x => x)
+
+    return results
+
+}
+
+
+
+
+
+
+
+
 
 /**
  * Fill in missing @id
@@ -12,18 +84,25 @@ import * as recordIDHelpers from '../../recordIdHelpers/recordIdHelpers.js'
  */
 export function setTempID(value) {
 
+    // Deal with array
     if (Array.isArray(value)) {
         return value.map(x => h.assignId(x))
     }
 
-    if (!value?.['@id'] && !value?.['@type']) {
+    // Deal with non object
+    if (h.isObject(value) == false) {
         return value
     }
 
+    // Assign temp id if missing
+    value['@id'] = value?.["@id"] || "_:" + h.randomUUID();
+
+    // iterate
     for (let k of Object.keys(value)) {
-        value['@id'] = value?.["@id"] || "_:" + h.randomUUID();
         value[k] = h.assignId(value[k])
     }
+
+    //
     return value
 }
 
@@ -43,7 +122,7 @@ export function assignId(value) {
         return value.map(x => h.assignId(x))
     }
 
-    if (!value?.['@id'] && !value?.['@type']) {
+    if (h.isObject(value) == false) {
         return value
     }
 

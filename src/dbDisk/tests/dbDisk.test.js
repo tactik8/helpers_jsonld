@@ -24,20 +24,35 @@ describe('dbDisk', () => {
 
         it('Check if record exists', async () => {
             let r = await db.exists(record_id)
-            expect(r).toBe(false);
+            expect(r?.result).toEqual(undefined);
         });
 
         it('Check if record exists', async () => {
             let r = await db.get(record_id)
-            expect(r).toEqual({ "@id": record_id });
+            expect(r?.result).toEqual({ "@id": record_id });
         });
 
         it('Post', async () => {
             let a = await db.set(record)
             let r = await db.get(record_id)
-            expect(r).toEqual(record);
+            expect(r.actionStatus).toEqual("CompletedActionStatus");
         });
 
+        it('Check if record exists', async () => {
+            let r = await db.get(record_id)
+            expect(r?.result).toEqual(record);
+        });
+
+        it('Delete record', async () => {
+            let r = await db.delete(record_id)
+            expect(r?.result).toEqual(undefined);
+            expect(r?.actionStatus).toEqual("CompletedActionStatus");
+        });
+
+        it('Check if record exists', async () => {
+            let r = await db.get(record_id)
+            expect(r?.result).toEqual({"@id": "https://www.test.com/thing1#thing"});
+        });
 
     })
 
