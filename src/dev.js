@@ -108,13 +108,12 @@ async function test4() {
         name: 'Thing1',
     };
     let record_id = record?.['@id'];
-    let db = new _h.DbDisk(d);
+    let db = new _h.DbDisk(d, false);
 
     await db.purge();
 
     let a11 = await db.getAll();
     console.log('a11', a11);
-    return
 
 
     let a1 = await db.exists(record_id);

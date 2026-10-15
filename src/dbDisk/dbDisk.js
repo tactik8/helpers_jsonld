@@ -54,7 +54,7 @@ export class DbDisk {
         }
 
         // Handle array
-        if (h.isArray(record)) {
+        if (_h.isArray(record)) {
             for (let r of record) {
                 let a = await this._set(r);
                 action.addPart(a);
