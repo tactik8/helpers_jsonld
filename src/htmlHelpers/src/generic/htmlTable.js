@@ -18,9 +18,7 @@ export function getTable(record, options) {
     if (!properties) {
         let keys = []
         let items = itemList.itemListElement.map(x => h.getValue(x, 'item'))
-        console.log(items)
         items.forEach(x => keys = keys.concat(Object.keys(x.record)))
-        console.log('kkk', keys)
         keys = [...new Set(keys)]
         keys.sort()
         keys = keys.filter(x => x.startsWith('@') === false)

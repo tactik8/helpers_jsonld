@@ -133,6 +133,8 @@ export function DropdownMenu({
     : `${kebabIcon}<span class="sr-only">Toggle menu</span>`;
 
   // Render dropdown items
+  items = items || []
+  items = Array.isArray(items) ? items : items
   const renderedItems = items
     .map((item) => {
       if (item.isSeparator) {

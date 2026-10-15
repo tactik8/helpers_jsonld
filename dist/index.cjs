@@ -40,7 +40,7 @@ ${r.join(`
       <circle cx="12" cy="5" r="1"/>
       <circle cx="12" cy="19" r="1"/>
     </svg>
-  `.trim(),m=t?`<span class="mr-2">${ke(t)}</span>${c}`:`${c}<span class="sr-only">Toggle menu</span>`,g=e.map($=>{if($.isSeparator)return'<div role="separator" class="-mx-1 my-1 h-px bg-border"></div>';let R=_s($.object),B=$.disabled?"disabled":"";return`
+  `.trim(),m=t?`<span class="mr-2">${ke(t)}</span>${c}`:`${c}<span class="sr-only">Toggle menu</span>`;e=e||[],e=(Array.isArray(e),e);let g=e.map($=>{if($.isSeparator)return'<div role="separator" class="-mx-1 my-1 h-px bg-border"></div>';let R=_s($.object),B=$.disabled?"disabled":"";return`
         <form method="POST" action="${ke($.url||"")}" class="m-0 p-0">
           ${R}
           <button
