@@ -55,7 +55,7 @@ export class Action extends Thing {
         return this.getValues( "object")
     }
     set object(value) {
-        return
+        return this.setValues('object', value)
     }
     get instrument() {
         return this.getValues( "instrument")
