@@ -67,7 +67,7 @@ Retrieve records.
     let records = db.search(filter, offset, limit, orderBy, orderDirection)
 
     // Generate and return html
-    let html = _h.html.shadcn.recordsPage({ website, webpage, title: "Test Title", req.originalUrl, records, filter, offset, limit, orderBy, orderDirection, options })
+    let html = _h.html.shadcn.recordsPage({ website, webpage, title: "Test Title", url: req.originalUrl, records, filter, offset, limit, orderBy, orderDirection, options })
 
     res.status(200).send(html)
 

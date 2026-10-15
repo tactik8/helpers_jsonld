@@ -107,11 +107,11 @@ export function flatten(record) {
                 continue;
             }
             if (k == 'previousItem') {
-                v[k] = h.ref(record?.[k]);
+                record[k] = h.ref(record?.[k]);
                 continue;
             }
             if (k == 'nextItem') {
-                v[k] = h.ref(record?.[k]);
+                record[k] = h.ref(record?.[k]);
                 continue;
             }
 
