@@ -232,7 +232,6 @@ export class DbDisk {
 
         let a = await this.get(record_ids, expand);
 
-        console.log('aa', a)
 
         action.addPart(a);
 
