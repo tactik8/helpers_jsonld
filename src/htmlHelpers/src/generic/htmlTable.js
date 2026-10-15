@@ -10,7 +10,9 @@ export function getTable(record, options) {
     // Init itemlist
     let itemList = new things.ItemList(record)
 
-    //console.log(itemList.record)
+
+
+    console.log('ffff', itemList.record)
 
     // Get properties from record if not provided
     let properties = options?.properties

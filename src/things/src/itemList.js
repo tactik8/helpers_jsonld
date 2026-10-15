@@ -14,9 +14,14 @@ export class ItemList extends Thing {
 
         this._loadRecord(name_or_record_or_items)
         this._setValueIfString('name', name_or_record_or_items)
-        if(h.isArray(name_or_record_or_items)){
-            this.add(name_or_record_or_items)
+        
+        for(let r of h.toArray(name_or_record_or_items)){
+            if(h.record_type(r) !== "ItemList"){
+                this.add(r)
+            }
         }
+       
+        
        
     }
 

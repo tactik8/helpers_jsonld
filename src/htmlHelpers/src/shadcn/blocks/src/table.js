@@ -40,6 +40,9 @@ export function Table({
   // Generate records
   let itemList = new things.ItemList(records);
   itemList = itemList.record;
+
+
+
   itemList.numberOfItems =
     itemList?.numberOfItems ?? itemList.itemListElement.length;
 
@@ -163,6 +166,7 @@ function getPropertiesFromRecords(itemList) {
 
 function getHeadersFromProperties(properties) {
   // Define titles from records if not provided
+  properties = properties || []
   let headers = properties.map((x) => x.split(".")?.[1] || x);
 
   headers = headers.map((x) => (x == "position" ? "No" : x));
