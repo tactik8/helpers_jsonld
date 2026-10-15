@@ -35,7 +35,7 @@ app.get("/health", (req, res) => {
 // Mount Routes
 app.get("/", async (req, res) => {
 
-    let parsedRequest = _h.html.express.getParsedRequest(req);
+    let parsedRequest = {} //_h.html.express.getParsedRequest(req);
 
 
     // Get records
@@ -47,7 +47,7 @@ app.get("/", async (req, res) => {
 
   //let apiUrl = `https://db.tactik8.com/api/bronzeV1/stash?@type=${"VideoObject"}&offset=${req.query?.offset || 0}&limit=${req.query?.limit || 20}`;
   let r = await fetch(apiUrl);
-  let records = await r.json();
+  let records =  await r.json();
   records = records.result;
 
   // Generate webpage object from website with page url and title
@@ -235,11 +235,12 @@ app.get("/:record_type", async (req, res) => {
   let webpage = website.getWebPage(req.originalUrl, req.params.record_type);
   webpage.addBreadcrumb("/" + req.params.record_type, req.params.record_type);
 
+  records = []
   let url = req.originalUrl;
   let offset = Number(req.query.offset);
   let limit = Number(req.query.limit);
 
-  let parsedRequest = _h.html.express.getParsedRequest(req);
+  let parsedRequest = {} //_h.html.express.getParsedRequest(req);
 
   let html = _h.html.shadcn.recordsPage({
     website,

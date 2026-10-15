@@ -261,7 +261,15 @@ export function simplify(value) {
         ) {
             let newValue = {};
             for (let k of Object.keys(value)) {
+
+                
+               
+
                 let r = simplify(value?.[k]);
+
+                if(k == "itemListElement"){
+                    r = h.toArray(r)
+                }
 
                 if (r !== undefined) {
                     newValue[k] = r;
