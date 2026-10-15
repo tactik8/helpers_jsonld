@@ -13,7 +13,7 @@ export function recordsPage({website, webpage, title, url, headContent, content,
 
 
     content = content ?? ""
-    content += blocks.Table({url, records, offset, limit, options})
+    content += blocks.Table({url, records, properties, headers, offset, limit, options})
 
     
     let html = blankPage({website, webpage, title, headContent, content, options})
