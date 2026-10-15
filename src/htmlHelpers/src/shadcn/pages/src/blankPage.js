@@ -40,8 +40,15 @@ export function blankPage({website, webpage, title, headContent, content,  optio
 
     let brandName = h.getValue(website, 'about.name') ?? h.getValue(website, 'name') ?? h.getValue(webpage, 'about.name') ?? h.webpage(website, 'name')
 
-    config.header = components.Header({ brand: brandName, navItems: webpage.WPHeader.hasPart }) 
-    config.footer = components.Footer({ brand: brandName, navItems: webpage.WPFooter.hasPart }) 
+
+    let headerParts = webpage.WPHeader.hasPart || []
+    let footerParts = webpage.WPFooter.hasPart || []
+
+    headerParts = Array.isArray(headerParts) ? headerParts : [headerParts]
+    footerParts = Array.isArray(footerParts) ? footerParts : [footerParts]
+
+    config.header = components.Header({ brand: brandName, navItems: headerParts }) 
+    config.footer = components.Footer({ brand: brandName, navItems: footerParts }) 
 
 
     // add content 
