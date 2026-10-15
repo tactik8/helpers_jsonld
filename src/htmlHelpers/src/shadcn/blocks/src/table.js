@@ -44,7 +44,7 @@ export function Table({
 
 
   itemList.numberOfItems =
-    itemList?.numberOfItems ?? itemList.itemListElement.length;
+    itemList?.numberOfItems ?? (itemList?.itemListElement || []).length;
 
   // Add potential actions
   itemList = dataConversion.addPotentialActions({ record: itemList, options });
