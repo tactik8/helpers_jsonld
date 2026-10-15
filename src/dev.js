@@ -112,6 +112,11 @@ async function test4() {
 
     await db.purge();
 
+    let a11 = await db.getAll();
+    console.log('a11', a11);
+    return
+
+
     let a1 = await db.exists(record_id);
     console.log('a1', a1);
 
@@ -130,7 +135,7 @@ async function test4() {
     let a6 = await db.get(record_id);
     console.log('a6', a6);
 
-    
+
 
 }
 

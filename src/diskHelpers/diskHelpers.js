@@ -123,7 +123,7 @@ async function listFiles(directoryPath) {
 
     try {
         const files = await fs.readdir(directoryPath);
-        return files
+        return files || []
     } catch (error) {
         console.error(`Error listing files: ${error.message}`);
     }

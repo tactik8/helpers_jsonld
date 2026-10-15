@@ -141,6 +141,13 @@ export class DbDisk {
         let action = new things.Action('Get record from db');
         action.object = _h.ref(record_id);
 
+        // Handle null
+        if(!record_id){
+            action.setFailed('No @id provided')
+            return action.record
+        }
+
+
         // Handle array
         if (_h.isArray(record_id)) {
             let results = [];
@@ -207,15 +214,25 @@ export class DbDisk {
         let filenames;
         try {
             filenames = await disk.dir.list(this.path);
+            filenames = filenames || []
             filenames = _h.toArray(filenames);
         } catch (err) {
             action.setFailed(err);
             return action.record;
         }
 
-        let record_ids = record_ids.map((x) => filenameToUrl(x));
+        if(filenames.length == 0) {
+            action.setCompleted([])
+            return action.record
+        }
 
-        let a = await get(record_ids, expand);
+        let record_ids = filenames.map((x) => filenameToUrl(x));
+
+        
+
+        let a = await this.get(record_ids, expand);
+
+        console.log('aa', a)
 
         action.addPart(a);
 
