@@ -56,13 +56,7 @@ export function Table({
       h.getValue(x, "position") < offset + limit,
   );
 
-  // Convert data to table format
-  // let data = dataConversion.recordsToTable(
-  //   itemList,
-  //  properties,
-  //  headers,
-  //  options,
-  // );
+  
 
   let data = recordsToTable(itemList, properties, headers, options);
 

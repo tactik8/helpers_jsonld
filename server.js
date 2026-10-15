@@ -52,13 +52,45 @@ app.get('/', async (req, res) => {
     let webpage = website.getWebPage(req.originalUrl, 'Home');
     webpage.addBreadcrumb('/', 'Home');
 
-    records =  {"@type":"ItemList","@id":"_:3f629b78-42f2-4460-8b49-d59a55dceaef","itemListElement":[{"@type":"ListItem","@id":"9ddbd122-b55f-4e1f-9f54-842e865b56b5","item":{"@type":"Action","@id":"_:f16cdf80-df98-4847-a917-33c5ec3e3f8b","name":"Scrape webpage","actionStatus":"PotentialActionStatus"},"position":0}],"numberOfItems":1}
+    records = {
+        '@type': 'ItemList',
+        '@id': '_:3f629b78-42f2-4460-8b49-d59a55dceaef',
+        itemListElement: [
+            {
+                '@type': 'ListItem',
+                '@id': '9ddbd122-b55f-4e1f-9f54-842e865b56b5',
+                item: {
+                    '@type': 'Action',
+                    '@id': '_:f16cdf80-df98-4847-a917-33c5ec3e3f8b',
+                    name: 'Scrape webpage',
+                    actionStatus: 'PotentialActionStatus',
+                },
+                position: 0,
+            },{
+                '@type': 'ListItem',
+                '@id': '9ddbd122-b55f-4e1f-9f54-89942e865b56b5',
+                item: {
+                    '@type': 'Action',
+                    '@id': '_:f16cdf80-df98-488847-a917-33c5ec3e3f8b',
+                    name: 'Scrape webpage1',
+                    actionStatus: 'PotentialActionStatus',
+                },
+                position: 1,
+            },
+        ],
+        numberOfItems: 2,
+    };
+    let properties = ['item.name', 'item.actionStatus', 'item.object.url']
+
+    options = { ...options };
+    options.showMedia = false;
 
     let html = _h.html.shadcn.recordsPage({
         website,
         webpage,
         title: 'Test Title',
         records,
+        properties,
         ...parsedRequest,
         options,
     });
