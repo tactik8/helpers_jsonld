@@ -428,10 +428,11 @@ ${r.join(`
   
   
   `}function Bd(t,e){return t?(Array.isArray(t)&&(t=t.join("")),`
+  <thead>
     <tr class="border-b border-border transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
           ${t}
         </tr>
-  
+  </thead>
   `):""}function Fd(t,e){return t||(t=""),`
     <td class="p-4 align-middle pr-0 ${t?.table?.className||t?.className||""}">
       ${t?.htmlValue??t?.value??t}

@@ -1,13 +1,20 @@
 import express from 'express';
 
 import { _h } from './src/index.js';
-import { DataFeed } from './src/things/src/dataFeed.js';
-import { recordToDatapoints } from './src/datapointHelpers/src/methods/dataPointMethods.js';
-import datapointHelpers from './src/datapointHelpers/datapointHelpers.js';
+
+import path from 'path'
+import { fileURLToPath } from 'url'
 
 const app = express();
+
+// Replicate __dirname in ES6 modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
 
 let options = {
     baseUrl: 'http://localhost:3021/things',
@@ -52,12 +59,19 @@ app.get('/', async (req, res) => {
     let webpage = website.getWebPage(req.originalUrl, 'Home');
     webpage.addBreadcrumb('/', 'Home');
 
-    records = {
-        '@type': 'ItemList',
-        '@id': '_:3f629b78-42f2-4460-8b49-d59a55dceaef',
-        
-    };
-    let properties = ['item.name', 'item.actionStatus', 'item.object.url']
+    records = new _h.things.ItemList();
+
+    let action = new _h.things.Action('action0');
+    action.setActive();
+    action.object = new _h.things.WebPage('https://www.test.com');
+    records.add(action);
+
+    let properties = [
+        'item.@id',
+        'item.name',
+        'item.actionStatus',
+        'item.object.url',
+    ];
 
     options = { ...options };
     options.showMedia = false;
@@ -76,6 +90,37 @@ app.get('/', async (req, res) => {
 });
 
 // Mount Routes
+
+
+
+
+
+
+
+
+
+app.get('/t', async (req, res) => {
+    // Generate webpage object from website with page url and title
+    let webpage = website.getWebPage(req.originalUrl, 'Things');
+    webpage.addBreadcrumb('/t', 'Test');
+
+    
+
+    let content = _h.html.shadcn.components.InputUrl({label: "URL", value: 'https://www.test.com'})
+
+    // Generate and return html
+    let html = _h.html.shadcn.blankPage({
+        website,
+        webpage,
+        title: 'Test',
+        content,
+        options,
+    });
+
+    res.status(200).send(html);
+});
+
+
 
 app.get('/things', async (req, res) => {
     // Generate webpage object from website with page url and title

@@ -1,0 +1,219 @@
+ <!DOCTYPE html>
+    <html lang="en" class="dark">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>${title || ''}</title>
+      <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+      <style type="text/tailwindcss">
+        @variant dark (&:where(.dark, .dark *));
+
+        @theme inline {
+          --color-border: hsl(var(--border));
+          --color-input: hsl(var(--input));
+          --color-ring: hsl(var(--ring));
+          --color-background: hsl(var(--background));
+          --color-foreground: hsl(var(--foreground));
+
+          --color-primary: hsl(var(--primary));
+          --color-primary-foreground: hsl(var(--primary-foreground));
+
+          --color-secondary: hsl(var(--secondary));
+          --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+          --color-destructive: hsl(var(--destructive));
+          --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+          --color-muted: hsl(var(--muted));
+          --color-muted-foreground: hsl(var(--muted-foreground));
+
+          --color-accent: hsl(var(--accent));
+          --color-accent-foreground: hsl(var(--accent-foreground));
+
+          --color-popover: hsl(var(--popover));
+          --color-popover-foreground: hsl(var(--popover-foreground));
+
+          --color-card: hsl(var(--card));
+          --color-card-foreground: hsl(var(--card-foreground));
+
+          --radius-lg: var(--radius);
+        }
+
+        :root {
+          --background: 0 0% 100%;
+          --foreground: 222.2 84% 4.9%;
+          --card: 0 0% 100%;
+          --card-foreground: 222.2 84% 4.9%;
+          --popover: 0 0% 100%;
+          --popover-foreground: 222.2 84% 4.9%;
+          --primary: 222.2 47.4% 11.2%;
+          --primary-foreground: 210 40% 98%;
+          --secondary: 210 40% 96.1%;
+          --secondary-foreground: 222.2 47.4% 11.2%;
+          --muted: 210 40% 96.1%;
+          --muted-foreground: 215.4 16.3% 46.9%;
+          --accent: 210 40% 96.1%;
+          --accent-foreground: 222.2 47.4% 11.2%;
+          --destructive: 0 84.2% 60.2%;
+          --destructive-foreground: 210 40% 98%;
+          --border: 214.3 31.8% 91.4%;
+          --input: 214.3 31.8% 91.4%;
+          --ring: 222.2 84% 4.9%;
+          --radius: 0.5rem;
+        }
+
+        .dark {
+          --background: 222.2 84% 4.9%;
+          --foreground: 210 40% 98%;
+          --card: 222.2 84% 4.9%;
+          --card-foreground: 210 40% 98%;
+          --popover: 222.2 84% 4.9%;
+          --popover-foreground: 210 40% 98%;
+          --primary: 210 40% 98%;
+          --primary-foreground: 222.2 47.4% 11.2%;
+          --secondary: 217.2 32.6% 17.5%;
+          --secondary-foreground: 210 40% 98%;
+          --muted: 217.2 32.6% 17.5%;
+          --muted-foreground: 215 20.2% 65.1%;
+          --accent: 217.2 32.6% 17.5%;
+          --accent-foreground: 210 40% 98%;
+          --destructive: 0 62.8% 30.6%;
+          --destructive-foreground: 210 40% 98%;
+          --border: 217.2 32.6% 17.5%;
+          --input: 217.2 32.6% 17.5%;
+          --ring: 212.7 26.8% 83.9%;
+          --radius: 0.5rem;
+        }
+      </style>
+      
+    </head>
+    <body class="bg-background text-foreground min-h-screen w-full flex flex-col justify-between antialiased">
+
+      <!-- Header Target: Spans full width -->
+      <div id="header-container" class="w-full">Header content</div>
+
+      <!-- Main Content Target: Flex-1 fills available vertical space -->
+      <main class="w-full flex-1 flex flex-col items-center justify-start p-6 md:p-8">
+        <div id="main-content" class="w-full max-w-6xl space-y-8">
+          <div>Breadcrumb content</div>
+         
+          <div>
+
+
+
+
+
+
+
+
+
+          </div>
+
+
+
+
+          <!--------------------------------------------------------------->
+          <style>
+            .progress-card {
+  width: 100%;
+  max-width: 360px;
+  padding: 1.25rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e5e7eb;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  box-sizing: border-box;
+}
+
+.progress-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+}
+
+.progress-card-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.progress-card-subtitle {
+  margin: 0.25rem 0 0 0;
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.progress-card-badge {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #374151;
+  background-color: #f3f4f6;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+}
+
+.progress-bar-container {
+  height: 8px;
+  width: 100%;
+  background-color: #e5e7eb;
+  border-radius: 9999px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 0.4s ease-in-out;
+}
+
+.progress-card-footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: #6b7280;
+  font-weight: 500;
+}B
+          </style>
+<div class="progress-card">
+      <div class="progress-card-header">
+        <div>
+          <h3 class="progress-card-title">Title</h3>
+          <p class="progress-card-subtitle">Sub</p>
+        </div>
+        <span class="progress-card-badge">45%</span>
+      </div>
+      
+      <div class="progress-bar-container">
+        <div 
+          class="progress-bar-fill" 
+          style="width: 45%; background-color: red;"
+          role="progressbar"
+          aria-valuenow="45"
+          aria-valuemin="0"
+          aria-valuemax="100"
+        ></div>
+      </div>
+      
+      <div class="progress-card-footer">
+        <span>45cm</span>
+        <span>100cm</span>
+      </div>
+    </div>
+
+
+    <!--------------------------------------------------------------->
+
+
+
+        </div>
+      </main>
+
+      <!-- Footer Target: Spans full width at bottom -->
+      <div id="footer-container" class="w-full">${footer || ''}</div>
+
+    </body>
+    </html>

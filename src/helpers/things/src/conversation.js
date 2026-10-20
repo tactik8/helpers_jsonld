@@ -1,0 +1,229 @@
+import { jsonldBase as h } from '../../jsonldBase/jsonldBase.js';
+
+import { Thing } from './thing.js';
+
+import { CreativeWork } from './creativeWork.js';
+import { Message } from './message.js';
+
+/**
+ * Represents a message in the system.
+ *
+ *
+ */
+export class Conversation extends CreativeWork {
+    constructor(record) {
+        super();
+        this._defaultRecordType = 'Conversation';
+
+        if (record?.['@type'] == 'Conversation') {
+            this.record = record;
+        } else {
+            this.record_type = 'Conversation';
+        }
+    }
+
+    test() {
+        return 'This is a test';
+    }
+
+    toString() {
+        return toString(this.record);
+    }
+
+    get messages() {
+        let messages = this.getValues('hasPart').filter(
+            (x) => h.record_type(x) == 'Message',
+        );
+        messages = Message.sort(messages);
+        return messages;
+    }
+    set messages(value) {
+        this.setValues('hasPart', value);
+    }
+
+    get firstMessage() {
+        return this.messages.length > 0 ? this.messages[0] : undefined;
+    }
+
+    get lastMessage() {
+        return this.messages.length > 0
+            ? this.messages[this.messages.length - 1]
+            : undefined;
+    }
+
+    // Convenience properties
+    get participants() {
+        return getParticipants(this.record);
+    }
+
+    // Helper methods
+    add(sender, recipient, subject, text, dateSent, dateReceived) {
+        this.record = newMessage(
+            this.record,
+            sender,
+            recipient,
+            subject,
+            text,
+            dateSent,
+            dateReceived,
+        );
+    }
+
+    addMessage(sender, recipient, subject, text, dateSent, dateReceived) {
+        this.record = newMessage(
+            this.record,
+            sender,
+            recipient,
+            subject,
+            text,
+            dateSent,
+            dateReceived,
+        );
+    }
+
+    newMessage(sender, recipient, subject, text, dateSent, dateReceived) {
+        let message = new Message(
+            sender,
+            recipient,
+            subject,
+            text,
+            dateSent,
+            dateReceived,
+        );
+        this.messages = this.messages.push(message);
+    }
+
+    // static
+
+    static getParticipants(conversationRecord) {
+        return getParticipants(conversationRecord);
+    }
+
+    static newMessage(
+        conversationRecord,
+        sender,
+        recipient,
+        subject,
+        text,
+        dateSent,
+        dateReceived,
+    ) {
+        return newMessage(
+            conversationRecord,
+            sender,
+            recipient,
+            subject,
+            text,
+            dateSent,
+            dateReceived,
+        );
+    }
+
+    static addMessage(
+        conversationRecord,
+        sender,
+        recipient,
+        subject,
+        text,
+        dateSent,
+        dateReceived,
+    ) {
+        return newMessage(
+            conversationRecord,
+            sender,
+            recipient,
+            subject,
+            text,
+            dateSent,
+            dateReceived,
+        );
+    }
+
+    static getMessages(conversationRecord) {
+        return getMessages(conversationRecord);
+    }
+
+    static getFirstMessage(conversationRecord) {
+        let messages = getMessages(conversationRecord);
+        return messages.length > 0 ? messages[0] : undefined;
+    }
+
+    static getLastMessage(conversationRecord) {
+        let messages = getMessages(conversationRecord);
+        return messages.length > 0 ? messages[messages.length - 1] : undefined;
+    }
+}
+
+function toString(conversationRecord) {
+    let messages = getMessages(conversationRecord);
+
+    let result = `Conversation with ${messages.length} messages:\n`;
+
+    result += Message.toString(messages);
+
+    return result;
+}
+
+function newMessage(
+    conversationRecord,
+    sender,
+    recipient,
+    subject,
+    text,
+    dateSent,
+    dateReceived,
+) {
+    let message = new Message(
+        sender,
+        recipient,
+        subject,
+        text,
+        dateSent,
+        dateReceived,
+    );
+    conversationRecord = h.addValues(conversationRecord, 'hasPart', message);
+    return conversationRecord;
+}
+
+function getMessages(conversationRecord) {
+    let messages = h
+        .getValues(conversationRecord, 'hasPart')
+        .filter((x) => h.getValue(x, '@type') == 'Message');
+    messages = sortMessages(messages);
+    return messages;
+}
+
+function sortMessages(messages) {
+    messages.sort((a, b) => {
+        let dateA = new Date(
+            h.getValue(a, 'dateSent') ||
+                h.getValue(a, 'dateCreated') ||
+                h.getValue(a, 'dateReceived'),
+        );
+        let dateB = new Date(
+            h.getValue(b, 'dateSent') ||
+                h.getValue(b, 'dateCreated') ||
+                h.getValue(b, 'dateReceived'),
+        );
+        return dateA - dateB;
+    });
+    return messages;
+}
+
+function getParticipants(conversationRecord) {
+    let messages = getMessages(conversationRecord);
+    let participants = new Set();
+
+    messages.forEach((message) => {
+        let sender = h.getValue(message, 'sender');
+        if (sender) {
+            participants.add(sender);
+        }
+        let recipients = h.getValues(message, 'recipient');
+        recipients.forEach((recipient) => {
+            participants.add(recipient);
+        });
+    });
+
+    return Array.from(participants);
+}
