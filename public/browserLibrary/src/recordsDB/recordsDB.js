@@ -2,6 +2,11 @@
 
 
 
-  import {h} from 'https://cdn.jsdelivr.net/gh/tactik8/helpers_jsonld';
+import { h } from '/jsonldCore.js';
 
- 
+
+export const db  = new h.DB()
+
+
+export default db;
+

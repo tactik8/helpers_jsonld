@@ -17,7 +17,8 @@ import * as utilitiesHelpers from './src/utilitiesHelpers.js';
 import * as listHelpers from './src/listHelpers.js';
 import * as toStringHelpers from './src/toStringHelpers.js';
 import * as databaseHelpers from './src/databaseHelpers.js';
-
+import * as itemListHelpers from './src/itemListHelpers.js'
+import * as actionExecutionHelpers from './src/actionExecutionHelpers.js'
 /**
  * @module jsonldBase
  * @description Module for working with JSON-LD records
@@ -95,4 +96,18 @@ export const jsonldBase = {
      * @see module:databaseHelpers
      */
     ...databaseHelpers,
+    /**
+     * @namespace list
+     * @description Helpers for itemList
+     * @see module:itemListHelpers
+     */
+    list: itemListHelpers,
+    
+    /**
+     * @namespace actionExecutionHelpers
+     * @description Helpers for action execution
+     * @see module:actionExecutionHelpers
+     */
+    ...actionExecutionHelpers
+    
 };

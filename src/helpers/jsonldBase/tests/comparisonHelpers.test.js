@@ -24,6 +24,7 @@ describe('comparisonHelpers', () => {
       expect(isEqual(a, b)).toBe(true);
     });
 
+   
     it('returns false when object values differ', () => {
       expect(isEqual({ a: 1 }, { a: 2 })).toBe(false);
     });

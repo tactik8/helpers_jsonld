@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+@theme {
+  /* Colors */
+  --color-brand-primary: #0284c7;
+  --color-brand-hover: #0369a1;
+  --color-surface-bg: #ffffff;
+  --color-surface-text: #0f172a;
+
+  /* Typography */
+  --font-display: "Inter", sans-serif;
+
+  /* Layout / Radii */
+  --radius-control: 0.375rem;
+  --radius-container: 0.75rem;
+}
+
+/* Custom CSS dark mode override via CSS variables */
+.dark {
+  --color-surface-bg: #0f172a;
+  --color-surface-text: #f8fafc;
+}

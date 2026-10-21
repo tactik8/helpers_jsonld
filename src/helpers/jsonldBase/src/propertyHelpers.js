@@ -13,6 +13,32 @@ let DEFAULT_LANGUAGE = 'en-CA';
 export function record_type(record) {
     return getValue(record, '@type');
 }
+export function getRecord_type(record) {
+    return getValue(record, '@type');
+}
+export function setRecord_type(record, value) {
+    return  setValue(record, '@type', value);
+}
+
+export function recordType(record) {
+    return getValue(record, '@type');
+}
+export function getRecordType(record) {
+    return getValue(record, '@type');
+}
+export function setRecordType(record, value) {
+    return  setValue(record, '@type', value);
+}
+
+export function Type(record) {
+    return getValue(record, '@type');
+}
+export function getType(record) {
+    return getValue(record, '@type');
+}
+export function setType(record, value) {
+    return setValue(record, '@type', value);
+}
 
 /**
  * Returns @id.
@@ -21,6 +47,52 @@ export function record_type(record) {
  */
 export function record_id(record) {
     return getValue(record, '@id');
+}
+export function getRecord_id(record) {
+    return getValue(record, '@id');
+}
+export function setRecord_id(record, value){
+    return setValue(record, '@id', value)
+}
+
+export function recordId(record) {
+    return getValue(record, '@id');
+}
+export function getRecordId(record) {
+    return getValue(record, '@id');
+}
+export function setRecordId(record, value){
+    return setValue(record, '@id', value)
+}
+
+export function recordID(record) {
+    return getValue(record, '@id');
+}
+export function getRecordID(record) {
+    return getValue(record, '@id');
+}
+export function setRecordID(record, value){
+    return setValue(record, '@id', value)
+}
+
+export function ID(record) {
+    return getValue(record, '@id');
+}
+export function getID(record) {
+    return getValue(record, '@id');
+}
+export function setID(record, value){
+    return setValue(record, '@id', value)
+}
+
+export function Id(record) {
+    return getValue(record, '@id');
+}
+export function getId(record) {
+    return getValue(record, '@id');
+}
+export function setId(record, value){
+    return setValue(record, '@id', value)
 }
 
 /**
@@ -167,6 +239,39 @@ export function setValue(record, propertyID, value, position, language) {
     }
     return setValues(record, propertyID, value, language);
 }
+
+/**
+ * Set the value if current value is null / undefined
+ * @param {*} record 
+ * @param {*} propertyID 
+ * @param {*} value 
+ * @param {*} position 
+ * @param {*} language 
+ */
+export function setValueIfNull(record, propertyID, value, position, language){
+
+    let currentValue = getValue(record, propertyID, position)
+
+    if(h.isNull(currentValue) == false){
+        return record
+    }
+
+    return setValue(record, propertyID, value, position, language)
+
+}
+
+/**
+ * Set the value if current value is null / undefined
+ * @param {*} record 
+ * @param {*} propertyID 
+ * @param {*} value 
+ * @param {*} position 
+ * @param {*} language 
+ */
+export function setIfNull(record, propertyID, value, position, language){
+    return setValueIfNull(record, propertyID, value, position, language)
+}
+
 
 /**
  * Add values to a property, combining with existing values.
@@ -345,6 +450,7 @@ export function insertValue(record, propertyID, value) {
  * @param {*} record
  * @param {*} propertyID
  * @param {*} value
+ * @returns {boolean} True if contains value, false
  */
 export function hasValue(record, propertyID, value) {
     let values = getValues(record, propertyID);
@@ -362,6 +468,11 @@ export function hasValue(record, propertyID, value) {
     return false;
 }
 
+/**
+ * Splits dot notation into propertyID and position
+ * @param {*} pathFragment 
+ * @returns {[string, string]} array of propertyID and position
+ */
 function getPathFragment(pathFragment) {
     if (pathFragment === undefined) {
         return (undefined, 0);
@@ -411,65 +522,215 @@ export function setAtValue(record, value) {
     return h.setValues(record, '@value', value);
 }
 
+// actionStatus
 export function actionStatus(record) {
     return h.getValue(record, 'actionStatus');
 }
+export function getActionStatus(record) {
+    return h.getValue(record, 'actionStatus');
+}
+export function setActionStatus(record, value) {
+    return h.setValue(record, 'actionStatus', value);
+}
 
+// contentUrl
 export function contentUrl(record) {
     return h.getValue(record, 'contentUrl');
 }
+export function getContentUrl(record) {
+    return h.getValue(record, 'contentUrl');
+}
+export function setContentUrl(record, value) {
+    return h.setValue(record, 'contentUrl', value);
+}
 
+// description
 export function description(record) {
     return h.getValue(record, 'description');
 }
+export function getDescription(record) {
+    return h.getValue(record, 'description');
+}
+export function setDescription(record, value) {
+    return h.setValue(record, 'description', value);
+}
 
+//email
 export function email(record) {
     return h.getValue(record, 'email');
 }
+export function getEmail(record) {
+    return h.getValue(record, 'email');
+}
+export function setEmail(record, value) {
+    return h.setValue(record, 'email', value);
+}
 
+// item
 export function item(record) {
     return h.getValue(record, 'item');
 }
+export function getItem(record) {
+    return h.getValue(record, 'item');
+}
+export function setItem(record, value) {
+    return h.setValue(record, 'item', value);
+}
 
+// items
+export function items(record){
+    return h.list.getItems(record)
+}
+export function getItems(record){
+    return h.list.getItems(record)
+}
+export function setItems(record, values){
+    return h.list.setItems(record, values)
+}
+
+// itemListElement
+export function itemListElement(record) {
+    return h.list.getItemListElement(record)
+}
+export function getItemListElement(record) {
+    return h.list.getItemListElement(record)
+}
+export function setItemListElement(record, value) {
+    return h.list.setItemListElement(record, value)
+}
+
+// name
 export function name(record) {
     return h.getValue(record, 'name');
 }
-
-export function position(record) {
-    return h.getValue(record, 'position');
+export function getName(record) {
+    return h.getValue(record, 'name');
+}
+export function setName(record, value) {
+    return h.setValue(record, 'name', value);
 }
 
+// nomberOfItems
+export function numberOfItems(record) {
+    return h.getValue(record, 'numberOfItems');
+}
+export function getNumberOfItems(record) {
+    return h.getValue(record, 'numberOfItems');
+}
+export function setNumberOfItems(record, value) {
+    return h.setValue(record, 'numberOfItems', value);
+}
+
+
+
+// object
+export function object(record) {
+    return h.getValue(record, 'object')
+}
+export function getObject(record) {
+    return h.getValue(record, 'object')
+}
+export function setObject(record, value) {
+    return setValue(record, 'object', value)
+}
+
+// objects
+export function objects(record) {
+    return h.getValues(record, 'object')
+}
+export function getObjects(record) {
+    return h.getValues(record, 'object')
+}
+export function setObjects(record, value) {
+    return setValues(record, 'object', value)
+}
+
+
+
+
+// position
+export function position(record) {
+    return h.list.getPosition(record)
+}
+export function getPosition(record) {
+    return h.list.getPosition(record)
+}
+export function setPosition(record, value) {
+    return h.list.setPosition(record, value)
+}
+
+
+// result
+export function result(record) {
+    return h.getValue(record, 'result')
+}
+export function getResult(record) {
+    return h.getValue(record, 'result')
+}
+export function setResult(record, value) {
+    return setValue(record, 'result', value)
+}
+
+
+// results
+export function results(record) {
+    return h.getValues(record, 'result')
+}
+export function getResults(record) {
+    return h.getValues(record, 'result')
+}
+export function setResults(record, value) {
+    return setValues(record, 'result', value)
+}
+
+
+// targetCollection
+export function targetCollection(record) {
+    return h.getValue(record, 'targetCollection');
+}
+export function getTargetCollection(record) {
+    return h.getValue(record, 'targetCollection');
+}
+export function setTargetCollection(record, value) {
+    return h.setValue(record, 'targetCollection', value);
+}
+
+// targetCollections
+export function targetCollections(record) {
+    return h.getValues(record, 'targetCollection');
+}
+export function getTargetCollections(record) {
+    return h.getValues(record, 'targetCollection');
+}
+export function setTargetCollections(record, value) {
+    return h.setValues(record, 'targetCollection', value);
+}
+
+
+// text
 export function text(record) {
     return h.getValue(record, 'text');
 }
+export function getText(record) {
+    return h.getValue(record, 'text');
+}
+export function setText(record, value) {
+    return h.setValue(record, 'text', value);
+}
 
+// url
 export function url(record) {
     return h.getValue(record, 'url');
 }
-
-export function itemListElement(record) {
-    return h.getValues(record, 'itemListElement');
+export function getUrl(record) {
+    return h.getValue(record, 'url');
+}
+export function setUrl(record, value) {
+    return h.setValue(record, 'url', value);
 }
 
-/**
- * Returns the listItem items from an itemList
- * @param {object} record - The itemlist from which to get items
- * @returns {array} An array of items
- */
-export function items(record) {
-    let values = h.getValues(record, 'itemListElement');
-    values = values.map((x) => h.getValue(x, 'item'));
-    return values;
-}
 
-/**
- * Returns the numberOfitems property from an itemlist
- * @param {*} record - The itemList record
- * @returns {number} The numberOfitems property from an itemlist
- */
-export function numberOfitems(record) {
-    return h.getValue(record, 'numberOfitems');
-}
+
 
 /**
  * Returns true if the actionStatus property is PotentialActionStatus

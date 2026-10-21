@@ -99,8 +99,215 @@ export class DB {
         return getRecordIDs(this._store);
     }
 
+    // List elements
+
+    get list() {
+        return {
+            insert: this._list_insert.bind(this),
+            upsert: this._list_upsert.bind(this),
+            remove: this._list_remove.bind(this),
+            delete: this._list_remove.bind(this),
+            insertBefore: this._list_insertBefore.bind(this),
+            insertAfter: this._list_insertAfter.bind(this),
+            moveUp: this._list_moveUp.bind(this),
+            moveDown: this._list_moveDown.bind(this),
+            moveBefore: this._list_moveBefore.bind(this),
+            moveAfter: this._list_moveAfter.bind(this),
+            replace: this._list_replace.bind(this),
+            length: this._list_length.bind(this),
+            getListItems: this._list_getListItems.bind(this),
+            getItemListElement: this._list_getItemListElement.bind(this),
+            getItems: this._list_getItems.bind(this),
+        };
+    }
+
+    _list_insert(itemList, item, position) {
+        itemList = this.get(itemList);
+        item = this.get(item);
+        itemList = h.list.insert(itemList, item, position);
+        this.set(itemList);
+    }
+
+    _list_upsert(itemList, item, position) {
+        itemList = this.get(itemList);
+        item = this.get(item);
+        itemList = h.list.upsert(itemList, item, position);
+        this.set(itemList);
+    }
+
+
+    _list_insertBefore(itemList, item, reference) {
+        itemList = this.get(itemList);
+        item = this.get(item);
+        reference = this.get(reference)
+        itemList = h.list.insertBefore(itemList, item, reference);
+        this.set(itemList);
+    }
+
+    _list_insertAfter(itemList, item, reference) {
+        itemList = this.get(itemList);
+        item = this.get(item);
+        itemList = h.list.insertAfter(itemList, item, reference);
+        this.set(itemList);
+    }
+
+    _list_moveBefore(itemList, item, reference) {
+        itemList = this.get(itemList);
+        item = this.get(item);
+        reference = this.get(reference)
+        itemList = h.list.moveBefore(itemList, item, reference);
+        this.set(itemList);
+    }
+
+    _list_moveAfter(itemList, item, reference) {
+        itemList = this.get(itemList);
+        item = this.get(item);
+        itemList = h.list.moveAfter(itemList, item, reference);
+        this.set(itemList);
+    }
+
+    _list_moveUp(itemList, reference) {
+        itemList = this.get(itemList);
+        itemList = h.list.moveUp(itemList, reference);
+        this.set(itemList);
+    }
+
+    _list_moveDown(itemList, reference) {
+        itemList = this.get(itemList);
+        itemList = h.list.moveDown(itemList, reference);
+        this.set(itemList);
+    }
+
+    _list_remove(itemList, reference) {
+        itemList = this.get(itemList);
+        itemList = h.list.remove(itemList, reference);
+        this.set(itemList);
+    }
+
+    _list_delete(itemList, reference) {
+        itemList = this.get(itemList);
+        itemList = h.list.remove(itemList, reference);
+        this.set(itemList);
+    }
+
+    _list_replace(itemList, replacer, replacee){
+        itemList = this.get(itemList);
+        replacer = this.get(replacer)
+        itemList = h.list.replace(itemList, replacer, replacee);
+        this.set(itemList);
+    }
+
+    _list_length(itemList){
+        itemList = this.get(itemList);
+        return this.list.length(itemList)
+    }
+
+    _list_getItems(itemList){
+        itemList = this.get(itemList);
+        return this.list.getItems(itemList)
+    }
+
+    _list_getListItems(itemList){
+        itemList = this.get(itemList);
+        return this.list.getItemListElement(itemList)
+    }
+    _list_getItemListElement(itemList){
+        itemList = this.get(itemList);
+        return this.list.getItemListElement(itemList)
+    }
+
+
+    // Specialized functions
+
+    /**
+     * Get record form db, returns defautValue is only a reference
+     * @param {*} value 
+     * @param {*} defaultValue 
+     */
+    getRecord(value, expand=true, defaultValue = undefined){
+
+        let record = this.get(value)
+
+        if(!record || h.isRef(record)){
+            return defaultValue
+        }
+
+        return record
+
+    }
+
+
+    /**
+     * Replaces each ref of a record by the value from database
+     * @param {*} value 
+     */
+    updateRefs(value){
+
+        function _updateRecord(value, listOfRecordIDsFetched={}){
+
+            if(h.isArray(value)){
+                return value.map(x => _updateRecord(value, listOfRecordIDsFetched))
+            }
+
+            if(h.isObject(value)){
+
+                if(h.isRef(value)){
+                    // check if already in cache
+                    if(listOfRecordIDsFetched?.[h.record_id(value)]){
+                        return listOfRecordIDsFetched[h.record_id(value)]
+                    }
+
+                    // get from database
+                    value = getRecord(value, true, value)
+                    
+                    // store in cache
+                    listOfRecordIDsFetched[h.record_id(value)] = value
+                    
+                    // iterate keys
+                    for(let k of Object.keys(value)){
+                        value[k] = _updateRecord(value, listOfRecordIDsFetched)
+                    }
+                }
+                
+                return value
+                
+            }
+
+            // handle
+            return value
+        }
+        
+        return _updateRecord(value, {})
+    }
+
+     // Action execution
+
+    /**
+     * Executes an action on a record, repalceing the refs in the action by values from the database
+     * @param {*} action 
+     */
+    execute(action){
+
+        // Refresh values with ones from database
+        action = updateRecord(action)
+
+        action = h.execute(action)
+
+        this.set(h.getResults(action))
+
+        return action
+
+    }
+
+
     // callbacks
 
+    /**
+     * Register to receive notification when a record changes
+     * @param {*} record_id 
+     * @param {*} callbackFn 
+     * @returns 
+     */
     subscribe(record_id, callbackFn) {
         if (!record_id || record_id == '*' || record_id == 'all') {
             record_id = 'all';
@@ -113,6 +320,12 @@ export class DB {
         return;
     }
 
+    /**
+     * Cancel subscription
+     * @param {*} record_id 
+     * @param {*} callbackFn 
+     * @returns 
+     */
     unsubscribe(record_id, callbackFn) {
         if (!record_id || record_id == '*' || record_id == 'all') {
             record_id = 'all';

@@ -151,11 +151,17 @@ export class Base {
      * Sets the base url for api
      */
     get baseUrl() {
-        return process.env.baseUrl;
+        try {
+            return process.env.baseUrl;
+        } catch (err) {
+            return undefined;
+        }
     }
 
     set baseUrl(value) {
-        process.env.baseUrl = value;
+        try {
+            process.env.baseUrl = value;
+        } catch (err) {}
     }
 
     /**

@@ -1,14 +1,39 @@
 import { jsonldBase as h } from '../../../../../jsonldBase/jsonldBase.js';
-
+import { things} from '../../../../../things/things.js'
 import * as dataConversion from '../../dataConversion/dataConversion.js';
 import { components } from '../../components/components.js';
 import { Media } from './media.js';
-import { things } from '../../../../../things/things.js';
 
 import * as htmlValue from '../../../formating/htmlValue.js';
 
 import { formatHelpers } from '../../../../../formatHelpers/formatHelpers.js';
 import { dataHelpers } from '../../../../../dataHelpers/dataHelpers.js';
+import { cardsPage } from '../../pages/src/cardsPage.js';
+
+
+
+/**
+ * Generate a card from a record
+ * @param {*} record 
+ * @param {*} baseUrl 
+ * @returns 
+ */
+export function Card(record, baseUrl, className, includeMedia=true){
+
+
+    let title = things.format.getTitle1(record)
+    let description = things.format.getContent(record)
+    let url = h.getRecordUrl(record, baseUrl)
+    let media = includeMedia == true ? things.format.imageUrl(record) : undefined
+
+    let card =  components.Card({title, description, url, media, className})
+
+    return card
+}
+
+
+
+
 /**
  *
  * @param {*} param0

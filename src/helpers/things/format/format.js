@@ -22,7 +22,7 @@ export function getTitle1(record) {
     }
 
     if (record_type == 'ListItem') {
-        let item = helpers.getValue(record, 'item');
+        let item = _h.getValue(record, 'item');
         return getTitle1(item);
     }
 

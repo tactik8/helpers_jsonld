@@ -123,7 +123,10 @@ export function isEqual(a, b) {
         b = JSON.stringify(b, sortedReplacer, 4);
     } catch {}
 
-    return a == b;
+    let result =  a == b;
+
+
+    return result
 }
 
 /**
