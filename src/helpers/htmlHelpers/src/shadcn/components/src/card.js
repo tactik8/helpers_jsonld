@@ -71,7 +71,7 @@ export function CardFooter(content, className) {
   }
 
   return `
-    <footer class="card-footer mt-auto align-bottom ${className || ""} ">${ content || ""}</footer>
+    <footer class="card-footer mt-3 align-bottom ${className || ""} ">${ content || ""}</footer>
   `;
 }
 
