@@ -14,60 +14,37 @@ import { components as c } from "../components.js";
  * @param {string} [props.className=''] - Additional CSS classes for the card wrapper
  * @param {string} [props.attrs=''] - Additional HTML attributes for the card wrapper
  */
-export function Card({
-  title = "",
-  description = "",
-  url,
-  media = "",
-  header = "",
-  content = "",
-  footer = "",
-  className = "",
-  attrs = "",
-  options = {},
-}) {
+export function Card(content, className) {
   return `
-  
-    <div class="card flex flex-col rounded-xl border border-border bg-card text-card-foreground shadow-sm p-6 ${className}" ${attrs}>
 
-      ${CardHeader(header)}
 
-      ${CardMedia(media)}
+    <div class="card flex flex-col rounded-xl border border-border bg-card text-card-foreground shadow-sm p-6 ${className}">
 
-      ${CardMain(`
-
-        ${CardBody(`
-
-            ${CardTitle(title, url)}
-            
-            ${CardDescription(description)}
-
-        `)}
-
-      `)}
-
-      ${CardFooter(footer)}
+      ${content || ''}
 
     </div>
   `;
 
 }
 
-function CardHeader(content) {
+export function CardHeader(content, className) {
   if (!content) {
     return "";
   }
+
+  className = className || ''
+
   if (content.trim().length == 0) {
     return "";
   }
 
   return `
-    <header class="card-header  ${content?.record?.className || content?.className || ""} ">${content?.htmlValue || content?.value || content || ""}</header>
+    <header class="card-header  ${className || ""} ">${content || ""}</header>
 
   `;
 }
 
-function CardMain(content, className) {
+export function CardMain(content, className) {
   if (!content) {
     return "";
   }
@@ -76,12 +53,12 @@ function CardMain(content, className) {
   }
 
   return `
-    <section class="card-main  ${content?.record?.className || content?.className || ""} ">${content?.htmlValue || content?.value || content || ""}</section>
+    <section class="card-main  ${className || ""} ">${ content || ""}</section>
 
   `;
 }
 
-function CardBody(content, className) {
+export function CardBody(content, className) {
   if (!content) {
     return "";
   }
@@ -90,12 +67,12 @@ function CardBody(content, className) {
   }
 
   return `
-      <div class="card-body flex-1 space-y-4  mb-6 ${content?.record?.className || content?.className || ""} ">${content?.htmlValue || content?.value || content || ""}</div>
+      <div class="card-body flex-1 space-y-4  mb-6 ${className || ""} ">${content || ""}</div>
 
   `;
 }
 
-function CardFooter(content, className) {
+export function CardFooter(content, className) {
   if (!content) {
     return "";
   }
@@ -104,11 +81,11 @@ function CardFooter(content, className) {
   }
 
   return `
-    <footer class="card-footer mt-auto align-bottom ${content?.record?.className || content?.className || ""} ">${content?.htmlValue || content?.value || content || ""}</footer>
+    <footer class="card-footer mt-auto align-bottom ${className || ""} ">${ content || ""}</footer>
   `;
 }
 
-function CardTitle(content, url, className) {
+export function CardTitle(content, className) {
   if (!content) {
     return "";
   }
@@ -117,15 +94,15 @@ function CardTitle(content, url, className) {
   }
 
   return `
-  <h3 class="card-title font-semibold text-l leading-none tracking line-clamp-2 break-all  ${content?.record?.className || content?.className || ""} ">
+  <h3 class="card-title font-semibold text-l leading-none tracking line-clamp-2 break-all  ${className || ""} ">
     <a href="${url || ""}">
-     ${content?.htmlValue || content?.value || content || ""}
+     ${content || ""}
     </a>
     </h3>
      `;
 }
 
-function CardDescription(content, className) {
+export function CardDescription(content, className) {
   if (!content) {
     return "";
   }
@@ -134,11 +111,11 @@ function CardDescription(content, className) {
   }
 
   return `
-    <p class="card-description text-sm text-muted-foreground line-clamp-4 break-all  ${content?.record?.className || content?.className || ""}">${content?.htmlValue || content?.value || content || ""}</p>
+    <p class="card-description text-sm text-muted-foreground line-clamp-4 break-all  ${className || ""}">${content || ""}</p>
   `;
 }
 
-function CardContent(content, className) {
+export function CardContent(content, className) {
   if (!content) {
     return "";
   }
@@ -147,12 +124,12 @@ function CardContent(content, className) {
   }
 
   return `
-    <div class="card-content  ${content?.record?.className || content?.className || ""} ">${content?.htmlValue || content?.value || content || ""}</div>
+    <div class="card-content  ${className || ""} ">${content || ""}</div>
   `;
 }
 
 
-function CardMedia(content, className) {
+export function CardMedia(content, className) {
   if (!content) {
     return "";
   }
@@ -162,8 +139,8 @@ function CardMedia(content, className) {
 
 
   return `
-    <div class="card-media overflow-hidden -mx-6 -mt-6 mb-6 rounded-t-xl ${content?.record?.className || content?.className || ""} ">
-        ${content?.htmlValue || content?.value || content || ""}
+    <div class="card-media overflow-hidden -mx-6 -mt-6 mb-6 rounded-t-xl ${className || ""} ">
+        ${ content || ""}
     </div>
   `
 
