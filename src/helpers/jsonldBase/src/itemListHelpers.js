@@ -646,7 +646,11 @@ export function find(items, itemToFind) {
         return findByListItem(items, itemToFind);
     }
 
-    return findByItem(items, itemToFind);
+    if(!h.record_type){
+        return findByItem(items, itemToFind) || findByListItem(items, itemToFind)
+    }
+
+    return findByItem(items, itemToFind) 
 }
 
 /**
