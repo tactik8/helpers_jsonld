@@ -646,7 +646,7 @@ export function find(items, itemToFind) {
         return findByListItem(items, itemToFind);
     }
 
-    if(!h.record_type){
+    if(!h.record_type(itemToFind)){
         return findByItem(items, itemToFind) || findByListItem(items, itemToFind)
     }
 
