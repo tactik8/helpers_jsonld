@@ -2,17 +2,7 @@ import { components as c } from "../components.js";
 
 /**
  * Card Component
- * @param {Object} props
- * @param {string} [props.title] - Main card heading
- * @param {string} [props.description] - Subheading text
- * @param {string} [props.image] - URL of the image
- * @param {string} [props.imageAlt] - Alt text for the image
- * @param {('top'|'bottom'|'content')} [props.imagePosition='top'] - Position of the image relative to card sections
- * @param {string} [props.imageClassName=''] - Additional classes for the image element
- * @param {string} props.content - Body HTML content
- * @param {string} [props.footer] - Optional footer HTML
- * @param {string} [props.className=''] - Additional CSS classes for the card wrapper
- * @param {string} [props.attrs=''] - Additional HTML attributes for the card wrapper
+
  */
 export function Card(content, className) {
   return `
@@ -95,9 +85,7 @@ export function CardTitle(content, className) {
 
   return `
   <h3 class="card-title font-semibold text-l leading-none tracking line-clamp-2 break-all  ${className || ""} ">
-    <a href="${url || ""}">
-     ${content || ""}
-    </a>
+    ${content || ""}  
     </h3>
      `;
 }

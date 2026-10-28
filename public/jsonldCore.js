@@ -159,9 +159,7 @@ ${n.join(`
     <footer class="card-footer mt-auto align-bottom ${r||""} ">${e||""}</footer>
   `}function oc(e,r){return!e||e.trim().length==0?"":`
   <h3 class="card-title font-semibold text-l leading-none tracking line-clamp-2 break-all  ${r||""} ">
-    <a href="${url||""}">
-     ${e||""}
-    </a>
+    ${e||""}  
     </h3>
      `}function ac(e,r){return!e||e.trim().length==0?"":`
     <p class="card-description text-sm text-muted-foreground line-clamp-4 break-all  ${r||""}">${e||""}</p>
