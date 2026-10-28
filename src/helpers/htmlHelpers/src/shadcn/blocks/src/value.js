@@ -60,7 +60,7 @@ export function ValueArray(value, propertyID, baseUrl) {
 
 }
 
-export function ValueUrl(value, baseUrl) {
+export function ValueUrl(value, propertyID, baseUrl) {
     let pv = `<a title="${value}" href="${value}" target="_blank" rel="noopener noreferrer">${value}</a>`;
     return wrapValue(pv, propertyID);
 }
