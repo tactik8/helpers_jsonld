@@ -31,6 +31,22 @@ export class DB {
         return getRecord(this._store, record_id, expand);
     }
 
+    /**
+     * get record or add it to db if doesn't exist
+     * @param {*} record_id 
+     * @param {*} expand 
+     */
+    getOrCreate(record_id, expand = true){
+        let r = this.get(record_id, expand)
+        if(!r || h.isRef(r)){
+            this.set(r)
+            r = this.get(record_id, expand)
+        }
+        return r
+    }
+
+
+
     search(filter = {}, expand = true) {
         return getRecords(this._store, filter, expand);
     }
@@ -156,6 +172,8 @@ export class DB {
         return {
             insert: this._list_insert.bind(this),
             upsert: this._list_upsert.bind(this),
+            prepend: this._list_prepend.bind(this),
+            append: this._list_append.bind(this),
             remove: this._list_remove.bind(this),
             delete: this._list_remove.bind(this),
             insertBefore: this._list_insertBefore.bind(this),
@@ -173,76 +191,89 @@ export class DB {
     }
 
     _list_insert(itemList, item, position) {
-        itemList = this.get(itemList);
-        item = this.get(item);
+        itemList = this.getOrCreate(itemList);
+        item = this.getOrCreate(item);
         itemList = h.list.insert(itemList, item, position);
         this.set(itemList);
     }
 
     _list_upsert(itemList, item, position) {
-        itemList = this.get(itemList);
-        item = this.get(item);
+        itemList = this.getOrCreate(itemList);
+        item = this.getOrCreate(item);
         itemList = h.list.upsert(itemList, item, position);
         this.set(itemList);
     }
 
+    _list_prepend(itemList, item) {
+        itemList = this.getOrCreate(itemList);
+        item = this.getOrCreate(item);
+        itemList = h.list.prepend(itemList, item);
+        this.set(itemList);
+    }
+    _list_append(itemList, item) {
+        itemList = this.getOrCreate(itemList);
+        item = this.getOrCreate(item);
+        itemList = h.list.append(itemList, item);
+        this.set(itemList);
+    }
+
     _list_insertBefore(itemList, item, reference) {
-        itemList = this.get(itemList);
-        item = this.get(item);
-        reference = this.get(reference);
+        itemList = this.getOrCreate(itemList);
+        item = this.getOrCreate(item);
+        reference = this.getOrCreate(reference);
         itemList = h.list.insertBefore(itemList, item, reference);
         this.set(itemList);
     }
 
     _list_insertAfter(itemList, item, reference) {
-        itemList = this.get(itemList);
-        item = this.get(item);
+        itemList = this.getOrCreate(itemList);
+        item = this.getOrCreate(item);
         itemList = h.list.insertAfter(itemList, item, reference);
         this.set(itemList);
     }
 
     _list_moveBefore(itemList, item, reference) {
-        itemList = this.get(itemList);
-        item = this.get(item);
-        reference = this.get(reference);
+        itemList = this.getOrCreate(itemList);
+        item = this.getOrCreate(item);
+        reference = this.getOrCreate(reference);
         itemList = h.list.moveBefore(itemList, item, reference);
         this.set(itemList);
     }
 
     _list_moveAfter(itemList, item, reference) {
-        itemList = this.get(itemList);
-        item = this.get(item);
+        itemList = this.getOrCreate(itemList);
+        item = this.getOrCreate(item);
         itemList = h.list.moveAfter(itemList, item, reference);
         this.set(itemList);
     }
 
     _list_moveUp(itemList, reference) {
-        itemList = this.get(itemList);
+        itemList = this.getOrCreate(itemList);
         itemList = h.list.moveUp(itemList, reference);
         this.set(itemList);
     }
 
     _list_moveDown(itemList, reference) {
-        itemList = this.get(itemList);
+        itemList = this.getOrCreate(itemList);
         itemList = h.list.moveDown(itemList, reference);
         this.set(itemList);
     }
 
     _list_remove(itemList, reference) {
-        itemList = this.get(itemList);
+        itemList = this.getOrCreate(itemList);
         itemList = h.list.remove(itemList, reference);
         this.set(itemList);
     }
 
     _list_delete(itemList, reference) {
-        itemList = this.get(itemList);
+        itemList = this.getOrCreate(itemList);
         itemList = h.list.remove(itemList, reference);
         this.set(itemList);
     }
 
     _list_replace(itemList, replacer, replacee) {
-        itemList = this.get(itemList);
-        replacer = this.get(replacer);
+        itemList = this.getOrCreate(itemList);
+        replacer = this.getOrCreate(replacer);
         itemList = h.list.replace(itemList, replacer, replacee);
         this.set(itemList);
     }
@@ -253,16 +284,16 @@ export class DB {
     }
 
     _list_getItems(itemList) {
-        itemList = this.get(itemList);
+        itemList = this.getOrCreate(itemList);
         return this.list.getItems(itemList);
     }
 
     _list_getListItems(itemList) {
-        itemList = this.get(itemList);
+        itemList = this.getOrCreate(itemList);
         return this.list.getItemListElement(itemList);
     }
     _list_getItemListElement(itemList) {
-        itemList = this.get(itemList);
+        itemList = this.getOrCreate(itemList);
         return this.list.getItemListElement(itemList);
     }
 
