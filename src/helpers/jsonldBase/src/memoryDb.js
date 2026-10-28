@@ -39,7 +39,7 @@ export class DB {
     getOrCreate(record_id, expand = true){
         let r = this.get(record_id, expand)
         if(!r || h.isRef(r)){
-            this.set(r)
+            this.set(record_id)
             r = this.get(record_id, expand)
         }
         return r
