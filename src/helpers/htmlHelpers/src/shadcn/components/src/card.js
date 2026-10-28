@@ -57,7 +57,7 @@ export function CardBody(content, className) {
   }
 
   return `
-      <div class="card-body flex-1 space-y-4  mb-6 ${className || ""} ">${content || ""}</div>
+      <div class="card-body flex-1 space-y-4  mt-2 mb-6 ${className || ""} ">${content || ""}</div>
 
   `;
 }

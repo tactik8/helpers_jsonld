@@ -167,7 +167,7 @@ ${n.join(`
     <section class="card-main  ${e||""} ">${r||""}</section>
 
   `}function ic(r,e){return!r||r.trim().length==0?"":`
-      <div class="card-body flex-1 space-y-4  mb-6 ${e||""} ">${r||""}</div>
+      <div class="card-body flex-1 space-y-4  mt-2 mb-6 ${e||""} ">${r||""}</div>
 
   `}function sc(r,e){return!r||r.trim().length==0?"":`
     <footer class="card-footer mt-3 align-bottom ${e||""} ">${r||""}</footer>
