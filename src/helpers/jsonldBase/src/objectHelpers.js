@@ -91,6 +91,80 @@ export function clean(value, baseUrl) {
 }
 
 /**
+ * Replace circular json elements with ref
+ * @param {*} value
+ */
+export function removeCircularRefs(value) {
+    return _removeCircular(value, new Set());
+}
+
+function _removeCircular(value, db) {
+
+    db = new Set([...db])
+
+    if (value === null || typeof value !== 'object') {
+        return value;
+    }
+
+    if (h.isArray(value)) {
+        return value.map((x) => _removeCircular(x, db));
+    }
+
+    if (!h.isObject(value)) {
+        return value;
+    }
+
+    let id = h.record_id(value);
+    if (db.has(id)) {
+        return h.ref(value);
+    }
+    db.add(id);
+
+    for (let k of Object.keys(value)) {
+        value[k] = _removeCircular(value[k], db);
+    }
+
+    return value;
+}
+
+export function sortedReplacer(key, value) {
+    if (value instanceof Object && !(value instanceof Array)) {
+        return Object.keys(value)
+            .sort()
+            .reduce((sorted, k) => {
+                sorted[k] = value[k];
+                return sorted;
+            }, {});
+    }
+    return value;
+}
+
+/**
+ *
+ * @param {*} value
+ * @returns
+ */
+export function JSON_stringify(value) {
+    value = removeCircularRefs(value);
+    return JSON.stringify(value, sortedReplacer, 4);
+}
+
+export function stringify(value) {
+    return JSON_stringify(value);
+}
+
+/**
+ *
+ * @param {*} value
+ * @returns
+ */
+export function JSON_parse(value) {
+    return JSON.parse(value);
+}
+
+// -------------------------------------------------------------
+
+/**
  * Converts all nested values in record to @values objects
  * @param {*} value
  */

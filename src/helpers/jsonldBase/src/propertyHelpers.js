@@ -659,6 +659,29 @@ export function setPosition(record, value) {
     return h.list.setPosition(record, value)
 }
 
+// potentialAction
+export function potentialAction(record) {
+    return h.getValues(record, 'potentialAction')
+}
+export function getPotentialAction(record) {
+    return h.getValues(record, 'potentialAction')
+}
+export function setPotentialAction(record, value) {
+    return h.setValues(record, 'potentialAction', value)
+}
+
+// potentialAction
+export function potentialActions(record) {
+    return h.getValues(record, 'potentialAction')
+}
+export function getPotentialActions(record) {
+    return h.getValues(record, 'potentialAction')
+}
+export function setPotentialActions(record, value) {
+    return h.setValues(record, 'potentialAction', value)
+}
+
+
 
 // result
 export function result(record) {

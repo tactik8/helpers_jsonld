@@ -1,96 +1,110 @@
-import * as hpv from "../../../formating/htmlPropertyValue.js";
-
+import { dataHelpers} from '../../../../../dataHelpers/dataHelpers.js'
 import { jsonldBase as h} from '../../../../../jsonldBase/jsonldBase.js'
 
-export function Value({ value, propertyID }) {
-  let record = {};
-  record[proeprtyID] = value;
+export function Value(value, propertyID, baseUrl ) {
+ 
 
-  let hpvRecord = hpv.getHtmlPropertyValue({
-    record,
-    propertyID,
-  });
+  if(h.isArray(value)){
+    return ValueArray(value, propertyID, baseUrl)
+  }
 
+  if(propertyID == "@type"){
+    return ValueRecordType(value, propertyID, baseUrl)
+  }
 
-  return hpv.htmlValue
+  if(propertyID == "@id"){
+    return ValueRecordId(value, propertyID, baseUrl)
+  }
 
+  if(h.isObject(value)){
+    return ValueThing(value, propertyID, baseUrl)
+  }
+
+  if(h.isNumber(value)){
+    return ValueNumber(value, propertyID, baseUrl)
+  }
+
+  if(h.isDate(value)){
+    return ValueDateTime(value, propertyID, baseUrl)
+  }
+
+  if(dataHelpers.isUrl(value)){
+    return ValueUrl(value, propertyID, baseUrl)
+  }
+
+  return ValueText(value, propertyID, baseUrl)
 
 }
 
 
 
+export function ValueRecordId(value, propertyID, baseUrl) {
+    let url = h.getRecordUrl({ '@id': value }, baseUrl);
+    let pv = `<a title="${value}" href="${url}">${value}</a>`;
+    return wrapValue(pv, propertyID);
 
-
-function ValueRecordId(record, pv, baseUrl) {
-    let url = h.getRecordUrl({ '@id': pv.value }, baseUrl);
-    pv.htmlValue = `<a title="${pv?.value}" href="${url}">${pv.value}</a>`;
-    pv.table.className = 'krpropertyrecordid max-w-2xs truncate';
-    return pv;
+   
 }
 
-function ValueyRecordType(record, pv, baseUrl) {
-    let url = dataHelpers.url.getUrl(baseUrl, pv.value);
-    pv.htmlValue = `<a class="h-min" title="${pv?.value}" href="${url}">${pv.value}</a>`;
-    pv.table.className = 'krrecordtype max-w-2xs truncate';
-    return pv;
+export function ValueRecordType(value, propertyID, baseUrl) {
+    let url = dataHelpers.url.getUrl(baseUrl, value);
+    let pv = `<a class="h-min" title="${value}" href="${url}">${value}</a>`;
+    return wrapValue(pv, propertyID);
+
+   
+}
+
+export function ValueArray(value, propertyID, baseUrl) {
+    let pv = value.length > 0 ? `(${value.length})` : '';
+    return wrapValue(pv, propertyID);
+
+}
+
+export function ValueUrl(value, baseUrl) {
+    let pv = `<a title="${value}" href="${value}" target="_blank" rel="noopener noreferrer">${value}</a>`;
+    return wrapValue(pv, propertyID);
 }
 
 
-function ValueArray(record, pv, baseUrl) {
-    pv.table.className = 'krarray w-min text-center';
-    pv.htmlValue = pv.value.length > 0 ? `(${pv.value.length})` : '';
-    return pv;
+export function ValueDateTime(value, propertyID, baseUrl) {
+    value = h.toDate(value);
+    let pv = dataHelpers.date.format(value);
+    return wrapValue(pv, propertyID);
+}
+   
+
+
+export function ValueDuration(value, propertyID, baseUrl) {
+    return dataHelpers.duration.format(pv.value);
+
 }
 
-function ValueUrl(record, pv, baseUrl) {
-    pv.htmlValue = `<a title="${pv?.value}" href="${pv.value}" target="_blank" rel="noopener noreferrer">${pv.value}</a>`;
-    pv.table.className = 'krurl max-w-2xs truncate';
-
-    return pv;
+export function ValueNumber(value, propertyID, baseUrl) {
+    let nbOfDecimals = propertyID == 'position' ? 0 : 2;
+    value = h.toNumber(value);
+    value = dataHelpers.number.format(value, nbOfDecimals);
+    return wrapValue(value, propertyID);
 }
 
-function ValueDateTime(record, pv, baseUrl) {
-    pv.value = h.toDate(pv.value);
-    pv.htmlValue = dataHelpers.date.format(pv.value);
-    pv.table.className = 'krdatetime h-min truncate';
-    return pv;
+
+export function ValueText(value, propertyID, baseUrl) {
+    return wrapValue(value, propertyID);
 }
 
-function ValueDuration(record, pv, baseUrl) {
-    pv.htmlValue = dataHelpers.duration.format(pv.value);
-    pv.table.className = 'krduration h-min truncate';
+export function ValueThing(value, propertyID, baseUrl) {
+    let url = h.getRecordUrl(value, baseUrl);
 
-    return pv;
+    let title = h.getName(value) || h.record_id(value)
+    if(h.record_type(value) == "ListItem"){
+      title = `ListItem ${h.getPosition(value)} - ${h.getValue(value, 'item.name') || h.getValue(value, '@id')}`
+    }
+
+    let pv = `<a title="${title}" href="${url}">${title}</a>`;
+    return wrapValue(pv, propertyID);
+
 }
 
-function ValueNumber(record, pv, baseUrl) {
-    let nbOfDecimals = pv.propertyID == 'position' ? 0 : 2;
-    pv.value = h.toNumber(pv.value);
-    pv.table.className = 'krnumber h-min text-right font-mono';
-    pv.htmlValue = dataHelpers.number.format(pv.value, nbOfDecimals);
-    return pv;
-}
-
-function ValueText(record, pv, baseUrl) {
-    //pv.htmlValue = pv?.value ?? "";
-    // pv.htmlValue = `<div title="${pv?.value}" class="min-w-md line-clamp-4">${pv?.value ?? ""}</div>`
-
-    pv.htmlValue = `<div title="${pv?.value}" class=" line-clamp-4">${pv?.value ?? ''}</div>`;
-    pv.table.className = 'krtext';
-    return pv;
-}
-
-function ValueThing(record, pv, baseUrl) {
-    let url = h.getRecordUrl(pv.value, baseUrl);
-
-    pv.htmlValue = `<a title="${h.record_id(pv.value)}" href="${url}">${h.getValue(pv.value, 'name') || h.record_id(pv.value)}</a>`;
-
-    pv.table.className = 'max-w-xs truncate';
-
-    return pv;
-}
-
-function ValueMonetaryAmount(record, pv, baseUrl) {
+export function ValueMonetaryAmount(value, propertyID, baseUrl) {
     //
     let v = dataHelpers.toNumber(h.getValue(pv.value, 'value'));
     if (v === undefined) {
@@ -123,5 +137,19 @@ function ValueMonetaryAmount(record, pv, baseUrl) {
     pv.table.className = 'text-right font-mono';
     pv.record.className = 'text-right font-mono';
 
-    return pv;
+    return wrapValue(pv, propertyID);
+}
+
+
+/**
+ * Wraps value in a span element. Adds propertyID
+ * @param {*} value 
+ * @param {*} propertyID 
+ */
+function wrapValue(value, propertyID){
+
+    return `
+      <span class="kr-value" data-property-id="${propertyID}">${value}</span>
+    `;
+
 }

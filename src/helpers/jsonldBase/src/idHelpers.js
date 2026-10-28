@@ -101,18 +101,23 @@ export function getGenericRecordID(url) {
  * @param {*} value
  * @returns
  */
-export function assignId(value) {
-    if (Array.isArray(value)) {
-        return value.map((x) => h.assignId(x));
+export function assignId(value, parentIDs=[]) {
+    if (h.isArray(value)) {
+        return value.map((x) => h.assignId(x,parentIDs));
     }
 
     if (h.isObject(value) == false) {
         return value;
     }
 
+    if(parentIDs.includes(value)){
+        return value
+    }
+    parentIDs.push(value)
+
     for (let k of Object.keys(value)) {
         value['@id'] = value?.['@id'] || '_:' + h.randomUUID();
-        value[k] = h.assignId(value[k]);
+        value[k] = h.assignId(value[k], parentIDs);
     }
     return value;
 }

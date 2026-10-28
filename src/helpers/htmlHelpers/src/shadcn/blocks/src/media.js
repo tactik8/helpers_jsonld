@@ -19,13 +19,25 @@ export function Media({
     className,
     attrs,
 }) {
+
+    let contentUrl = h.getValue(record, 'contentUrl')
+
+        if(!contentUrl){
+            return ''
+        }
+
+        
     if (h.record_type(record) == 'VideoObject') {
+        
         let poster = h.getValue(record, 'thumbnailUrl');
+
+        
+
         return `  
         
 
                 <video class="w-full min-w-64 h-auto max-w-full " controls loop poster="${poster}">
-                    <source src="${h.getValue(record, 'contentUrl')}" type="video/mp4">
+                    <source src="${contentUrl}" onerror="this.style.display='none';" type="video/mp4">
                 
                 Your browser does not support the video tag.
                 </video>

@@ -44,74 +44,74 @@ function getPlayground(name) {
 
 }
 
+function getItemList(){
+    // Init record
+    let list = new h.things.ItemList()
+
+    for(let i =0; i < 5; i++ ){
+        let a = new h.things.Action('action_' + String(i))
+        a.setPotential()
+        list.add(a)
+    }
+
+    for(let i =5; i < 10; i++ ){
+        let a = new h.things.Action('action_' + String(i))
+        a.setActive()
+        list.add(a)
+    }
+    return list
+}
+let itemList = getItemList()
+
+
 
 
 async function test1() {
    
     let playGround = getPlayground('PlayGround test1')
    
-    let t1 = {
-        '@context': 'https://schema.org/',
-        '@type': 'Thing',
-        '@id': 'https://www.test.com/thing2#thing',
-        name: 'thing2',
-        url: 'https://www.test.com/thing2',
-    };
-
-    db.set(t1);
-
-    let element = document.createElement('kr-card');
-    element.dataset.recordId = 'https://www.test.com/thing2#thing';
-
-    playGround.appendChild(element);
-
-    //await delay(2000); // Waits for 2 seconds (2000 ms)
-
-    t1.name = 'thing222';
-    db.set(t1);
-
-    //await delay(2000); // Waits for 2 seconds (2000 ms)
+   
+    // Init record
+    let list = itemList
 
 
+
+    let record = list.record
   
+    db.set(record)
+
+    // Init kanban element
+
+    let e = document.createElement('kr-kanban')
+    e.dataset.id = list.record_id
+
+
+    playGround.append(e)
 
 }
 
 test1()
 
-async function test2(){
 
-    let playGround = getPlayground('PlayGround test2')
-
-  // Test list
-    let l = new h.things.ItemList()
-    for(let i =0; i < 15; i++){
-            l.add((new h.things.Thing('thing' + String(i))).record);
-
-    }
+async function test3() {
    
-    db.set(l.record)
+    let playGround = getPlayground('PlayGround test2')
+   
+   
+    // Init record
+    let list = itemList
 
-    let element2 = document.createElement('kr-itemlist')
-    element2.dataset.recordId = l.record_id
-    playGround.appendChild(element2);
+   
+    let record = list.record
+  
 
+    // Init kanban element
 
+  //  let e = document.createElement('kr-table')
+  //  e.dataset.id = list.record_id
 
-    if(1==0){
-    let record = l.record
-    for(let r of record.itemListElement){
-        let newPosition = 15 - h.getValue(r, 'position')
-        r.position = newPosition
-    }
-
-    record.itemListElement = record.itemListElement.slice(0, 11)
-
-    db.set(record)
-    }
+   // playGround.append(e)
 
 }
 
-
-
-test2();
+test3()

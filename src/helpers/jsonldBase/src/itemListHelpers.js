@@ -208,6 +208,15 @@ export function insert(itemList, item, position) {
  */
 export function insertBefore(itemList, item, referenceItem){
 
+    // Handle arrays
+    if(h.isArray(item)){
+        for(let i of item){
+            itemList = insertBefore(itemList, i, referenceItem)
+        }
+        return itemList
+    }
+
+    //
     let refItem = find(itemList, referenceItem)
     if(!refItem){
         return insert(itemList, item)
@@ -225,6 +234,16 @@ export function insertBefore(itemList, item, referenceItem){
  */
 export function insertAfter(itemList, item, referenceItem){
 
+     // Handle arrays
+    if(h.isArray(item)){
+        for(let i of item){
+            itemList = insertAfter(itemList, i, referenceItem)
+        }
+        return itemList
+    }
+
+    //
+
     let refItem = find(itemList, referenceItem)
     if(!refItem){
         return insert(itemList, item)
@@ -241,6 +260,17 @@ export function insertAfter(itemList, item, referenceItem){
  * @returns {ItemList} The modified ItemList
  */
 export function prepend(itemList, item){
+
+     // Handle arrays
+    if(h.isArray(item)){
+        for(let i = item.length -1; i >= 0; i-- ){
+            itemList = prepend(itemList, item?.[i], referenceItem)
+        }
+        return itemList
+    }
+
+    //
+    
     return insert(itemList, item, 0 )
 }
 
@@ -252,6 +282,15 @@ export function prepend(itemList, item){
  */
 export function append(itemList, item){
 
+     // Handle arrays
+    if(h.isArray(item)){
+        for(let i of item){
+            itemList = append(itemList, i, referenceItem)
+        }
+        return itemList
+    }
+
+    //
 
     let items = getItemListElement(itemList)
 
@@ -450,6 +489,29 @@ export function remove(itemList, itemToRemove) {
     return itemList
 
 }
+
+/**
+ * Returns array of listItems that meets filter
+ * @param {ItemList} itemList 
+ * @param {object} filter - The filter to apply on item
+ * @returns {ListItem[]} An array of listitems that meet filter
+ */
+export function filter(itemList, filter){
+
+    
+    let listItems = h.getItemListElement(itemList)
+
+    if(filter){
+        listItems = h.filter(listItems, filter)
+    }
+
+
+    return listItems
+
+}
+
+
+
 
 // -------------------------------------------------------------
 // ListItems

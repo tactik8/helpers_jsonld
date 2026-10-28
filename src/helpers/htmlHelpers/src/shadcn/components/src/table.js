@@ -43,7 +43,7 @@ export function getTable({ headers = [], rows = [], className = "" }) {
  * @param { array } headers - table headers as array
  * @returns 
  */
-export function Table(content="", className = "") {
+export function Table(content, record_id, propertyID, layoutClasses, className = "") {
 
   if (Array.isArray(content)) {
     content = content.join(" ");
@@ -55,7 +55,7 @@ export function Table(content="", className = "") {
   
     <div class="relative overflow-auto w-full rounded-md border border-border ${className || ""}">
       
-      <table class="w-full caption-bottom text-sm">
+      <table data-id="${record_id || ""}" data-property-id="${propertyID || ""}" class="w-full caption-bottom text-sm">
 
         ${content}
 
@@ -130,7 +130,7 @@ export function TableColumnHeaderCenter(content, className){
 
 }
 
-export function TableBody( content, className ) {
+export function TableBody( content, record_id, propertyID, className ) {
   if (!content) {
     return "";
   }
@@ -147,14 +147,14 @@ export function TableBody( content, className ) {
   `;
 }
 
-export function TableRow(content, className ) {
+export function TableRow(content, record_id, propertyID, className ) {
   
   if (!content) {
     return "";
   }
   
   if (Array.isArray(content)) {
-    content = content.join("");
+    content = content.join(" ");
   }
 
   if (content.trim().length == 0) {
@@ -163,13 +163,15 @@ export function TableRow(content, className ) {
 
   return `
   
-  <tr class="border-b border-border transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-    ${content}
-  </tr>
+    <tr 
+      data-id="${record_id || ""}" 
+      data-property-id="${propertyID || ""}" 
+      class="${className || ""} border-b border-border transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
+    >${content}</tr>
   `;
 }
 
-export function TableCell(content, className ) {
+export function TableCell(content, record_id, propertyID, className ) {
 
 
   // Produce cell even if empty value
@@ -183,45 +185,40 @@ export function TableCell(content, className ) {
 
   return `
     <td 
-      class="
-        p-4 
-        align-middle                                     
-        ${content?.table?.className || content?.className || ""}                    
-        ${className || ""}
-      "
-    >
-      ${content?.htmlValue ?? content?.value ?? content ?? ""}
-    </td>
+      data-id="${record_id || ""}" 
+      data-property-id="${propertyID || ""}" 
+      class="p-4 align-middle ${className || ""}"
+    >${content}</td>
   `;
 }
 
 
-export function TableCellLeft(){
+export function TableCellLeft(content, record_id, propertyID, className){
 
-  return TableCell(content, className)
+  return TableCell(content, record_id, propertyID, className)
 
 }
 
 
-export function TableCellRight(content, className){
+export function TableCellRight(content, record_id, propertyID, className){
 
   // text-right
   className = className + ' text-right '
-  return TableCell(content, className)
+  return TableCell(content, record_id, propertyID, className)
 
 }
 
-export function TableCellCenter(content, className){
+export function TableCellCenter(content, record_id, propertyID, className){
 
    // text-right
   className = className + ' text-center '
-  return TableCell(content, className)
+  return TableCell(content, record_id, propertyID, className)
 }
 
 
 
 
-export function TableCellNumber(value, nbOfDecimals, content, className ) {
+export function TableCellNumber(value, nbOfDecimals, content, record_id, propertyID, className ) {
   
   value = h.toNumber(value)
   value = dataHelpers.number.format(value, nbOfDecimals)
@@ -239,12 +236,12 @@ export function TableCellNumber(value, nbOfDecimals, content, className ) {
 }
 
 
-export function TableCellLink(url, title, content, className ) {
+export function TableCellLink(url, title, content, record_id, propertyID, className ) {
 
 
   return TableCell(`
       
-    <a title="${title || ""}" href="${url || ""}" target="_blank" rel="noopener noreferrer">${title || url || ""}</a>
+    <a data-id="${record_id || ""}" data-property-id="${propertyID || ""}"  title="${title || ""}" href="${url || ""}" target="_blank" rel="noopener noreferrer">${title || url || ""}</a>
     ${content || ""}
   `,
   "krurl max-w-2xs truncate"
@@ -252,20 +249,24 @@ export function TableCellLink(url, title, content, className ) {
 }
 
 
-export function TableCellText(text, content, className ) {
+export function TableCellText(text, record_id, propertyID, className ) {
 
 
-  return TableCell(`
+  let c = `
+    <div 
+      data-id="${record_id || ""}" 
+      data-property-id="${propertyID || ""}"  
+      title="${text}" 
+      class=" line-clamp-4"
+    >${text ?? ''}</div>
+  `
 
-    <div title="${text}" class=" line-clamp-4">${text ?? ''}</div>
-    ${content || ""}
-  `,
-    ''
-)
+  return TableCell(c)
+
 }
 
 
-export function TableFooter( content, className ) {
+export function TableFooter( content, record_id, propertyID, className ) {
 
   if (!content) {
     return ""

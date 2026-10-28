@@ -280,44 +280,45 @@ export function search(itemList, item) {
 
 /**
  * Returns all same items
- * @param {*} itemList 
+ * @param {*} items of items 
  * @param {*} item 
+ * 
  */
-export function filter(itemList, filter, orderBy, orderDirection, limit, offset) {
+export function filter(items, filter, orderBy, orderDirection, limit, offset) {
 
-    itemList = h.toArray(itemList)
+    items = h.toArray(items)
 
     //
-    if (itemList.length == 0) {
+    if (items.length == 0) {
         return itemList
     }
 
     // filter items
     if (h.isNotNull(filter)) {
-        itemList = itemList.filter(x => h.evaluate(x, filter))
+        items = items.filter(x => h.evaluate(x, filter))
     }
 
     // sort items
-    itemList = sort(itemList, orderBy, orderDirection)
+    items = sort(items, orderBy, orderDirection)
 
-    if (itemList.length == 0) {
-        return itemList
+    if (items.length == 0) {
+        return items
     }
 
 
     // offset and limit
     offset = h.toNumber(offset)
     if (h.isNumber(offset)) {
-        itemList = itemList.slice(offset)
+        items = items.slice(offset)
     }
 
     limit = h.toNumber(limit)
     if (h.isNumber(limit)) {
-        if (itemList.length >= limit) {
-            itemList = slice(0, limit)
+        if (items.length >= limit) {
+            items = slice(0, limit)
         }
     }
 
-    return itemList
+    return items
 
 }

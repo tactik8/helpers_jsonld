@@ -21,6 +21,9 @@ import * as Webpage from './src/webpage.js'
 import * as DropdownMenu from './src/dropdownMenu.js'
 import * as CardGrid from './src/cardGrid.js'
 import * as JsonEditor from './src/jsonEditor.js'
+import * as Modal from './src/modal.js'
+import * as menu from './src/menu.js'
+import * as kanban from './src/kanban.js'
 
 export const components = {
 
@@ -36,6 +39,9 @@ export const components = {
   ...Footer,
   ...Header,
   ...ImageModal,
+  ...kanban,
+  ...menu,
+  ...Modal,
   ...Input,
   ...JsonEditor,
   ...Pagination,

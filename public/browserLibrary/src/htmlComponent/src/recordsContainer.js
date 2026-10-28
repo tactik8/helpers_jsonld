@@ -1,7 +1,6 @@
-
-import { BaseElement} from './_base.js'
-import {h} from '/jsonldCore.js';
-import { db } from '../../recordsDB/recordsDB.js'
+import { BaseElement } from './_baseElement.js';
+import { h } from '/jsonldCore.js';
+import { db } from '../../recordsDB/recordsDB.js';
 
 export class RecordsContainer extends BaseElement {
     constructor() {
@@ -9,9 +8,8 @@ export class RecordsContainer extends BaseElement {
         super();
     }
 
-    update(){
-
-         let listItemElement = h.getValues(this.record, 'itemListElement')
+    update() {
+        let listItemElement = h.getValues(this.record, 'itemListElement');
 
         for (let l of listItemElement) {
             content += `
@@ -22,11 +20,7 @@ export class RecordsContainer extends BaseElement {
 
             `;
         }
-
     }
-  
-
-
 }
 
 customElements.define('kr-recordscontainer', RecordsContainer);

@@ -19,6 +19,8 @@ import * as toStringHelpers from './src/toStringHelpers.js';
 import * as databaseHelpers from './src/databaseHelpers.js';
 import * as itemListHelpers from './src/itemListHelpers.js'
 import * as actionExecutionHelpers from './src/actionExecutionHelpers.js'
+import * as potentialActionHelpers from './src/potentialActionHelpers.js'
+
 /**
  * @module jsonldBase
  * @description Module for working with JSON-LD records
@@ -108,6 +110,11 @@ export const jsonldBase = {
      * @description Helpers for action execution
      * @see module:actionExecutionHelpers
      */
-    ...actionExecutionHelpers
+    ...actionExecutionHelpers,
+
+    /**
+     * 
+     */
+    potentialAction: potentialActionHelpers
     
 };

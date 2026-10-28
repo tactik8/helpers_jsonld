@@ -21,7 +21,13 @@ export class DB {
         return this.records;
     }
 
+
+    // -------------------------------------------------------------
+    // CRUD
+    // -------------------------------------------------------------
+
     get(record_id, expand = true) {
+        record_id = record_id?.["@id"] || record_id
         return getRecord(this._store, record_id, expand);
     }
 
@@ -30,16 +36,20 @@ export class DB {
     }
 
     set(value) {
-        let records = h.flatten(value);
+        let newRecords = h.flatten(value);
 
-        for (let r of records) {
-            let currentRecord = getRecord(this._store, h.record_id(r));
+        let currentRecords = newRecords.map((x) =>
+            getRecord(this._store, h.record_id(x), false),
+        );
+        
+
+        for (let r of newRecords) {
 
             this._store = postRecord(this._store, r);
-            if (!h.isEqual(currentRecord, r)) {
-                this.broadcast(h.record_id(r));
-            }
+           
         }
+        this._broadcastIfChanged(currentRecords, newRecords);
+
         return value;
     }
 
@@ -48,23 +58,31 @@ export class DB {
     }
 
     patch(value, skipDuplicates = true) {
-        let records = h.flatten(value);
+        let newRecords = h.flatten(value);
 
-        for (let r of records) {
-            let currentRecord = getRecord(this._store, h.record_id(r));
+        let currentRecords = newRecords.map((x) =>
+            getRecord(this._store, h.record_id(x), false),
+        );
 
+        for (let r of newRecords) {
             this._store = patchRecord(this._store, r, skipDuplicates);
-            if (!h.isEqual(currentRecord, r)) {
-                this.broadcast(h.record_id(r));
-            }
         }
+        this._broadcastIfChanged(currentRecords, newRecords);
         return value;
     }
 
+    
     delete(record_id) {
+        let oldRecords = [this.get(record_id)]
         this._store = h.deleteRecord(this._store, record_id);
+        this._broadcastIfChanged(oldRecords, [{"@id": record_id}])
     }
 
+    
+    // -------------------------------------------------------------
+    // Property
+    // -------------------------------------------------------------
+    
     getValue(record_id, propertyID, position, defaultValue) {
         let record = this.get(record_id);
         return h.getValue(record, propertyID, position, defaultValue);
@@ -73,6 +91,7 @@ export class DB {
         let record = this.get(record_id);
         return h.getValues(record, propertyID, defaultValue);
     }
+
     setValue(record_id, propertyID, value) {
         let record = this.get(record_id);
         if (!record) {
@@ -80,6 +99,36 @@ export class DB {
         }
         record = h.clone(record);
         record = h.setValue(record, propertyID, value);
+        return this.set(record);
+    }
+
+    setValues(record_id, propertyID, value) {
+        let record = this.get(record_id);
+        if (!record) {
+            record = { '@id': record_id };
+        }
+        record = h.clone(record);
+        record = h.setValue(record, propertyID, value);
+        return this.set(record);
+    }
+
+    addValue(record_id, propertyID, value) {
+        let record = this.get(record_id);
+        if (!record) {
+            record = { '@id': record_id };
+        }
+        record = h.clone(record);
+        record = h.addValue(record, propertyID, value);
+        return this.set(record);
+    }
+
+    addValues(record_id, propertyID, value) {
+        let record = this.get(record_id);
+        if (!record) {
+            record = { '@id': record_id };
+        }
+        record = h.clone(record);
+        record = h.addValues(record, propertyID, value);
         return this.set(record);
     }
 
@@ -99,7 +148,9 @@ export class DB {
         return getRecordIDs(this._store);
     }
 
-    // List elements
+    // -------------------------------------------------------------
+    // ItemList elements
+    // -------------------------------------------------------------
 
     get list() {
         return {
@@ -135,11 +186,10 @@ export class DB {
         this.set(itemList);
     }
 
-
     _list_insertBefore(itemList, item, reference) {
         itemList = this.get(itemList);
         item = this.get(item);
-        reference = this.get(reference)
+        reference = this.get(reference);
         itemList = h.list.insertBefore(itemList, item, reference);
         this.set(itemList);
     }
@@ -154,7 +204,7 @@ export class DB {
     _list_moveBefore(itemList, item, reference) {
         itemList = this.get(itemList);
         item = this.get(item);
-        reference = this.get(reference)
+        reference = this.get(reference);
         itemList = h.list.moveBefore(itemList, item, reference);
         this.set(itemList);
     }
@@ -190,123 +240,120 @@ export class DB {
         this.set(itemList);
     }
 
-    _list_replace(itemList, replacer, replacee){
+    _list_replace(itemList, replacer, replacee) {
         itemList = this.get(itemList);
-        replacer = this.get(replacer)
+        replacer = this.get(replacer);
         itemList = h.list.replace(itemList, replacer, replacee);
         this.set(itemList);
     }
 
-    _list_length(itemList){
+    _list_length(itemList) {
         itemList = this.get(itemList);
-        return this.list.length(itemList)
+        return this.list.length(itemList);
     }
 
-    _list_getItems(itemList){
+    _list_getItems(itemList) {
         itemList = this.get(itemList);
-        return this.list.getItems(itemList)
+        return this.list.getItems(itemList);
     }
 
-    _list_getListItems(itemList){
+    _list_getListItems(itemList) {
         itemList = this.get(itemList);
-        return this.list.getItemListElement(itemList)
+        return this.list.getItemListElement(itemList);
     }
-    _list_getItemListElement(itemList){
+    _list_getItemListElement(itemList) {
         itemList = this.get(itemList);
-        return this.list.getItemListElement(itemList)
+        return this.list.getItemListElement(itemList);
     }
 
-
+    // ------------------------------------------------------------
     // Specialized functions
+    // ------------------------------------------------------------
 
     /**
      * Get record form db, returns defautValue is only a reference
-     * @param {*} value 
-     * @param {*} defaultValue 
+     * @param {*} value
+     * @param {*} defaultValue
      */
-    getRecord(value, expand=true, defaultValue = undefined){
+    getRecord(value, expand = true, defaultValue = undefined) {
+        let record = this.get(value);
 
-        let record = this.get(value)
-
-        if(!record || h.isRef(record)){
-            return defaultValue
+        if (!record || h.isRef(record)) {
+            return defaultValue;
         }
 
-        return record
-
+        return record;
     }
-
 
     /**
      * Replaces each ref of a record by the value from database
-     * @param {*} value 
+     * @param {*} value
      */
-    updateRefs(value){
-
-        function _updateRecord(value, listOfRecordIDsFetched={}){
-
-            if(h.isArray(value)){
-                return value.map(x => _updateRecord(value, listOfRecordIDsFetched))
+    updateRefs(value) {
+        function _updateRecord(value, listOfRecordIDsFetched = {}) {
+            if (h.isArray(value)) {
+                return value.map((x) =>
+                    _updateRecord(value, listOfRecordIDsFetched),
+                );
             }
 
-            if(h.isObject(value)){
-
-                if(h.isRef(value)){
+            if (h.isObject(value)) {
+                if (h.isRef(value)) {
                     // check if already in cache
-                    if(listOfRecordIDsFetched?.[h.record_id(value)]){
-                        return listOfRecordIDsFetched[h.record_id(value)]
+                    if (listOfRecordIDsFetched?.[h.record_id(value)]) {
+                        return listOfRecordIDsFetched[h.record_id(value)];
                     }
 
                     // get from database
-                    value = getRecord(value, true, value)
-                    
+                    value = getRecord(value, true, value);
+
                     // store in cache
-                    listOfRecordIDsFetched[h.record_id(value)] = value
-                    
+                    listOfRecordIDsFetched[h.record_id(value)] = value;
+
                     // iterate keys
-                    for(let k of Object.keys(value)){
-                        value[k] = _updateRecord(value, listOfRecordIDsFetched)
+                    for (let k of Object.keys(value)) {
+                        value[k] = _updateRecord(value, listOfRecordIDsFetched);
                     }
                 }
-                
-                return value
-                
+
+                return value;
             }
 
             // handle
-            return value
+            return value;
         }
-        
-        return _updateRecord(value, {})
+
+        return _updateRecord(value, {});
     }
 
-     // Action execution
+    // ------------------------------------------------------------
+    // Action execution
+    // ------------------------------------------------------------
 
     /**
      * Executes an action on a record, repalceing the refs in the action by values from the database
-     * @param {*} action 
+     * @param {*} action
      */
-    execute(action){
-
+    execute(action) {
         // Refresh values with ones from database
-        action = updateRecord(action)
+        action = this.updateRefs(action);
 
-        action = h.execute(action)
+        action = h.execute(action);
 
-        this.set(h.getResults(action))
+        this.set(h.getResults(action));
 
-        return action
-
+        return action;
     }
 
-
+    // ------------------------------------------------------------
     // callbacks
+    // ------------------------------------------------------------
 
     /**
      * Register to receive notification when a record changes
-     * @param {*} record_id 
-     * @param {*} callbackFn 
-     * @returns 
+     * @param {*} record_id
+     * @param {*} callbackFn
+     * @returns
      */
     subscribe(record_id, callbackFn) {
         if (!record_id || record_id == '*' || record_id == 'all') {
@@ -322,9 +369,9 @@ export class DB {
 
     /**
      * Cancel subscription
-     * @param {*} record_id 
-     * @param {*} callbackFn 
-     * @returns 
+     * @param {*} record_id
+     * @param {*} callbackFn
+     * @returns
      */
     unsubscribe(record_id, callbackFn) {
         if (!record_id || record_id == '*' || record_id == 'all') {
@@ -336,16 +383,52 @@ export class DB {
         return;
     }
 
-    broadcast(record_id) {
-        let record = this.get(record_id);
-        let ss = this._subscriptions.get(record_id) || [];
-        ss = ss.concat(this._subscriptions.get('all') || []);
-        ss = [...new Set(ss)];
+    async _broadcastIfChanged(oldRecords, newRecords) {
+        let toBroadcast = [];
 
-        ss.forEach((x) => x(record));
+        for(let newRecord of newRecords){
+            let oldRecord = oldRecords.find(x => h.record_id(x) == h.record_id(newRecord))
+            if (!h.isEqual(oldRecord, newRecord)) {
+                toBroadcast.push(h.record_id(newRecord));
+            }
+        }
+
+        this.broadcast(toBroadcast)
     }
 
+    broadcast(record_ids) {
+        // To array and dedupe
+        record_ids = h.toArray(record_ids);
+        record_ids = [...new Set(record_ids)];
+
+        for (let record_id of record_ids) {
+            let record = this.get(record_id);
+
+            // Get callbackFunctions specific to this record_id
+            let callbackFunctions = this._subscriptions.get(record_id) || [];
+
+            // Get callbackFunction that registered for all changes and combine
+            callbackFunctions = callbackFunctions.concat(this._subscriptions.get('all') || []);
+            callbackFunctions = [...new Set(callbackFunctions)];
+            
+            // Call callbackFunctions in async mode without waiting
+            for(let callbackFunction of callbackFunctions){
+                this._broadcastItem(callbackFunction, record)
+            }
+        }
+        return;
+    }
+
+    async _broadcastItem(callbackFn, record){
+         try {
+            return callbackFn(record)
+         } catch(err){}
+    }
+
+
+    // ------------------------------------------------------------
     // Static
+    // ------------------------------------------------------------
 
     static randomUUID() {
         return h.randomUUID();
@@ -505,6 +588,12 @@ export function patchRecord(store, value, skipDuplicates = true) {
  * @returns
  */
 export function getRecord(store, record_or_id, expandFlag = true) {
+    //
+    if (h.isArray(record_or_id)) {
+        return record_or_id.map((x) => getRecord(store, x, expandFlag));
+    }
+
+    //
     let record_id = h._utilGetId(record_or_id);
 
     // convert store to map

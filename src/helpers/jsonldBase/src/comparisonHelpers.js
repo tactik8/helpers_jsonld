@@ -116,11 +116,12 @@ export function isEqual(a, b) {
         return value;
     };
 
+    
     try {
-        a = JSON.stringify(a, sortedReplacer, 4);
+        a = h.JSON_stringify(a);
     } catch {}
     try {
-        b = JSON.stringify(b, sortedReplacer, 4);
+        b = h.JSON_stringify(b);
     } catch {}
 
     let result =  a == b;

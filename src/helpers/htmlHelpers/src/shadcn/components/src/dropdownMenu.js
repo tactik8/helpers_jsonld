@@ -1,16 +1,16 @@
 /**
  * Safely escapes double quotes and HTML special characters for attributes and text nodes
- * @param {string} str 
+ * @param {string} str
  * @returns {string}
  */
 export function escapeHtml(str) {
-  if (typeof str !== 'string') return '';
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
+    if (typeof str !== 'string') return '';
+    return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
 }
 
 /**
@@ -23,31 +23,36 @@ export function escapeHtml(str) {
  * @param {string} [props.attrs='']
  */
 export function Button({
-  children = '',
-  variant = 'default',
-  size = 'default',
-  className = '',
-  attrs = ''
+    children = '',
+    variant = 'default',
+    size = 'default',
+    className = '',
+    attrs = '',
 } = {}) {
-  const variants = {
-    default: 'bg-primary text-primary-foreground shadow hover:bg-primary/90',
-    destructive: 'bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90',
-    outline: 'border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground',
-    secondary: 'bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80',
-    ghost: 'hover:bg-accent hover:text-accent-foreground',
-    link: 'text-primary underline-offset-4 hover:underline'
-  };
+    const variants = {
+        default:
+            'bg-primary text-primary-foreground shadow hover:bg-primary/90',
+        destructive:
+            'bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90',
+        outline:
+            'border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground',
+        secondary:
+            'bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80',
+        ghost: 'hover:bg-accent hover:text-accent-foreground',
+        link: 'text-primary underline-offset-4 hover:underline',
+    };
 
-  const sizes = {
-    default: 'h-9 px-4 py-2',
-    sm: 'h-8 rounded-md px-3 text-xs',
-    lg: 'h-10 rounded-md px-8',
-    icon: 'h-9 w-9'
-  };
+    const sizes = {
+        default: 'h-9 px-4 py-2',
+        sm: 'h-8 rounded-md px-3 text-xs',
+        lg: 'h-10 rounded-md px-8',
+        icon: 'h-9 w-9',
+    };
 
-  const base = 'inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 select-none';
+    const base =
+        'inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 select-none';
 
-  return `
+    return `
     <button type="button" class="${base} ${variants[variant] || variants.default} ${sizes[size] || sizes.default} ${className}" ${attrs}>
       ${children}
     </button>
@@ -56,22 +61,22 @@ export function Button({
 
 /**
  * Recursively converts a key-value JS object into hidden HTML form inputs
- * @param {Object} obj 
- * @param {string} [prefix=''] 
+ * @param {Object} obj
+ * @param {string} [prefix='']
  * @returns {string} HTML hidden input strings
  */
 function renderHiddenInputs(obj, prefix = '') {
-  if (!obj || typeof obj !== 'object') return '';
-  
-  return Object.entries(obj)
-    .map(([key, val]) => {
-      const inputName = prefix ? `${prefix}[${key}]` : key;
-      if (typeof val === 'object' && val !== null) {
-        return renderHiddenInputs(val, inputName);
-      }
-      return `<input type="hidden" name="${escapeHtml(inputName)}" value="${escapeHtml(String(val))}">`;
-    })
-    .join('');
+    if (!obj || typeof obj !== 'object') return '';
+
+    return Object.entries(obj)
+        .map(([key, val]) => {
+            const inputName = prefix ? `${prefix}[${key}]` : key;
+            if (typeof val === 'object' && val !== null) {
+                return renderHiddenInputs(val, inputName);
+            }
+            return `<input type="hidden" name="${escapeHtml(inputName)}" value="${escapeHtml(String(val))}">`;
+        })
+        .join('');
 }
 
 /**
@@ -90,36 +95,40 @@ function renderHiddenInputs(obj, prefix = '') {
  * @param {string} [props.attrs=''] - Extra inline attributes
  */
 export function DropdownMenu({
-  label = '',
-  items = [],
-  align = 'end',
-  variant = 'ghost',
-  size = 'icon',
-  className = '',
-  attrs = ''
+    label = '',
+    items = [],
+    align = 'end',
+    variant = 'ghost',
+    size = 'icon',
+    className = '',
+    attrs = '',
 } = {}) {
-  const alignClasses = {
-    start: 'left-0 origin-top-left',
-    end: 'right-0 origin-top-right'
-  };
+    const alignClasses = {
+        start: 'left-0 origin-top-left',
+        end: 'right-0 origin-top-right',
+    };
 
-  const buttonVariants = {
-    default: 'bg-primary text-primary-foreground shadow hover:bg-primary/90',
-    destructive: 'bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90',
-    outline: 'border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground',
-    secondary: 'bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80',
-    ghost: 'hover:bg-accent hover:text-accent-foreground'
-  };
+    const buttonVariants = {
+        default:
+            'bg-primary text-primary-foreground shadow hover:bg-primary/90',
+        destructive:
+            'bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90',
+        outline:
+            'border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground',
+        secondary:
+            'bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80',
+        ghost: 'hover:bg-accent hover:text-accent-foreground',
+    };
 
-  const buttonSizes = {
-    default: 'h-9 px-4 py-2',
-    sm: 'h-8 rounded-md px-3 text-xs',
-    lg: 'h-10 rounded-md px-8',
-    icon: 'h-9 w-9 p-0'
-  };
+    const buttonSizes = {
+        default: 'h-9 px-4 py-2',
+        sm: 'h-8 rounded-md px-3 text-xs',
+        lg: 'h-10 rounded-md px-8',
+        icon: 'h-9 w-9 p-0',
+    };
 
-  // Kebab / MoreVertical SVG Icon
-  const kebabIcon = `
+    // Kebab / MoreVertical SVG Icon
+    const kebabIcon = `
     <svg class="h-4 w-4 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <circle cx="12" cy="12" r="1"/>
       <circle cx="12" cy="5" r="1"/>
@@ -127,24 +136,24 @@ export function DropdownMenu({
     </svg>
   `.trim();
 
-  // Render trigger inner content
-  const triggerContent = label
-    ? `<span class="mr-2">${escapeHtml(label)}</span>${kebabIcon}`
-    : `${kebabIcon}<span class="sr-only">Toggle menu</span>`;
+    // Render trigger inner content
+    const triggerContent = label
+        ? `<span class="mr-2">${escapeHtml(label)}</span>${kebabIcon}`
+        : `${kebabIcon}<span class="sr-only">Toggle menu</span>`;
 
-  // Render dropdown items
-  items = items || []
-  items = Array.isArray(items) ? items : items
-  const renderedItems = items
-    .map((item) => {
-      if (item.isSeparator) {
-        return `<div role="separator" class="-mx-1 my-1 h-px bg-border"></div>`;
-      }
+    // Render dropdown items
+    items = items || [];
+    items = Array.isArray(items) ? items : items;
+    const renderedItems = items
+        .map((item) => {
+            if (item.isSeparator) {
+                return `<div role="separator" class="-mx-1 my-1 h-px bg-border"></div>`;
+            }
 
-      const hiddenInputs = renderHiddenInputs(item.object);
-      const disabledAttr = item.disabled ? 'disabled' : '';
+            const hiddenInputs = renderHiddenInputs(item.object);
+            const disabledAttr = item.disabled ? 'disabled' : '';
 
-      return `
+            return `
         <form method="POST" action="${escapeHtml(item.url || '')}" class="m-0 p-0">
           ${hiddenInputs}
           <button
@@ -156,10 +165,10 @@ export function DropdownMenu({
           </button>
         </form>
       `.trim();
-    })
-    .join('');
+        })
+        .join('');
 
-  return `
+    return `
     <details class="relative inline-block text-left ${className}" ${attrs}>
       <summary 
         class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring cursor-pointer list-none [&::-webkit-details-marker]:hidden ${buttonVariants[variant] || buttonVariants.ghost} ${buttonSizes[size] || buttonSizes.icon}"
@@ -172,4 +181,30 @@ export function DropdownMenu({
       </div>
     </details>
   `.trim();
+}
+
+/**
+ * Returns a line in a menu
+ * @param {Action} actionRecord - a jsonld action record
+ * @returns
+ */
+export function MenuItem(actionRecord) {
+
+    if (item.isSeparator) {
+        return `<div role="separator" class="-mx-1 my-1 h-px bg-border"></div>`;
+    }
+
+    const hiddenInputs = renderHiddenInputs(item.object);
+    const disabledAttr = item.disabled ? 'disabled' : '';
+
+    return `<form method="POST" action="${escapeHtml(h.getUrl(item) || '')}" class="m-0 p-0">
+          ${hiddenInputs}
+          <button
+            type="submit"
+            ${disabledAttr}
+            class="relative flex w-full cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground disabled:pointer-events-none disabled:opacity-50 text-left"
+          >
+            ${escapeHtml(h.getName(item) || '')}
+          </button>
+        </form>`;
 }

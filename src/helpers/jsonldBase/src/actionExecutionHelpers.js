@@ -1,4 +1,9 @@
+import { jsonldBase as h } from '../jsonldBase.js';
+
+
 export function execute(action) {
+
+
     // Handle array
     if (h.isArray(action)) {
         return action.map((x) => execute(x));

@@ -1,5 +1,6 @@
 import { db } from '../../recordsDB/recordsDB.js';
 import { h } from '/jsonldCore.js';
+import * as eh from '../../libraries/src/elementHelpers.js';
 
 let BASE_URL = 'http://localhost:3021/';
 
@@ -11,6 +12,8 @@ export class BaseElement extends HTMLElement {
         this.listenerRecordID;
         this.previousRecord;
         this.oldRecord;
+        this.childrenTemplate = '';
+        this.boundProcessListeners = this.processListeners.bind(this);
     }
 
     get ref() {
@@ -26,7 +29,6 @@ export class BaseElement extends HTMLElement {
      * @returns
      */
     isSame(value) {
-
         if (!this?.record_id) {
             return false;
         }
@@ -59,21 +61,41 @@ export class BaseElement extends HTMLElement {
         this.setListeners();
     }
 
+    get record_type() {
+        return h.record_type(this.record);
+    }
+
     get record_id() {
-        return this.dataset.recordId;
+        return this.dataset.id;
     }
 
     set record_id(value) {
-        this.dataset.recordId = value;
+        this.dataset.id = value;
         this.setListeners();
     }
 
     get propertyID() {
-        return this.dataset.propertyId;
+        return eh.getPropertyID(this);
     }
 
     set propertyID(value) {
-        return (this.dataset.propertyId = value);
+        return eh.setPropertyID(this, value);
+    }
+
+    get propertyValue() {
+        return eh.getPropertyValue(this);
+    }
+
+    set propertyValue(value) {
+        return eh.setPropertyValue(this, value);
+    }
+
+    get filter() {
+        return eh.getFilter(this);
+    }
+
+    set filter(value) {
+        return eh.setFilter(this, value);
     }
 
     // Element at the top in charge of the childs. An id that groups elements in a group.
@@ -89,13 +111,16 @@ export class BaseElement extends HTMLElement {
         return document.getElementById(this.controllerID);
     }
 
-    // Aris Selected
-    get selected() {
-        return this.ariaSelected === 'true';
+    // ------------------------------------------------------------
+    // Status
+    // ------------------------------------------------------------
+    // Selected
+    isSelected() {
+        return eh.isSelected(this);
     }
 
-    set selected(value) {
-        this.ariaSelected = value ? 'true' : 'false';
+    setSelected(value) {
+        return eh.setSelected(this);
     }
 
     toggleSelected() {
@@ -105,6 +130,7 @@ export class BaseElement extends HTMLElement {
     //
     connectedCallback() {
         this.id = this?.id || 'element-' + h.randomUUID();
+        this.initTemplate();
         this.setListeners();
         this.render();
     }
@@ -126,28 +152,20 @@ export class BaseElement extends HTMLElement {
     }
 
     setListeners() {
-        // Return if already set
-        if (this.listenerRecordID == this.record_id) {
-            return;
-        }
-
-        // Remove current listener
-        this.removeListeners(this.listenerRecordID);
-
-        // Set new listener
+        if (this.listenerRecordID == this.record_id) return;
+        this.removeListeners();
         if (this.record_id) {
-            db.subscribe(this.record_id, this.processListeners.bind(this));
+            db.subscribe(this.record_id, this.boundProcessListeners);
             this.listenerRecordID = this.record_id;
         }
     }
 
     removeListeners() {
-        if (this.record_id) {
-            db.unsubscribe(this.record_id, this.processListeners.bind(this));
+        if (this.listenerRecordID) {
+            db.unsubscribe(this.listenerRecordID, this.boundProcessListeners);
             this.listenerRecordID = undefined;
         }
     }
-
     processListeners(value) {
         if (h.isEqual(this.record, this.oldRecord) == true) {
             return;
@@ -155,6 +173,10 @@ export class BaseElement extends HTMLElement {
 
         this.oldRecord = this.record;
 
+        this.asyncRender();
+    }
+
+    async asyncRender() {
         this.render();
     }
 
@@ -162,6 +184,17 @@ export class BaseElement extends HTMLElement {
      * Render html for this element
      */
     render() {}
+
+    initTemplate() {
+        let template = this.innerHTML || '';
+        template = template.split('<template>')?.[1] || template;
+        template = template.split('</template>')?.[0] || template;
+        template = template.trim();
+        if (template) {
+            this.childrenTemplate = template;
+        }
+        // this.innerHTML = '';
+    }
 }
 
 customElements.define('base-element', BaseElement);
