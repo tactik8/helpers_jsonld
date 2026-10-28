@@ -92,12 +92,26 @@ ${n.join(`
       <div class="inline-flex truncate items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 ${i[n]||i.default} ${e|""}">
         ${r}
       </div>
-    `.trim()}function Yd(r,e,n="default"){let i={default:"border-transparent bg-primary text-primary-foreground hover:bg-primary/80",secondary:"border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",destructive:"border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",outline:"text-foreground border-border"};return typeof text=="string"&&(text=[text]),`
-      <div class="flex flex-wrap gap-2 ${e||""}">
-        ${r||""}
-      
-      </div>
-    `.trim()}var mn={};m(mn,{Breadcrumb:()=>Xd,BreadcrumbEllipsis:()=>Qd,BreadcrumbItem:()=>Cs,BreadcrumbLink:()=>vs,BreadcrumbList:()=>Ns,BreadcrumbMain:()=>Ps,BreadcrumbPage:()=>Zd,BreadcrumbSeparator:()=>js});function Xd({urls:r,titles:e,links:n}){let i=new S.ItemList(n);if(r)for(let l=0;l<r.length;l++){let u=e?.[l]||r[l].split("/")?.[r[l].split("/").length-1]||"na";i.add({"@type":"WebPage",url:r[l],name:u})}let o=i.items;return console.log("items",o),Ps({children:Ns({children:o.map(l=>Cs({children:vs({href:l?.url,children:l?.name})})).join(js())})})}function Ps({children:r="",className:e="",attrs:n=""}={}){return`
+    `.trim()}function Yd(r,e,n="default"){let i={default:"border-transparent bg-primary text-primary-foreground hover:bg-primary/80",secondary:"border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",destructive:"border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",outline:"text-foreground border-border"};return typeof text=="string"&&(text=[text]),n=="secondary"?`
+        <span class="inline-flex items-center rounded-md border border-transparent bg-secondary px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground transition-colors hover:bg-secondary/80">
+          ${r||""}
+        </span>
+        `:n=="destructive"?`
+        <span class="inline-flex items-center rounded-md border border-transparent bg-destructive px-2.5 py-0.5 text-xs font-semibold text-destructive-foreground transition-colors hover:bg-destructive/80">
+          ${r||""}
+        </span>
+
+    `:n=="outline"?`
+
+        <span class="inline-flex items-center rounded-md border border-border px-2.5 py-0.5 text-xs font-semibold text-foreground transition-colors">
+            ${r||""}
+        </span>
+
+    `:`
+     <span class="inline-flex items-center rounded-md border border-transparent bg-primary px-2.5 py-0.5 text-xs font-semibold text-primary-foreground transition-colors hover:bg-primary/80 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
+      ${r||""}
+    </span>
+    `}var mn={};m(mn,{Breadcrumb:()=>Xd,BreadcrumbEllipsis:()=>Qd,BreadcrumbItem:()=>Cs,BreadcrumbLink:()=>vs,BreadcrumbList:()=>Ns,BreadcrumbMain:()=>Ps,BreadcrumbPage:()=>Zd,BreadcrumbSeparator:()=>js});function Xd({urls:r,titles:e,links:n}){let i=new S.ItemList(n);if(r)for(let l=0;l<r.length;l++){let u=e?.[l]||r[l].split("/")?.[r[l].split("/").length-1]||"na";i.add({"@type":"WebPage",url:r[l],name:u})}let o=i.items;return console.log("items",o),Ps({children:Ns({children:o.map(l=>Cs({children:vs({href:l?.url,children:l?.name})})).join(js())})})}function Ps({children:r="",className:e="",attrs:n=""}={}){return`
       <nav aria-label="breadcrumb" class="${e}" ${n}>
         ${r}
       </nav>
