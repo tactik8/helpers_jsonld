@@ -4,6 +4,8 @@ import { jsonldBase as h} from '../../../../../jsonldBase/jsonldBase.js'
 export function Value(value, propertyID, baseUrl ) {
  
 
+  if(!value && value !== 0){ return '' }
+
   if(h.isArray(value)){
     return ValueArray(value, propertyID, baseUrl)
   }
