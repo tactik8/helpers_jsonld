@@ -179,7 +179,7 @@ export function insert(itemList, item, position) {
     // Ensure position variable is set
     position = position ?? getMaxPosition(items)
     position = position ?? items.length
-    position = position <= 0 ? position : 0;
+    position = position >= 0 ? position : 0;
 
 
     // Increment positions
