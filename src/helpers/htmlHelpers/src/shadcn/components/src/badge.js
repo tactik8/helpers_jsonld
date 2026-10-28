@@ -6,7 +6,7 @@
  * @param {'default'|'secondary'|'destructive'|'outline'} [props.variant='default']
  * @param {string} [props.className='']
  */
-export function Badge({ text, variant = 'default', className = '' }) {
+export function Badge(content, className, variant = 'default') {
   const variants = {
     default: 'border-transparent bg-primary text-primary-foreground hover:bg-primary/80',
     secondary: 'border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80',
@@ -16,7 +16,7 @@ export function Badge({ text, variant = 'default', className = '' }) {
 
   return `
       <div class="inline-flex truncate items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 ${variants[variant] || variants.default} ${className}">
-        ${text}
+        ${content}
       </div>
     `.trim();
 }
@@ -30,7 +30,7 @@ export function Badge({ text, variant = 'default', className = '' }) {
  * @param {'default'|'secondary'|'destructive'|'outline'} [props.variant='default']
  * @param {string} [props.className='']
  */
-export function Badges({ text, variant = 'default', className = '' }) {
+export function Badges(content, className, variant = 'default') {
 
 
 
@@ -44,8 +44,8 @@ export function Badges({ text, variant = 'default', className = '' }) {
   if(typeof text == 'string'){ text = [text]}
 
   return `
-      <div class="flex flex-wrap gap-2">
-        ${ text.map(x => Badge({text: x, variant}) ).join('')}
+      <div class="flex flex-wrap gap-2 ${className || ""}">
+        ${content || ""}
       
       </div>
     `.trim();
