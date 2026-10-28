@@ -168,13 +168,11 @@ export function insert(itemList, item, position) {
     item = toListItem(item, position);
 
 
-    // Remove item (in case it was in the list already)
-    itemList = remove(itemList, item)
-
-
     // Get items
     let items = getItemListElement(itemList);
 
+    // Remove item (if was already in list)
+    items = items.filter(x => h.record_id(x) != h.record_id(item))
 
     // Ensure position variable is set
     position = position ?? getMaxPosition(items)
