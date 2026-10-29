@@ -306,8 +306,12 @@ export function patch(item1, item2) {
     item1 = item1 ?? {};
     item2 = item2 ?? {};
 
+    item2 = item2?.record || item2
+
     for (let k of h.keys(item2)) {
-        let v = h.getValues(item2, k) || item2?.[k];
+        
+        let v = h.toArray(item2?.[k])
+       
         item1 = h.setValues(item1, k, v);
     }
 
