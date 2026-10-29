@@ -370,18 +370,18 @@ export class DB {
 
         let actions = h.toArray(action)
 
-        for(let action of actions){
+        for(let a of actions){
 
             // Refresh values with ones from database
-            action = this.updateRefs(action);
+            a = this.updateRefs(a);
 
-            action = h.execute(action);
+            a = h.execute(a);
         }
 
         // get results
         let results = []
-        for(let actions of actions){
-            results = results.concat(h.getResults(action))
+        for(let a of actions){
+            results = results.concat(h.getResults(a))
         }
 
         this.set(results);
