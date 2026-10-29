@@ -207,7 +207,7 @@ export function replaceAction(action) {
     let replacer = h.getValue(action, 'replacer');
     let replacee = h.getValue(action, 'replacee');
 
-    t = h.list.replace(t, replacer, replacee);
+    let t = h.list.replace(t, replacer, replacee);
     action = h.addValue(action, 'result', target);
 
     action = h.setCompleted(action);
