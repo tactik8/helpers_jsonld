@@ -1053,7 +1053,7 @@ ${r.join(`
      <button 
         type="button"
         onclick="document.getElementById('${r}').showModal()"
-        aria-label="Enlarge image: ${alt||"View image"}"
+        aria-label="Enlarge image:"
         class="relative block w-full h-full cursor-zoom-in outline-none"
       >
         <div class="relative w-full  overflow-hidden bg-muted">
