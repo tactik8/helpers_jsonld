@@ -31,7 +31,7 @@ export function ModalTrigger(content, className, modalID){
         type="button"
         onclick="document.getElementById('${modalID}').showModal()"
         aria-label="Enlarge image:"
-        class="relative block w-full h-full cursor-zoom-in outline-none"
+        class="w-full block relative text-left"
       >
         <div class="relative w-full  overflow-hidden bg-muted">
          ${content || ""}

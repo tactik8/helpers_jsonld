@@ -1054,7 +1054,7 @@ ${r.join(`
         type="button"
         onclick="document.getElementById('${r}').showModal()"
         aria-label="Enlarge image:"
-        class="relative block w-full h-full cursor-zoom-in outline-none"
+        class="w-full block relative text-left"
       >
         <div class="relative w-full  overflow-hidden bg-muted">
          ${e||""}
