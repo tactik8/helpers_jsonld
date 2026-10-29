@@ -103,7 +103,7 @@ export function setId(record, value){
 export function toRecord_id(record) {
 
     if (h.isArray(record)) {
-        return rcord.map(x => toRecord_id(x))
+        return record.map(x => toRecord_id(x))
     }
 
     if (typeof record == 'string') {
