@@ -6,7 +6,18 @@ export function execute(action) {
    
     // Handle array
     if (h.isArray(action)) {
-        return action.map((x) => execute(x));
+
+        let db = new h.DB()
+        db.set(action)
+        let newActions = []
+        for(let a of action){
+            a = db.get(a)
+            let newA = execute(a)
+            newActions.push(newA)
+            db.set(h.getValues(newA, 'result'))
+        }
+        return newActions
+        
     }
 
     //
