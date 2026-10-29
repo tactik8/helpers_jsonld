@@ -875,11 +875,15 @@ export function setCompleted(record, result) {
         h.getValue(record, 'endTime') ?? new Date(),
     );
     record = h.setValue(record, 'error', undefined);
-    record = h.setValue(
-        record,
-        'result',
-        result ?? h.getValues(record, 'result'),
-    );
+    
+    if(h.isNotNull(result)){
+        record = h.setValue(
+            record,
+            'result',
+            result 
+        )
+    }
+
     return record;
 }
 

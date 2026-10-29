@@ -83,5 +83,13 @@ function test1() {
 ]
 
     db.execute(actions);
+
+
+    l1 = db.get(record1)
+    l2 = db.get(record2)
+
+  
+
+
 }
 test1();

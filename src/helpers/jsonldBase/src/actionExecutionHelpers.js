@@ -3,7 +3,7 @@ import { jsonldBase as h } from '../jsonldBase.js';
 
 export function execute(action) {
 
-
+   
     // Handle array
     if (h.isArray(action)) {
         return action.map((x) => execute(x));
@@ -246,6 +246,7 @@ export function duplicateAction(action) {
 export function deleteAction(action) {
     let objects = h.getObjects(action);
     let targets = h.targetCollections(action);
+
 
     for (let t of targets) {
         for (let o of objects) {

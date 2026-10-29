@@ -1,4 +1,5 @@
 import { dotHelpers as dot } from '../../dotHelpers/dotHelpers.js';
+import { ValueRecordType } from '../../htmlHelpers/src/shadcn/blocks/src/value.js';
 import { jsonldBase as h } from '../jsonldBase.js';
 
 export class DB {
@@ -21,31 +22,28 @@ export class DB {
         return this.records;
     }
 
-
     // -------------------------------------------------------------
     // CRUD
     // -------------------------------------------------------------
 
     get(record_id, expand = true) {
-        record_id = record_id?.["@id"] || record_id
+        record_id = record_id?.['@id'] || record_id;
         return getRecord(this._store, record_id, expand);
     }
 
     /**
      * get record or add it to db if doesn't exist
-     * @param {*} record_id 
-     * @param {*} expand 
+     * @param {*} record_id
+     * @param {*} expand
      */
-    getOrCreate(record_id, expand = true){
-        let r = this.get(record_id, expand)
-        if(!r || h.isRef(r)){
-            this.set(record_id)
-            r = this.get(record_id, expand)
+    getOrCreate(record_id, expand = true) {
+        let r = this.get(record_id, expand);
+        if (!r || h.isRef(r)) {
+            this.set(record_id);
+            r = this.get(record_id, expand);
         }
-        return r
+        return r;
     }
-
-
 
     search(filter = {}, expand = true) {
         return getRecords(this._store, filter, expand);
@@ -57,12 +55,9 @@ export class DB {
         let currentRecords = newRecords.map((x) =>
             getRecord(this._store, h.record_id(x), false),
         );
-        
 
         for (let r of newRecords) {
-
             this._store = postRecord(this._store, r);
-           
         }
         this._broadcastIfChanged(currentRecords, newRecords);
 
@@ -87,18 +82,16 @@ export class DB {
         return value;
     }
 
-    
     delete(record_id) {
-        let oldRecords = [this.get(record_id)]
+        let oldRecords = [this.get(record_id)];
         this._store = h.deleteRecord(this._store, record_id);
-        this._broadcastIfChanged(oldRecords, [{"@id": record_id}])
+        this._broadcastIfChanged(oldRecords, [{ '@id': record_id }]);
     }
 
-    
     // -------------------------------------------------------------
     // Property
     // -------------------------------------------------------------
-    
+
     getValue(record_id, propertyID, position, defaultValue) {
         let record = this.get(record_id);
         return h.getValue(record, propertyID, position, defaultValue);
@@ -320,41 +313,40 @@ export class DB {
      * Replaces each ref of a record by the value from database
      * @param {*} value
      */
-    updateRefs(value) {
-        function _updateRecord(value, listOfRecordIDsFetched = {}) {
-            if (h.isArray(value)) {
-                return value.map((x) =>
-                    _updateRecord(value, listOfRecordIDsFetched),
-                );
-            }
+    updateRefs(value, listOfRecordIDsFetched = {}) {
 
-            if (h.isObject(value)) {
-                if (h.isRef(value)) {
-                    // check if already in cache
-                    if (listOfRecordIDsFetched?.[h.record_id(value)]) {
-                        return listOfRecordIDsFetched[h.record_id(value)];
-                    }
+        if(!value){ return value}
 
-                    // get from database
-                    value = getRecord(value, true, value);
+        if (h.isArray(value)) {
+            return value.map((x) =>
+                this.updateRefs(x, listOfRecordIDsFetched),
+            );
+        }
 
-                    // store in cache
-                    listOfRecordIDsFetched[h.record_id(value)] = value;
-
-                    // iterate keys
-                    for (let k of Object.keys(value)) {
-                        value[k] = _updateRecord(value, listOfRecordIDsFetched);
-                    }
+        if (h.isObject(value)) {
+            if (h.isRef(value)) {
+                // check if already in cache
+                if (listOfRecordIDsFetched?.[h.record_id(value)]) {
+                    return listOfRecordIDsFetched[h.record_id(value)];
                 }
 
-                return value;
+                // get from database
+                value = this.get(value, true) || value
+
+                // store in cache
+                listOfRecordIDsFetched[h.record_id(value)] = value;
+            }
+            // iterate keys
+            for (let k of Object.keys(value)) {
+                if(['previousItem', 'nextItem'].includes(k)){ continue }
+                value[k] = this.updateRefs(value[k], listOfRecordIDsFetched);
             }
 
-            // handle
             return value;
         }
 
-        return _updateRecord(value, {});
+        // handle
+        return value;
     }
 
     // ------------------------------------------------------------
@@ -367,11 +359,9 @@ export class DB {
      * @returns {Action | Action[]} - The action with the values replaced
      */
     execute(action) {
+        let actions = h.toArray(action);
 
-        let actions = h.toArray(action)
-
-        for(let a of actions){
-
+        for (let a of actions) {
             // Refresh values with ones from database
             a = this.updateRefs(a);
 
@@ -379,9 +369,9 @@ export class DB {
         }
 
         // get results
-        let results = []
-        for(let a of actions){
-            results = results.concat(h.getResults(a))
+        let results = [];
+        for (let a of actions) {
+            results = results.concat(h.getResults(a));
         }
 
         this.set(results);
@@ -430,20 +420,22 @@ export class DB {
     async _broadcastIfChanged(oldRecords, newRecords) {
         let toBroadcast = [];
 
-        for(let newRecord of newRecords){
-            let oldRecord = oldRecords.find(x => h.record_id(x) == h.record_id(newRecord))
+        for (let newRecord of newRecords) {
+            let oldRecord = oldRecords.find(
+                (x) => h.record_id(x) == h.record_id(newRecord),
+            );
             if (!h.isEqual(oldRecord, newRecord)) {
                 toBroadcast.push(h.record_id(newRecord));
             }
         }
 
-        this.broadcast(toBroadcast)
+        this.broadcast(toBroadcast);
     }
 
     broadcast(record_ids) {
         // To array and dedupe
         record_ids = h.toArray(record_ids);
-        record_ids = h.toRecordID(record_ids)
+        record_ids = h.toRecordID(record_ids);
         record_ids = [...new Set(record_ids)];
 
         for (let record_id of record_ids) {
@@ -453,23 +445,24 @@ export class DB {
             let callbackFunctions = this._subscriptions.get(record_id) || [];
 
             // Get callbackFunction that registered for all changes and combine
-            callbackFunctions = callbackFunctions.concat(this._subscriptions.get('all') || []);
+            callbackFunctions = callbackFunctions.concat(
+                this._subscriptions.get('all') || [],
+            );
             callbackFunctions = [...new Set(callbackFunctions)];
-            
+
             // Call callbackFunctions in async mode without waiting
-            for(let callbackFunction of callbackFunctions){
-                this._broadcastItem(callbackFunction, record)
+            for (let callbackFunction of callbackFunctions) {
+                this._broadcastItem(callbackFunction, record);
             }
         }
         return;
     }
 
-    async _broadcastItem(callbackFn, record){
-         try {
-            return callbackFn(record)
-         } catch(err){}
+    async _broadcastItem(callbackFn, record) {
+        try {
+            return callbackFn(record);
+        } catch (err) {}
     }
-
 
     // ------------------------------------------------------------
     // Static
