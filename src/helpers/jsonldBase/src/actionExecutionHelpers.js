@@ -79,6 +79,65 @@ function updateAction(action) {
 // ItemList Actions
 // --------------------------------------------------------------
 
+
+
+export function insertAction(action){
+
+    let objects = h.getObjects(action);
+    let toLocation = h.getValue(action, 'toLocation')
+    let targets = h.targetCollections(action);
+
+    for (let t of targets) {
+        for (let o of objects) {
+            t = h.list.insert(t, o, toLocation);
+        }
+        action = h.addValue(action, 'result', t);
+    }
+
+    action = h.setCompleted(action);
+
+    return action;
+
+}
+
+export function insertBeforeAction(action){
+
+    let objects = h.getObjects(action);
+    let toLocation = h.getValue(action, 'toLocation')
+    let targets = h.targetCollections(action);
+
+    for (let t of targets) {
+        for (let o of objects) {
+            t = h.list.insertBefore(t, o, toLocation);
+        }
+        action = h.addValue(action, 'result', t);
+    }
+
+    action = h.setCompleted(action);
+
+    return action;
+
+}
+
+export function insertAfterAction(action){
+
+    let objects = h.getObjects(action);
+    let toLocation = h.getValue(action, 'toLocation')
+    let targets = h.targetCollections(action);
+
+    for (let t of targets) {
+        for (let o of objects) {
+            t = h.list.insertAfter(t, o, toLocation);
+        }
+        action = h.addValue(action, 'result', t);
+    }
+
+    action = h.setCompleted(action);
+
+    return action;
+
+}
+
 export function prependAction(action) {
     let objects = h.getObjects(action);
     let targets = h.targetCollections(action);

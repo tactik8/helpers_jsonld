@@ -443,6 +443,7 @@ export class DB {
     broadcast(record_ids) {
         // To array and dedupe
         record_ids = h.toArray(record_ids);
+        record_ids = record_ids.map(x => x?.['@id'] || x)
         record_ids = [...new Set(record_ids)];
 
         for (let record_id of record_ids) {
