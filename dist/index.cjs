@@ -1077,9 +1077,9 @@ ${r.join(`
       <dialog 
         id="${r}" 
         onclick="if (event.target === this) this.close()"
-        class="fixed inset-0 m-auto max-h-[90vh] max-w-[90vw] overflow-visible rounded-xl border border-border bg-popover/95 p-0 text-popover-foreground shadow-2xl backdrop:bg-black/80 backdrop:backdrop-blur-sm backdrop:animate-in backdrop:fade-in-0 open:animate-in open:zoom-in-95 focus:outline-none"
+        class="w-full fixed inset-0 m-auto w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-xl border border-border bg-popover/95 p-0 text-popover-foreground shadow-2xl backdrop:bg-black/80 backdrop:backdrop-blur-sm backdrop:animate-in backdrop:fade-in-0 open:animate-in open:zoom-in-95 focus:outline-none"
       >
-        <div class="relative flex flex-col items-center justify-center p-2 sm:p-4">
+        <div class="relative flex flex-col w-full p-2 sm:p-4">
           <!-- Close Button -->
           <button 
             type="button" 
@@ -1093,7 +1093,7 @@ ${r.join(`
             </svg>
           </button>
 
-          <div class="max-h-[80vh] overflow-hidden rounded-lg">
+          <div class="w-full rounded-lg">
             
             ${t||""}
           </div>
