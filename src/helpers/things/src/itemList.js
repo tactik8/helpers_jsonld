@@ -26,7 +26,7 @@ export class ItemList extends Thing {
     }
 
     set itemListElement(value) {
-        this.record = h.list.setItemListElement(value)
+        this.record = h.list.setItemListElement(this.record, value)
     }
 
     get items() {
