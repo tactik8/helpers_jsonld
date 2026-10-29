@@ -1,6 +1,10 @@
 import { jsonldBase as h } from '../jsonldBase.js';
 
-
+/**
+ * Execute sequentially, using the value from the previous step as starting point
+ * @param {*} action 
+ * @returns 
+ */
 export function execute(action) {
 
    
@@ -14,8 +18,9 @@ export function execute(action) {
             a = db.get(a)
             let newA = execute(a)
             newActions.push(newA)
-            db.set(h.getValues(newA, 'result'))
+            db.set(h.getResults(newA))
         }
+       
         return newActions
         
     }
@@ -82,7 +87,9 @@ function updateAction(action) {
     for (let t of targets) {
         for (let o of objects) {
             // merge values
-            t = h.patch(t, o);
+            let propertyID = h.getValue(o, 'propertyID')
+            let value = h.getValue(o, 'value')
+            t = h.setValues(t, propertyID, value )
         }
 
         // Add to result

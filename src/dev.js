@@ -56,17 +56,32 @@ function test1() {
     recordsDB.set(l2.record);
 
     let actions = [
-     {
+    {
         "@type": "UpdateAction",
-        "@id": "1c7111d7-33fd-4640-91bc-647b55a3bd2f",
+        "@id": "c0fede50-16a7-465c-9aa2-de12c6b5b187",
         "object": {
-            "@id": "li_Action_200",
-            "item.actionStatus": "ActiveActionStatus"
+            "@type": "PropertyValue",
+            "@id": "f9a8b0bf-c3b9-4967-8e9e-47f6915f20c1",
+            "propertyID": "item.actionStatus",
+            "value": "ActiveActionStatus"
         },
         "targetCollection": {
             "@id": "li_Action_200"
         },
         "actionStatus": "PotentialActionStatus"
+    },
+    {
+        "@type": "InsertBeforeAction",
+        "@id": "ce33409c-8ead-4d33-bc92-c1ea04b3ce90",
+        "targetCollection": {
+            "@id": "list_200"
+        },
+        "object": {
+            "@id": "li_Action_201"
+        },
+        "toLocation": {
+            "@id": "li_Action_200"
+        }
     }
 ]
     db.execute(actions);
@@ -74,6 +89,6 @@ function test1() {
     l1 = db.get(l1);
     l2 = db.get(l2);
 
-    console.log(l1.itemListElement[0].item);
+    console.log(l1.itemListElement[1].item);
 }
 test1();

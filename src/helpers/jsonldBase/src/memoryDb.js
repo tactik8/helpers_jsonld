@@ -31,6 +31,10 @@ export class DB {
         return getRecord(this._store, record_id, expand);
     }
 
+     getAll(expand = true) {
+        return getRecords(this._store, {}, expand);
+    }
+
     /**
      * get record or add it to db if doesn't exist
      * @param {*} record_id
@@ -361,22 +365,28 @@ export class DB {
     execute(action) {
         let actions = h.toArray(action);
 
+
+        // Update refs
+
+        actions = actions.map(x => this.updateRefs(x))
+
+        let db = new h.DB()
+        db.set(actions)
+
+        let results = []
         for (let a of actions) {
             // Refresh values with ones from database
-            a = this.updateRefs(a);
-
+            a = db.get(a)
+            
             a = h.execute(a);
+          
+            results.push(a)
+            db.set(h.getResults(a))
         }
 
-        // get results
-        let results = [];
-        for (let a of actions) {
-            results = results.concat(h.getResults(a));
-        }
+        this.set(db.getAll());
 
-        this.set(results);
-
-        return actions.length == 1 ? actions[0] : actions;
+        return results.length == 1 ? results[0] : results;
     }
 
     // ------------------------------------------------------------
