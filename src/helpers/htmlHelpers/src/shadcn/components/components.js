@@ -4,6 +4,7 @@
 
 import * as Accordion from './src/accordion.js'
 import * as Alert from './src/alert.js'
+import * as article from './src/article.js'
 import * as Badge from './src/badge.js'
 import * as Breadcrumb from './src/breadcrumb.js'
 import * as Button from './src/button.js'
@@ -24,11 +25,13 @@ import * as JsonEditor from './src/jsonEditor.js'
 import * as Modal from './src/modal.js'
 import * as menu from './src/menu.js'
 import * as kanban from './src/kanban.js'
+import * as starRating from './src/starRating.js'
 
 export const components = {
 
   ...Accordion,
   ...Alert,
+  ...article,
   ...Badge,
   ...Breadcrumb,
   ...Button,
@@ -46,6 +49,7 @@ export const components = {
   ...JsonEditor,
   ...Pagination,
   ...Section,
+  ...starRating,
   ...Table,
   ...Text,
   ...Webpage

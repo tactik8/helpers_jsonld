@@ -1,24 +1,40 @@
 import { jsonldBase as h} from '../../../../../jsonldBase/jsonldBase.js'
 
 
-export function Modal(triggerContent, modalContent, className){
 
-    let uniqueId = 'modal_' + h.randomUUID()
+
+
+
+export function Modal(content, className, modalID){
+
+
+    return `
+     <div 
+      class="group relative inline-block overflow-hidden rounded-lg border border-border bg-card text-card-foreground shadow-sm transition-all hover:border-ring/50 focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 ${className || ""}" 
+      
+    >
+        ${content || ""}
+    </div>
     
+    
+    `
+
+
+}
+
+export function ModalTrigger(content, className, modalID){
+
+
     return `
     
-    <div 
-      class="group relative inline-block overflow-hidden rounded-lg border border-border bg-card text-card-foreground shadow-sm transition-all hover:border-ring/50 focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 ${className}" 
-      ${attrs}
-    >
-      <button 
+     <button 
         type="button"
-        onclick="document.getElementById('${uniqueId}').showModal()"
+        onclick="document.getElementById('${modalID}').showModal()"
         aria-label="Enlarge image: ${alt || 'View image'}"
         class="relative block w-full h-full cursor-zoom-in outline-none"
       >
         <div class="relative w-full  overflow-hidden bg-muted">
-         ${triggerContent}
+         ${content || ""}
         </div>
         <!-- Hover Overlay Icon -->
         <div class="absolute inset-0 flex items-center justify-center bg-background/20 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
@@ -32,10 +48,18 @@ export function Modal(triggerContent, modalContent, className){
           </div>
         </div>
       </button>
+    
+    `
 
-      <!-- Native Dialog Modal -->
+}
+
+
+export function ModalBody(content, className, modalID){
+
+    return `
+    
       <dialog 
-        id="${uniqueId}" 
+        id="${modalID}" 
         onclick="if (event.target === this) this.close()"
         class="fixed inset-0 m-auto max-h-[90vh] max-w-[90vw] overflow-visible rounded-xl border border-border bg-popover/95 p-0 text-popover-foreground shadow-2xl backdrop:bg-black/80 backdrop:backdrop-blur-sm backdrop:animate-in backdrop:fade-in-0 open:animate-in open:zoom-in-95 focus:outline-none"
       >
@@ -43,7 +67,7 @@ export function Modal(triggerContent, modalContent, className){
           <!-- Close Button -->
           <button 
             type="button" 
-            onclick="document.getElementById('${uniqueId}').close()" 
+            onclick="document.getElementById('${modalID}').close()" 
             aria-label="Close modal"
             class="absolute -top-3 -right-3 z-10 flex h-8 w-8 items-center justify-center rounded-full border border-border bg-background text-foreground shadow-md transition-colors hover:bg-accent hover:text-accent-foreground focus:outline-none focus:ring-2 focus:ring-ring"
           >
@@ -55,14 +79,15 @@ export function Modal(triggerContent, modalContent, className){
 
           <div class="max-h-[80vh] overflow-hidden rounded-lg">
             
-            ${modalContent || ""}
+            ${content || ""}
           </div>
 
          
         </div>
       </dialog>
-    </div>
     
     
     `
+
+
 }
