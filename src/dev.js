@@ -56,20 +56,31 @@ function test1() {
     recordsDB.set(record2);
 
     let actions = [
-        {
-            '@type': 'InsertBeforeAction',
-            '@id': '69782e96-c978-436d-822a-4de61102a347',
-            targetCollection: {
-                '@id': 'itemList1',
-            },
-            object: {
-                '@id': 'li_Action_0',
-            },
-            toLocation: {
-                '@id': 'li_Action_0',
-            },
+    {
+        "@type": "DeleteAction",
+        "@id": "69500246-273e-4d21-aa24-219d7219dd17",
+        "targetCollection": {
+            "@id": "itemList2"
         },
-    ];
+        "object": {
+            "@id": "li_Action_100"
+        },
+        "actionStatus": "PotentialActionStatus"
+    },
+    {
+        "@type": "InsertBeforeAction",
+        "@id": "31267b16-d07a-4e69-b49d-780bbfb7d50e",
+        "targetCollection": {
+            "@id": "itemList1"
+        },
+        "object": {
+            "@id": "li_Action_100"
+        },
+        "toLocation": {
+            "@id": "li_Action_0"
+        }
+    }
+]
 
     db.execute(actions);
 }

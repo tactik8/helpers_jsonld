@@ -188,8 +188,8 @@ export function moveUpAction(action) {
         for (let o of objects) {
             t = h.list.moveUp(t, o);
         }
+        action = h.addValue(action, 'result', t);
     }
-    action = h.addValue(action, 'result', t);
 
     action = h.setCompleted(action);
 
@@ -204,8 +204,9 @@ export function moveDownAction(action) {
         for (let o of objects) {
             t = h.list.moveDown(t, o);
         }
+        action = h.addValue(action, 'result', t);
     }
-    action = h.addValue(action, 'result', t);
+    
 
     action = h.setCompleted(action);
 
@@ -233,9 +234,10 @@ export function duplicateAction(action) {
         for (let o of objects) {
             t = h.list.duplicate(t, o);
         }
-    }
-    action = h.addValue(action, 'result', t);
+        action = h.addValue(action, 'result', t);
 
+    }
+    
     action = h.setCompleted(action);
 
     return action;
@@ -247,10 +249,11 @@ export function deleteAction(action) {
 
     for (let t of targets) {
         for (let o of objects) {
-            t = h.list.delete(t, o);
+            t = h.list.remove(t, o);
         }
+        action = h.addValue(action, 'result', t);
     }
-    action = h.addValue(action, 'result', t);
+    
 
     action = h.setCompleted(action);
 
