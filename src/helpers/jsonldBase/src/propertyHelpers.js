@@ -98,7 +98,7 @@ export function setId(record, value){
 /**
  * Returns record id
  * @param {Object | Object[] | String | String[]} record - the record ref or record_id string
- * @returns {String} The record_id
+ * @returns {String | String[]} The record_id
  */
 export function toRecord_id(record) {
 
@@ -115,7 +115,7 @@ export function toRecord_id(record) {
 /**
  * Returns record id
  * @param {Object | Object[] | String | String[]} record - the record ref or record_id string
- * @returns {String} The record_id
+ * @returns {String | String[]} The record_id
  */
 export function toRecord_ids(record) {
     return toRecord_id(record)
@@ -124,7 +124,7 @@ export function toRecord_ids(record) {
 /**
  * Returns record id
  * @param {Object | Object[] | String | String[]} record - the record ref or record_id string
- * @returns {String} The record_id
+ * @returns {String | String[]} The record_id
  */
 export function toRecordID(record) {
     return toRecord_id(record)
@@ -133,7 +133,7 @@ export function toRecordID(record) {
 /**
  * Returns record id
  * @param {Object | Object[] | String | String[]} record - the record ref or record_id string
- * @returns {String} The record_id
+ * @returns {String | String[]} The record_id
  */
 export function toRecordId(record) {
     return toRecord_id(record)
@@ -143,7 +143,7 @@ export function toRecordId(record) {
 /**
  * Returns true if object is a ref (only @id as property)
  * @param {*} value
- * @returns
+ * @returns {Boolean} True if ref record
  */
 export function isRef(value) {
     if (!h.isObject(value)) {
@@ -176,6 +176,25 @@ export function ref(value) {
     }
     return { '@id': record_id };
 }
+
+/**
+ * Converts objects or string to ref record ({"@id": ...})
+ * @param {Object | Object[] | String | String[]} value 
+ * @returns {Ref | Ref[]} Ref record 
+ */
+export function toRef(value){
+
+    if(h.isArray(value)){
+        return value.map(x => toRef(x))
+    }
+
+    return {
+        "@id": toRecordID(value)
+    }
+    
+}
+
+
 
 /**
  * Returns list of properties (keys) for an object. If list of objects, returns all properties
