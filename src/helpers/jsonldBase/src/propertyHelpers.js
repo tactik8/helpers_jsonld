@@ -96,10 +96,16 @@ export function setId(record, value){
 }
 
 /**
- * Return @id value. If string, assumes it is id
- * @param {*} record
+ * Returns record id
+ * @param {Object | Object[] | String | String[]} record - the record ref or record_id string
+ * @returns {String} The record_id
  */
 export function toRecord_id(record) {
+
+    if (h.isArray(record)) {
+        return rcord.map(x => toRecord_id(x))
+    }
+
     if (typeof record == 'string') {
         return record;
     }
@@ -107,23 +113,32 @@ export function toRecord_id(record) {
 }
 
 /**
- * Return @id values in an array. If string, assumes it is id
- * @param {*} record
+ * Returns record id
+ * @param {Object | Object[] | String | String[]} record - the record ref or record_id string
+ * @returns {String} The record_id
  */
 export function toRecord_ids(record) {
-    if (h.isArray(record)) {
-        let results = [];
-        record.foreach((x) => {
-            results = results.concat(toRecord_id(x));
-        });
-        return results;
-    }
-
-    if (typeof record == 'string') {
-        return [record];
-    }
-    return [record_id(record)];
+    return toRecord_id(record)
 }
+
+/**
+ * Returns record id
+ * @param {Object | Object[] | String | String[]} record - the record ref or record_id string
+ * @returns {String} The record_id
+ */
+export function toRecordID(record) {
+    return toRecord_id(record)
+}
+
+/**
+ * Returns record id
+ * @param {Object | Object[] | String | String[]} record - the record ref or record_id string
+ * @returns {String} The record_id
+ */
+export function toRecordId(record) {
+    return toRecord_id(record)
+}
+
 
 /**
  * Returns true if object is a ref (only @id as property)
