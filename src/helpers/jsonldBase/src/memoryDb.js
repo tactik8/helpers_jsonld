@@ -363,17 +363,30 @@ export class DB {
 
     /**
      * Executes an action on a record, repalceing the refs in the action by values from the database
-     * @param {*} action
+     * @param {Action | Action[]} action - The action to execute
+     * @returns {Action | Action[]} - The action with the values replaced
      */
     execute(action) {
-        // Refresh values with ones from database
-        action = this.updateRefs(action);
 
-        action = h.execute(action);
+        let actions = h.toArray(action)
 
-        this.set(h.getResults(action));
+        for(let action of actions){
 
-        return action;
+            // Refresh values with ones from database
+            action = this.updateRefs(action);
+
+            action = h.execute(action);
+        }
+
+        // get results
+        let results = []
+        for(let actions of actions){
+            results = results.concat(h.getResults(action))
+        }
+
+        this.set(results);
+
+        return actions.length == 1 ? actions[0] : actions;
     }
 
     // ------------------------------------------------------------
