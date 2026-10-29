@@ -21,6 +21,16 @@ export function execute(action) {
     }
 
     // ItemList
+    if (record_type == 'InsertAction') {
+        return insertAction(action);
+    }
+    if (record_type == 'InsertBeforeAction') {
+        return insertBeforeAction(action);
+    }
+    if (record_type == 'InsertAfterAction') {
+        return insertAfterAction(action);
+    }
+
     if (record_type == 'MoveUpAction') {
         return moveUpAction(action);
     }
