@@ -1041,7 +1041,7 @@ ${r.join(`
     ${d}
   `.trim();return Rp({title:"JSON Record Editor",description:"View, edit, and post JSON records directly to your backend service.",children:c,className:i,attrs:o})}var mi={};p(mi,{Modal:()=>Bp,ModalBody:()=>Hp,ModalTrigger:()=>Up});function Bp(t,e,r){return`
      <div 
-      class="group relative inline-block overflow-hidden rounded-lg border border-border bg-card text-card-foreground shadow-sm transition-all hover:border-ring/50 focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 ${e||""}" 
+      class="w-full transition-all hover:border-ring/50 focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2" 
       
     >
         ${t||""}

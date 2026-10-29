@@ -10,7 +10,7 @@ export function Modal(content, className, modalID){
 
     return `
      <div 
-      class="group relative inline-block overflow-hidden rounded-lg border border-border bg-card text-card-foreground shadow-sm transition-all hover:border-ring/50 focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 ${className || ""}" 
+      class="w-full transition-all hover:border-ring/50 focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2" 
       
     >
         ${content || ""}
