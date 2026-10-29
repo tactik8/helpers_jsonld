@@ -39,6 +39,9 @@ export function execute(action) {
     if (record_type == 'DuplicateAction') {
         return duplicateAction(action);
     }
+    if (record_type == 'DeleteAction') {
+        return deleteAction(action);
+    }
 }
 
 // --------------------------------------------------------------
@@ -160,6 +163,22 @@ export function duplicateAction(action) {
     for (let t of targets) {
         for (let o of objects) {
             t = h.list.duplicate(t, o);
+        }
+    }
+    action = h.addValue(action, 'result', t);
+
+    action = h.setCompleted(action);
+
+    return action;
+}
+
+export function deleteAction(action) {
+    let objects = h.getObjects(action);
+    let targets = h.targetCollections(action);
+
+    for (let t of targets) {
+        for (let o of objects) {
+            t = h.list.delete(t, o);
         }
     }
     action = h.addValue(action, 'result', t);
