@@ -1,5 +1,7 @@
 import { jsonldBase as h } from '../jsonldBase.js';
 
+import { dataHelpers } from '../../dataHelpers/dataHelpers.js';
+
 /**
  * Returns random uuidv4
  * @returns {string} A random uuidv4
@@ -71,29 +73,13 @@ export function getDataType(value) {
 }
 
 /**
- * Returns true if record or property is undefined or null
- * @param {*} record
+ * Returns true if value or property is undefined or null
+ * @param {*} value
  * @param {*} propertyID
  * @returns {boolean} True if value is considered undefined but no 0
  */
-export function isNull(record, propertyID = undefined) {
-    if (record === undefined || record === null) {
-        return true;
-    }
-
-    if (typeof record == 'string' && record.length == 0) {
-        return true;
-    }
-
-    // Evalue record as not null if no propertyID given
-    if (propertyID === undefined || propertyID === null) {
-        return false;
-    }
-
-    //
-    let values = h.getValues(record, propertyID);
-
-    return values.length == 0;
+export function isNull(value) {
+    return dataHelpers.isNull(value);
 }
 
 /**
@@ -102,199 +88,58 @@ export function isNull(record, propertyID = undefined) {
  * @param {*} propertyID
  * @returns
  */
-export function isNotNull(record, propertyID = undefined) {
-    return !isNull(record, propertyID);
+export function isNotNull(value) {
+    return dataHelpers.isNotNull(value);
 }
 
 export function isBoolean(value) {
-    if (value === true || value === false) {
-        return true;
-    }
-    return false;
+    return dataHelpers.isBoolean(value);
+}
+export function isNotBoolean(value) {
+    return dataHelpers.isNotBoolean(value);
+}
+export function toBoolean(value) {
+    return dataHelpers.toBoolean(value);
 }
 
-/**
- * Return true if value is anumber
- * @param {*} value
- */
 export function isNumber(value) {
-    if (isNull(value)) {
-        return false;
-    }
-
-    if (value === '') {
-        return false;
-    }
-
-    value = Number(value);
-    return !isNaN(value);
+    return dataHelpers.isNumber(value);
 }
-
-/**
- * Return true if value is anumber
- * @param {*} value
- */
 export function isNotNumber(value) {
-    return !isNumber(value);
+    return dataHelpers.isNotNumber(value);
 }
-
-/**
- * Ensure a value is a number
- * @param {*} value
- * @returns
- */
 export function toNumber(value) {
-    if (isNull(value)) {
-        return undefined;
-    }
-    value = Number(value);
-
-    if (!isNaN(value)) {
-        return value;
-    }
-    return undefined;
+    return dataHelpers.toNumber(value);
 }
 
-/**
- * Return true if typeof is string
- * @param {*} value - Value to test if string
- * @returns {boolean} True if string, false
- */
 export function isString(value) {
-    if (isNull(value)) {
-        return false;
-    }
-    return typeof value == 'string';
+    return dataHelpers.isString(value);
 }
-
-/**
- * Return true if typeof is not string
- * @param {*} value - Value to test if not string
- * @returns {boolean} True if not string,
- */
 export function isNotString(value) {
-    return !isString(value);
+    return dataHelpers.isNotString(value);
 }
-
-/**
- * Convert a value to string
- * @param {*} value - Value to convert to string
- * @returns {string} String value
- */
 export function toString(value) {
-    if (isNull(value)) {
-        return '';
-    }
-
-    if (isString(value)) {
-        return value;
-    }
-
-    if (h.isValid(value)) {
-        return h.exportToString(value);
-    }
-
-    if (isDate(value)) {
-        return value.toLocaleString();
-    }
-    if (h.isArray(value)) {
-        let content = `Array of ${value.length} items.\n--------------------\n`;
-        let i = 0;
-        let max = value.length - 1;
-        max = max > 8 ? 8 : max;
-        for (let i = 0; i < max; i++) {
-            content += toString(value[i]) + '\n';
-        }
-        return content;
-    }
-
-    return String(value);
+    return dataHelpers.toString(value);
 }
 
-/**
- * Returns true if value is Date. Does not convert string to date.
- * @param {*} value - Value to check if date
- * @returns {boolean} True if value is date
- */
 export function isDate(value) {
-    if (isNull(value)) {
-        return false;
-    }
-    if (value === '') {
-        return false;
-    }
-
-    return value instanceof Date && !Number.isNaN(value.getTime());
+    return dataHelpers.isDate(value);
 }
-
-/**
- * Returns true if value is not date
- * @param {*} value - Value to check if not date
- * @returns {boolean} True if value is not date
- */
 export function isNotDate(value) {
-    return !isDate(value);
+    return dataHelpers.isNotDate(value);
 }
-
-/**
- * Converts a value to DateTime format
- * @param {Date | string | number} value - Value to convert to date
- * @returns {Date | undefined} The value in DateTime format or undefined if not a date. 
- */
 export function toDate(value) {
-    if (isNull(value)) {
-        return undefined;
-    }
-
-    if (isDate(value) == true) {
-        return value;
-    }
-
-    if (!isNaN(Number(value))) {
-        return undefined;
-    }
-
-    const timestamp = Date.parse(value);
-    if (!isNaN(timestamp) == false) {
-        return undefined;
-    }
-
-    value = new Date(value);
-    value = isDate(value) ? value : undefined;
-
-    return value;
+    return dataHelpers.toDate(value);
 }
 
-/**
- * Return true if object
- * @param {*} value - Value to test if it is an object.
- * @returns {boolean} True if object, false
- */
 export function isObject(value) {
-    if (Object.prototype.toString.call(value) !== '[object Object]') {
-        return false;
-    }
-    const prototype = Object.getPrototypeOf(value);
-    return prototype === null || prototype === Object.prototype;
-
-    if (isNull(value)) {
-        return false;
-    }
-
-    if (isString(value) == true) {
-        return false;
-    }
-
-    if (isDate(value) == true) {
-        return false;
-    }
-
-    if (isNumber(value) == true) {
-        return false;
-    }
-
-    let keys = Object.keys(value);
-    return keys.length > 0;
+    return dataHelpers.isObject(value);
+}
+export function isNotObject(value) {
+    return dataHelpers.isNotObject(value);
+}
+export function toObject(value) {
+    return dataHelpers.toObject(value);
 }
 
 /**
@@ -314,34 +159,20 @@ export function isJsonld(value) {
     return false;
 }
 
-/**
- * Returns true if array
- * @param {*} value - Value to test if array
- * @returns {boolean} True if array, false
- */
+
 export function isArray(value) {
-    if (isNull(value)) {
-        return false;
-    }
-    return Array.isArray(value) && typeof value != 'string';
+   return dataHelpers.isArray(value)
 }
-
-/**
- * Converts to array if not one already
- * @param {*} value - Value to convert to array
- * @returns {Array} Array of value
- */
+export function isNotArray(value) {
+   return dataHelpers.isNotArray(value)
+}
 export function toArray(value) {
-    if (isNull(value)) {
-        return [];
-    }
-
-    value = isArray(value) ? value : [value];
-
-    value = value.filter((x) => x != undefined);
-
-    return value;
+   return dataHelpers.toArray(value)
 }
+
+
+
+
 
 /**
  * Convert value to single, if array, takes first element
@@ -350,7 +181,6 @@ export function toArray(value) {
  */
 export function toSingle(value) {
     value = toArray(value);
-
     return value?.[0] ?? undefined;
 }
 

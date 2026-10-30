@@ -17,9 +17,9 @@ import * as utilitiesHelpers from './src/utilitiesHelpers.js';
 import * as listHelpers from './src/listHelpers.js';
 import * as toStringHelpers from './src/toStringHelpers.js';
 import * as databaseHelpers from './src/databaseHelpers.js';
-import * as itemListHelpers from './src/itemListHelpers.js'
-import * as actionExecutionHelpers from './src/actionExecutionHelpers.js'
-import * as potentialActionHelpers from './src/potentialActionHelpers.js'
+import * as itemListHelpers from './src/itemListHelpers.js';
+import * as actionExecutionHelpers from './src/actionExecutionHelpers.js';
+import * as potentialActionHelpers from './src/potentialActionHelpers.js';
 
 /**
  * @module jsonldBase
@@ -104,7 +104,7 @@ export const jsonldBase = {
      * @see module:itemListHelpers
      */
     list: itemListHelpers,
-    
+
     /**
      * @namespace actionExecutionHelpers
      * @description Helpers for action execution
@@ -113,8 +113,9 @@ export const jsonldBase = {
     ...actionExecutionHelpers,
 
     /**
-     * 
+     *
      */
-    potentialAction: potentialActionHelpers
-    
+    potentialAction: potentialActionHelpers,
+
+   
 };

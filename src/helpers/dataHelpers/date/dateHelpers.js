@@ -133,6 +133,5 @@ export function formatDate(value, includeTime=false){
         content = content + ` ${thh}:${tmm}:${tss}`
     }
 
-console.log('cc', content)
     return content
 }

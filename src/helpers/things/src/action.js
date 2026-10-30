@@ -151,14 +151,14 @@ export class Action extends Thing {
         return getPVSInput(this.record);
     }
     addInputCondition(key, condition) {
-        this.record = this.addValues(key + '-input', condition);
+        return this.addValues(key + '-input', condition);
     }
 
     getOutputConditions() {
         return getPVSOutput(this.record);
     }
     addOutputCondition(key, condition) {
-        this.record = this.addValues(key + '-output', condition);
+        return this.addValues(key + '-output', condition);
     }
 
     test() {
@@ -250,7 +250,7 @@ function getPVSInput(record, propertyID) {
 
     let results = [];
 
-    for (let k in Object.keys(record)) {
+    for (let k of Object.keys(record)) {
         if (k.endsWith('-input')) {
             k = k.replace('-input', '');
             results.push({ k: record?.[k] });
@@ -282,7 +282,7 @@ function getPVSOutput(record, propertyID) {
 
     let results = [];
 
-    for (let k in Object.keys(record)) {
+    for (let k of Object.keys(record)) {
         if (k.endsWith('-output')) {
             k = k.replace('-output', '');
             results.push({ k: record?.[k] });
@@ -291,7 +291,7 @@ function getPVSOutput(record, propertyID) {
     return results;
 }
 
-function setPVSOutput(record, pps) {
+function setPVSOutput(record, propertyID, pvs) {
     if (propertyID.endsWith('-output') == false) {
         propertyID = propertyID + '-output';
     }
@@ -336,7 +336,7 @@ function addMaxValue(record, propertyID, value) {
     let pvs =
         getPVSInput(record, propertyID) || new PropertyValueSpecification();
     pvs.maxValue = value;
-    record = setPVSInput(pvs.record);
+    record = setPVSInput(pvs.record,propertyID, value);
     return record;
 }
 function addMinLength(record, propertyID, value) {
@@ -374,8 +374,8 @@ function addValueRequired(record, propertyID, value) {
 function testConditions(record) {
     let pps = getPVSInput(record);
 
-    for (let k of Object.keys(pps)) {
-        if (PropertyValueSpecification.test(pps[k], record?.[k]) == false) {
+    for (let p of pps) {
+        if (PropertyValueSpecification.test(p, record?.[p.propertyID]) == false) {
             return false;
         }
     }
@@ -395,19 +395,19 @@ export class UpdateAction extends Action {
     }
 
     get targetCollection() {
-        return this.getValues(this.record, 'targetCollection');
+        return this.getValues( 'targetCollection');
     }
 
     set targetCollection(value) {
-        this.record = this.setValues(this.record, 'targetCollection', value);
+        return this.setValues( 'targetCollection', value);
     }
 
     get toLocation() {
-        return this.getValues(this.record, 'toLocation');
+        return this.getValues( 'toLocation');
     }
 
     set toLocation(value) {
-        this.record = this.setValues(this.record, 'toLocation', value);
+        return this.setValues( 'toLocation', value);
     }
 }
 
@@ -444,19 +444,19 @@ export class ReplaceAction extends UpdateAction {
     }
 
     get replacer() {
-        return this.getValues(this.record, 'replacer');
+        return this.getValues( 'replacer');
     }
 
     set replacer(value) {
-        this.record = this.setValues(this.record, 'replacer', value);
+        return this.setValues( 'replacer', value);
     }
 
     get replacee() {
-        return this.getValues(this.record, 'replacee');
+        return this.getValues( 'replacee');
     }
 
     set replacee(value) {
-        this.record = this.setValues(this.record, 'replacee', value);
+        return  this.setValues( 'replacee', value);
     }
 }
 
@@ -508,7 +508,7 @@ export class SearchAction extends UpdateAction {
     }
 
     set query(value) {
-        return this.setValue(this.record, 'query', value);
+        return this.setValue( 'query', value);
     }
 
     get filter() {
@@ -581,7 +581,7 @@ export class SearchAction extends UpdateAction {
         return this.getValue('target') || '';
     }
     set target(value) {
-        return this.setValue(this.record, 'target', value);
+        return this.setValue( 'target', value);
     }
 
     async execute() {
@@ -609,7 +609,6 @@ export class SearchAction extends UpdateAction {
         let itemList = new ItemList();
         results.forEach((x) => itemList.add(x));
 
-        this.setCompleted();
-        this.result = itemList.record;
+        this.setCompleted(itemList.record);
     }
 }

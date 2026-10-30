@@ -46,14 +46,25 @@ export function isArray(value) {
 }
 
 /**
+ * Returns true if array
+ * @param {*} value 
+ * @returns 
+ */
+export function isNotArray(value) {
+    return !isArray(value)
+}
+
+
+
+
+/**
  * Converts to array if not one already
  * @param {*} value 
  * @returns 
  */
 export function toArray(value) {
-    if(isNull(value)){
-        return []
-    }
+
+    if (value === undefined || value === null) return [];
 
     value = isArray(value) ? value : [value]
 

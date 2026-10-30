@@ -46,6 +46,11 @@ export function isDuration(value){
     return isISODuration(value)
 }
 
+export function isNotDuration(value){
+    return !isDuration(value)
+}
+
+
 // todo: complete this
 export function toDuration(value){
     return value

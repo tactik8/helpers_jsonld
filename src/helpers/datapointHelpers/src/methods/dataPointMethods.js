@@ -1,5 +1,8 @@
 import { jsonldBase as _h } from '../../../jsonldBase/jsonldBase.js'
 
+import { dataHelpers} from '../../../dataHelpers/dataHelpers.js'
+
+
 let COUNTER = 0
 
 
@@ -583,12 +586,10 @@ export function getModifiedDate(dp) {
 export function _getDate(dp, path) {
 
     let d = _h.getValue(dp, path)
-    d = new Date(d)
-    if (d instanceof Date && !Number.isNaN(d.getTime())) {
-        return d
-    }
-    return undefined
 
+    return dataHelpers.toDate(d)
+
+    
 }
 
 

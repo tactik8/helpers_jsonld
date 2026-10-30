@@ -163,7 +163,7 @@ export function isRef(value) {
 export function ref(value) {
     // Check if thing object
     if (value?._isThingClass == true) {
-        return record.ref;
+        return value.ref;
     }
 
     // Handle null
@@ -378,7 +378,7 @@ export function getValues(record, propertyID, defaultValue, language) {
             (x) =>
                 x?.['@language'] == language ||
                 x?.['@language'] == DEFAULT_LANGUAGE ||
-                x?.['@lannguage'] === undefined,
+                x?.['@language'] === undefined,
         );
 
         // Deal with @value
@@ -426,7 +426,7 @@ export function setValues(record, propertyID, value, language) {
         let [propertyID, position] = getPathFragment(paths[i]);
 
         // Deal with empty
-        runningValue[propertyID] = runningValue?.[propertyID] || [];
+        runningValue[propertyID] = h.toArray(runningValue?.[propertyID] || []);
 
         let newRunningValue;
 
@@ -509,7 +509,7 @@ export function hasValue(record, propertyID, value) {
  */
 function getPathFragment(pathFragment) {
     if (pathFragment === undefined) {
-        return (undefined, 0);
+        return [undefined, 0];
     }
     let propertyID = pathFragment.split('[')?.[0];
     let position = (pathFragment.split('[')?.[1] || '').split(']')?.[0];
@@ -849,7 +849,7 @@ export function setActive(record) {
     record = h.setValue(
         record,
         'startTime',
-        h.getValue(record, 'startTime') ?? new Date(),
+        h.getValue(record, 'startTime') ?? new Date().toISOString(),
     );
     record = h.setValue(record, 'endTime', undefined);
     record = h.setValue(record, 'error', undefined);
@@ -863,16 +863,19 @@ export function setActive(record) {
  * @returns {object} The updated action
  */
 export function setCompleted(record, result) {
+
+    
+
     record = h.setValue(record, 'actionStatus', 'CompletedActionStatus');
     record = h.setValue(
         record,
         'startTime',
-        h.getValue(record, 'startTime') ?? new Date(),
+        h.getValue(record, 'startTime') || (new Date().toISOString()),
     );
     record = h.setValue(
         record,
         'endTime',
-        h.getValue(record, 'endTime') ?? new Date(),
+        h.getValue(record, 'endTime') || (new Date().toISOString()),
     );
     record = h.setValue(record, 'error', undefined);
     
@@ -884,6 +887,7 @@ export function setCompleted(record, result) {
         )
     }
 
+    
     return record;
 }
 
@@ -897,12 +901,12 @@ export function setFailed(record, error) {
     record = h.setValue(
         record,
         'startTime',
-        h.getValue(record, 'startTime') ?? new Date(),
+        h.getValue(record, 'startTime') ?? new Date().toISOString(),
     );
     record = h.setValue(
         record,
         'endTime',
-        h.getValue(record, 'endTime') ?? new Date(),
+        h.getValue(record, 'endTime') ?? new Date().toISOString(),
     );
     record = h.setValue(record, 'error', String(error));
     record = h.setValue(record, 'result', undefined);
@@ -940,7 +944,7 @@ export function getImageUrl(record) {
 export function getImageName(record) {
     let imageName = h.getValue(record, 'image.name');
 
-    imageName = imageName ?? h.getValue(record, 'image.name');
+    imageName = imageName ?? h.getValue(record, 'name');
 
     imageName = imageName ?? h.record_id(record);
 

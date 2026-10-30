@@ -42,53 +42,31 @@ function getList(start = 0) {
     return l;
 }
 
-function test1() {
-    let recordsDB = new _h.DB();
-    let db = recordsDB;
-
-    // Generate list record
-    let l1 = getList(200);
+async function test1() {
     
-    recordsDB.set(l1.record);
+    let base_url = 'https://db.tactik8.com/api'
+    let databaseID = 'bronzeV1'
+    let tenantID = 'stash'
 
-    //
-    let l2 = getList(200);
-    recordsDB.set(l2.record);
+    let record_id = 'https://stash.tactik8.com/scenes/330#video'
 
-    let actions = [
-    {
-        "@type": "UpdateAction",
-        "@id": "c0fede50-16a7-465c-9aa2-de12c6b5b187",
-        "object": {
-            "@type": "PropertyValue",
-            "@id": "f9a8b0bf-c3b9-4967-8e9e-47f6915f20c1",
-            "propertyID": "item.actionStatus",
-            "value": "ActiveActionStatus"
-        },
-        "targetCollection": {
-            "@id": "li_Action_200"
-        },
-        "actionStatus": "PotentialActionStatus"
-    },
-    {
-        "@type": "InsertBeforeAction",
-        "@id": "ce33409c-8ead-4d33-bc92-c1ea04b3ce90",
-        "targetCollection": {
-            "@id": "list_200"
-        },
-        "object": {
-            "@id": "li_Action_201"
-        },
-        "toLocation": {
-            "@id": "li_Action_200"
-        }
-    }
-]
-    db.execute(actions);
+    let apiDB = new _h.ApiDB(base_url, databaseID, tenantID)
 
-    l1 = db.get(l1);
-    l2 = db.get(l2);
+    let r1 = await apiDB.get(record_id)
+    console.log('r1', r1)
 
-    console.log(l1.itemListElement[1].item);
+
+
+    let r2 = await apiDB.search({})
+    console.log('r2', r2)
+
+
+    let record_ids = r2.itemListElement.map(x => _h.record_id(h.getItem(x)))
+    
+    console.log('rr', record_ids)
+
+    let f = {'@id': record_ids.slice(0, 3)}
+
+
 }
 test1();

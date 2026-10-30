@@ -18,7 +18,7 @@ import { diskHelpers as disk } from '../../helpers/diskHelpers/diskHelpers.js';
  * Does not flatten objects
  * @class
  */
-export class DbDisk {
+export class DiskDB {
     /**
      * Tool to store jsonld data as json files on local disk.
      * @param {*} directoryPath - the directory where to store records

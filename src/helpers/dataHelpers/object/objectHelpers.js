@@ -39,6 +39,10 @@ export function isValid(value){
  */
 export function isObject(value){
 
+    if (typeof value !== 'object' || value === null || Array.isArray(value)) {
+        return false;
+    }
+
     if(value === undefined){
         return false
     }
@@ -59,12 +63,15 @@ export function isObject(value){
         return false
     }
 
-    let keys = Object.keys(value)
-    return keys.length > 0
+   
+    return Object.keys(value).length > 0;
 
 
 }
 
+export function isNotObject(value){
+    return !isObject(value)
+}
 
 /**
  * Returns a cleaned version of the object

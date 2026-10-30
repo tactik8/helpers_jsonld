@@ -6,6 +6,8 @@ import * as objectHelpers from "./object/objectHelpers.js";
 import * as stringHelpers from "./string/stringHelpers.js";
 import * as urlHelpers from "./url/urlHelpers.js";
 import * as durationHelpers from "./duration/durationHelpers.js";
+import * as booleanHelpers from './boolean/boolean.js'
+import * as jsonHelpers from './json/json.js'
 
 /**
  * @fileoverview Helpers to identify and convert dataTypes.
@@ -15,23 +17,49 @@ import * as durationHelpers from "./duration/durationHelpers.js";
 export const dataHelpers = {
   isNull: nullHelpers.isNull,
   isNotNull: nullHelpers.isNotNull,
+
   isArray: arrayHelpers.isArray,
+  isNotArray: arrayHelpers.isNotArray,
   toArray: arrayHelpers.toArray,
+
   isDate: dateHelpers.isDate,
+  isNotDate: dateHelpers.isNotDate,
   toDate: dateHelpers.toDate,
+
   isDuration: durationHelpers.isDuration,
+  isNotDuration: durationHelpers.isNotDuration,
   toDuration: durationHelpers.toDuration,
+
   isObject: objectHelpers.isObject,
+  isNotObject: objectHelpers.isNotObject,
+  
   isNumber: numberHelpers.isNumber,
+  isNotNumber: numberHelpers.isNotNumber,
   toNumber: numberHelpers.toNumber,
+
   isString: stringHelpers.isString,
+  isNotString: stringHelpers.isNotString,
   toString: stringHelpers.toString,
+
   isUrl: urlHelpers.isUrl,
+  isNotUrl: urlHelpers.isNotUrl,
   toUrl: urlHelpers.toUrl,
 
+  isBoolean: booleanHelpers.isBoolean,
+  isNotBoolean: booleanHelpers.isNotBoolean,
+  toBoolean: booleanHelpers.toBoolean,
+  
+  isJson: jsonHelpers.isJson,
+  isNotJson: jsonHelpers.isNotJson,
+  toJson: jsonHelpers.toJson,
+  fromJson: jsonHelpers.fromJson,
+
+
   array: arrayHelpers,
+  boolean: booleanHelpers,
   date: dateHelpers,
   duration: durationHelpers,
+  json: jsonHelpers,
   null: nullHelpers,
   number: numberHelpers,
   object: objectHelpers,

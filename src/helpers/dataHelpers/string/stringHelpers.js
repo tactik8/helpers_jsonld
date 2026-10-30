@@ -89,6 +89,11 @@ export function isString(value) {
     return typeof value === 'string' || value instanceof String;
 }
 
+export function isNotString(value) {
+    return !isString(value)
+}
+
+
 /**
  * Safely converts any value to its string representation.
  * Handles null, undefined, primitives, and objects safely.

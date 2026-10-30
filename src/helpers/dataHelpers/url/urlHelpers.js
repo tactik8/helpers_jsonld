@@ -66,6 +66,9 @@ export function isUrl(url) {
 
 }
 
+export function isNotUrl(value){
+    return !isUrl(value)
+}
 
 /**
  * Returns a standardized url string
