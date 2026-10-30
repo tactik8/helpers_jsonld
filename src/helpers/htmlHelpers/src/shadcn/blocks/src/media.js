@@ -11,49 +11,69 @@ import { formatHelpers } from '../../../../../formatHelpers/formatHelpers.js';
  *
  * @param {*} param0
  */
-export function Media({
-    url,
+export function Media(
     record,
-    options,
-    layoutClasses,
-    className,
-    attrs,
-}) {
+    className
+) {
 
     let contentUrl = h.getValue(record, 'contentUrl')
 
-        if(!contentUrl){
-            return ''
-        }
+    if(!contentUrl){
+        return ''
+    }
 
-        
+
+    let poster = ''
+
     if (h.record_type(record) == 'VideoObject') {
-        
-        let poster = h.getValue(record, 'thumbnailUrl');
 
-        
+        return MediaVideo(record, className)
+    }
 
-        return `  
+    return MediaImage(record, className)
         
+        
+}
 
-                <video class="w-full min-w-64 h-auto max-w-full " controls loop poster="${poster}">
+
+
+export function MediaVideo(record, className){
+
+    let contentUrl = h.getValue(record, 'contentUrl')
+
+    if(!contentUrl){
+        return ''
+    }
+
+    let poster = ''
+
+    return `
+    
+            <video class="w-full min-w-64 h-auto max-w-full " controls loop poster="${poster || ""}">
                     <source src="${contentUrl}" onerror="this.style.display='none';" type="video/mp4">
                 
                 Your browser does not support the video tag.
-                </video>
-           
-            
-        `;
+            </video>
+    
+    `
+
+}
+
+export function MediaImage(record, className){
+
+    let contentUrl = h.getValue(record, 'contentUrl')
+
+    if(!contentUrl){
+        return ''
     }
 
-    return `
-        
-                    <div class="block-media  ">
 
-          
-                ${components.ImageModal({ src: h.getImageUrl(record), alt: h.getImageName(record) })}
-         
-                    </div>
+    return components.Modal(
 
-        `;
+
+        components.ImageModal(contentUrl)
+
+    )
+    
+
 }
