@@ -91,109 +91,122 @@ function defineActionsForItemList(record, url) {
 }
 
 function defineActionsForAction(record, url) {
-    let newValue;
-    if (!h.getValue(record, 'actionStatus')) {
-        newValue = {
-            actionStatus: 'PotentialActionStatus',
-            startTime: '',
-            endTime: '',
-        };
-        record = addPropertyUpdateAction(
-            record,
-            url,
-            newValue,
-            'Set Potential',
-        );
+    
+    let startTime = h.getValue(record, 'startTime')
+    let endTime = h.getValue(record, 'endTime')
 
-        newValue = {
-            actionStatus: 'ActiveActionStatus',
-            startTime: new Date(),
-            endTime: '',
-        };
-        record = addPropertyUpdateAction(record, url, newValue, 'Set Active');
+    let actionStatus = h.getValue(record, 'actionStatus')
 
-        newValue = {
-            actionStatus: 'CompletedActionStatus',
-            startTime: new Date(),
-            endTime: new Date(),
-        };
-        record = addPropertyUpdateAction(
-            record,
-            url,
-            newValue,
-            'Set Completed',
-        );
+    if (!actionStatus) {
+        
+        record = addSetPotentialActionStatus(record, url)
+        record = addSetActiveActionStatus(record, url)
+        record = addSetCompletedActionStatus(record, url)
+        record = addSetFailedActionStatus(record, url)
 
-        newValue = {
-            actionStatus: 'FailedActionStatus',
-            startTime: new Date(),
-            endTime: new Date(),
-        };
-        record = addPropertyUpdateAction(record, url, newValue, 'Set Failed');
     }
 
     if (h.isPotential(record)) {
-        newValue = {
-            actionStatus: 'ActiveActionStatus',
-            startTime: new Date(),
-            endTime: '',
-        };
-        record = addPropertyUpdateAction(record, url, newValue, 'Set Active');
-
-        newValue = {
-            actionStatus: 'CompletedActionStatus',
-            startTime: new Date(),
-            endTime: new Date(),
-        };
-        record = addPropertyUpdateAction(
-            record,
-            url,
-            newValue,
-            'Set Completed',
-        );
-
-        newValue = {
-            actionStatus: 'FailedActionStatus',
-            startTime: new Date(),
-            endTime: new Date(),
-        };
-        record = addPropertyUpdateAction(record, url, newValue, 'Set Failed');
+        record = addSetActiveActionStatus(record, url)
+        record = addSetCompletedActionStatus(record, url)
+        record = addSetFailedActionStatus(record, url)
     }
 
     if (h.isActive(record)) {
-        newValue = {
-            actionStatus: 'CompletedActionStatus',
-            startTime: new Date(),
-            endTime: new Date(),
-        };
-        record = addPropertyUpdateAction(
-            record,
-            url,
-            newValue,
-            'Set Completed',
-        );
 
-        newValue = {
-            actionStatus: 'FailedActionStatus',
-            startTime: new Date(),
-            endTime: new Date(),
-        };
-        record = addPropertyUpdateAction(record, url, newValue, 'Set Failed');
+      
+        record = addSetCompletedActionStatus(record, url)
+        record = addSetFailedActionStatus(record, url)
     }
 
     return record;
 }
 
-function addPropertyUpdateAction(record, url, newValues, name) {
-    name = name || `Set ${propertyID} ${value}`;
 
-    newValues['@id'] = h.record_id(record);
+function addSetPotentialActionStatus(record, url){
+
+     
+    let startTime = h.getValue(record, 'startTime')
+    let endTime = h.getValue(record, 'endTime')
+
+    record = addPropertyUpdateAction(record, url, 'actionStatus', 'PotentialActionStatus')
+    record = addPropertyUpdateAction(record, url, 'startTime', '')
+    record = addPropertyUpdateAction(record, url, 'endTime', '')
+    record = addPropertyUpdateAction(record, url, 'error', '')
+
+   
+
+    return record
+
+}
+
+
+function addSetActiveActionStatus(record, url){
+
+     
+    let startTime = h.getValue(record, 'startTime')
+    let endTime = h.getValue(record, 'endTime')
+
+    record = addPropertyUpdateAction(record, url, 'actionStatus', 'ActiveActionStatus')
+    record = addPropertyUpdateAction(record, url, 'startTime', startTime ?? new Date())
+    record = addPropertyUpdateAction(record, url, 'endTime', '')
+    record = addPropertyUpdateAction(record, url, 'error', '')
+
+
+    return record
+
+}
+
+
+function addSetCompletedActionStatus(record, url){
+
+     
+    let startTime = h.getValue(record, 'startTime')
+    let endTime = h.getValue(record, 'endTime')
+
+    record = addPropertyUpdateAction(record, url, 'actionStatus', 'CompletedActionStatus')
+    record = addPropertyUpdateAction(record, url, 'startTime', startTime ?? new Date())
+    record = addPropertyUpdateAction(record, url, 'endTime', endTime ?? new Date())
+    record = addPropertyUpdateAction(record, url, 'error', '')
+
+
+    return record
+
+}
+
+function addSetFailedActionStatus(record, url){
+
+     
+    let startTime = h.getValue(record, 'startTime')
+    let endTime = h.getValue(record, 'endTime')
+
+    record = addPropertyUpdateAction(record, url, 'actionStatus', 'FailedActionStatus')
+    record = addPropertyUpdateAction(record, url, 'startTime', startTime ?? new Date())
+    record = addPropertyUpdateAction(record, url, 'endTime', endTime ?? new Date())
+    record = addPropertyUpdateAction(record, url, 'error', '')
+
+
+    return record
+
+}
+
+
+
+function addPropertyUpdateAction(record, url, propertyID, values, name) {
+
+    name = name || `Set ${propertyID} ${String(values).slice(0, 50)}`;
+
 
     let actionRecord = {
         '@type': 'UpdateAction',
         "@id": h.randomUUID(),
         name: name,
-        object: newValues,
+        object: {
+            "@type": "PropertyValue",
+            "@id": h.randomUUID(),
+            'propertyID': propertyID, 
+            'value': values
+        },
         targetCollection: h.ref(record),
         url: url,
     };
