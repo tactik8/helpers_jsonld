@@ -186,6 +186,7 @@ function addPropertyUpdateAction(record, url, newValues, name) {
 
     let actionRecord = {
         '@type': 'UpdateAction',
+        "@id": h.randomUUID(),
         name: name,
         object: newValues,
         targetCollection: h.ref(record),
@@ -202,6 +203,7 @@ function addMoveUpAction(record, itemList, url, name) {
 
     let actionRecord = {
         '@type': 'MoveUpAction',
+        "@id": h.randomUUID(),
         name: name,
         object: h.ref(record),
         targetCollection: h.ref(itemList),
@@ -218,6 +220,7 @@ function addMoveDownAction(record, itemList, url, name) {
 
     let actionRecord = {
         '@type': 'MoveDownAction',
+        "@id": h.randomUUID(),
         name: name,
         object: h.ref(record),
         targetCollection: h.ref(itemList),
@@ -234,6 +237,7 @@ function addDeleteAction(record, itemList, url, name) {
 
     let actionRecord = {
         '@type': 'DeleteAction',
+        "@id": h.randomUUID(),
         name: name,
         object: h.ref(record),
         targetCollection: h.ref(itemList),
@@ -250,6 +254,7 @@ function addDuplicateAction(record, itemList, url, name) {
 
     let actionRecord = {
         '@type': 'DuplicateAction',
+        "@id": h.randomUUID(),
         name: name,
         object: h.ref(record),
         targetCollection: h.ref(itemList),
@@ -266,6 +271,7 @@ function addAppendAction(itemList, record, url, name) {
 
     let actionRecord = {
         '@type': 'AppendAction',
+        "@id": h.randomUUID(),
         name: name,
         object: record,
         targetCollection: h.ref(itemList),
