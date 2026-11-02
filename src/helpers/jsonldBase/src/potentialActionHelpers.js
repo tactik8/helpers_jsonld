@@ -1,6 +1,9 @@
 import { jsonldBase as h } from '../jsonldBase.js';
 
 
+export function add(record, url) {
+    return addPotentialActions(record, url) 
+}
 
 export function addPotentialActions(record, url) {
     // Handle null
@@ -36,6 +39,7 @@ export function addPotentialActions(record, url) {
         record = defineActionsForItemList(record, url);
     }
 
+
     //
 
     // Iterate properties
@@ -56,7 +60,7 @@ function defineActionsForItemList(record, url) {
     let numberOfItems = h.getValues(record, 'numberOfItems');
 
     for (let i = 0; i < listItems.length; i++) {
-        let position = h.getValue(listItems[i], 'position');
+        let position = h.getPosition(listItems[i]);
         if (position > 0) {
             listItems[i] = addMoveUpAction(listItems[i], record, url);
         }
@@ -69,6 +73,9 @@ function defineActionsForItemList(record, url) {
 
         listItems[i] = addDuplicateAction(listItems[i], record, url);
     }
+
+
+    record = h.setValues(record, 'itemListElement', listItems)
 
 
     let newRecord = {"@type": "Thing", "@id": '_h:' + h.randomUUID(), 'name': 'new record'}
