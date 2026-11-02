@@ -317,17 +317,19 @@ export class DB {
      * Replaces each ref of a record by the value from database
      * @param {*} value
      */
-    updateRefs(value, listOfRecordIDsFetched = {}) {
+    updateRefs(value, listOfRecordIDsFetched = {}, circularIDs = {}) {
 
         if(!value){ return value}
 
         if (h.isArray(value)) {
             return value.map((x) =>
-                this.updateRefs(x, listOfRecordIDsFetched),
+                this.updateRefs(x, listOfRecordIDsFetched, circularIDs),
             );
         }
 
         if (h.isObject(value)) {
+
+            
             if (h.isRef(value)) {
                 // check if already in cache
                 if (listOfRecordIDsFetched?.[h.record_id(value)]) {
@@ -339,11 +341,17 @@ export class DB {
 
                 // store in cache
                 listOfRecordIDsFetched[h.record_id(value)] = value;
+            } else {
+                if (circularIDs?.[h.record_id(value)]) {
+                    return value
+                }
+
+                circularIDs[h.record_id(value)] = value
             }
             // iterate keys
             for (let k of Object.keys(value)) {
                 if(['previousItem', 'nextItem'].includes(k)){ continue }
-                value[k] = this.updateRefs(value[k], listOfRecordIDsFetched);
+                value[k] = this.updateRefs(value[k], listOfRecordIDsFetched, circularIDs);
             }
 
             return value;
