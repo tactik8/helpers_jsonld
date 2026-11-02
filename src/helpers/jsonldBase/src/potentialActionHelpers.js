@@ -11,6 +11,11 @@ export function addPotentialActions(record, url) {
         return record;
     }
 
+
+    if(typeof record == "string"){
+        return record
+    }
+
     // Handle array
     if (h.isArray(record)) {
         return record.map((x) => addPotentialActions(x, url));
