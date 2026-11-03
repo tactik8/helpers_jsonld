@@ -9,7 +9,6 @@ import { htmlHelpers } from './htmlHelpers/htmlHelpers.js';
 import { formatHelpers } from './formatHelpers/formatHelpers.js';
 import { records } from './sampleRecords/records.js';
 import { datapointHelpers } from './datapointHelpers/datapointHelpers.js';
-import { potentialActionHelpers } from './potentialActionHelpers/potentialActionHelpers.js';
 export { records } from './sampleRecords/records.js';
 export { transformHelpers } from './transformHelpers/transformHelpers.js';
 
@@ -51,7 +50,6 @@ export const _h = {
     datapointHelpers: datapointHelpers,
     format: formatHelpers,
     html: htmlHelpers, // HTML Templates for jsonld records
-    potentialAction: potentialActionHelpers, // Adds potential actions to record and execute
 };
 
 export const helpers = _h;
