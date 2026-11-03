@@ -381,20 +381,30 @@ export class DB {
         let db = new h.DB()
         db.set(actions)
 
-        let results = []
+        let executedActions = []
         for (let a of actions) {
             // Refresh values with ones from database
             a = db.get(a)
             
             a = h.execute(a);
           
-            results.push(a)
+            executedActions.push(a)
+
+            // store sub action results (parts)
+            let parts = h.getValues(a, 'hasPart')
+            for (let p of parts) {
+                let l = h.list.toItemList(p)
+                let items= h.list.getItems(l)
+                items.forEach(x => db.set(h.getResults(x)))
+            }
+
+
             db.set(h.getResults(a))
         }
 
         this.set(db.getAll());
 
-        return results.length == 1 ? results[0] : results;
+        return executedActions.length == 1 ? executedActions[0] : executedActions;
     }
 
     // ------------------------------------------------------------

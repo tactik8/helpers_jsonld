@@ -134,7 +134,12 @@ export function setItemListElement(itemList, values) {
     values = ensurePreviousNextItem(values)
 
     itemList =  h.setValues(itemList, 'itemListElement', values);
-    itemList = h.setValue(itemList, 'numberOfItems', values.length)
+
+    // Update nbOfItems if changed
+    let nbOfItems = h.getValue(itemList, 'numberOfItems')
+    if(nbOfItems != values.length){
+        itemList = h.setValue(itemList, 'numberOfItems', values.length)
+    }
 
     return itemList
 }
@@ -989,6 +994,17 @@ export function setItems(items, itemsToAdd){
 
 
 
+
+
+export function getListItems(itemList){
+
+    return getItemListElement(listItems)
+
+}
+
+
+
+
 /**
  * Get item value
  * @param {*} listItem
@@ -1008,4 +1024,42 @@ export function getItem(listItem) {
  */
 export function setItem(listItem, value) {
     return h.setValue(listItem, 'item', value);
+}
+
+
+export function updateItem(itemList, listItemRef, newItem){
+
+    let listItem = findByListItem(itemList, listItemRef)
+
+    listItem = h.setValue(listItem, 'item', newItem)
+
+
+
+}
+
+
+/**
+ * Replace the item value of a listItem 
+ * @param {*} itemList 
+ * @param {*} listItemRef 
+ * @param {*} newItem 
+ * @returns 
+ */
+export function replaceItem(itemList, listItemRef, newItem){
+    
+    let listItems = getItemListElement(itemList)
+
+    let record_id = h.toRecordID(listItemRef)
+
+    for(let i =0; i < listItems.length; i ++ ){
+        let l = listItems[i]
+        if(h.record_id(l) == record_id){
+            listItems[i] = h.setItem(l, newItem)
+        }
+    }
+
+    itemList = setItemListElement(listItems)
+
+    return itemList
+
 }

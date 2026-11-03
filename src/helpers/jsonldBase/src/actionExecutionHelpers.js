@@ -1,7 +1,8 @@
 import { jsonldBase as h } from '../jsonldBase.js';
 
 /**
- * Execute sequentially, using the value from the previous step as starting point
+ * Execute sequentially, using the value from the previous step as starting point.
+ * If hasPart, assumes only a container and executes sub actions sequentially, returning result from last action
  * @param {*} action 
  * @returns 
  */
@@ -24,6 +25,60 @@ export function execute(action) {
         return newActions
         
     }
+
+    // Handle subparts
+    let parts = h.getValues(action, 'hasPart')
+
+    if(parts.length > 0){
+
+        // handle itemLists
+        let itemLists = parts.map(x => h.list.toItemList(x))
+
+        // if itemList
+        let db = new h.DB()
+        db.set(itemLists)
+        let newItemLists = []
+        
+        // Iterate itemLists
+        let lastAction
+        let isFailed = false
+        for(let i of itemLists){
+
+            let listItems = h.list.getItemListElement(i)
+
+            // Iterate items
+            for(let li of listItems){
+
+                a = h.getItem(li)
+                a = db.get(a)
+
+                // skip if previous step failed
+                if(isFailed == true){
+                    a = h.setFailed(a, 'Previous step failed')
+                    i = h.list.replaceItem(i, li, lastAction)
+                }
+
+                if(isFailed == false){
+                    lastAction = execute(a)
+                    isFailed = h.isFailed(lastAction)
+                    i = h.list.replaceItem(i, li, lastAction)
+                    db.set(h.getResults(lastAction))
+                }
+            }
+
+            newItemLists.push(i)
+        }
+       
+        action = h.setValues(action, 'hasPart', newItemLists)
+
+        let resultsFromLastAction = h.getResults(lastAction)
+        // Set results from last action as result from this action
+        action = h.setCompleted(action, resultsFromLastAction )
+        return action
+    }
+
+
+
 
     //
     let record_type = h.record_type(action);

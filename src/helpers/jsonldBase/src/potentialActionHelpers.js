@@ -59,7 +59,7 @@ export function addPotentialActions(record, url) {
 // Action records
 // --------------------------------------------------------------
 
-function defineActionsForItemList(record, url) {
+export function defineActionsForItemList(record, url) {
     // Add for listItems
     let listItems = h.getValues(record, 'itemListElement');
     let numberOfItems = h.getValues(record, 'numberOfItems');
@@ -90,7 +90,7 @@ function defineActionsForItemList(record, url) {
     return record;
 }
 
-function defineActionsForAction(record, url) {
+export function defineActionsForAction(record, url) {
     
     let startTime = h.getValue(record, 'startTime')
     let endTime = h.getValue(record, 'endTime')
@@ -123,7 +123,7 @@ function defineActionsForAction(record, url) {
 }
 
 
-function addSetPotentialActionStatus(record, url){
+export function addSetPotentialActionStatus(record, url){
 
      
     let startTime = h.getValue(record, 'startTime')
@@ -134,14 +134,12 @@ function addSetPotentialActionStatus(record, url){
     record = addPropertyUpdateAction(record, url, 'endTime', '')
     record = addPropertyUpdateAction(record, url, 'error', '')
 
-   
-
     return record
 
 }
 
 
-function addSetActiveActionStatus(record, url){
+export function addSetActiveActionStatus(record, url){
 
      
     let startTime = h.getValue(record, 'startTime')
@@ -158,7 +156,7 @@ function addSetActiveActionStatus(record, url){
 }
 
 
-function addSetCompletedActionStatus(record, url){
+export function addSetCompletedActionStatus(record, url){
 
      
     let startTime = h.getValue(record, 'startTime')
@@ -174,9 +172,8 @@ function addSetCompletedActionStatus(record, url){
 
 }
 
-function addSetFailedActionStatus(record, url){
+export function addSetFailedActionStatus(record, url){
 
-     
     let startTime = h.getValue(record, 'startTime')
     let endTime = h.getValue(record, 'endTime')
 
@@ -185,14 +182,24 @@ function addSetFailedActionStatus(record, url){
     record = addPropertyUpdateAction(record, url, 'endTime', endTime ?? new Date())
     record = addPropertyUpdateAction(record, url, 'error', '')
 
-
     return record
 
 }
 
 
 
-function addPropertyUpdateAction(record, url, propertyID, values, name) {
+
+export function addPropertyUpdateAction(record, url, propertyID, values, name) {
+
+    let actionRecord = getPropertyUpdateAction(record, url, propertyID, values, name)
+
+    record = h.addValue(record, 'potentialAction', actionRecord);
+
+    return record;
+}
+
+
+export function getPropertyUpdateAction(record, url, propertyID, values, name) {
 
     name = name || `Set ${propertyID} ${String(values).slice(0, 50)}`;
 
@@ -211,12 +218,20 @@ function addPropertyUpdateAction(record, url, propertyID, values, name) {
         url: url,
     };
 
+
+    return actionRecord;
+}
+
+
+export function addMoveUpAction(record, itemList, url, name) {
+
+    let actionRecord = getMoveUpAction(record, itemList, url, name)
     record = h.addValue(record, 'potentialAction', actionRecord);
 
     return record;
 }
 
-function addMoveUpAction(record, itemList, url, name) {
+export function getMoveUpAction(record, itemList, url, name) {
     name = name || 'Move up';
 
     let actionRecord = {
@@ -228,12 +243,22 @@ function addMoveUpAction(record, itemList, url, name) {
         url: url,
     };
 
+   
+    return actionRecord;
+}
+
+
+
+export function addMoveDownAction(record, itemList, url, name) {
+
+    let actionRecord = etMoveDownAction(record, itemList, url, name)
+
     record = h.addValue(record, 'potentialAction', actionRecord);
 
     return record;
 }
 
-function addMoveDownAction(record, itemList, url, name) {
+export function getMoveDownAction(record, itemList, url, name) {
     name = name || 'Move down';
 
     let actionRecord = {
@@ -245,12 +270,21 @@ function addMoveDownAction(record, itemList, url, name) {
         url: url,
     };
 
+
+    return actionRecord;
+}
+
+
+export function addDeleteAction(record, itemList, url, name) {
+
+    let actionRecord =  getDeleteAction(record, itemList, url, name)
+
     record = h.addValue(record, 'potentialAction', actionRecord);
 
     return record;
 }
 
-function addDeleteAction(record, itemList, url, name) {
+export function getDeleteAction(record, itemList, url, name) {
     name = name || 'Delete';
 
     let actionRecord = {
@@ -262,12 +296,20 @@ function addDeleteAction(record, itemList, url, name) {
         url: url,
     };
 
+
+    return actionRecord;
+}
+
+export function addDuplicateAction(record, itemList, url, name) {
+
+    let actionRecord = getDuplicateAction(record, itemList, url, name)
+
     record = h.addValue(record, 'potentialAction', actionRecord);
 
     return record;
 }
 
-function addDuplicateAction(record, itemList, url, name) {
+export function getDuplicateAction(record, itemList, url, name) {
     name = name || 'Duplicate';
 
     let actionRecord = {
@@ -279,12 +321,21 @@ function addDuplicateAction(record, itemList, url, name) {
         url: url,
     };
 
-    record = h.addValue(record, 'potentialAction', actionRecord);
 
-    return record;
+    return actionRecord;
 }
 
-function addAppendAction(itemList, record, url, name) {
+export function addAppendAction(itemList, record, url, name) {
+
+    let actionRecord = getAppendAction(itemList, record, url, name)
+
+    itemList = h.addValue(itemList, 'potentialAction', actionRecord);
+
+    return itemList;
+}
+
+
+export function getAppendAction(itemList, record, url, name) {
     name = name || 'Duplicate';
 
     let actionRecord = {
@@ -296,7 +347,6 @@ function addAppendAction(itemList, record, url, name) {
         url: url,
     };
 
-    itemList = h.addValue(itemList, 'potentialAction', actionRecord);
 
-    return itemList;
+    return actionRecord;
 }
