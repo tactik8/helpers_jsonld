@@ -37,10 +37,12 @@ export function clean(value, baseUrl) {
     // Clone
     try {
         value = clone(value);
-    } catch (err) {}
+    } catch  {
+        //
+    }
 
     // Set id
-    value = setTempID(value);
+    value = recordIDHelpers.setTempID(value);
 
     // Flatten
     let flatRecords = h.flatten(value);
@@ -243,12 +245,14 @@ export function clone(value) {
     try {
         value = structuredClone(value);
         return value;
-    } catch {}
+    } catch { // 
+        }
 
     try {
         value = JSON.parse(JSON.stringify(value));
         return value;
-    } catch {}
+    } catch { // 
+        }
 
     return value;
 }
@@ -331,7 +335,7 @@ export function getRecordUrl(record, baseUrl) {
             baseUrl,
             encodeURIComponent(h.record_id(record)),
         );
-    } catch (err) {
+    } catch {
         console.log('Err getRecordUrl');
         return '';
     }

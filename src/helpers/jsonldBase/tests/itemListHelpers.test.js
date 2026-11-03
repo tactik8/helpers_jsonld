@@ -1,7 +1,6 @@
 import {
     isItemList,
     toItemList,
-    clean,
     getItemListElement,
     setItemListElement,
     insert,
@@ -17,8 +16,6 @@ import {
     sort,
     find,
     findByPosition,
-    findByListItem,
-    findByItem,
     getPosition,
     setPosition,
     incrementPositions,
@@ -30,6 +27,7 @@ import {
     getItem,
     setItem
 } from '../src/itemListHelpers.js';
+import {  describe, beforeEach, test, expect } from '@jest/globals'
 
 
 describe('JSON-LD ItemList & ListItem Utilities', () => {

@@ -2,10 +2,6 @@
 
 
 import { jsonldBase as h } from '../jsonldBase.js'
-import { toArray } from './utilitiesHelpers.js'
-
-
-
 
 /**
  * Dedupes a list containing objects, values, etc. Merge duplicates by default
@@ -290,7 +286,7 @@ export function filter(items, filter, orderBy, orderDirection, limit, offset) {
 
     //
     if (items.length == 0) {
-        return itemList
+        return items
     }
 
     // filter items
@@ -315,7 +311,7 @@ export function filter(items, filter, orderBy, orderDirection, limit, offset) {
     limit = h.toNumber(limit)
     if (h.isNumber(limit)) {
         if (items.length >= limit) {
-            items = slice(0, limit)
+            items = items.slice(0, limit)
         }
     }
 

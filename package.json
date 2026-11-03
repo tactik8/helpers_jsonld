@@ -19,16 +19,20 @@
     "build": "rm -rf dist && rm -rf distCore && npm run build:cjs && npm run build:esm && npm run build:core",
     "build:cjs": "esbuild src/index.js --bundle --packages=external --sourcemap --minify --platform=node --format=cjs --outfile=dist/index.cjs",
     "build:esm": "esbuild src/index.js --bundle --packages=external --sourcemap --minify --platform=node --format=esm --outfile=dist/index.js",
-    "build:core":"esbuild src/indexCore.js --bundle --packages=external --sourcemap --minify --platform=node --format=esm --outfile=public/jsonldCore.js",
+    "build:core": "esbuild src/indexCore.js --bundle --packages=external --sourcemap --minify --platform=node --format=esm --outfile=public/jsonldCore.js",
     "dev": "node src/dev.js",
     "start": "node dist/index.js",
-    "server": "nodemon ./server.js"
+    "server": "nodemon ./server.js",
+    "lint": "eslint ."
   },
   "keywords": [],
   "author": "Tactik8",
   "license": "ISC",
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "esbuild": "^0.25.0",
+    "eslint": "^10.14.0",
+    "globals": "^17.14.0",
     "jest": "^30.4.2",
     "nodemon": "^3.1.14"
   },

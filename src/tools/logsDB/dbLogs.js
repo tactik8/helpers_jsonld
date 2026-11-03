@@ -46,7 +46,7 @@ export class DbLogs {
         indexDBContent = indexDBContent ?? [];
         try {
             this.indexDB = JSON.parse(indexDBContent);
-        } catch (err) {
+        } catch  {
             this.indexDB = [];
         }
 
@@ -57,6 +57,7 @@ export class DbLogs {
         await this.init();
 
         let indexDBContent = JSON.stringify(this.indexDB, null, 4);
+        // eslint-disable-next-line no-unused-vars
         let r = await diskHelpers.save(
             this.dbpath,
             this.indexFilename,
@@ -120,8 +121,8 @@ export class DbLogs {
         let filename = urlToFilename(action.record_id);
         let content = JSON.stringify(action.record, null, 4);
 
-        let r = await diskHelpers.save(this.dbpath, filename, content);
-        let r2 = await this.sync();
+        await diskHelpers.save(this.dbpath, filename, content);
+        await this.sync();
 
         return;
     }
@@ -158,9 +159,13 @@ export class DbLogs {
         return await this.set(record);
     }
 
-    get actions() {}
+    get actions() {
+        return undefined
+    }
 
-    get activeActions() {}
+    get activeActions() {
+        return undefined
+    }
 }
 
 /**

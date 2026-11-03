@@ -5,12 +5,12 @@ import { jsonldBase as h} from '../../../../../jsonldBase/jsonldBase.js'
 
 
 
-export function Modal(content, className, modalID){
+export function Modal(content, className){
 
 
     return `
      <div 
-      class="w-full transition-all hover:border-ring/50 focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2" 
+      class="w-full transition-all hover:border-ring/50 focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 ${className || ""}" 
       
     >
         ${content || ""}

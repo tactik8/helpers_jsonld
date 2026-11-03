@@ -1,5 +1,4 @@
 import { dotHelpers as dot } from '../../dotHelpers/dotHelpers.js';
-import { ValueRecordType } from '../../htmlHelpers/src/shadcn/blocks/src/value.js';
 import { jsonldBase as h } from '../jsonldBase.js';
 
 export class DB {
@@ -154,7 +153,7 @@ export class DB {
     }
 
     getRecords(expand = false) {
-        return getRecords(this._store, undefined, false);
+        return getRecords(this._store, undefined, expand);
     }
 
     get record_ids() {
@@ -304,7 +303,7 @@ export class DB {
      * @param {*} defaultValue
      */
     getRecord(value, expand = true, defaultValue = undefined) {
-        let record = this.get(value);
+        let record = this.get(value, expand);
 
         if (!record || h.isRef(record)) {
             return defaultValue;
@@ -489,7 +488,9 @@ export class DB {
     async _broadcastItem(callbackFn, record) {
         try {
             return callbackFn(record);
-        } catch (err) {}
+        } catch {
+            return
+        }
     }
 
     // ------------------------------------------------------------
@@ -616,7 +617,7 @@ export function postRecord(store, value) {
 /**
  *
  */
-export function patchRecord(store, value, skipDuplicates = true) {
+export function patchRecord(store, value) {
     value = h.clone(value);
 
     // Assign Id. if missing or wrong
@@ -707,7 +708,7 @@ export function getRecords(store, filters, expandFlag = true) {
     return records;
 }
 
-function deleteRecord(store, record_or_id) {
+export function deleteRecord(store, record_or_id) {
     let record_id = h._utilGetId(record_or_id);
 
     let storeRecord = _storeToMap(store);
@@ -719,7 +720,7 @@ function deleteRecord(store, record_or_id) {
     return store;
 }
 
-function length(store) {
+export function length(store) {
     let storeRecord = _storeToMap(store);
     return storeRecord.size;
 }

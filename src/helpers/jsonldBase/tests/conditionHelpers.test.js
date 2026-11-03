@@ -1,4 +1,6 @@
 import { evaluate } from '../src/conditionHelpers.js';
+import {  describe,  it, expect } from '@jest/globals'
+
 
 describe('conditionHelpers', () => {
   const record = {

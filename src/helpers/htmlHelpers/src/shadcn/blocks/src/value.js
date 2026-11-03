@@ -56,18 +56,21 @@ export function ValueRecordType(value, propertyID, baseUrl) {
    
 }
 
+// eslint-disable-next-line no-unused-vars
 export function ValueArray(value, propertyID, baseUrl) {
     let pv = value.length > 0 ? `(${value.length})` : '';
     return wrapValue(pv, propertyID);
 
 }
 
+// eslint-disable-next-line no-unused-vars
 export function ValueUrl(value, propertyID, baseUrl) {
     let pv = `<a title="${value}" href="${value}" target="_blank" rel="noopener noreferrer">${value}</a>`;
     return wrapValue(pv, propertyID);
 }
 
 
+// eslint-disable-next-line no-unused-vars
 export function ValueDateTime(value, propertyID, baseUrl) {
     value = h.toDate(value);
     let pv = dataHelpers.date.format(value);
@@ -76,11 +79,13 @@ export function ValueDateTime(value, propertyID, baseUrl) {
    
 
 
+// eslint-disable-next-line no-unused-vars
 export function ValueDuration(value, propertyID, baseUrl) {
-    return dataHelpers.duration.format(pv.value);
+    return dataHelpers.duration.format(value);
 
 }
 
+// eslint-disable-next-line no-unused-vars
 export function ValueNumber(value, propertyID, baseUrl) {
     let nbOfDecimals = propertyID == 'position' ? 0 : 2;
     value = h.toNumber(value);
@@ -89,6 +94,7 @@ export function ValueNumber(value, propertyID, baseUrl) {
 }
 
 
+// eslint-disable-next-line no-unused-vars
 export function ValueText(value, propertyID, baseUrl) {
     return wrapValue(value, propertyID);
 }
@@ -106,40 +112,39 @@ export function ValueThing(value, propertyID, baseUrl) {
 
 }
 
+// eslint-disable-next-line no-unused-vars
 export function ValueMonetaryAmount(value, propertyID, baseUrl) {
     //
-    let v = dataHelpers.toNumber(h.getValue(pv.value, 'value'));
+    let v = dataHelpers.toNumber(h.getValue(value, 'value'));
     if (v === undefined) {
-        return pv;
+        return v;
     }
 
     // Ensure number
     let fv = dataHelpers.number.format(v, 2);
 
     // Retireve and format currency
-    let currency = h.getValue(record, 'currency');
+    let currency = h.getValue(value, 'currency');
     currency = (currency || '').toUpperCase();
 
     // Set html value
-    pv.htmlValue = currency + ' ' + '$' + fv;
+    let htmlValue = currency + ' ' + '$' + fv;
     if (currency == 'USD') {
-        pv.htmlValue = currency + ' ' + '$' + fv;
+        htmlValue = currency + ' ' + '$' + fv;
     }
     if (currency == 'CAD') {
-        pv.htmlValue = currency + ' ' + '$' + fv;
+        htmlValue = currency + ' ' + '$' + fv;
     }
     if (currency == 'EUR') {
-        pv.htmlValue = currency + ' ' + fv + ' ' + '€';
+        htmlValue = currency + ' ' + fv + ' ' + '€';
     }
     if (currency == 'GBP') {
-        pv.htmlValue = currency + ' ' + fv + ' ' + '£';
+        htmlValue = currency + ' ' + fv + ' ' + '£';
     }
 
-    // Set alignment
-    pv.table.className = 'text-right font-mono';
-    pv.record.className = 'text-right font-mono';
 
-    return wrapValue(pv, propertyID);
+
+    return wrapValue(htmlValue, propertyID);
 }
 
 

@@ -1,4 +1,6 @@
 import { isJsonld, isValid, clean, clone, patch } from '../src/objectHelpers.js';
+import {  describe,  it, expect } from '@jest/globals'
+
 
 describe('objectHelpers', () => {
   describe('isJsonld & isValid', () => {

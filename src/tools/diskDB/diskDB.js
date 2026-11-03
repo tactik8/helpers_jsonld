@@ -68,6 +68,7 @@ export class DiskDB {
             let c = JSON.stringify(record, null, 4);
             let record_id = _h.record_id(record);
             let f = urlToFilename(record_id);
+            // eslint-disable-next-line no-unused-vars
             let r = await disk.save(this.path, f, c);
 
             action.setCompleted(record);
@@ -100,6 +101,7 @@ export class DiskDB {
                 let c = JSON.stringify(record, null, 4);
                 let record_id = _h.record_id(record);
                 let f = urlToFilename(record_id);
+                // eslint-disable-next-line no-unused-vars
                 let r = await disk.save(this.path, f, c);
 
                 a.setCompleted(record);
@@ -280,6 +282,7 @@ export class DiskDB {
         // Delete file
         try {
             let filename = urlToFilename(record_id);
+            // eslint-disable-next-line no-unused-vars
             let r = await disk.file.delete(this.path, filename);
             action.setCompleted();
             return action.record;
@@ -298,6 +301,7 @@ export class DiskDB {
         let action = new things.Action('Purge database');
 
         try {
+            // eslint-disable-next-line no-unused-vars
             let r = await disk.dir.delete(this.path);
             action.setCompleted();
             return action.record;
@@ -306,7 +310,7 @@ export class DiskDB {
             return action.record;
         }
 
-        return;
+        
     }
 }
 
@@ -327,55 +331,4 @@ function filenameToUrl(filename) {
     if (!filename || filename === 'unnamed-file.json') return '';
     const nameWithoutExt = filename.replace(/\.json$/, '');
     return Buffer.from(nameWithoutExt, 'base64url').toString('utf-8');
-}
-
-/**
- * Converts any URL or path string into a safe, valid filename.
- * @param {string} url - The URL or string to process.
- * @param {number} [maxLength=200] - Optional max character limit.
- * @returns {string} Safe filename string.
- */
-function urlToFilenameOLD(url, maxLength = 200) {
-    if (typeof url !== 'string' || !url.trim()) {
-        return 'unnamed-file';
-    }
-
-    let result = url.trim();
-
-    // 1. Remove literal "undefined" or "null" substrings created by prior operations
-    result = result.replace(/(undefined|null)/gi, '');
-
-    // 2. Strip protocol (http://, https://, file://, etc.)
-    result = result.replace(/^[a-z]+:\/\//i, '');
-
-    // 3. Remove accent diacritics
-    result = result.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-
-    // 4. Convert all non-alphanumeric chars (except dots and hyphens) to dashes
-    result = result.replace(/[^a-zA-Z0-9.-]/g, '-');
-
-    // 5. Clean up redundant, leading, and trailing characters
-    result = result
-        .replace(/--+/g, '-') // Collapse multiple hyphens
-        .replace(/\.\.+/g, '.') // Collapse multiple dots
-        .replace(/^[-.]+|[-.]+$|\.$/g, ''); // Strip leading/trailing dots and hyphens
-
-    // 6. Handle edge cases
-    if (!result) {
-        return 'unnamed-file';
-    }
-
-    // 7. Enforce max length limit while preserving file extension if present
-    if (result.length > maxLength) {
-        const extIndex = result.lastIndexOf('.');
-        if (extIndex > result.length - 10 && extIndex > 0) {
-            const ext = result.slice(extIndex);
-            result = result.slice(0, maxLength - ext.length) + ext;
-        } else {
-            result = result.slice(0, maxLength);
-        }
-    }
-
-    result = result + '.json';
-    return result;
 }

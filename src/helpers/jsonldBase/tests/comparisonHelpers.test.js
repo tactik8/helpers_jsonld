@@ -1,5 +1,7 @@
 import { eq, isEqual } from '../src/comparisonHelpers.js';
 import { jsonldBase as h } from '../jsonldBase.js'
+import {  describe,  it, expect } from '@jest/globals'
+
 
 describe('comparisonHelpers', () => {
   describe('eq', () => {
@@ -49,16 +51,7 @@ describe('comparisonHelpers', () => {
       }
     }
 
-    const record2Full = {
-      "@type": "Thing",
-      "@id": "https://www.test.com/thing2#thing",
-      "name": "Thing2",
-      "other": {
-        "@type": "Thing",
-        "@id": "https://www.test.com/thing22#thing",
-        "name": "Thing22"
-      }
-    }
+    
       const record2Stripped = {
       "@type": "Thing",
       "@id": "https://www.test.com/thing2#thing",

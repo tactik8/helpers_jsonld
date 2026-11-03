@@ -92,8 +92,7 @@ export function defineActionsForItemList(record, url) {
 
 export function defineActionsForAction(record, url) {
     
-    let startTime = h.getValue(record, 'startTime')
-    let endTime = h.getValue(record, 'endTime')
+    
 
     let actionStatus = h.getValue(record, 'actionStatus')
 
@@ -126,9 +125,7 @@ export function defineActionsForAction(record, url) {
 export function addSetPotentialActionStatus(record, url){
 
      
-    let startTime = h.getValue(record, 'startTime')
-    let endTime = h.getValue(record, 'endTime')
-
+  
     record = addPropertyUpdateAction(record, url, 'actionStatus', 'PotentialActionStatus')
     record = addPropertyUpdateAction(record, url, 'startTime', '')
     record = addPropertyUpdateAction(record, url, 'endTime', '')
@@ -143,7 +140,6 @@ export function addSetActiveActionStatus(record, url){
 
      
     let startTime = h.getValue(record, 'startTime')
-    let endTime = h.getValue(record, 'endTime')
 
     record = addPropertyUpdateAction(record, url, 'actionStatus', 'ActiveActionStatus')
     record = addPropertyUpdateAction(record, url, 'startTime', startTime ?? new Date())
@@ -251,7 +247,7 @@ export function getMoveUpAction(record, itemList, url, name) {
 
 export function addMoveDownAction(record, itemList, url, name) {
 
-    let actionRecord = etMoveDownAction(record, itemList, url, name)
+    let actionRecord = getMoveDownAction(record, itemList, url, name)
 
     record = h.addValue(record, 'potentialAction', actionRecord);
 
@@ -277,7 +273,7 @@ export function getMoveDownAction(record, itemList, url, name) {
 
 export function addDeleteAction(record, itemList, url, name) {
 
-    let actionRecord =  getDeleteAction(record, itemList, url, name)
+    let actionRecord = getDeleteAction(record, itemList, url, name)
 
     record = h.addValue(record, 'potentialAction', actionRecord);
 

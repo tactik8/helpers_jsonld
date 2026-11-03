@@ -1,7 +1,6 @@
 import { jsonldBase as h } from '../jsonldBase.js';
 
-import * as dot from '../../dotHelpers/dotHelpers.js';
-import { getRecord } from './memoryDb.js';
+
 
 let DEFAULT_LANGUAGE = 'en-CA';
 
@@ -457,6 +456,7 @@ export function setValues(record, propertyID, value, language) {
     }
 
     // Assign value
+    // eslint-disable-next-line no-unused-vars
     let [p, n] = getPathFragment(paths[paths.length - 1]);
 
     // Ensure array
@@ -539,8 +539,10 @@ export function setAdditionalProperty(record, propertyID, value, unitText) {
         '@id': h.randomUUID(),
         propertyID: propertyID,
         value: value,
+        unitText: unitText
     };
-    record = h.addValue(record, 'additionalProperty', pv);
+    pvs.push(pv)
+    record = h.setValues(record, 'additionalProperty', pvs);
     return record;
 }
 

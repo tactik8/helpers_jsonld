@@ -184,7 +184,6 @@ async function apiPost(headers, baseUrl, path, data) {
 
         return action;
     } catch (err) {
-        console.log(url);
         console.log(err);
         action.setFailed(String(err));
         return action;

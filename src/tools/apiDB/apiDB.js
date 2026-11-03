@@ -75,7 +75,7 @@ export class ApiDB {
             // Return if complete
             if (records_in_cache) {
                 console.log('record retrieved from cache');
-                return record_in_cache;
+                return records_in_cache;
             }
 
             console.log('record not found in cache');

@@ -1,6 +1,8 @@
 import * as actionExecutionHelpers from '../src/actionExecutionHelpers.js';
 import * as potentialActionHelpers from '../src/potentialActionHelpers.js';
 import { jsonldBase as h } from '../jsonldBase.js';
+import {  describe,  it, expect } from '@jest/globals'
+
 
 let aeh = actionExecutionHelpers;
 let pah = potentialActionHelpers;
@@ -25,7 +27,6 @@ describe('actionExecutionHelpers', () => {
                 },
             };
 
-            let name = h.getName(record);
             let propertyID = 'name';
             let new_name = 'thing1_updated';
 
@@ -41,6 +42,8 @@ describe('actionExecutionHelpers', () => {
             let result = h.getResult(executed_action);
 
             expect(h.getName(result)).toBe(new_name);
+
+
         });
 
         it('set property multiple2', () => {
@@ -67,8 +70,7 @@ describe('actionExecutionHelpers', () => {
             };
 
           
-            let new_name = 'thing1_updated';
-            let new_url = 'https://www.test.com/thing1_updated';
+          
 
             let action = {
                 '@type': 'Action',
@@ -112,7 +114,6 @@ describe('actionExecutionHelpers', () => {
                 },
             };
 
-            let name = h.getName(record);
             let propertyName = 'name';
             let propertyUrl = 'url';
             let new_name = 'thing1_updated';

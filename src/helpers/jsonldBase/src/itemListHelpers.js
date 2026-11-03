@@ -128,7 +128,7 @@ export function setItemListElement(itemList, values) {
 
     values = h.toArray(values);
 
-    values = values.map((x, i) => toListItem(x));
+    values = values.map(x => toListItem(x));
 
     values = ensurePositions(values)
     values = ensurePreviousNextItem(values)
@@ -267,7 +267,7 @@ export function prepend(itemList, item){
      // Handle arrays
     if(h.isArray(item)){
         for(let i = item.length -1; i >= 0; i-- ){
-            itemList = prepend(itemList, item?.[i], referenceItem)
+            itemList = prepend(itemList, item?.[i])
         }
         return itemList
     }
@@ -288,7 +288,7 @@ export function append(itemList, item){
      // Handle arrays
     if(h.isArray(item)){
         for(let i of item){
-            itemList = append(itemList, i, referenceItem)
+            itemList = append(itemList, i)
         }
         return itemList
     }
@@ -409,7 +409,7 @@ export function replace(itemList, replacer, replacee){
     for(let i of listItems){
         let item = getItem(i)
         if(h.isSame(item, replacee)){
-            item = setItem(i, replacer)
+            i = setItem(i, replacer)
         }
         newItems.push(i)
     }
@@ -999,7 +999,7 @@ export function setItems(items, itemsToAdd){
 
 export function getListItems(itemList){
 
-    return getItemListElement(listItems)
+    return getItemListElement(itemList)
 
 }
 
@@ -1028,15 +1028,7 @@ export function setItem(listItem, value) {
 }
 
 
-export function updateItem(itemList, listItemRef, newItem){
 
-    let listItem = findByListItem(itemList, listItemRef)
-
-    listItem = h.setValue(listItem, 'item', newItem)
-
-
-
-}
 
 
 /**

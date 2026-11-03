@@ -1,4 +1,6 @@
+/* eslint-disable no-unused-vars */
 import { DiskDB } from '../diskDB.js';
+import {  describe,  it, expect } from '@jest/globals'
 
 describe('diskDB', () => {
     describe('CRUD', () => {

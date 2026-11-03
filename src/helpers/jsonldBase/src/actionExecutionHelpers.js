@@ -49,7 +49,7 @@ export function execute(action) {
             // Iterate items
             for(let li of listItems){
 
-                a = h.getItem(li)
+                let a = h.getItem(li)
                 a = db.get(a)
 
                 // skip if previous step failed
@@ -85,7 +85,7 @@ export function execute(action) {
 
     // Record
     if (record_type == 'UpsertAction') {
-        return updateAction(action);
+        return upsertAction(action);
     }
 
     // Properties
@@ -202,6 +202,8 @@ function upsertAction(action){
 
     // set action completed
     action = h.setCompleted(action);
+
+    return action
 
 
 }
@@ -389,7 +391,7 @@ export function replaceAction(action) {
         return action
     }
 
-    let t = h.list.replace(t, replacer, replacee);
+    target = h.list.replace(target, replacer, replacee);
     action = h.addValue(action, 'result', target);
 
     action = h.setCompleted(action);
@@ -449,7 +451,7 @@ export  function searchAction(action){
      for (let t of targets) {
         let items = h.list.getItemListElement(t)
         for (let q of queries) {
-             items = h.list.filter(items, o);
+             items = h.list.filter(items, q);
         }
         let newT = h.list.toItemList(items)
         action = h.addValue(action, 'result', newT);

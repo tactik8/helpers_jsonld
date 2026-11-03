@@ -1,5 +1,4 @@
 import { jsonldBase } from './jsonldBase/jsonldBase.js';
-import * as dot from './dotHelpers/dotHelpers.js';
 import { things } from './things/things.js';
 import * as rdf from './rdfHelpers/rdfHelpers.js';
 import * as recordIDHelpers from './recordIdHelpers/recordIdHelpers.js';
