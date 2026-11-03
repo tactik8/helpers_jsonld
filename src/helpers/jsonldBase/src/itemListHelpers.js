@@ -498,14 +498,15 @@ export function remove(itemList, itemToRemove) {
 
 /**
  * Returns array of listItems that meets filter
- * @param {ItemList} itemList 
+ * @param {ItemList|ListItems[]} listItems 
  * @param {object} filter - The filter to apply on item
  * @returns {ListItem[]} An array of listitems that meet filter
  */
-export function filter(itemList, filter){
+export function filter(listItems, filter){
 
-    
-    let listItems = h.getItemListElement(itemList)
+    if(isItemList(listItems)){
+        listItems = h.getItemListElement(listItems)
+    }
 
     if(filter){
         listItems = h.filter(listItems, filter)

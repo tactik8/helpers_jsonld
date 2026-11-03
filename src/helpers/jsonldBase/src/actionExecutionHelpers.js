@@ -83,6 +83,11 @@ export function execute(action) {
     //
     let record_type = h.record_type(action);
 
+    // Record
+    if (record_type == 'UpsertAction') {
+        return updateAction(action);
+    }
+
     // Properties
     if (record_type == 'ReplaceAction') {
         return replaceAction(action);
@@ -90,6 +95,8 @@ export function execute(action) {
     if (record_type == 'UpdateAction') {
         return updateAction(action);
     }
+    
+
 
     // ItemList
     if (record_type == 'InsertAction') {
@@ -139,6 +146,12 @@ function updateAction(action) {
     let objects = h.getObjects(action);
     let targets = h.targetCollections(action);
 
+    if(objects.length ==0){
+        action = h.setFailed(action, 'No object provided in action')
+        return action
+    }
+
+
     for (let t of targets) {
         for (let o of objects) {
             // merge values
@@ -151,12 +164,50 @@ function updateAction(action) {
         action = h.addValue(action, 'result', t);
     }
 
+
+    // if no targets, return objects as results
+    if(targets.length == 0){
+        action = h.addValues(action, 'result', objects);
+    }
+
     // set action completed
     action = h.setCompleted(action);
 
     //
     return action;
 }
+
+
+function upsertAction(action){
+
+    let objects = h.getObjects(action);
+    let targets = h.targetCollections(action);
+
+    if(objects.length ==0){
+        action = h.setFailed(action, 'No object provided in action')
+        return action
+    }
+
+
+    // Add to itemList if t is defined
+    for (let t of targets) {
+        t = h.list.upsert(t, objects)
+        action = h.addValue(action, 'result', t);
+    }
+
+    // Simply return objects in result if no targets
+    if(targets.length == 0){
+        action = h.addValues(action, 'result', objects);
+    }
+
+    // set action completed
+    action = h.setCompleted(action);
+
+
+}
+
+
+
 
 // --------------------------------------------------------------
 // ItemList Actions
@@ -166,9 +217,15 @@ function updateAction(action) {
 
 export function insertAction(action){
 
+
     let objects = h.getObjects(action);
     let toLocation = h.getValue(action, 'toLocation')
     let targets = h.targetCollections(action);
+
+    if(objects.length ==0){
+        action = h.setFailed(action, 'No object provided in action')
+        return action
+    }
 
     for (let t of targets) {
         for (let o of objects) {
@@ -176,6 +233,13 @@ export function insertAction(action){
         }
         action = h.addValue(action, 'result', t);
     }
+
+    // Simply return objects in result if no targets
+    if(targets.length == 0){
+        action = h.addValues(action, 'result', objects);
+    }
+
+
 
     action = h.setCompleted(action);
 
@@ -188,6 +252,11 @@ export function insertBeforeAction(action){
     let objects = h.getObjects(action);
     let toLocation = h.getValue(action, 'toLocation')
     let targets = h.targetCollections(action);
+
+    if(objects.length ==0){
+        action = h.setFailed(action, 'No object provided in action')
+        return action
+    }
 
     for (let t of targets) {
         for (let o of objects) {
@@ -208,6 +277,11 @@ export function insertAfterAction(action){
     let toLocation = h.getValue(action, 'toLocation')
     let targets = h.targetCollections(action);
 
+    if(objects.length ==0){
+        action = h.setFailed(action, 'No object provided in action')
+        return action
+    }
+
     for (let t of targets) {
         for (let o of objects) {
             t = h.list.insertAfter(t, o, toLocation);
@@ -225,6 +299,11 @@ export function prependAction(action) {
     let objects = h.getObjects(action);
     let targets = h.targetCollections(action);
 
+    if(objects.length ==0){
+        action = h.setFailed(action, 'No object provided in action')
+        return action
+    }
+
     for (let t of targets) {
         for (let o of objects) {
             t = h.list.prepend(t, o);
@@ -240,6 +319,11 @@ export function prependAction(action) {
 export function appendAction(action) {
     let objects = h.getObjects(action);
     let targets = h.targetCollections(action);
+
+    if(objects.length ==0){
+        action = h.setFailed(action, 'No object provided in action')
+        return action
+    }
 
     for (let t of targets) {
         for (let o of objects) {
@@ -257,6 +341,11 @@ export function moveUpAction(action) {
     let objects = h.getObjects(action);
     let targets = h.targetCollections(action);
 
+    if(objects.length ==0){
+        action = h.setFailed(action, 'No object provided in action')
+        return action
+    }
+
     for (let t of targets) {
         for (let o of objects) {
             t = h.list.moveUp(t, o);
@@ -273,6 +362,11 @@ export function moveDownAction(action) {
     let objects = h.getObjects(action);
     let targets = h.targetCollections(action);
 
+    if(objects.length ==0){
+        action = h.setFailed(action, 'No object provided in action')
+        return action
+    }
+
     for (let t of targets) {
         for (let o of objects) {
             t = h.list.moveDown(t, o);
@@ -280,7 +374,6 @@ export function moveDownAction(action) {
         action = h.addValue(action, 'result', t);
     }
     
-
     action = h.setCompleted(action);
 
     return action;
@@ -290,6 +383,11 @@ export function replaceAction(action) {
     let target = h.targetCollection(action);
     let replacer = h.getValue(action, 'replacer');
     let replacee = h.getValue(action, 'replacee');
+
+    if(replacee.length ==0){
+        action = h.setFailed(action, 'No replacee provided in action')
+        return action
+    }
 
     let t = h.list.replace(t, replacer, replacee);
     action = h.addValue(action, 'result', target);
@@ -302,6 +400,11 @@ export function replaceAction(action) {
 export function duplicateAction(action) {
     let objects = h.getObjects(action);
     let targets = h.targetCollections(action);
+
+    if(objects.length ==0){
+        action = h.setFailed(action, 'No object provided in action')
+        return action
+    }
 
     for (let t of targets) {
         for (let o of objects) {
@@ -320,6 +423,10 @@ export function deleteAction(action) {
     let objects = h.getObjects(action);
     let targets = h.targetCollections(action);
 
+    if(objects.length ==0){
+        action = h.setFailed(action, 'No object provided in action')
+        return action
+    }
 
     for (let t of targets) {
         for (let o of objects) {
@@ -332,4 +439,24 @@ export function deleteAction(action) {
     action = h.setCompleted(action);
 
     return action;
+}
+
+export  function searchAction(action){
+
+    let queries = h.getValues(action, 'query')
+    let targets = h.targetCollections(action);
+
+     for (let t of targets) {
+        let items = h.list.getItemListElement(t)
+        for (let q of queries) {
+             items = h.list.filter(items, o);
+        }
+        let newT = h.list.toItemList(items)
+        action = h.addValue(action, 'result', newT);
+    }
+
+    action = h.setCompleted(action);
+
+    return action;
+
 }
