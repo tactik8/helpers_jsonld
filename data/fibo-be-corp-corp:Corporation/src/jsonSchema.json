@@ -1,0 +1,10 @@
+{
+    "@type": "Class",
+    "$id": "https://schema.org/fibo-be-corp-corp:Corporation",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "fibo-be-corp-corp:Corporation",
+    "type": "object",
+    "parent": "",
+    "properties": {},
+    "propertiesAll": {}
+}

@@ -1,0 +1,2033 @@
+
+    
+
+import { jsonldBase as h } from '../../../../jsonldBase/jsonldBase.js';
+
+/**
+ * Returns list of properties for WebSite and its parents.
+ * @returns {String[]} - The properties for WebSite.
+ */
+export function getProperties() {
+    return ["issn","about","abstract","accessMode","accessModeSufficient","accessibilityAPI","accessibilityControl","accessibilityFeature","accessibilityHazard","accessibilitySummary","accountablePerson","acquireLicensePage","aggregateRating","alternativeHeadline","archivedAt","assesses","associatedMedia","audience","audio","author","award","awards","character","citation","comment","commentCount","conditionsOfAccess","contentLocation","contentRating","contentReferenceTime","contributor","copyrightHolder","copyrightNotice","copyrightYear","correction","countryOfOrigin","creativeWorkStatus","creator","creditText","dateCreated","dateModified","datePublished","digitalSourceType","discussionUrl","displayLocation","editEIDR","editor","educationalAlignment","educationalLevel","educationalUse","encoding","encodingFormat","encodings","exampleOfWork","expires","fileFormat","funder","funding","genre","hasPart","headline","inLanguage","interactionStatistic","interactivityType","interpretedAsClaim","isAccessibleForFree","isBasedOn","isBasedOnUrl","isFamilyFriendly","isPartOf","keywords","learningResourceType","license","locationCreated","mainEntity","maintainer","material","materialExtent","mentions","offers","pattern","position","producer","provider","publication","publisher","publisherImprint","publishingPrinciples","recordedAt","releasedEvent","review","reviews","schemaVersion","sdDatePublished","sdLicense","sdPublisher","size","sourceOrganization","spatial","spatialCoverage","sponsor","teaches","temporal","temporalCoverage","text","thumbnail","thumbnailUrl","timeRequired","translationOfWork","translator","typicalAgeRange","usageInfo","version","video","wordCount","workExample","workTranslation","additionalType","alternateName","description","disambiguatingDescription","identifier","image","mainEntityOfPage","name","owner","potentialAction","sameAs","subjectOf","url"]
+}
+
+/**
+ * Returns list of properties for WebSite and its parents.
+ * @returns {String[]} - The properties for WebSite.
+ */
+export function getPropertiesAll() {
+    return ["issn","about","abstract","accessMode","accessModeSufficient","accessibilityAPI","accessibilityControl","accessibilityFeature","accessibilityHazard","accessibilitySummary","accountablePerson","acquireLicensePage","aggregateRating","alternativeHeadline","archivedAt","assesses","associatedMedia","audience","audio","author","award","awards","character","citation","comment","commentCount","conditionsOfAccess","contentLocation","contentRating","contentReferenceTime","contributor","copyrightHolder","copyrightNotice","copyrightYear","correction","countryOfOrigin","creativeWorkStatus","creator","creditText","dateCreated","dateModified","datePublished","digitalSourceType","discussionUrl","displayLocation","editEIDR","editor","educationalAlignment","educationalLevel","educationalUse","encoding","encodingFormat","encodings","exampleOfWork","expires","fileFormat","funder","funding","genre","hasPart","headline","inLanguage","interactionStatistic","interactivityType","interpretedAsClaim","isAccessibleForFree","isBasedOn","isBasedOnUrl","isFamilyFriendly","isPartOf","keywords","learningResourceType","license","locationCreated","mainEntity","maintainer","material","materialExtent","mentions","offers","pattern","position","producer","provider","publication","publisher","publisherImprint","publishingPrinciples","recordedAt","releasedEvent","review","reviews","schemaVersion","sdDatePublished","sdLicense","sdPublisher","size","sourceOrganization","spatial","spatialCoverage","sponsor","teaches","temporal","temporalCoverage","text","thumbnail","thumbnailUrl","timeRequired","translationOfWork","translator","typicalAgeRange","usageInfo","version","video","wordCount","workExample","workTranslation","additionalType","alternateName","description","disambiguatingDescription","identifier","image","mainEntityOfPage","name","owner","potentialAction","sameAs","subjectOf","url"]
+}
+
+/**
+ * Returns list of properties for WebSite without parent properties.
+ * @returns {String[]} - The properties for WebSite.
+ */
+export function getPropertiesMain() {
+    return ["issn"]
+}
+
+/**
+ * Returns list of common properties for WebSite.
+ * @returns {String[]} - The common properties for WebSite.
+ */
+export function getPropertiesShort() {
+    return ["issn"]        
+}
+
+    
+    
+/**
+ * Returns property definitions for WebSite.
+ * @returns {Object} - Property definitions for WebSite.
+ */
+export const properties = {
+    "issn": {
+        "@type": "Property",
+        "$id": "https://schema.org/issn",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "issn",
+        "description": "The International Standard Serial Number (ISSN) that identifies this serial publication. You can repeat this property to identify different formats of, or the linking ISSN (ISSN-L) for, this serial publication.",
+        "type": [
+            "Text"
+        ],
+        "classes": [
+            "Blog",
+            "CreativeWorkSeries",
+            "Dataset",
+            "WebSite"
+        ]
+    },
+    "about": {
+        "@type": "Property",
+        "$id": "https://schema.org/about",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "about",
+        "description": "The subject matter of an object.",
+        "type": [
+            "Thing"
+        ],
+        "classes": [
+            "Certification",
+            "CommunicateAction",
+            "CreativeWork",
+            "DefinedTerm",
+            "DefinedTermSet",
+            "Event"
+        ]
+    },
+    "abstract": {
+        "@type": "Property",
+        "$id": "https://schema.org/abstract",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "abstract",
+        "description": "An abstract is a short description that summarizes a [[CreativeWork]].",
+        "type": [
+            "Text"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "accessMode": {
+        "@type": "Property",
+        "$id": "https://schema.org/accessMode",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "accessMode",
+        "description": "The human sensory perceptual system or cognitive faculty through which a person may process or perceive the intellectual content of a resource, not including any adaptations of the content (e.g., text alternatives for images). Values should be drawn from the [approved vocabulary](https://www.w3.org/2021/a11y-discov-vocab/latest/#accessMode-vocabulary).",
+        "type": [
+            "Text"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "accessModeSufficient": {
+        "@type": "Property",
+        "$id": "https://schema.org/accessModeSufficient",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "accessModeSufficient",
+        "description": "A list of single or combined access modes that are sufficient to understand all the intellectual content of a resource, including any adaptations. Values should be drawn from the [approved vocabulary](https://www.w3.org/2021/a11y-discov-vocab/latest/#accessModeSufficient-vocabulary).",
+        "type": [
+            "ItemList"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "accessibilityAPI": {
+        "@type": "Property",
+        "$id": "https://schema.org/accessibilityAPI",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "accessibilityAPI",
+        "description": "Indicates that the resource is compatible with the referenced accessibility API. Values should be drawn from the [approved vocabulary](https://www.w3.org/2021/a11y-discov-vocab/latest/#accessibilityAPI-vocabulary).",
+        "type": [
+            "Text"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "accessibilityControl": {
+        "@type": "Property",
+        "$id": "https://schema.org/accessibilityControl",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "accessibilityControl",
+        "description": "Identifies input methods that are sufficient to fully control the described resource. Values should be drawn from the [approved vocabulary](https://www.w3.org/2021/a11y-discov-vocab/latest/#accessibilityControl-vocabulary).",
+        "type": [
+            "Text"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "accessibilityFeature": {
+        "@type": "Property",
+        "$id": "https://schema.org/accessibilityFeature",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "accessibilityFeature",
+        "description": "Content features of the resource, such as accessible media, alternatives and supported enhancements for accessibility. Values should be drawn from the [approved vocabulary](https://www.w3.org/2021/a11y-discov-vocab/latest/#accessibilityFeature-vocabulary).",
+        "type": [
+            "Text"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "accessibilityHazard": {
+        "@type": "Property",
+        "$id": "https://schema.org/accessibilityHazard",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "accessibilityHazard",
+        "description": "A characteristic of the described resource that is physiologically dangerous to some users. Related to WCAG 2.0 guideline 2.3. Values should be drawn from the [approved vocabulary](https://www.w3.org/2021/a11y-discov-vocab/latest/#accessibilityHazard-vocabulary).",
+        "type": [
+            "Text"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "accessibilitySummary": {
+        "@type": "Property",
+        "$id": "https://schema.org/accessibilitySummary",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "accessibilitySummary",
+        "description": "A human-readable summary of specific accessibility features or deficiencies, consistent with the other accessibility metadata but expressing subtleties such as \"short descriptions are present but long descriptions will be needed for non-visual users\" or \"short descriptions are present and no long descriptions are needed\".",
+        "type": [
+            "Text"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "accountablePerson": {
+        "@type": "Property",
+        "$id": "https://schema.org/accountablePerson",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "accountablePerson",
+        "description": "Specifies the Person that is legally accountable for the CreativeWork.",
+        "type": [
+            "Person"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "acquireLicensePage": {
+        "@type": "Property",
+        "$id": "https://schema.org/acquireLicensePage",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "acquireLicensePage",
+        "description": "Indicates a page documenting how licenses can be purchased or otherwise acquired, for the current item.",
+        "type": [
+            "CreativeWork",
+            "URL"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "aggregateRating": {
+        "@type": "Property",
+        "$id": "https://schema.org/aggregateRating",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "aggregateRating",
+        "description": "The overall rating, based on a collection of reviews or ratings, of the item.",
+        "type": [
+            "AggregateRating"
+        ],
+        "classes": [
+            "Brand",
+            "CreativeWork",
+            "Event",
+            "Offer",
+            "Organization",
+            "Place",
+            "Product",
+            "Service"
+        ]
+    },
+    "alternativeHeadline": {
+        "@type": "Property",
+        "$id": "https://schema.org/alternativeHeadline",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "alternativeHeadline",
+        "description": "A secondary title of the CreativeWork.",
+        "type": [
+            "Text"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "archivedAt": {
+        "@type": "Property",
+        "$id": "https://schema.org/archivedAt",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "archivedAt",
+        "description": "Indicates a page or other link involved in archival of a [[CreativeWork]]. In the case of [[MediaReview]], the items in a [[MediaReviewItem]] may often become inaccessible, but be archived by archival, journalistic, activist, or law enforcement organizations. In such cases, the referenced page may not directly publish the content.",
+        "type": [
+            "URL",
+            "WebPage"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "assesses": {
+        "@type": "Property",
+        "$id": "https://schema.org/assesses",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "assesses",
+        "description": "The item being described is intended to assess the competency or learning outcome defined by the referenced term.",
+        "type": [
+            "DefinedTerm",
+            "Text"
+        ],
+        "classes": [
+            "CreativeWork",
+            "EducationEvent",
+            "LearningResource"
+        ]
+    },
+    "associatedMedia": {
+        "@type": "Property",
+        "$id": "https://schema.org/associatedMedia",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "associatedMedia",
+        "description": "A media object that encodes this CreativeWork. This property is a synonym for encoding.",
+        "type": [
+            "MediaObject"
+        ],
+        "classes": [
+            "CreativeWork",
+            "HyperToc",
+            "HyperTocEntry"
+        ]
+    },
+    "audience": {
+        "@type": "Property",
+        "$id": "https://schema.org/audience",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "audience",
+        "description": "An intended audience, i.e. a group for whom something was created.",
+        "type": [
+            "Audience"
+        ],
+        "classes": [
+            "CreativeWork",
+            "Event",
+            "LodgingBusiness",
+            "PlayAction",
+            "Product",
+            "Service"
+        ]
+    },
+    "audio": {
+        "@type": "Property",
+        "$id": "https://schema.org/audio",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "audio",
+        "description": "An embedded audio object.",
+        "type": [
+            "AudioObject",
+            "Clip",
+            "MusicRecording"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "author": {
+        "@type": "Property",
+        "$id": "https://schema.org/author",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "author",
+        "description": "The author of this content or rating. Please note that author is special in that HTML 5 provides a special mechanism for indicating authorship via the rel tag. That is equivalent to this and may be used interchangeably.",
+        "type": [
+            "Organization",
+            "Person"
+        ],
+        "classes": [
+            "CreativeWork",
+            "Rating"
+        ]
+    },
+    "award": {
+        "@type": "Property",
+        "$id": "https://schema.org/award",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "award",
+        "description": "An award won by or for this item.",
+        "type": [
+            "Text"
+        ],
+        "classes": [
+            "CreativeWork",
+            "Organization",
+            "Person",
+            "Product",
+            "Service"
+        ]
+    },
+    "awards": {
+        "@type": "Property",
+        "$id": "https://schema.org/awards",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "awards",
+        "description": "Awards won by or for this item.",
+        "type": [
+            "Text"
+        ],
+        "classes": [
+            "CreativeWork",
+            "Organization",
+            "Person",
+            "Product"
+        ]
+    },
+    "character": {
+        "@type": "Property",
+        "$id": "https://schema.org/character",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "character",
+        "description": "Fictional person connected with a creative work.",
+        "type": [
+            "Person"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "citation": {
+        "@type": "Property",
+        "$id": "https://schema.org/citation",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "citation",
+        "description": "A citation or reference to another creative work, such as another publication, web page, scholarly article, etc.",
+        "type": [
+            "CreativeWork",
+            "Text"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "comment": {
+        "@type": "Property",
+        "$id": "https://schema.org/comment",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "comment",
+        "description": "Comments, typically from users.",
+        "type": [
+            "Comment"
+        ],
+        "classes": [
+            "CreativeWork",
+            "RsvpAction"
+        ]
+    },
+    "commentCount": {
+        "@type": "Property",
+        "$id": "https://schema.org/commentCount",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "commentCount",
+        "description": "The number of comments this CreativeWork (e.g. Article, Question or Answer) has received. This is most applicable to works published in Web sites with commenting system; additional comments may exist elsewhere.",
+        "type": [
+            "Integer"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "conditionsOfAccess": {
+        "@type": "Property",
+        "$id": "https://schema.org/conditionsOfAccess",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "conditionsOfAccess",
+        "description": "Conditions that affect the availability of, or method(s) of access to, an item. Typically used for real world items such as an [[ArchiveComponent]] held by an [[ArchiveOrganization]]. This property is not suitable for use as a general Web access control mechanism. It is expressed only in natural language.\\n\\nFor example \"Available by appointment from the Reading Room\" or \"Accessible only from logged-in accounts \". ",
+        "type": [
+            "Text"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "contentLocation": {
+        "@type": "Property",
+        "$id": "https://schema.org/contentLocation",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "contentLocation",
+        "description": "The location depicted or described in the content. For example, the location in a photograph or painting.",
+        "type": [
+            "Place"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "contentRating": {
+        "@type": "Property",
+        "$id": "https://schema.org/contentRating",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "contentRating",
+        "description": "Official rating of a piece of content&#x2014;for example, 'MPAA PG-13'.",
+        "type": [
+            "Rating",
+            "Text"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "contentReferenceTime": {
+        "@type": "Property",
+        "$id": "https://schema.org/contentReferenceTime",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "contentReferenceTime",
+        "description": "The specific time described by a creative work, for works (e.g. articles, video objects etc.) that emphasise a particular moment within an Event.",
+        "type": [
+            "DateTime"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "contributor": {
+        "@type": "Property",
+        "$id": "https://schema.org/contributor",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "contributor",
+        "description": "A secondary contributor to the CreativeWork or Event.",
+        "type": [
+            "Organization",
+            "Person"
+        ],
+        "classes": [
+            "CreativeWork",
+            "Event"
+        ]
+    },
+    "copyrightHolder": {
+        "@type": "Property",
+        "$id": "https://schema.org/copyrightHolder",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "copyrightHolder",
+        "description": "The party holding the legal copyright to the CreativeWork.",
+        "type": [
+            "Organization",
+            "Person"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "copyrightNotice": {
+        "@type": "Property",
+        "$id": "https://schema.org/copyrightNotice",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "copyrightNotice",
+        "description": "Text of a notice appropriate for describing the copyright aspects of this Creative Work, ideally indicating the owner of the copyright for the Work.",
+        "type": [
+            "Text"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "copyrightYear": {
+        "@type": "Property",
+        "$id": "https://schema.org/copyrightYear",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "copyrightYear",
+        "description": "The year during which the claimed copyright for the CreativeWork was first asserted.",
+        "type": [
+            "Number"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "correction": {
+        "@type": "Property",
+        "$id": "https://schema.org/correction",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "correction",
+        "description": "Indicates a correction to a [[CreativeWork]], either via a [[CorrectionComment]], textually or in another document.",
+        "type": [
+            "CorrectionComment",
+            "Text",
+            "URL"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "countryOfOrigin": {
+        "@type": "Property",
+        "$id": "https://schema.org/countryOfOrigin",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "countryOfOrigin",
+        "description": "The country of origin of something, including products as well as creative  works such as movie and TV content.\n\nIn the case of TV and movie, this would be the country of the principle offices of the production company or individual responsible for the movie. For other kinds of [[CreativeWork]] it is difficult to provide fully general guidance, and properties such as [[contentLocation]] and [[locationCreated]] may be more applicable.\n\nIn the case of products, the country of origin of the product. The exact interpretation of this may vary by context and product type, and cannot be fully enumerated here.",
+        "type": [
+            "Country"
+        ],
+        "classes": [
+            "CreativeWork",
+            "Movie",
+            "Product",
+            "TVEpisode",
+            "TVSeason",
+            "TVSeries"
+        ]
+    },
+    "creativeWorkStatus": {
+        "@type": "Property",
+        "$id": "https://schema.org/creativeWorkStatus",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "creativeWorkStatus",
+        "description": "The status of a creative work in terms of its stage in a lifecycle. Example terms include Incomplete, Draft, Published, Obsolete. Some organizations define a set of terms for the stages of their publication lifecycle.",
+        "type": [
+            "DefinedTerm",
+            "Text"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "creator": {
+        "@type": "Property",
+        "$id": "https://schema.org/creator",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "creator",
+        "description": "The creator/author of this CreativeWork. This is the same as the Author property for CreativeWork.",
+        "type": [
+            "Organization",
+            "Person"
+        ],
+        "classes": [
+            "CreativeWork",
+            "UserComments"
+        ]
+    },
+    "creditText": {
+        "@type": "Property",
+        "$id": "https://schema.org/creditText",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "creditText",
+        "description": "Text that can be used to credit person(s) and/or organization(s) associated with a published Creative Work.",
+        "type": [
+            "Text"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "dateCreated": {
+        "@type": "Property",
+        "$id": "https://schema.org/dateCreated",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "dateCreated",
+        "description": "The date on which the CreativeWork was created or the item was added to a DataFeed.",
+        "type": [
+            "Date",
+            "DateTime"
+        ],
+        "classes": [
+            "CreativeWork",
+            "DataFeedItem"
+        ]
+    },
+    "dateModified": {
+        "@type": "Property",
+        "$id": "https://schema.org/dateModified",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "dateModified",
+        "description": "The date on which the CreativeWork was most recently modified or when the item's entry was modified within a DataFeed.",
+        "type": [
+            "Date",
+            "DateTime"
+        ],
+        "classes": [
+            "CreativeWork",
+            "DataFeedItem"
+        ]
+    },
+    "datePublished": {
+        "@type": "Property",
+        "$id": "https://schema.org/datePublished",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "datePublished",
+        "description": "Date of first publication or broadcast. For example the date a [[CreativeWork]] was broadcast or a [[Certification]] was issued.",
+        "type": [
+            "Date",
+            "DateTime"
+        ],
+        "classes": [
+            "Certification",
+            "CreativeWork"
+        ]
+    },
+    "digitalSourceType": {
+        "@type": "Property",
+        "$id": "https://schema.org/digitalSourceType",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "digitalSourceType",
+        "description": "Indicates an IPTCDigitalSourceEnumeration code indicating the nature of the digital source(s) for some [[CreativeWork]].",
+        "type": [
+            "IPTCDigitalSourceEnumeration"
+        ],
+        "classes": [
+            "CreativeWork"
+        ],
+        "enum": [
+            "AlgorithmicMediaDigitalSource",
+            "AlgorithmicallyEnhancedDigitalSource",
+            "CompositeCaptureDigitalSource",
+            "CompositeDigitalSource",
+            "CompositeSyntheticDigitalSource",
+            "CompositeWithTrainedAlgorithmicMediaDigitalSource",
+            "DataDrivenMediaDigitalSource",
+            "DigitalArtDigitalSource",
+            "DigitalCaptureDigitalSource",
+            "MinorHumanEditsDigitalSource",
+            "MultiFrameComputationalCaptureDigitalSource",
+            "NegativeFilmDigitalSource",
+            "PositiveFilmDigitalSource",
+            "PrintDigitalSource",
+            "ScreenCaptureDigitalSource",
+            "TrainedAlgorithmicMediaDigitalSource",
+            "VirtualRecordingDigitalSource"
+        ]
+    },
+    "discussionUrl": {
+        "@type": "Property",
+        "$id": "https://schema.org/discussionUrl",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "discussionUrl",
+        "description": "A link to the page containing the comments of the CreativeWork.",
+        "type": [
+            "URL"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "displayLocation": {
+        "@type": "Property",
+        "$id": "https://schema.org/displayLocation",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "displayLocation",
+        "description": "The location at which an item can be viewed or experienced in-person.",
+        "type": [
+            "Place"
+        ],
+        "classes": [
+            "CreativeWork",
+            "Product"
+        ]
+    },
+    "editEIDR": {
+        "@type": "Property",
+        "$id": "https://schema.org/editEIDR",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "editEIDR",
+        "description": "An [EIDR](https://eidr.org/) (Entertainment Identifier Registry) [[identifier]] representing a specific edit / edition for a work of film or television.\n\nFor example, the motion picture known as \"Ghostbusters\" whose [[titleEIDR]] is \"10.5240/7EC7-228A-510A-053E-CBB8-J\" has several edits, e.g. \"10.5240/1F2A-E1C5-680A-14C6-E76B-I\" and \"10.5240/8A35-3BEE-6497-5D12-9E4F-3\".\n\nSince schema.org types like [[Movie]] and [[TVEpisode]] can be used for both works and their multiple expressions, it is possible to use [[titleEIDR]] alone (for a general description), or alongside [[editEIDR]] for a more edit-specific description.\n",
+        "type": [
+            "Text",
+            "URL"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "editor": {
+        "@type": "Property",
+        "$id": "https://schema.org/editor",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "editor",
+        "description": "Specifies the Person who edited the CreativeWork.",
+        "type": [
+            "Person"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "educationalAlignment": {
+        "@type": "Property",
+        "$id": "https://schema.org/educationalAlignment",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "educationalAlignment",
+        "description": "An alignment to an established educational framework.\n\nThis property should not be used where the nature of the alignment can be described using a simple property, for example to express that a resource [[teaches]] or [[assesses]] a competency.",
+        "type": [
+            "AlignmentObject"
+        ],
+        "classes": [
+            "CreativeWork",
+            "LearningResource"
+        ]
+    },
+    "educationalLevel": {
+        "@type": "Property",
+        "$id": "https://schema.org/educationalLevel",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "educationalLevel",
+        "description": "The level in terms of progression through an educational or training context. Examples of educational levels include 'beginner', 'intermediate' or 'advanced', and formal sets of level indicators.",
+        "type": [
+            "DefinedTerm",
+            "Text",
+            "URL"
+        ],
+        "classes": [
+            "CreativeWork",
+            "EducationEvent",
+            "EducationalOccupationalCredential",
+            "LearningResource"
+        ]
+    },
+    "educationalUse": {
+        "@type": "Property",
+        "$id": "https://schema.org/educationalUse",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "educationalUse",
+        "description": "The purpose of a work in the context of education; for example, 'assignment', 'group work'.",
+        "type": [
+            "DefinedTerm",
+            "Text"
+        ],
+        "classes": [
+            "CreativeWork",
+            "LearningResource"
+        ]
+    },
+    "encoding": {
+        "@type": "Property",
+        "$id": "https://schema.org/encoding",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "encoding",
+        "description": "A media object that encodes this CreativeWork. This property is a synonym for associatedMedia.",
+        "type": [
+            "MediaObject"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "encodingFormat": {
+        "@type": "Property",
+        "$id": "https://schema.org/encodingFormat",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "encodingFormat",
+        "description": "Media type typically expressed using a MIME format (see [IANA site](http://www.iana.org/assignments/media-types/media-types.xhtml) and [MDN reference](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types)), e.g. application/zip for a SoftwareApplication binary, audio/mpeg for .mp3 etc.\n\nIn cases where a [[CreativeWork]] has several media type representations, [[encoding]] can be used to indicate each [[MediaObject]] alongside particular [[encodingFormat]] information.\n\nUnregistered or niche encoding and file formats can be indicated instead via the most appropriate URL, e.g. defining Web page or a Wikipedia/Wikidata entry.",
+        "type": [
+            "Text",
+            "URL"
+        ],
+        "classes": [
+            "CreativeWork",
+            "MediaObject"
+        ]
+    },
+    "encodings": {
+        "@type": "Property",
+        "$id": "https://schema.org/encodings",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "encodings",
+        "description": "A media object that encodes this CreativeWork.",
+        "type": [
+            "MediaObject"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "exampleOfWork": {
+        "@type": "Property",
+        "$id": "https://schema.org/exampleOfWork",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "exampleOfWork",
+        "description": "A creative work that this work is an example/instance/realization/derivation of.",
+        "type": [
+            "CreativeWork"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "expires": {
+        "@type": "Property",
+        "$id": "https://schema.org/expires",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "expires",
+        "description": "Date the content expires and is no longer useful or available. For example a [[VideoObject]] or [[NewsArticle]] whose availability or relevance is time-limited, a [[ClaimReview]] fact check whose publisher wants to indicate that it may no longer be relevant (or helpful to highlight) after some date, or a [[Certification]] the validity has expired.",
+        "type": [
+            "Date",
+            "DateTime"
+        ],
+        "classes": [
+            "Certification",
+            "CreativeWork"
+        ]
+    },
+    "fileFormat": {
+        "@type": "Property",
+        "$id": "https://schema.org/fileFormat",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "fileFormat",
+        "description": "Media type, typically MIME format (see [IANA site](http://www.iana.org/assignments/media-types/media-types.xhtml)) of the content, e.g. application/zip of a SoftwareApplication binary. In cases where a CreativeWork has several media type representations, 'encoding' can be used to indicate each MediaObject alongside particular fileFormat information. Unregistered or niche file formats can be indicated instead via the most appropriate URL, e.g. defining Web page or a Wikipedia entry.",
+        "type": [
+            "Text",
+            "URL"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "funder": {
+        "@type": "Property",
+        "$id": "https://schema.org/funder",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "funder",
+        "description": "A person or organization that supports (sponsors) something through some kind of financial contribution.",
+        "type": [
+            "Organization",
+            "Person"
+        ],
+        "classes": [
+            "CreativeWork",
+            "Event",
+            "Grant",
+            "MonetaryGrant",
+            "Organization",
+            "Person"
+        ]
+    },
+    "funding": {
+        "@type": "Property",
+        "$id": "https://schema.org/funding",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "funding",
+        "description": "A [[Grant]] that directly or indirectly provide funding or sponsorship for this item. See also [[ownershipFundingInfo]].",
+        "type": [
+            "Grant"
+        ],
+        "classes": [
+            "BioChemEntity",
+            "CreativeWork",
+            "Event",
+            "MedicalEntity",
+            "Organization",
+            "Person",
+            "Product"
+        ]
+    },
+    "genre": {
+        "@type": "Property",
+        "$id": "https://schema.org/genre",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "genre",
+        "description": "Genre of the creative work, broadcast channel or group.",
+        "type": [
+            "DefinedTerm",
+            "Text",
+            "URL"
+        ],
+        "classes": [
+            "BroadcastChannel",
+            "CreativeWork",
+            "MusicGroup"
+        ]
+    },
+    "hasPart": {
+        "@type": "Property",
+        "$id": "https://schema.org/hasPart",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "hasPart",
+        "description": "Indicates an item or CreativeWork that is part of this item, or CreativeWork (in some sense).",
+        "type": [
+            "CreativeWork"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "headline": {
+        "@type": "Property",
+        "$id": "https://schema.org/headline",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "headline",
+        "description": "Headline of the article.",
+        "type": [
+            "Text"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "inLanguage": {
+        "@type": "Property",
+        "$id": "https://schema.org/inLanguage",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "inLanguage",
+        "description": "The language of the content or performance or used in an action. Please use one of the language codes from the [IETF BCP 47 standard](http://tools.ietf.org/html/bcp47). See also [[availableLanguage]].",
+        "type": [
+            "Language",
+            "Text"
+        ],
+        "classes": [
+            "BroadcastService",
+            "CommunicateAction",
+            "CreativeWork",
+            "Event",
+            "LinkRole",
+            "PronounceableText",
+            "WriteAction"
+        ]
+    },
+    "interactionStatistic": {
+        "@type": "Property",
+        "$id": "https://schema.org/interactionStatistic",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "interactionStatistic",
+        "description": "The number of interactions for the CreativeWork using the WebSite or SoftwareApplication. The most specific child type of InteractionCounter should be used.",
+        "type": [
+            "InteractionCounter"
+        ],
+        "classes": [
+            "CreativeWork",
+            "Organization",
+            "Person"
+        ]
+    },
+    "interactivityType": {
+        "@type": "Property",
+        "$id": "https://schema.org/interactivityType",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "interactivityType",
+        "description": "The predominant mode of learning supported by the learning resource. Acceptable values are 'active', 'expositive', or 'mixed'.",
+        "type": [
+            "Text"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "interpretedAsClaim": {
+        "@type": "Property",
+        "$id": "https://schema.org/interpretedAsClaim",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "interpretedAsClaim",
+        "description": "Used to indicate a specific claim contained, implied, translated or refined from the content of a [[MediaObject]] or other [[CreativeWork]]. The interpreting party can be indicated using [[claimInterpreter]].",
+        "type": [
+            "Claim"
+        ],
+        "classes": [
+            "CreativeWork",
+            "MediaObject"
+        ]
+    },
+    "isAccessibleForFree": {
+        "@type": "Property",
+        "$id": "https://schema.org/isAccessibleForFree",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "isAccessibleForFree",
+        "description": "A flag to signal that the item, event, or place is accessible for free.",
+        "type": [
+            "Boolean"
+        ],
+        "classes": [
+            "CreativeWork",
+            "Event",
+            "Place"
+        ],
+        "enum": [
+            "False",
+            "True"
+        ]
+    },
+    "isBasedOn": {
+        "@type": "Property",
+        "$id": "https://schema.org/isBasedOn",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "isBasedOn",
+        "description": "A resource from which this work is derived or from which it is a modification or adaptation.",
+        "type": [
+            "CreativeWork",
+            "Product",
+            "URL"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "isBasedOnUrl": {
+        "@type": "Property",
+        "$id": "https://schema.org/isBasedOnUrl",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "isBasedOnUrl",
+        "description": "A resource that was used in the creation of this resource. This term can be repeated for multiple sources. For example, http://example.com/great-multiplication-intro.html.",
+        "type": [
+            "CreativeWork",
+            "Product",
+            "URL"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "isFamilyFriendly": {
+        "@type": "Property",
+        "$id": "https://schema.org/isFamilyFriendly",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "isFamilyFriendly",
+        "description": "Indicates whether this content is family friendly.",
+        "type": [
+            "Boolean"
+        ],
+        "classes": [
+            "CreativeWork",
+            "Offer",
+            "Product"
+        ],
+        "enum": [
+            "False",
+            "True"
+        ]
+    },
+    "isPartOf": {
+        "@type": "Property",
+        "$id": "https://schema.org/isPartOf",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "isPartOf",
+        "description": "Indicates an item or CreativeWork that this item, or CreativeWork (in some sense), is part of.",
+        "type": [
+            "CreativeWork",
+            "URL"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "keywords": {
+        "@type": "Property",
+        "$id": "https://schema.org/keywords",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "keywords",
+        "description": "Keywords or tags used to describe some item. Multiple textual entries in a keywords list are typically delimited by commas, or by repeating the property.",
+        "type": [
+            "DefinedTerm",
+            "Text",
+            "URL"
+        ],
+        "classes": [
+            "CreativeWork",
+            "Event",
+            "Organization",
+            "Place",
+            "Product"
+        ]
+    },
+    "learningResourceType": {
+        "@type": "Property",
+        "$id": "https://schema.org/learningResourceType",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "learningResourceType",
+        "description": "The predominant type or kind characterizing the learning resource. For example, 'presentation', 'handout'.",
+        "type": [
+            "DefinedTerm",
+            "Text"
+        ],
+        "classes": [
+            "CreativeWork",
+            "LearningResource"
+        ]
+    },
+    "license": {
+        "@type": "Property",
+        "$id": "https://schema.org/license",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "license",
+        "description": "A license document that applies to this content, typically indicated by URL.",
+        "type": [
+            "CreativeWork",
+            "URL"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "locationCreated": {
+        "@type": "Property",
+        "$id": "https://schema.org/locationCreated",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "locationCreated",
+        "description": "The location where the CreativeWork was created, which may not be the same as the location depicted in the CreativeWork.",
+        "type": [
+            "Place"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "mainEntity": {
+        "@type": "Property",
+        "$id": "https://schema.org/mainEntity",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "mainEntity",
+        "description": "Indicates the primary entity described in some page or other CreativeWork.",
+        "type": [
+            "Thing"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "maintainer": {
+        "@type": "Property",
+        "$id": "https://schema.org/maintainer",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "maintainer",
+        "description": "A maintainer of a [[Dataset]], software package ([[SoftwareApplication]]), or other [[Project]]. A maintainer is a [[Person]] or [[Organization]] that manages contributions to, and/or publication of, some (typically complex) artifact. It is common for distributions of software and data to be based on \"upstream\" sources. When [[maintainer]] is applied to a specific version of something e.g. a particular version or packaging of a [[Dataset]], it is always  possible that the upstream source has a different maintainer. The [[isBasedOn]] property can be used to indicate such relationships between datasets to make the different maintenance roles clear. Similarly in the case of software, a package may have dedicated maintainers working on integration into software distributions such as Ubuntu, as well as upstream maintainers of the underlying work.\n      ",
+        "type": [
+            "Organization",
+            "Person"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "material": {
+        "@type": "Property",
+        "$id": "https://schema.org/material",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "material",
+        "description": "A material that something is made from, e.g. leather, wool, cotton, paper.",
+        "type": [
+            "Product",
+            "Text",
+            "URL"
+        ],
+        "classes": [
+            "CreativeWork",
+            "Product"
+        ]
+    },
+    "materialExtent": {
+        "@type": "Property",
+        "$id": "https://schema.org/materialExtent",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "materialExtent",
+        "type": [
+            "QuantitativeValue",
+            "Text"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "mentions": {
+        "@type": "Property",
+        "$id": "https://schema.org/mentions",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "mentions",
+        "description": "Indicates that the CreativeWork contains a reference to, but is not necessarily about a concept.",
+        "type": [
+            "Thing"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "offers": {
+        "@type": "Property",
+        "$id": "https://schema.org/offers",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "offers",
+        "description": "An offer to provide this item&#x2014;for example, an offer to sell a product, rent the DVD of a movie, perform a service, or give away tickets to an event. Use [[businessFunction]] to indicate the kind of transaction offered, i.e. sell, lease, etc. This property can also be used to describe a [[Demand]]. While this property is listed as expected on a number of common types, it can be used in others. In that case, using a second type, such as Product or a subtype of Product, can clarify the nature of the offer.\n      ",
+        "type": [
+            "Demand",
+            "Offer"
+        ],
+        "classes": [
+            "AggregateOffer",
+            "CreativeWork",
+            "EducationalOccupationalProgram",
+            "Event",
+            "MenuItem",
+            "Product",
+            "Service",
+            "Trip"
+        ]
+    },
+    "pattern": {
+        "@type": "Property",
+        "$id": "https://schema.org/pattern",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "pattern",
+        "description": "A pattern that something has, for example 'polka dot', 'striped', 'Canadian flag'. Values are typically expressed as text, although links to controlled value schemes are also supported.",
+        "type": [
+            "DefinedTerm",
+            "Text"
+        ],
+        "classes": [
+            "CreativeWork",
+            "Product"
+        ]
+    },
+    "position": {
+        "@type": "Property",
+        "$id": "https://schema.org/position",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "position",
+        "description": "The position of an item in a series or sequence of items.",
+        "type": [
+            "Integer",
+            "Text"
+        ],
+        "classes": [
+            "CreativeWork",
+            "ListItem"
+        ]
+    },
+    "producer": {
+        "@type": "Property",
+        "$id": "https://schema.org/producer",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "producer",
+        "description": "The person or organization who produced the work (e.g. music album, movie, TV/radio series etc.).",
+        "type": [
+            "Organization",
+            "Person"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "provider": {
+        "@type": "Property",
+        "$id": "https://schema.org/provider",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "provider",
+        "description": "The service provider, service operator, or service performer; the goods producer. Another party (a seller) may offer those services or goods on behalf of the provider. A provider may also serve as the seller.",
+        "type": [
+            "Organization",
+            "Person"
+        ],
+        "classes": [
+            "Action",
+            "CreativeWork",
+            "EducationalOccupationalProgram",
+            "FinancialIncentive",
+            "Invoice",
+            "OfferShippingDetails",
+            "ParcelDelivery",
+            "Reservation",
+            "Service",
+            "Trip"
+        ]
+    },
+    "publication": {
+        "@type": "Property",
+        "$id": "https://schema.org/publication",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "publication",
+        "description": "A publication event associated with the item.",
+        "type": [
+            "PublicationEvent"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "publisher": {
+        "@type": "Property",
+        "$id": "https://schema.org/publisher",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "publisher",
+        "description": "The publisher of the article in question.",
+        "type": [
+            "Organization",
+            "Person"
+        ],
+        "classes": [
+            "CreativeWork",
+            "FinancialIncentive"
+        ]
+    },
+    "publisherImprint": {
+        "@type": "Property",
+        "$id": "https://schema.org/publisherImprint",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "publisherImprint",
+        "description": "The publishing division which published the comic.",
+        "type": [
+            "Organization"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "publishingPrinciples": {
+        "@type": "Property",
+        "$id": "https://schema.org/publishingPrinciples",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "publishingPrinciples",
+        "description": "The publishingPrinciples property indicates (typically via [[URL]]) a document describing the editorial principles of an [[Organization]] (or individual, e.g. a [[Person]] writing a blog) that relate to their activities as a publisher, e.g. ethics or diversity policies. When applied to a [[CreativeWork]] (e.g. [[NewsArticle]]) the principles are those of the party primarily responsible for the creation of the [[CreativeWork]].\n\nWhile such policies are most typically expressed in natural language, sometimes related information (e.g. indicating a [[funder]]) can be expressed using schema.org terminology.\n",
+        "type": [
+            "CreativeWork",
+            "URL"
+        ],
+        "classes": [
+            "CreativeWork",
+            "Organization",
+            "Person"
+        ]
+    },
+    "recordedAt": {
+        "@type": "Property",
+        "$id": "https://schema.org/recordedAt",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "recordedAt",
+        "description": "The Event where the CreativeWork was recorded. The CreativeWork may capture all or part of the event.",
+        "type": [
+            "Event"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "releasedEvent": {
+        "@type": "Property",
+        "$id": "https://schema.org/releasedEvent",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "releasedEvent",
+        "description": "The place and time the release was issued, expressed as a PublicationEvent.",
+        "type": [
+            "PublicationEvent"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "review": {
+        "@type": "Property",
+        "$id": "https://schema.org/review",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "review",
+        "description": "A review of the item.",
+        "type": [
+            "Review"
+        ],
+        "classes": [
+            "Brand",
+            "CreativeWork",
+            "Event",
+            "Offer",
+            "Organization",
+            "Place",
+            "Product",
+            "Service"
+        ]
+    },
+    "reviews": {
+        "@type": "Property",
+        "$id": "https://schema.org/reviews",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "reviews",
+        "description": "Review of the item.",
+        "type": [
+            "Review"
+        ],
+        "classes": [
+            "CreativeWork",
+            "Offer",
+            "Organization",
+            "Place",
+            "Product"
+        ]
+    },
+    "schemaVersion": {
+        "@type": "Property",
+        "$id": "https://schema.org/schemaVersion",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "schemaVersion",
+        "description": "Indicates (by URL or string) a particular version of a schema used in some CreativeWork. This property was created primarily to\n    indicate the use of a specific schema.org release, e.g. ```10.0``` as a simple string, or more explicitly via URL, ```https://schema.org/docs/releases.html#v10.0```. There may be situations in which other schemas might usefully be referenced this way, e.g. ```http://dublincore.org/specifications/dublin-core/dces/1999-07-02/``` but this has not been carefully explored in the community.",
+        "type": [
+            "Text",
+            "URL"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "sdDatePublished": {
+        "@type": "Property",
+        "$id": "https://schema.org/sdDatePublished",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "sdDatePublished",
+        "description": "Indicates the date on which the current structured data was generated / published. Typically used alongside [[sdPublisher]].",
+        "type": [
+            "Date"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "sdLicense": {
+        "@type": "Property",
+        "$id": "https://schema.org/sdLicense",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "sdLicense",
+        "description": "A license document that applies to this structured data, typically indicated by URL.",
+        "type": [
+            "CreativeWork",
+            "URL"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "sdPublisher": {
+        "@type": "Property",
+        "$id": "https://schema.org/sdPublisher",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "sdPublisher",
+        "description": "Indicates the party responsible for generating and publishing the current structured data markup, typically in cases where the structured data is derived automatically from existing published content but published on a different site. For example, student projects and open data initiatives often re-publish existing content with more explicitly structured metadata. The\n[[sdPublisher]] property helps make such practices more explicit.",
+        "type": [
+            "Organization",
+            "Person"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "size": {
+        "@type": "Property",
+        "$id": "https://schema.org/size",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "size",
+        "description": "A standardized size of a product or creative work, specified either through a simple textual string (for example 'XL', '32Wx34L'), a  QuantitativeValue with a unitCode, or a comprehensive and structured [[SizeSpecification]]; in other cases, the [[width]], [[height]], [[depth]] and [[weight]] properties may be more applicable. ",
+        "type": [
+            "DefinedTerm",
+            "QuantitativeValue",
+            "SizeSpecification",
+            "Text"
+        ],
+        "classes": [
+            "CreativeWork",
+            "Product"
+        ]
+    },
+    "sourceOrganization": {
+        "@type": "Property",
+        "$id": "https://schema.org/sourceOrganization",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "sourceOrganization",
+        "description": "The Organization on whose behalf the creator was working.",
+        "type": [
+            "Organization"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "spatial": {
+        "@type": "Property",
+        "$id": "https://schema.org/spatial",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "spatial",
+        "description": "The \"spatial\" property can be used in cases when more specific properties\n(e.g. [[locationCreated]], [[spatialCoverage]], [[contentLocation]]) are not known to be appropriate.",
+        "type": [
+            "Place"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "spatialCoverage": {
+        "@type": "Property",
+        "$id": "https://schema.org/spatialCoverage",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "spatialCoverage",
+        "description": "The spatialCoverage of a CreativeWork indicates the place(s) which are the focus of the content. It is a subproperty of\n      contentLocation intended primarily for more technical and detailed materials. For example with a Dataset, it indicates\n      areas that the dataset describes: a dataset of New York weather would have spatialCoverage which was the place: the state of New York.",
+        "type": [
+            "Place"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "sponsor": {
+        "@type": "Property",
+        "$id": "https://schema.org/sponsor",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "sponsor",
+        "description": "A person or organization that supports a thing through a pledge, promise, or financial contribution. E.g. a sponsor of a Medical Study or a corporate sponsor of an event.",
+        "type": [
+            "Organization",
+            "Person"
+        ],
+        "classes": [
+            "CreativeWork",
+            "Event",
+            "Grant",
+            "MedicalStudy",
+            "Organization",
+            "Person"
+        ]
+    },
+    "teaches": {
+        "@type": "Property",
+        "$id": "https://schema.org/teaches",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "teaches",
+        "description": "The item being described is intended to help a person learn the competency or learning outcome defined by the referenced term.",
+        "type": [
+            "DefinedTerm",
+            "Text"
+        ],
+        "classes": [
+            "CreativeWork",
+            "EducationEvent",
+            "LearningResource"
+        ]
+    },
+    "temporal": {
+        "@type": "Property",
+        "$id": "https://schema.org/temporal",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "temporal",
+        "description": "The \"temporal\" property can be used in cases where more specific properties\n(e.g. [[temporalCoverage]], [[dateCreated]], [[dateModified]], [[datePublished]]) are not known to be appropriate.",
+        "type": [
+            "DateTime",
+            "Text"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "temporalCoverage": {
+        "@type": "Property",
+        "$id": "https://schema.org/temporalCoverage",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "temporalCoverage",
+        "description": "The temporalCoverage of a CreativeWork indicates the period that the content applies to, i.e. that it describes, either as a DateTime or as a textual string indicating a time period in [ISO 8601 time interval format](https://en.wikipedia.org/wiki/ISO_8601#Time_intervals). In\n      the case of a Dataset it will typically indicate the relevant time period in a precise notation (e.g. for a 2011 census dataset, the year 2011 would be written \"2011/2012\"). Other forms of content, e.g. ScholarlyArticle, Book, TVSeries or TVEpisode, may indicate their temporalCoverage in broader terms - textually or via well-known URL.\n      Written works such as books may sometimes have precise temporal coverage too, e.g. a work set in 1939 - 1945 can be indicated in ISO 8601 interval format format via \"1939/1945\".\n\nOpen-ended date ranges can be written with \"..\" in place of the end date. For example, \"2015-11/..\" indicates a range beginning in November 2015 and with no specified final date. This is tentative and might be updated in future when ISO 8601 is officially updated.",
+        "type": [
+            "DateTime",
+            "Text",
+            "URL"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "text": {
+        "@type": "Property",
+        "$id": "https://schema.org/text",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "text",
+        "description": "The textual content of this CreativeWork.",
+        "type": [
+            "Text"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "thumbnail": {
+        "@type": "Property",
+        "$id": "https://schema.org/thumbnail",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "thumbnail",
+        "description": "Thumbnail image for an image or video.",
+        "type": [
+            "ImageObject"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "thumbnailUrl": {
+        "@type": "Property",
+        "$id": "https://schema.org/thumbnailUrl",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "thumbnailUrl",
+        "description": "A thumbnail image relevant to the Thing.",
+        "type": [
+            "URL"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "timeRequired": {
+        "@type": "Property",
+        "$id": "https://schema.org/timeRequired",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "timeRequired",
+        "description": "Approximate or typical time it usually takes to work with or through the content of this work for the typical or target audience.",
+        "type": [
+            "Duration"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "translationOfWork": {
+        "@type": "Property",
+        "$id": "https://schema.org/translationOfWork",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "translationOfWork",
+        "description": "The work that this work has been translated from. E.g. 物种起源 is a translationOf “On the Origin of Species”.",
+        "type": [
+            "CreativeWork"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "translator": {
+        "@type": "Property",
+        "$id": "https://schema.org/translator",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "translator",
+        "description": "Organization or person who adapts a creative work to different languages, regional differences and technical requirements of a target market, or that translates during some event.",
+        "type": [
+            "Organization",
+            "Person"
+        ],
+        "classes": [
+            "CreativeWork",
+            "Event"
+        ]
+    },
+    "typicalAgeRange": {
+        "@type": "Property",
+        "$id": "https://schema.org/typicalAgeRange",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "typicalAgeRange",
+        "description": "The typical expected age range, e.g. '7-9', '11-'.",
+        "type": [
+            "Text"
+        ],
+        "classes": [
+            "CreativeWork",
+            "Event"
+        ]
+    },
+    "usageInfo": {
+        "@type": "Property",
+        "$id": "https://schema.org/usageInfo",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "usageInfo",
+        "description": "The schema.org [[usageInfo]] property indicates further information about a [[CreativeWork]]. This property is applicable both to works that are freely available and to those that require payment or other transactions. It can reference additional information, e.g. community expectations on preferred linking and citation conventions, as well as purchasing details. For something that can be commercially licensed, usageInfo can provide detailed, resource-specific information about licensing options.\n\nThis property can be used alongside the license property which indicates license(s) applicable to some piece of content. The usageInfo property can provide information about other licensing options, e.g. acquiring commercial usage rights for an image that is also available under non-commercial creative commons licenses.",
+        "type": [
+            "CreativeWork",
+            "URL"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "version": {
+        "@type": "Property",
+        "$id": "https://schema.org/version",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "version",
+        "description": "The version of the CreativeWork embodied by a specified resource.",
+        "type": [
+            "Number",
+            "Text"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "video": {
+        "@type": "Property",
+        "$id": "https://schema.org/video",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "video",
+        "description": "An embedded video object.",
+        "type": [
+            "Clip",
+            "VideoObject"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "wordCount": {
+        "@type": "Property",
+        "$id": "https://schema.org/wordCount",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "wordCount",
+        "description": "The number of words in the text of the CreativeWork such as an Article, Book, etc.",
+        "type": [
+            "Integer"
+        ],
+        "classes": [
+            "Article",
+            "CreativeWork"
+        ]
+    },
+    "workExample": {
+        "@type": "Property",
+        "$id": "https://schema.org/workExample",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "workExample",
+        "description": "Example/instance/realization/derivation of the concept of this creative work. E.g. the paperback edition, first edition, or e-book.",
+        "type": [
+            "CreativeWork"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "workTranslation": {
+        "@type": "Property",
+        "$id": "https://schema.org/workTranslation",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "workTranslation",
+        "description": "A work that is a translation of the content of this work. E.g. 西遊記 has an English workTranslation “Journey to the West”, a German workTranslation “Monkeys Pilgerfahrt” and a Vietnamese  translation Tây du ký bình khảo.",
+        "type": [
+            "CreativeWork"
+        ],
+        "classes": [
+            "CreativeWork"
+        ]
+    },
+    "additionalType": {
+        "@type": "Property",
+        "$id": "https://schema.org/additionalType",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "additionalType",
+        "description": "An additional type for the item, typically used for adding more specific types from external vocabularies in microdata syntax. This is a relationship between something and a class that the thing is in. Typically the value is a URI-identified RDF class, and in this case corresponds to the\n    use of rdf:type in RDF. Text values can be used sparingly, for cases where useful information can be added without their being an appropriate schema to reference. In the case of text values, the class label should follow the schema.org <a href=\"https://schema.org/docs/styleguide.html\">style guide</a>.",
+        "type": [
+            "Text",
+            "URL"
+        ],
+        "classes": [
+            "Thing"
+        ]
+    },
+    "alternateName": {
+        "@type": "Property",
+        "$id": "https://schema.org/alternateName",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "alternateName",
+        "description": "An alias for the item.",
+        "type": [
+            "Text"
+        ],
+        "classes": [
+            "Thing"
+        ]
+    },
+    "description": {
+        "@type": "Property",
+        "$id": "https://schema.org/description",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "description",
+        "description": "A description of the item.",
+        "type": [
+            "Text",
+            "TextObject"
+        ],
+        "classes": [
+            "Thing"
+        ]
+    },
+    "disambiguatingDescription": {
+        "@type": "Property",
+        "$id": "https://schema.org/disambiguatingDescription",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "disambiguatingDescription",
+        "description": "A sub property of description. A short description of the item used to disambiguate from other, similar items. Information from other properties (in particular, name) may be necessary for the description to be useful for disambiguation.",
+        "type": [
+            "Text"
+        ],
+        "classes": [
+            "Thing"
+        ]
+    },
+    "identifier": {
+        "@type": "Property",
+        "$id": "https://schema.org/identifier",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "identifier",
+        "description": "The identifier property represents any kind of identifier for any kind of [[Thing]], such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See [background notes](/docs/datamodel.html#identifierBg) for more details.\n        ",
+        "type": [
+            "PropertyValue",
+            "Text",
+            "URL"
+        ],
+        "classes": [
+            "Thing"
+        ]
+    },
+    "image": {
+        "@type": "Property",
+        "$id": "https://schema.org/image",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "image",
+        "description": "An image of the item. This can be a [[URL]] or a fully described [[ImageObject]].",
+        "type": [
+            "ImageObject",
+            "URL"
+        ],
+        "classes": [
+            "Thing"
+        ]
+    },
+    "mainEntityOfPage": {
+        "@type": "Property",
+        "$id": "https://schema.org/mainEntityOfPage",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "mainEntityOfPage",
+        "description": "Indicates a page (or other CreativeWork) for which this thing is the main entity being described. See [background notes](/docs/datamodel.html#mainEntityBackground) for details.",
+        "type": [
+            "CreativeWork",
+            "URL"
+        ],
+        "classes": [
+            "Thing"
+        ]
+    },
+    "name": {
+        "@type": "Property",
+        "$id": "https://schema.org/name",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "name",
+        "description": "The name of the item.",
+        "type": [
+            "Text"
+        ],
+        "classes": [
+            "Thing"
+        ]
+    },
+    "owner": {
+        "@type": "Property",
+        "$id": "https://schema.org/owner",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "owner",
+        "description": "A person or organization who owns this Thing.",
+        "type": [
+            "Organization",
+            "Person"
+        ],
+        "classes": [
+            "Thing"
+        ]
+    },
+    "potentialAction": {
+        "@type": "Property",
+        "$id": "https://schema.org/potentialAction",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "potentialAction",
+        "description": "Indicates a potential Action, which describes an idealized action in which this thing would play an 'object' role.",
+        "type": [
+            "Action"
+        ],
+        "classes": [
+            "Thing"
+        ]
+    },
+    "sameAs": {
+        "@type": "Property",
+        "$id": "https://schema.org/sameAs",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "sameAs",
+        "description": "URL of a reference Web page that unambiguously indicates the item's identity. E.g. the URL of the item's Wikipedia page, Wikidata entry, or official website.",
+        "type": [
+            "URL"
+        ],
+        "classes": [
+            "Thing"
+        ]
+    },
+    "subjectOf": {
+        "@type": "Property",
+        "$id": "https://schema.org/subjectOf",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "subjectOf",
+        "description": "A CreativeWork or Event about this Thing.",
+        "type": [
+            "CreativeWork",
+            "Event"
+        ],
+        "classes": [
+            "Thing"
+        ]
+    },
+    "url": {
+        "@type": "Property",
+        "$id": "https://schema.org/url",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "url",
+        "description": "URL of the item.",
+        "type": [
+            "URL"
+        ],
+        "classes": [
+            "Thing"
+        ]
+    }
+}        
+
+    
+    
+        
+// ----------------------------------------------------------------------
+// Property: issn
+// ----------------------------------------------------------------------
+
+/**
+ * The International Standard Serial Number (ISSN) that identifies this serial publication. You can repeat this property to identify different formats of, or the linking ISSN (ISSN-L) for, this serial publication.
+ * @param {Blog | CreativeWorkSeries | Dataset | WebSite} record - The record to retrieve the value from.
+ * @returns {Text} - The 1st value of the issn property.
+ */
+export function issn(record) {
+    return h.getValue(record, 'issn');
+}
+
+/**
+ * The International Standard Serial Number (ISSN) that identifies this serial publication. You can repeat this property to identify different formats of, or the linking ISSN (ISSN-L) for, this serial publication.
+ * @param {Blog | CreativeWorkSeries | Dataset | WebSite} record - The record to retrieve the value from.
+ * @returns {Text} - The 1st value of the issn property.
+ */
+export function getIssn(record) {
+    return h.getValue(record, 'issn');
+}
+
+/**
+ * The International Standard Serial Number (ISSN) that identifies this serial publication. You can repeat this property to identify different formats of, or the linking ISSN (ISSN-L) for, this serial publication.
+ * @param {Blog | CreativeWorkSeries | Dataset | WebSite} record - The record to retrieve the value from.
+ * @param {Text} value - The value to set on record issn property.
+ * @returns {Blog | CreativeWorkSeries | Dataset | WebSite} - The record with updated value.
+ */
+export function setIssn(record, value) {
+    return h.setValue(record, 'issn', value);
+}
+
+/**
+ * The International Standard Serial Number (ISSN) that identifies this serial publication. You can repeat this property to identify different formats of, or the linking ISSN (ISSN-L) for, this serial publication.
+ * @param {Blog | CreativeWorkSeries | Dataset | WebSite} record - The record to retrieve the values from.
+ * @returns {Text[]} - All values of the issn property.
+ */
+export function issns(record) {
+    return h.getValues(record, 'issn');
+}
+
+/**
+ * The International Standard Serial Number (ISSN) that identifies this serial publication. You can repeat this property to identify different formats of, or the linking ISSN (ISSN-L) for, this serial publication.
+ * @param {Blog | CreativeWorkSeries | Dataset | WebSite} record - The record to retrieve the values from.
+ * @returns {Text[]} - All values of the issn property.
+ */
+export function getIssns(record) {
+    return h.getValues(record, 'issn');
+}
+
+/**
+ * The International Standard Serial Number (ISSN) that identifies this serial publication. You can repeat this property to identify different formats of, or the linking ISSN (ISSN-L) for, this serial publication.
+ * @param {Blog | CreativeWorkSeries | Dataset | WebSite} record - The record to retrieve the value from.
+ * @param {Text[]} value - The value to set on record issn property.
+ * @returns {Blog | CreativeWorkSeries | Dataset | WebSite} - The record with updated value.
+ */
+export function setIssns(record, value) {
+    return h.setValues(record, 'issn', value);
+}
+
+        
+
+/**
+ * Returns the list of choices (enum) for property issn.
+ * @returns {Integer[]} - The list (enum) of value options.
+ */
+export function getEnumIssn(){
+    
+    return []
+}
+    

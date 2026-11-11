@@ -69,4 +69,51 @@ async function test1() {
 
 
 }
-test1();
+//test1();
+
+
+async function test2(){
+
+    
+    let r = {
+  "@context": "https://schema.org/",
+  "@type": "Thing",
+  "@id": "https://www.test.com/thing1#thing",
+  "name": "thing1",
+  "url": "https://www.test.com/thing1",
+  "image":  {
+    "@context": "https://schema.org/",
+    "@type": "ImageObject",
+    "@id": "https://www.test.com/imageobject1#imageobject",
+    "name": "image_1",
+    "contentUrl": "https://placehold.co/600x400"
+  }
+}
+
+
+    let db = new _h.dph.DatapointDB()
+
+    db.metadata.confidence = 0.3
+    db.metadata.sourceID = "https://www.test.com/system1#webapi"
+    db.metadata.tableID = "https://www.test.com/system1/table1"
+
+    db.add(r)
+
+    db.metadata.confidence =  0.5
+    db.addValue('https://www.test.com/thing1#thing', 'image.name', 'bob4', 'https://www.tes.tcom/system1/table1/record3', '2020-02-01')
+
+    db.metadata.confidence =  0.4
+    db.addValue('https://www.test.com/thing1#thing', 'image.name', 'bob3', 'https://www.tes.tcom/system1/table1/record3', '2022-02-01')
+
+
+    let n = db.getValues('https://www.test.com/thing1#thing', 'image[1].name')
+
+    console.log(n)
+
+    console.log(db.records)
+
+    console.log(db.toString())
+
+}
+
+test2()

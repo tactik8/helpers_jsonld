@@ -8,10 +8,9 @@ import { diskHelpers } from './diskHelpers/diskHelpers.js';
 import { htmlHelpers } from './htmlHelpers/htmlHelpers.js';
 import { formatHelpers } from './formatHelpers/formatHelpers.js';
 import { records } from './sampleRecords/records.js';
-import { datapointHelpers } from './datapointHelpers/datapointHelpers.js';
-export { records } from './sampleRecords/records.js';
-export { transformHelpers } from './transformHelpers/transformHelpers.js';
-
+import { schemaObjectHelpers} from './schemaObjectHelpers/schemaObjectHelpers.js'
+import { extractHelpers} from './extractHelpers/extractHelpers.js'
+import { datapointHelpers } from './datapointHelpers/datapointHelpers.js'
 /**
  * Define an intersection type that explicitly merges all the spread modules
  * with the explicitly assigned helper properties.
@@ -47,9 +46,12 @@ export const _h = {
     transformHelpers,
     records, // Sample jsonld records
     disk: diskHelpers, // Helpers for disk operations
-    datapointHelpers: datapointHelpers,
     format: formatHelpers,
     html: htmlHelpers, // HTML Templates for jsonld records
+    ...schemaObjectHelpers,
+    extract: extractHelpers,
+    datapointHelpers,
+    dph: datapointHelpers
 };
 
 export const helpers = _h;

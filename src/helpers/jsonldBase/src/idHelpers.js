@@ -7,7 +7,7 @@ import * as recordIDHelpers from '../../recordIdHelpers/recordIdHelpers.js';
  */
 export function normalizeRecordId(value, baseUrl) {
     // Step 1. Set temp ID if missing
-    value = setTempID(value);
+    value = fillMissingIDs(value, baseUrl) //setTempID(value);
 
     // Gather list of normalized ids
     let normalizedIDs = getNormalizedIDs(value, baseUrl);
@@ -44,10 +44,17 @@ function getNormalizedIDs(value, baseUrl) {
         }
 
         // Deal with object
-        let results = [
+        let replacee = h.record_id(value)
+        let replacer = getNormalizedRecordID(value, baseUrl)
+
+        let results = []
+        if(replacee != replacer){
+            results.push({replacee, replacer})
+        }
+        let resultsOLD = [
             {
                 replacee: h.record_id(value),
-                replacer: recordIDHelpers.get(value, baseUrl),
+                replacer: getNormalizedRecordID(value, baseUrl) //recordIDHelpers.get(value, baseUrl),
             },
         ];
 
@@ -64,12 +71,49 @@ function getNormalizedIDs(value, baseUrl) {
     return results;
 }
 
+function getNormalizedRecordID(record, baseUrl){
+
+    baseUrl = baseUrl || '_:'
+    baseUrl = baseUrl.endsWith('/') ? baseUrl : baseUrl + '/'
+
+    let record_type = h.record_type(record)
+    let record_id = h.record_id(record)
+    let suffix = "#" + (record_type || "").toLowerCase()
+
+    // Case: No record_type
+    if(!record_type){ 
+        return record_id
+    }
+    
+    // Case: Blank record_id
+    if(!record_id){ 
+        return baseUrl + h.randomUUID() + suffix
+    }
+
+    if(!record_id.includes('#')){
+        return record_id + suffix
+    }
+
+    let currentSuffix = "#" + (record_id.split('#')?.[1] || '')
+
+    if(currentSuffix !== suffix){
+        return record_id.replace(currentSuffix, suffix)
+
+    }
+
+    return record_id
+
+
+}
+
+
+
 /**
  * Fill in missing @id
  * @param {*} value
  * @returns
  */
-export function setTempID(value) {
+export function setTempID_OLD(value) {
     // Deal with array
     if (Array.isArray(value)) {
         return value.map((x) => h.assignId(x));
@@ -91,6 +135,127 @@ export function setTempID(value) {
     //
     return value;
 }
+
+
+/**
+ * Fill in missing @id. Use own url or url of parent record. 
+ * @param {*} value
+ * @param {String | undefined} url - The url of the webpage the record is from
+ * @returns
+ */
+export function fillMissingIDs(value, url) {
+
+    function _fillMissingIDs(value, url, position=0){
+
+        // Deal with array
+        if (Array.isArray(value)) {
+
+            let positions = {}
+            let newValues = []
+            for(let v of value){
+
+                // Increment position type by type
+                let record_type = h.record_type(v) || 'na'
+                positions[record_type] = positions?.[record_type] + 1 || 0
+
+                // 
+                newValues.push(_fillMissingIDs(v, url, positions?.[record_type] || 0))
+            }
+
+            return newValues
+        }
+
+        // Deal with non object
+        if (h.isObject(value) == false) {
+            return value;
+        }
+
+
+        // Handle objects
+        url = h.getValue(value, 'url') || url || ''
+        url = url.split('#')[0]
+        position = position ?? 0
+        let positionString = position == 0 ? "" : String(position)
+        let record_type = h.record_type(value)
+        let tempID = url + "#" + record_type + positionString
+
+
+        // Assign temp id if missing
+        value['@id'] = value?.['@id'] || tempID
+
+        // iterate
+        for (let k of Object.keys(value)) {
+            value[k] = _fillMissingIDs(value[k], url);
+        }
+
+        //
+        return value;
+    }
+
+    return _fillMissingIDs(value, url)
+}
+
+
+
+/**
+ * Fill in missing @id. Use own url or url of parent record. 
+ * @param {*} value
+ * @param {String | undefined} url - The url of the webpage the record is from
+ * @returns
+ */
+export function setTempID(value, url) {
+
+    function _setTempID(value, url, position=0){
+
+        // Deal with array
+        if (Array.isArray(value)) {
+
+            let positions = {}
+            let newValues = []
+            for(let v of value){
+
+                // Increment position type by type
+                let record_type = h.record_type(v) || 'na'
+                positions[record_type] = positions?.[record_type] + 1 || 0
+
+                // 
+                newValues.push(_setTempID(v, url, positions?.[record_type] || 0))
+            }
+
+            return newValues
+        }
+
+        // Deal with non object
+        if (h.isObject(value) == false) {
+            return value;
+        }
+
+
+        // Handle objects
+        url = h.getValue(value, 'url') || url || ''
+        url = url.split('#')[0]
+        position = position ?? 0
+        let positionString = position == 0 ? "" : String(position)
+        let record_type = h.record_type(value)
+        let tempID = url + "#" + record_type + positionString
+
+
+        // Assign temp id if missing
+        value['@id'] = value?.['@id'] || tempID
+
+        // iterate
+        for (let k of Object.keys(value)) {
+            value[k] = _setTempID(value[k]);
+        }
+
+        //
+        return value;
+    }
+
+    return _setTempID(value, url)
+}
+
+
 
 export function getGenericRecordID(url) {
     return recordIDHelpers.getGenericRecordID(url);

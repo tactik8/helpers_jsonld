@@ -11,10 +11,23 @@ export function extractJsonLd(htmlString, formatAsJsonld=false) {
         return [];
     }
 
+    const getAttr = (tagStr, attrName) => {
+        const attrRegex = new RegExp(
+            `${attrName}\\s*=\\s*(?:"([^"]*)"|'([^']*)'|([^\\s>]+))`,
+            'i',
+        );
+        const match = tagStr.match(attrRegex);
+        return match ? (match[1] || match[2] || match[3] || '').trim() : null;
+    };
+
+    const htmlTagMatch = htmlString.match(/<html\b[^>]*>/i);
+    const lang = htmlTagMatch ? getAttr(htmlTagMatch[0], 'lang') : null;
+
+
     // Regex to match <script type="application/ld+json"> content, including optional attributes and whitespace
     const regex =
         /<script\b[^>]*\btype\s*=\s*(?:"application\/ld\+json"|'application\/ld\+json')[^>]*>([\s\S]*?)<\/script>/gi;
-    const results = [];
+    let results = [];
     let match;
 
     while ((match = regex.exec(htmlString)) !== null) {
@@ -36,7 +49,30 @@ export function extractJsonLd(htmlString, formatAsJsonld=false) {
         }
     }
 
+    results = setLanguage(results, lang)
+
+
     return results;
+}
+
+
+function setLanguage(record, language){
+
+    if(Array.isArray(record)){
+        return record.map(x => setLanguage(x, language))
+    }
+
+    if(record?.['@id'] || record?.['@type']){
+
+        record['@language'] = record?.['@language'] || language
+        language = record['@language']
+ 
+        for(let k of Object.keys(record)){
+            record[k] = setLanguage(record[k], language)
+        }
+    }
+
+    return record
 }
 
 /**

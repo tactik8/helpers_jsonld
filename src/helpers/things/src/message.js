@@ -1,5 +1,4 @@
 import { jsonldBase as h } from '../../jsonldBase/jsonldBase.js';
-import { Thing } from './thing.js';
 
 import { CreativeWork } from './creativeWork.js';
 
@@ -34,63 +33,63 @@ export class Message extends CreativeWork {
         return this.getValues('bccRecipient');
     }
     set bccRecipient(value) {
-        return this.setValues('bccRecipient', toContactPoint(value));
+        this.setValues('bccRecipient', toContactPoint(value));
     }
 
     get ccRecipient() {
         return this.getValues('ccRecipient');
     }
     set ccRecipient(value) {
-        return this.setValues('ccRecipient', toContactPoint(value));
+        this.setValues('ccRecipient', toContactPoint(value));
     }
 
     get dateRead() {
         return this.getValue('dateRead');
     }
     set dateRead(value) {
-        return this.setValue('dateRead', value);
+         this.setValue('dateRead', value);
     }
 
     get dateReceived() {
         return this.getValue('dateReceived');
     }
     set dateReceived(value) {
-        return this.setValue('dateReceived', value);
+         this.setValue('dateReceived', value);
     }
 
     get dateSent() {
         return this.getValue('dateSent');
     }
     set dateSent(value) {
-        return this.setValue('dateSent', value);
+         this.setValue('dateSent', value);
     }
 
     get messageAttachment() {
         return this.getValues('messageAttachment');
     }
     set messageAttachment(value) {
-        return this.setValues('messageAttachment', value);
+        this.setValues('messageAttachment', value);
     }
 
     get recipient() {
         return this.getValues('recipient');
     }
     set recipient(value) {
-        return this.setValues('recipient', toContactPoint(value));
+        this.setValues('recipient', toContactPoint(value));
     }
 
     get sender() {
         return this.getValue('sender');
     }
     set sender(value) {
-        return this.setValue('sender', toContactPoint(value));
+         this.setValue('sender', toContactPoint(value));
     }
 
     get toRecipient() {
         return this.getValues('toRecipient');
     }
     set toRecipient(value) {
-        return this.setValues('toRecipient', toContactPoint(value));
+        this.setValues('toRecipient', toContactPoint(value));
     }
 
     // Shortcurts for common properties
@@ -233,7 +232,9 @@ function toString(messageRecord) {
     let dateString = '';
     try {
         dateString = new Intl.DateTimeFormat('en-US').format(date);
-    } catch (err) {}
+    } catch  {
+        //
+    }
 
     let result = `${senderString} | ${recipientString} | ${subject} | ${dateString}`;
 

@@ -1,0 +1,10 @@
+{
+    "@type": "Class",
+    "$id": "https://schema.org/dctype:Image",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "dctype:Image",
+    "type": "object",
+    "parent": "",
+    "properties": {},
+    "propertiesAll": {}
+}

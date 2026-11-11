@@ -1,0 +1,10 @@
+{
+    "@type": "Class",
+    "$id": "https://schema.org/fibo-be-nfp-nfp:NonGovernmentalOrganization",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "fibo-be-nfp-nfp:NonGovernmentalOrganization",
+    "type": "object",
+    "parent": "",
+    "properties": {},
+    "propertiesAll": {}
+}

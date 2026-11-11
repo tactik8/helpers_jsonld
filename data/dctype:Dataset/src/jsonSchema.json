@@ -1,0 +1,10 @@
+{
+    "@type": "Class",
+    "$id": "https://schema.org/dctype:Dataset",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "dctype:Dataset",
+    "type": "object",
+    "parent": "",
+    "properties": {},
+    "propertiesAll": {}
+}

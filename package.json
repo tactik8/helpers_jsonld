@@ -23,6 +23,7 @@
     "dev": "node src/dev.js",
     "start": "node dist/index.js",
     "server": "nodemon ./server.js",
+    "generate": "node src/helpers/schemaObjectHelpers/codeGenerator/codeGenerator.js",
     "lint": "eslint ."
   },
   "keywords": [],

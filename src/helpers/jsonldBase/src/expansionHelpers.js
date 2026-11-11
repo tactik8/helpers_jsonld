@@ -147,9 +147,30 @@ export function flatten(record) {
             let values = record[k];
             values = h.toArray(values);
 
+            // Handle itemListElement
+            if(k == 'itemListElement'){
+
+                record[k] = h.toArray(record?.[k])
+                
+                for(let i =0; i < record[k].length; i ++ ){
+
+                    record[k][i].item = h.toArray(record[k][i]?.item)
+                    for(let ii=0; ii< record[k][i].item.length; ii++){
+
+                        if(record[k][i].item[ii]?.["@id"]){
+                            record[k][i].item[ii] = {"@id": record[k][i].item[ii]?.["@id"]}
+                            records = records.concat(_flatten(record[k][i].item[ii]));
+                        } 
+                    }
+                }
+                
+               continue
+            }
+
+            // Handle object
             record[k] = [];
             for (let v of values) {
-                if (v?.['@id']) {
+                if (v?.['@id'] ) {
                     record[k].push({ '@id': v?.['@id'] });
                 } else {
                     record[k].push(v);

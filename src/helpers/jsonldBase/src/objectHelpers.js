@@ -2,6 +2,8 @@ import { jsonldBase as h } from '../jsonldBase.js';
 
 import * as recordIDHelpers from '../../recordIdHelpers/recordIdHelpers.js';
 
+import * as idHelpers from './idHelpers.js'
+
 import { dataHelpers } from '../../dataHelpers/dataHelpers.js';
 
 /**
@@ -20,12 +22,101 @@ export function isJsonld(record) {
     return record?.['@type'] || record?.['@id'];
 }
 
+
+/**
+ * Sets id if missing. 
+ * @param {*} value 
+ * @param {String | undefined} url - The url the record is from. Can be empty.
+ * @returns 
+ */
+export function normalize(value, url){
+
+    return idHelpers.normalizeRecordId(value, url);
+
+
+}
+
+
 /**
  * Replace record_ids by standardized record_id. Sets permanent id if _:
  * @param {*} value
  * @returns
  */
 export function clean(value, baseUrl) {
+    if (Array.isArray(value) && value.length > 1) {
+        return value.map((x) => clean(x, baseUrl));
+    }
+
+    if (!value?.['@type'] || !value?.['@id']) {
+        return value;
+    }
+
+    // Clone
+    try {
+        value = clone(value);
+    } catch  {
+        //
+    }
+
+    // Set id
+    value = idHelpers.setTempID(value);
+
+    // Flatten
+    let flatRecords = h.flatten(value);
+
+    // Order keys
+    flatRecords = flatRecords.map((x) =>
+        JSON.parse(JSON.stringify(x, Object.keys(x).sort(), 4)),
+    );
+
+    //
+    let replacements = [];
+
+    // Get combinations of replacer, replacees
+    for (let f of flatRecords) {
+        // Ensure id not array
+        f['@id'] = Array.isArray(f?.['@id']) ? f?.['@id'][0] : f?.['@id'];
+
+        // Validate id, skip if ok
+        if (recordIDHelpers.validate(f) == true) {
+            continue;
+        }
+
+        // Get standard id
+        let newID = recordIDHelpers.getStandardID(f, baseUrl);
+
+        if (newID && f?.['@id'] != newID) {
+            let r = {
+                replacer: newID,
+                replacee: f?.['@id'],
+            };
+            replacements.push(r);
+        }
+
+        if (!newID && f?.['@id'].startsWith('_:')) {
+            let r = {
+                replacer: h.getGenericRecordID(baseUrl),
+                replacee: f?.['@id'],
+            };
+            replacements.push(r);
+        }
+    }
+
+    // Execute replacement
+    value = h.replaceIds(value, replacements);
+
+    //
+    return value;
+}
+
+
+
+/**
+ * Replace record_ids by standardized record_id. Sets permanent id if _:
+ * @param {*} value
+ * @returns
+ */
+export function cleanOLD(value, baseUrl) {
     if (Array.isArray(value) && value.length > 1) {
         return value.map((x) => clean(x, baseUrl));
     }

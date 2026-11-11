@@ -13,6 +13,7 @@ import * as idHelpers from './src/idHelpers.js';
 import * as memoryDb from './src/memoryDb.js';
 import * as objectHelpers from './src/objectHelpers.js';
 import * as propertyHelpers from './src/propertyHelpers.js';
+import * as propertyShortcutHelpers from './src/propertyShortcutHelpers.js'
 import * as utilitiesHelpers from './src/utilitiesHelpers.js';
 import * as listHelpers from './src/listHelpers.js';
 import * as toStringHelpers from './src/toStringHelpers.js';
@@ -20,6 +21,7 @@ import * as databaseHelpers from './src/databaseHelpers.js';
 import * as itemListHelpers from './src/itemListHelpers.js';
 import * as actionExecutionHelpers from './src/actionExecutionHelpers.js';
 import * as potentialActionHelpers from './src/potentialActionHelpers.js';
+//import * as datapointHelpers from './src/datapointHelpers.js'
 
 /**
  * @module jsonldBase
@@ -74,6 +76,7 @@ export const jsonldBase = {
      * @see module:propertyHelpers
      */
     ...propertyHelpers,
+    ...propertyShortcutHelpers,
     /**
      * @namespace utilitiesHelpers
      * @description Utilities helpers
@@ -116,6 +119,7 @@ export const jsonldBase = {
      *
      */
     potentialActionHelpers: potentialActionHelpers,
+
 
    
 };

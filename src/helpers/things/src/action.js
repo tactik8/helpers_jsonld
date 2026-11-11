@@ -336,7 +336,7 @@ function addMaxValue(record, propertyID, value) {
     let pvs =
         getPVSInput(record, propertyID) || new PropertyValueSpecification();
     pvs.maxValue = value;
-    record = setPVSInput(pvs.record,propertyID, value);
+    record = setPVSInput(pvs.record, propertyID, value);
     return record;
 }
 function addMinLength(record, propertyID, value) {
@@ -375,7 +375,9 @@ function testConditions(record) {
     let pps = getPVSInput(record);
 
     for (let p of pps) {
-        if (PropertyValueSpecification.test(p, record?.[p.propertyID]) == false) {
+        if (
+            PropertyValueSpecification.test(p, record?.[p.propertyID]) == false
+        ) {
             return false;
         }
     }
@@ -395,19 +397,19 @@ export class UpdateAction extends Action {
     }
 
     get targetCollection() {
-        return this.getValues( 'targetCollection');
+        return this.getValues('targetCollection');
     }
 
     set targetCollection(value) {
-        return this.setValues( 'targetCollection', value);
+        return this.setValues('targetCollection', value);
     }
 
     get toLocation() {
-        return this.getValues( 'toLocation');
+        return this.getValues('toLocation');
     }
 
     set toLocation(value) {
-        return this.setValues( 'toLocation', value);
+        return this.setValues('toLocation', value);
     }
 }
 
@@ -444,19 +446,19 @@ export class ReplaceAction extends UpdateAction {
     }
 
     get replacer() {
-        return this.getValues( 'replacer');
+        return this.getValues('replacer');
     }
 
     set replacer(value) {
-        return this.setValues( 'replacer', value);
+        return this.setValues('replacer', value);
     }
 
     get replacee() {
-        return this.getValues( 'replacee');
+        return this.getValues('replacee');
     }
 
     set replacee(value) {
-        return  this.setValues( 'replacee', value);
+        return this.setValues('replacee', value);
     }
 }
 
@@ -508,7 +510,7 @@ export class SearchAction extends UpdateAction {
     }
 
     set query(value) {
-        return this.setValue( 'query', value);
+        return this.setValue('query', value);
     }
 
     get filter() {
@@ -581,7 +583,7 @@ export class SearchAction extends UpdateAction {
         return this.getValue('target') || '';
     }
     set target(value) {
-        return this.setValue( 'target', value);
+        return this.setValue('target', value);
     }
 
     async execute() {

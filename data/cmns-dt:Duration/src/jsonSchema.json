@@ -1,0 +1,10 @@
+{
+    "@type": "Class",
+    "$id": "https://schema.org/cmns-dt:Duration",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "cmns-dt:Duration",
+    "type": "object",
+    "parent": "",
+    "properties": {},
+    "propertiesAll": {}
+}

@@ -1,0 +1,598 @@
+{
+    "@type": "Class",
+    "$id": "https://schema.org/Action",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Action",
+    "type": "object",
+    "description": "An action performed by a direct agent and indirect participants upon a direct object. Optionally happens at a location with the help of an inanimate instrument. The execution of the action may produce a result. Specific action sub-type documentation specifies the exact expectation of each argument/role.\\n\\nSee also [blog post](https://blog.schema.org/2014/04/16/announcing-schema-org-actions/) and [Actions overview document](https://schema.org/docs/actions.html).",
+    "parent": "Thing",
+    "properties": {
+        "actionProcess": {
+            "@type": "Property",
+            "$id": "https://schema.org/actionProcess",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "actionProcess",
+            "description": "Description of the process by which the action was performed.",
+            "type": [
+                "HowTo"
+            ],
+            "classes": [
+                "Action"
+            ]
+        },
+        "actionStatus": {
+            "@type": "Property",
+            "$id": "https://schema.org/actionStatus",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "actionStatus",
+            "description": "Indicates the current disposition of the Action.",
+            "type": [
+                "ActionStatusType"
+            ],
+            "classes": [
+                "Action"
+            ],
+            "enum": [
+                "ActiveActionStatus",
+                "CompletedActionStatus",
+                "FailedActionStatus",
+                "PotentialActionStatus"
+            ]
+        },
+        "agent": {
+            "@type": "Property",
+            "$id": "https://schema.org/agent",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "agent",
+            "description": "The direct performer or driver of the action (animate or inanimate). E.g. *John* wrote a book.",
+            "type": [
+                "Organization",
+                "Person"
+            ],
+            "classes": [
+                "Action"
+            ]
+        },
+        "endTime": {
+            "@type": "Property",
+            "$id": "https://schema.org/endTime",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "endTime",
+            "description": "The endTime of something. For a reserved event or service (e.g. FoodEstablishmentReservation), the time that it is expected to end. For actions that span a period of time, when the action was performed. E.g. John wrote a book from January to *December*. For media, including audio and video, it's the time offset of the end of a clip within a larger file.\\n\\nNote that Event uses startDate/endDate instead of startTime/endTime, even when describing dates with times. This situation may be clarified in future revisions.",
+            "type": [
+                "DateTime",
+                "Time"
+            ],
+            "classes": [
+                "Action",
+                "FoodEstablishmentReservation",
+                "InteractionCounter",
+                "MediaObject",
+                "Schedule"
+            ]
+        },
+        "error": {
+            "@type": "Property",
+            "$id": "https://schema.org/error",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "error",
+            "description": "For failed actions, more information on the cause of the failure. Consider using the Error type.",
+            "type": [
+                "Thing"
+            ],
+            "classes": [
+                "Action"
+            ]
+        },
+        "instrument": {
+            "@type": "Property",
+            "$id": "https://schema.org/instrument",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "instrument",
+            "description": "The object that helped the agent perform the action. E.g. John wrote a book with *a pen*.",
+            "type": [
+                "Thing"
+            ],
+            "classes": [
+                "Action"
+            ]
+        },
+        "location": {
+            "@type": "Property",
+            "$id": "https://schema.org/location",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "location",
+            "description": "The location of, for example, where an event is happening, where an organization is located, or where an action takes place.",
+            "type": [
+                "Place",
+                "PostalAddress",
+                "Text",
+                "VirtualLocation"
+            ],
+            "classes": [
+                "Action",
+                "Event",
+                "InteractionCounter",
+                "Organization"
+            ]
+        },
+        "object": {
+            "@type": "Property",
+            "$id": "https://schema.org/object",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "object",
+            "description": "The object upon which the action is carried out, whose state is kept intact or changed. Also known as the semantic roles patient, affected or undergoer (which change their state) or theme (which doesn't). E.g. John read *a book*.",
+            "type": [
+                "Thing"
+            ],
+            "classes": [
+                "Action"
+            ]
+        },
+        "participant": {
+            "@type": "Property",
+            "$id": "https://schema.org/participant",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "participant",
+            "description": "Other co-agents that participated in the action indirectly. E.g. John wrote a book with *Steve*.",
+            "type": [
+                "Organization",
+                "Person"
+            ],
+            "classes": [
+                "Action"
+            ]
+        },
+        "provider": {
+            "@type": "Property",
+            "$id": "https://schema.org/provider",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "provider",
+            "description": "The service provider, service operator, or service performer; the goods producer. Another party (a seller) may offer those services or goods on behalf of the provider. A provider may also serve as the seller.",
+            "type": [
+                "Organization",
+                "Person"
+            ],
+            "classes": [
+                "Action",
+                "CreativeWork",
+                "EducationalOccupationalProgram",
+                "FinancialIncentive",
+                "Invoice",
+                "OfferShippingDetails",
+                "ParcelDelivery",
+                "Reservation",
+                "Service",
+                "Trip"
+            ]
+        },
+        "result": {
+            "@type": "Property",
+            "$id": "https://schema.org/result",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "result",
+            "description": "The result produced in the action. E.g. John wrote *a book*.",
+            "type": [
+                "Thing"
+            ],
+            "classes": [
+                "Action"
+            ]
+        },
+        "startTime": {
+            "@type": "Property",
+            "$id": "https://schema.org/startTime",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "startTime",
+            "description": "The startTime of something. For a reserved event or service (e.g. FoodEstablishmentReservation), the time that it is expected to start. For actions that span a period of time, when the action was performed. E.g. John wrote a book from *January* to December. For media, including audio and video, it's the time offset of the start of a clip within a larger file.\\n\\nNote that Event uses startDate/endDate instead of startTime/endTime, even when describing dates with times. This situation may be clarified in future revisions.",
+            "type": [
+                "DateTime",
+                "Time"
+            ],
+            "classes": [
+                "Action",
+                "FoodEstablishmentReservation",
+                "InteractionCounter",
+                "MediaObject",
+                "Schedule"
+            ]
+        },
+        "target": {
+            "@type": "Property",
+            "$id": "https://schema.org/target",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "target",
+            "description": "Indicates a target EntryPoint, or url, for an Action.",
+            "type": [
+                "EntryPoint",
+                "URL"
+            ],
+            "classes": [
+                "Action"
+            ]
+        }
+    },
+    "propertiesAll": {
+        "actionProcess": {
+            "@type": "Property",
+            "$id": "https://schema.org/actionProcess",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "actionProcess",
+            "description": "Description of the process by which the action was performed.",
+            "type": [
+                "HowTo"
+            ],
+            "classes": [
+                "Action"
+            ]
+        },
+        "actionStatus": {
+            "@type": "Property",
+            "$id": "https://schema.org/actionStatus",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "actionStatus",
+            "description": "Indicates the current disposition of the Action.",
+            "type": [
+                "ActionStatusType"
+            ],
+            "classes": [
+                "Action"
+            ],
+            "enum": [
+                "ActiveActionStatus",
+                "CompletedActionStatus",
+                "FailedActionStatus",
+                "PotentialActionStatus"
+            ]
+        },
+        "agent": {
+            "@type": "Property",
+            "$id": "https://schema.org/agent",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "agent",
+            "description": "The direct performer or driver of the action (animate or inanimate). E.g. *John* wrote a book.",
+            "type": [
+                "Organization",
+                "Person"
+            ],
+            "classes": [
+                "Action"
+            ]
+        },
+        "endTime": {
+            "@type": "Property",
+            "$id": "https://schema.org/endTime",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "endTime",
+            "description": "The endTime of something. For a reserved event or service (e.g. FoodEstablishmentReservation), the time that it is expected to end. For actions that span a period of time, when the action was performed. E.g. John wrote a book from January to *December*. For media, including audio and video, it's the time offset of the end of a clip within a larger file.\\n\\nNote that Event uses startDate/endDate instead of startTime/endTime, even when describing dates with times. This situation may be clarified in future revisions.",
+            "type": [
+                "DateTime",
+                "Time"
+            ],
+            "classes": [
+                "Action",
+                "FoodEstablishmentReservation",
+                "InteractionCounter",
+                "MediaObject",
+                "Schedule"
+            ]
+        },
+        "error": {
+            "@type": "Property",
+            "$id": "https://schema.org/error",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "error",
+            "description": "For failed actions, more information on the cause of the failure. Consider using the Error type.",
+            "type": [
+                "Thing"
+            ],
+            "classes": [
+                "Action"
+            ]
+        },
+        "instrument": {
+            "@type": "Property",
+            "$id": "https://schema.org/instrument",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "instrument",
+            "description": "The object that helped the agent perform the action. E.g. John wrote a book with *a pen*.",
+            "type": [
+                "Thing"
+            ],
+            "classes": [
+                "Action"
+            ]
+        },
+        "location": {
+            "@type": "Property",
+            "$id": "https://schema.org/location",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "location",
+            "description": "The location of, for example, where an event is happening, where an organization is located, or where an action takes place.",
+            "type": [
+                "Place",
+                "PostalAddress",
+                "Text",
+                "VirtualLocation"
+            ],
+            "classes": [
+                "Action",
+                "Event",
+                "InteractionCounter",
+                "Organization"
+            ]
+        },
+        "object": {
+            "@type": "Property",
+            "$id": "https://schema.org/object",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "object",
+            "description": "The object upon which the action is carried out, whose state is kept intact or changed. Also known as the semantic roles patient, affected or undergoer (which change their state) or theme (which doesn't). E.g. John read *a book*.",
+            "type": [
+                "Thing"
+            ],
+            "classes": [
+                "Action"
+            ]
+        },
+        "participant": {
+            "@type": "Property",
+            "$id": "https://schema.org/participant",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "participant",
+            "description": "Other co-agents that participated in the action indirectly. E.g. John wrote a book with *Steve*.",
+            "type": [
+                "Organization",
+                "Person"
+            ],
+            "classes": [
+                "Action"
+            ]
+        },
+        "provider": {
+            "@type": "Property",
+            "$id": "https://schema.org/provider",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "provider",
+            "description": "The service provider, service operator, or service performer; the goods producer. Another party (a seller) may offer those services or goods on behalf of the provider. A provider may also serve as the seller.",
+            "type": [
+                "Organization",
+                "Person"
+            ],
+            "classes": [
+                "Action",
+                "CreativeWork",
+                "EducationalOccupationalProgram",
+                "FinancialIncentive",
+                "Invoice",
+                "OfferShippingDetails",
+                "ParcelDelivery",
+                "Reservation",
+                "Service",
+                "Trip"
+            ]
+        },
+        "result": {
+            "@type": "Property",
+            "$id": "https://schema.org/result",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "result",
+            "description": "The result produced in the action. E.g. John wrote *a book*.",
+            "type": [
+                "Thing"
+            ],
+            "classes": [
+                "Action"
+            ]
+        },
+        "startTime": {
+            "@type": "Property",
+            "$id": "https://schema.org/startTime",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "startTime",
+            "description": "The startTime of something. For a reserved event or service (e.g. FoodEstablishmentReservation), the time that it is expected to start. For actions that span a period of time, when the action was performed. E.g. John wrote a book from *January* to December. For media, including audio and video, it's the time offset of the start of a clip within a larger file.\\n\\nNote that Event uses startDate/endDate instead of startTime/endTime, even when describing dates with times. This situation may be clarified in future revisions.",
+            "type": [
+                "DateTime",
+                "Time"
+            ],
+            "classes": [
+                "Action",
+                "FoodEstablishmentReservation",
+                "InteractionCounter",
+                "MediaObject",
+                "Schedule"
+            ]
+        },
+        "target": {
+            "@type": "Property",
+            "$id": "https://schema.org/target",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "target",
+            "description": "Indicates a target EntryPoint, or url, for an Action.",
+            "type": [
+                "EntryPoint",
+                "URL"
+            ],
+            "classes": [
+                "Action"
+            ]
+        },
+        "additionalType": {
+            "@type": "Property",
+            "$id": "https://schema.org/additionalType",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "additionalType",
+            "description": "An additional type for the item, typically used for adding more specific types from external vocabularies in microdata syntax. This is a relationship between something and a class that the thing is in. Typically the value is a URI-identified RDF class, and in this case corresponds to the\n    use of rdf:type in RDF. Text values can be used sparingly, for cases where useful information can be added without their being an appropriate schema to reference. In the case of text values, the class label should follow the schema.org <a href=\"https://schema.org/docs/styleguide.html\">style guide</a>.",
+            "type": [
+                "Text",
+                "URL"
+            ],
+            "classes": [
+                "Thing"
+            ]
+        },
+        "alternateName": {
+            "@type": "Property",
+            "$id": "https://schema.org/alternateName",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "alternateName",
+            "description": "An alias for the item.",
+            "type": [
+                "Text"
+            ],
+            "classes": [
+                "Thing"
+            ]
+        },
+        "description": {
+            "@type": "Property",
+            "$id": "https://schema.org/description",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "description",
+            "description": "A description of the item.",
+            "type": [
+                "Text",
+                "TextObject"
+            ],
+            "classes": [
+                "Thing"
+            ]
+        },
+        "disambiguatingDescription": {
+            "@type": "Property",
+            "$id": "https://schema.org/disambiguatingDescription",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "disambiguatingDescription",
+            "description": "A sub property of description. A short description of the item used to disambiguate from other, similar items. Information from other properties (in particular, name) may be necessary for the description to be useful for disambiguation.",
+            "type": [
+                "Text"
+            ],
+            "classes": [
+                "Thing"
+            ]
+        },
+        "identifier": {
+            "@type": "Property",
+            "$id": "https://schema.org/identifier",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "identifier",
+            "description": "The identifier property represents any kind of identifier for any kind of [[Thing]], such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See [background notes](/docs/datamodel.html#identifierBg) for more details.\n        ",
+            "type": [
+                "PropertyValue",
+                "Text",
+                "URL"
+            ],
+            "classes": [
+                "Thing"
+            ]
+        },
+        "image": {
+            "@type": "Property",
+            "$id": "https://schema.org/image",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "image",
+            "description": "An image of the item. This can be a [[URL]] or a fully described [[ImageObject]].",
+            "type": [
+                "ImageObject",
+                "URL"
+            ],
+            "classes": [
+                "Thing"
+            ]
+        },
+        "mainEntityOfPage": {
+            "@type": "Property",
+            "$id": "https://schema.org/mainEntityOfPage",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "mainEntityOfPage",
+            "description": "Indicates a page (or other CreativeWork) for which this thing is the main entity being described. See [background notes](/docs/datamodel.html#mainEntityBackground) for details.",
+            "type": [
+                "CreativeWork",
+                "URL"
+            ],
+            "classes": [
+                "Thing"
+            ]
+        },
+        "name": {
+            "@type": "Property",
+            "$id": "https://schema.org/name",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "name",
+            "description": "The name of the item.",
+            "type": [
+                "Text"
+            ],
+            "classes": [
+                "Thing"
+            ]
+        },
+        "owner": {
+            "@type": "Property",
+            "$id": "https://schema.org/owner",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "owner",
+            "description": "A person or organization who owns this Thing.",
+            "type": [
+                "Organization",
+                "Person"
+            ],
+            "classes": [
+                "Thing"
+            ]
+        },
+        "potentialAction": {
+            "@type": "Property",
+            "$id": "https://schema.org/potentialAction",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "potentialAction",
+            "description": "Indicates a potential Action, which describes an idealized action in which this thing would play an 'object' role.",
+            "type": [
+                "Action"
+            ],
+            "classes": [
+                "Thing"
+            ]
+        },
+        "sameAs": {
+            "@type": "Property",
+            "$id": "https://schema.org/sameAs",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "sameAs",
+            "description": "URL of a reference Web page that unambiguously indicates the item's identity. E.g. the URL of the item's Wikipedia page, Wikidata entry, or official website.",
+            "type": [
+                "URL"
+            ],
+            "classes": [
+                "Thing"
+            ]
+        },
+        "subjectOf": {
+            "@type": "Property",
+            "$id": "https://schema.org/subjectOf",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "subjectOf",
+            "description": "A CreativeWork or Event about this Thing.",
+            "type": [
+                "CreativeWork",
+                "Event"
+            ],
+            "classes": [
+                "Thing"
+            ]
+        },
+        "url": {
+            "@type": "Property",
+            "$id": "https://schema.org/url",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "url",
+            "description": "URL of the item.",
+            "type": [
+                "URL"
+            ],
+            "classes": [
+                "Thing"
+            ]
+        }
+    }
+}

@@ -1,0 +1,2574 @@
+{
+    "@type": "Class",
+    "$id": "https://schema.org/Organization",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Organization",
+    "type": "object",
+    "description": "An organization such as a school, NGO, corporation, club, etc.",
+    "parent": "Thing",
+    "properties": {
+        "acceptedPaymentMethod": {
+            "@type": "Property",
+            "$id": "https://schema.org/acceptedPaymentMethod",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "acceptedPaymentMethod",
+            "description": "The payment method(s) that are accepted in general by an organization, or for some specific demand or offer.",
+            "type": [
+                "LoanOrCredit",
+                "PaymentMethod",
+                "Text"
+            ],
+            "classes": [
+                "Demand",
+                "Offer",
+                "Organization"
+            ]
+        },
+        "actionableFeedbackPolicy": {
+            "@type": "Property",
+            "$id": "https://schema.org/actionableFeedbackPolicy",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "actionableFeedbackPolicy",
+            "description": "For a [[NewsMediaOrganization]] or other news-related [[Organization]], a statement about public engagement activities (for news media, the newsroom’s), including involving the public - digitally or otherwise -- in coverage decisions, reporting and activities after publication.",
+            "type": [
+                "CreativeWork",
+                "URL"
+            ],
+            "classes": [
+                "NewsMediaOrganization",
+                "Organization"
+            ]
+        },
+        "address": {
+            "@type": "Property",
+            "$id": "https://schema.org/address",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "address",
+            "description": "Physical address of the item.",
+            "type": [
+                "PostalAddress",
+                "Text"
+            ],
+            "classes": [
+                "GeoCoordinates",
+                "GeoShape",
+                "Organization",
+                "Person",
+                "Place"
+            ]
+        },
+        "agentInteractionStatistic": {
+            "@type": "Property",
+            "$id": "https://schema.org/agentInteractionStatistic",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "agentInteractionStatistic",
+            "description": "The number of completed interactions for this entity, in a particular role (the 'agent'), in a particular action (indicated in the statistic), and in a particular context (i.e. interactionService).",
+            "type": [
+                "InteractionCounter"
+            ],
+            "classes": [
+                "Organization",
+                "Person"
+            ]
+        },
+        "aggregateRating": {
+            "@type": "Property",
+            "$id": "https://schema.org/aggregateRating",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "aggregateRating",
+            "description": "The overall rating, based on a collection of reviews or ratings, of the item.",
+            "type": [
+                "AggregateRating"
+            ],
+            "classes": [
+                "Brand",
+                "CreativeWork",
+                "Event",
+                "Offer",
+                "Organization",
+                "Place",
+                "Product",
+                "Service"
+            ]
+        },
+        "alumni": {
+            "@type": "Property",
+            "$id": "https://schema.org/alumni",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "alumni",
+            "description": "Alumni of an organization.",
+            "type": [
+                "Person"
+            ],
+            "classes": [
+                "EducationalOrganization",
+                "Organization"
+            ]
+        },
+        "areaServed": {
+            "@type": "Property",
+            "$id": "https://schema.org/areaServed",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "areaServed",
+            "description": "The geographic area where a service or offered item is provided.",
+            "type": [
+                "AdministrativeArea",
+                "GeoShape",
+                "Place",
+                "Text"
+            ],
+            "classes": [
+                "ContactPoint",
+                "DeliveryChargeSpecification",
+                "Demand",
+                "FinancialIncentive",
+                "Offer",
+                "Organization",
+                "Service"
+            ]
+        },
+        "authorizedRepresentative": {
+            "@type": "Property",
+            "$id": "https://schema.org/authorizedRepresentative",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "authorizedRepresentative",
+            "description": "An organization or person officially appointed to act on behalf of the manufacturer in a specific region or context.",
+            "type": [
+                "Organization",
+                "Person"
+            ],
+            "classes": [
+                "Organization",
+                "Product"
+            ]
+        },
+        "award": {
+            "@type": "Property",
+            "$id": "https://schema.org/award",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "award",
+            "description": "An award won by or for this item.",
+            "type": [
+                "Text"
+            ],
+            "classes": [
+                "CreativeWork",
+                "Organization",
+                "Person",
+                "Product",
+                "Service"
+            ]
+        },
+        "awards": {
+            "@type": "Property",
+            "$id": "https://schema.org/awards",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "awards",
+            "description": "Awards won by or for this item.",
+            "type": [
+                "Text"
+            ],
+            "classes": [
+                "CreativeWork",
+                "Organization",
+                "Person",
+                "Product"
+            ]
+        },
+        "brand": {
+            "@type": "Property",
+            "$id": "https://schema.org/brand",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "brand",
+            "description": "The brand(s) associated with a product or service, or the brand(s) maintained by an organization or business person.",
+            "type": [
+                "Brand",
+                "Organization"
+            ],
+            "classes": [
+                "Organization",
+                "Person",
+                "Product",
+                "Service"
+            ]
+        },
+        "companyRegistration": {
+            "@type": "Property",
+            "$id": "https://schema.org/companyRegistration",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "companyRegistration",
+            "description": "The official registration information of a business including the organization that issued it such as Company House or Chamber of Commerce in form of a Certification.",
+            "type": [
+                "Certification"
+            ],
+            "classes": [
+                "Organization"
+            ]
+        },
+        "contactPoint": {
+            "@type": "Property",
+            "$id": "https://schema.org/contactPoint",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "contactPoint",
+            "description": "A contact point for a person or organization.",
+            "type": [
+                "ContactPoint"
+            ],
+            "classes": [
+                "HealthInsurancePlan",
+                "Organization",
+                "Person"
+            ]
+        },
+        "contactPoints": {
+            "@type": "Property",
+            "$id": "https://schema.org/contactPoints",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "contactPoints",
+            "description": "A contact point for a person or organization.",
+            "type": [
+                "ContactPoint"
+            ],
+            "classes": [
+                "Organization",
+                "Person"
+            ]
+        },
+        "correctionsPolicy": {
+            "@type": "Property",
+            "$id": "https://schema.org/correctionsPolicy",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "correctionsPolicy",
+            "description": "For an [[Organization]] (e.g. [[NewsMediaOrganization]]), a statement describing (in news media, the newsroom’s) disclosure and correction policy for errors.",
+            "type": [
+                "CreativeWork",
+                "URL"
+            ],
+            "classes": [
+                "NewsMediaOrganization",
+                "Organization"
+            ]
+        },
+        "department": {
+            "@type": "Property",
+            "$id": "https://schema.org/department",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "department",
+            "description": "A relationship between an organization and a department of that organization, also described as an organization (allowing different urls, logos, opening hours). For example: a store with a pharmacy, or a bakery with a cafe.",
+            "type": [
+                "Organization"
+            ],
+            "classes": [
+                "Organization"
+            ]
+        },
+        "dissolutionDate": {
+            "@type": "Property",
+            "$id": "https://schema.org/dissolutionDate",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "dissolutionDate",
+            "description": "The date that this organization was dissolved.",
+            "type": [
+                "Date"
+            ],
+            "classes": [
+                "Organization"
+            ]
+        },
+        "diversityPolicy": {
+            "@type": "Property",
+            "$id": "https://schema.org/diversityPolicy",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "diversityPolicy",
+            "description": "Statement on diversity policy by an [[Organization]] e.g. a [[NewsMediaOrganization]]. For a [[NewsMediaOrganization]], a statement describing the newsroom’s diversity policy on both staffing and sources, typically providing staffing data.",
+            "type": [
+                "CreativeWork",
+                "URL"
+            ],
+            "classes": [
+                "NewsMediaOrganization",
+                "Organization"
+            ]
+        },
+        "diversityStaffingReport": {
+            "@type": "Property",
+            "$id": "https://schema.org/diversityStaffingReport",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "diversityStaffingReport",
+            "description": "For an [[Organization]] (often but not necessarily a [[NewsMediaOrganization]]), a report on staffing diversity issues. In a news context this might be for example ASNE or RTDNA (US) reports, or self-reported.",
+            "type": [
+                "Article",
+                "URL"
+            ],
+            "classes": [
+                "NewsMediaOrganization",
+                "Organization"
+            ]
+        },
+        "duns": {
+            "@type": "Property",
+            "$id": "https://schema.org/duns",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "duns",
+            "description": "The Dun & Bradstreet DUNS number for identifying an organization or business person.",
+            "type": [
+                "Text"
+            ],
+            "classes": [
+                "Organization",
+                "Person"
+            ]
+        },
+        "email": {
+            "@type": "Property",
+            "$id": "https://schema.org/email",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "email",
+            "description": "Email address.",
+            "type": [
+                "Text"
+            ],
+            "classes": [
+                "ContactPoint",
+                "Organization",
+                "Person"
+            ]
+        },
+        "employee": {
+            "@type": "Property",
+            "$id": "https://schema.org/employee",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "employee",
+            "description": "Someone working for this organization.",
+            "type": [
+                "Person"
+            ],
+            "classes": [
+                "Organization"
+            ]
+        },
+        "employees": {
+            "@type": "Property",
+            "$id": "https://schema.org/employees",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "employees",
+            "description": "People working for this organization.",
+            "type": [
+                "Person"
+            ],
+            "classes": [
+                "Organization"
+            ]
+        },
+        "ethicsPolicy": {
+            "@type": "Property",
+            "$id": "https://schema.org/ethicsPolicy",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "ethicsPolicy",
+            "description": "Statement about ethics policy, e.g. of a [[NewsMediaOrganization]] regarding journalistic and publishing practices, or of a [[Restaurant]], a page describing food source policies. In the case of a [[NewsMediaOrganization]], an ethicsPolicy is typically a statement describing the personal, organizational, and corporate standards of behavior expected by the organization.",
+            "type": [
+                "CreativeWork",
+                "URL"
+            ],
+            "classes": [
+                "NewsMediaOrganization",
+                "Organization"
+            ]
+        },
+        "event": {
+            "@type": "Property",
+            "$id": "https://schema.org/event",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "event",
+            "description": "Upcoming or past event associated with this place, organization, or action.",
+            "type": [
+                "Event"
+            ],
+            "classes": [
+                "InformAction",
+                "InviteAction",
+                "JoinAction",
+                "LeaveAction",
+                "Organization",
+                "Place",
+                "PlayAction"
+            ]
+        },
+        "events": {
+            "@type": "Property",
+            "$id": "https://schema.org/events",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "events",
+            "description": "Upcoming or past events associated with this place or organization.",
+            "type": [
+                "Event"
+            ],
+            "classes": [
+                "Organization",
+                "Place"
+            ]
+        },
+        "faxNumber": {
+            "@type": "Property",
+            "$id": "https://schema.org/faxNumber",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "faxNumber",
+            "description": "The fax number.",
+            "type": [
+                "Text"
+            ],
+            "classes": [
+                "ContactPoint",
+                "Organization",
+                "Person",
+                "Place"
+            ]
+        },
+        "founder": {
+            "@type": "Property",
+            "$id": "https://schema.org/founder",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "founder",
+            "description": "A person or organization who founded this organization.",
+            "type": [
+                "Organization",
+                "Person"
+            ],
+            "classes": [
+                "Organization"
+            ]
+        },
+        "founders": {
+            "@type": "Property",
+            "$id": "https://schema.org/founders",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "founders",
+            "description": "A person who founded this organization.",
+            "type": [
+                "Person"
+            ],
+            "classes": [
+                "Organization"
+            ]
+        },
+        "foundingDate": {
+            "@type": "Property",
+            "$id": "https://schema.org/foundingDate",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "foundingDate",
+            "description": "The date that this organization was founded.",
+            "type": [
+                "Date"
+            ],
+            "classes": [
+                "Organization"
+            ]
+        },
+        "foundingLocation": {
+            "@type": "Property",
+            "$id": "https://schema.org/foundingLocation",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "foundingLocation",
+            "description": "The place where the Organization was founded.",
+            "type": [
+                "Place"
+            ],
+            "classes": [
+                "Organization"
+            ]
+        },
+        "funder": {
+            "@type": "Property",
+            "$id": "https://schema.org/funder",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "funder",
+            "description": "A person or organization that supports (sponsors) something through some kind of financial contribution.",
+            "type": [
+                "Organization",
+                "Person"
+            ],
+            "classes": [
+                "CreativeWork",
+                "Event",
+                "Grant",
+                "MonetaryGrant",
+                "Organization",
+                "Person"
+            ]
+        },
+        "funding": {
+            "@type": "Property",
+            "$id": "https://schema.org/funding",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "funding",
+            "description": "A [[Grant]] that directly or indirectly provide funding or sponsorship for this item. See also [[ownershipFundingInfo]].",
+            "type": [
+                "Grant"
+            ],
+            "classes": [
+                "BioChemEntity",
+                "CreativeWork",
+                "Event",
+                "MedicalEntity",
+                "Organization",
+                "Person",
+                "Product"
+            ]
+        },
+        "globalLocationNumber": {
+            "@type": "Property",
+            "$id": "https://schema.org/globalLocationNumber",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "globalLocationNumber",
+            "description": "The [Global Location Number](http://www.gs1.org/gln) (GLN, sometimes also referred to as International Location Number or ILN) of the respective organization, person, or place. The GLN is a 13-digit number used to identify parties and physical locations.",
+            "type": [
+                "Text"
+            ],
+            "classes": [
+                "Organization",
+                "Person",
+                "Place"
+            ]
+        },
+        "hasCertification": {
+            "@type": "Property",
+            "$id": "https://schema.org/hasCertification",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "hasCertification",
+            "description": "Certification information about a product, organization, service, place, or person.",
+            "type": [
+                "Certification"
+            ],
+            "classes": [
+                "Organization",
+                "Person",
+                "Place",
+                "Product",
+                "Service"
+            ]
+        },
+        "hasCredential": {
+            "@type": "Property",
+            "$id": "https://schema.org/hasCredential",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "hasCredential",
+            "description": "A credential awarded to the Person or Organization.",
+            "type": [
+                "Credential"
+            ],
+            "classes": [
+                "Organization",
+                "Person"
+            ]
+        },
+        "hasGS1DigitalLink": {
+            "@type": "Property",
+            "$id": "https://schema.org/hasGS1DigitalLink",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "hasGS1DigitalLink",
+            "description": "The <a href=\"https://www.gs1.org/standards/gs1-digital-link\">GS1 digital link</a> associated with the object. This URL should conform to the particular requirements of digital links. The link should only contain the Application Identifiers (AIs) that are relevant for the entity being annotated, for instance a [[Product]] or an [[Organization]], and for the correct granularity. In particular, for products:<ul><li>A Digital Link that contains a serial number (AI <code>21</code>) should only be present on instances of [[IndividualProduct]]</li><li>A Digital Link that contains a lot number (AI <code>10</code>) should be annotated as [[SomeProducts]] if only products from that lot are sold, or [[IndividualProduct]] if there is only a specific product.</li><li>A Digital Link that contains a global model number (AI <code>8013</code>) should be attached to a [[Product]] or a [[ProductModel]].</li></ul> Other item types should be adapted similarly.",
+            "type": [
+                "URL"
+            ],
+            "classes": [
+                "Offer",
+                "Organization",
+                "Place",
+                "Product"
+            ]
+        },
+        "hasMemberProgram": {
+            "@type": "Property",
+            "$id": "https://schema.org/hasMemberProgram",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "hasMemberProgram",
+            "description": "MemberProgram offered by an Organization, for example an eCommerce merchant or an airline.",
+            "type": [
+                "MemberProgram"
+            ],
+            "classes": [
+                "Organization"
+            ]
+        },
+        "hasMerchantReturnPolicy": {
+            "@type": "Property",
+            "$id": "https://schema.org/hasMerchantReturnPolicy",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "hasMerchantReturnPolicy",
+            "description": "Specifies a MerchantReturnPolicy that may be applicable.",
+            "type": [
+                "MerchantReturnPolicy"
+            ],
+            "classes": [
+                "Offer",
+                "Organization",
+                "Product"
+            ]
+        },
+        "hasOfferCatalog": {
+            "@type": "Property",
+            "$id": "https://schema.org/hasOfferCatalog",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "hasOfferCatalog",
+            "description": "Indicates an OfferCatalog listing for this Organization, Person, or Service.",
+            "type": [
+                "OfferCatalog"
+            ],
+            "classes": [
+                "Organization",
+                "Person",
+                "Service"
+            ]
+        },
+        "hasPOS": {
+            "@type": "Property",
+            "$id": "https://schema.org/hasPOS",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "hasPOS",
+            "description": "Points-of-Sales operated by the organization or person.",
+            "type": [
+                "Place"
+            ],
+            "classes": [
+                "Organization",
+                "Person"
+            ]
+        },
+        "hasProductReturnPolicy": {
+            "@type": "Property",
+            "$id": "https://schema.org/hasProductReturnPolicy",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "hasProductReturnPolicy",
+            "description": "Indicates a ProductReturnPolicy that may be applicable.",
+            "type": [
+                "ProductReturnPolicy"
+            ],
+            "classes": [
+                "Organization",
+                "Product"
+            ]
+        },
+        "hasShippingService": {
+            "@type": "Property",
+            "$id": "https://schema.org/hasShippingService",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "hasShippingService",
+            "description": "Specification of a shipping service offered by the organization.",
+            "type": [
+                "ShippingService"
+            ],
+            "classes": [
+                "OfferShippingDetails",
+                "Organization"
+            ]
+        },
+        "interactionStatistic": {
+            "@type": "Property",
+            "$id": "https://schema.org/interactionStatistic",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "interactionStatistic",
+            "description": "The number of interactions for the CreativeWork using the WebSite or SoftwareApplication. The most specific child type of InteractionCounter should be used.",
+            "type": [
+                "InteractionCounter"
+            ],
+            "classes": [
+                "CreativeWork",
+                "Organization",
+                "Person"
+            ]
+        },
+        "isicV4": {
+            "@type": "Property",
+            "$id": "https://schema.org/isicV4",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "isicV4",
+            "description": "The International Standard of Industrial Classification of All Economic Activities (ISIC), Revision 4 code for a particular organization, business person, or place.",
+            "type": [
+                "Text"
+            ],
+            "classes": [
+                "Organization",
+                "Person",
+                "Place"
+            ]
+        },
+        "iso6523Code": {
+            "@type": "Property",
+            "$id": "https://schema.org/iso6523Code",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "iso6523Code",
+            "description": "An organization identifier as defined in [ISO 6523(-1)](https://en.wikipedia.org/wiki/ISO/IEC_6523). The identifier should be in the `XXXX:YYYYYY:ZZZ` or `XXXX:YYYYYY`format. Where `XXXX` is a 4 digit _ICD_ (International Code Designator), `YYYYYY` is an _OID_ (Organization Identifier) with all formatting characters (dots, dashes, spaces) removed with a maximal length of 35 characters, and `ZZZ` is an optional OPI (Organization Part Identifier) with a maximum length of 35 characters. The various components (ICD, OID, OPI) are joined with a colon character (ASCII `0x3a`). Note that many existing organization identifiers defined as attributes like [leiCode](https://schema.org/leiCode) (`0199`), [duns](https://schema.org/duns) (`0060`) or [GLN](https://schema.org/globalLocationNumber) (`0088`) can be expressed using ISO-6523. If possible, ISO-6523 codes should be preferred to populating [vatID](https://schema.org/vatID) or [taxID](https://schema.org/taxID), as ISO identifiers are less ambiguous.",
+            "type": [
+                "Text"
+            ],
+            "classes": [
+                "Organization"
+            ]
+        },
+        "keywords": {
+            "@type": "Property",
+            "$id": "https://schema.org/keywords",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "keywords",
+            "description": "Keywords or tags used to describe some item. Multiple textual entries in a keywords list are typically delimited by commas, or by repeating the property.",
+            "type": [
+                "DefinedTerm",
+                "Text",
+                "URL"
+            ],
+            "classes": [
+                "CreativeWork",
+                "Event",
+                "Organization",
+                "Place",
+                "Product"
+            ]
+        },
+        "knowsAbout": {
+            "@type": "Property",
+            "$id": "https://schema.org/knowsAbout",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "knowsAbout",
+            "description": "Of a [[Person]], and less typically of an [[Organization]], to indicate a topic that is known about - suggesting possible expertise but not implying it. We do not distinguish skill levels here, or relate this to educational content, events, objectives or [[JobPosting]] descriptions.",
+            "type": [
+                "Text",
+                "Thing",
+                "URL"
+            ],
+            "classes": [
+                "Organization",
+                "Person"
+            ]
+        },
+        "knowsLanguage": {
+            "@type": "Property",
+            "$id": "https://schema.org/knowsLanguage",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "knowsLanguage",
+            "description": "Of a [[Person]], and less typically of an [[Organization]], to indicate a known language. We do not distinguish skill levels or reading/writing/speaking/signing here. Use language codes from the [IETF BCP 47 standard](http://tools.ietf.org/html/bcp47).",
+            "type": [
+                "Language",
+                "Text"
+            ],
+            "classes": [
+                "Organization",
+                "Person"
+            ]
+        },
+        "legalAddress": {
+            "@type": "Property",
+            "$id": "https://schema.org/legalAddress",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "legalAddress",
+            "description": "The legal address of an organization which acts as the officially registered address used for legal and tax purposes. The legal address can be different from the place of operations of a business and other addresses can be part of an organization.",
+            "type": [
+                "PostalAddress"
+            ],
+            "classes": [
+                "Organization"
+            ]
+        },
+        "legalName": {
+            "@type": "Property",
+            "$id": "https://schema.org/legalName",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "legalName",
+            "description": "The official name of the organization, e.g. the registered company name.",
+            "type": [
+                "Text"
+            ],
+            "classes": [
+                "Organization"
+            ]
+        },
+        "legalRepresentative": {
+            "@type": "Property",
+            "$id": "https://schema.org/legalRepresentative",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "legalRepresentative",
+            "description": "One or multiple persons who represent this organization legally such as CEO or sole administrator.",
+            "type": [
+                "Person"
+            ],
+            "classes": [
+                "Organization"
+            ]
+        },
+        "leiCode": {
+            "@type": "Property",
+            "$id": "https://schema.org/leiCode",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "leiCode",
+            "description": "An organization identifier that uniquely identifies a legal entity as defined in ISO 17442.",
+            "type": [
+                "Text"
+            ],
+            "classes": [
+                "Organization"
+            ]
+        },
+        "location": {
+            "@type": "Property",
+            "$id": "https://schema.org/location",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "location",
+            "description": "The location of, for example, where an event is happening, where an organization is located, or where an action takes place.",
+            "type": [
+                "Place",
+                "PostalAddress",
+                "Text",
+                "VirtualLocation"
+            ],
+            "classes": [
+                "Action",
+                "Event",
+                "InteractionCounter",
+                "Organization"
+            ]
+        },
+        "logo": {
+            "@type": "Property",
+            "$id": "https://schema.org/logo",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "logo",
+            "description": "An associated logo.",
+            "type": [
+                "ImageObject",
+                "URL"
+            ],
+            "classes": [
+                "Brand",
+                "Certification",
+                "Organization",
+                "Place",
+                "Product",
+                "Service"
+            ]
+        },
+        "makesOffer": {
+            "@type": "Property",
+            "$id": "https://schema.org/makesOffer",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "makesOffer",
+            "description": "A pointer to products or services offered by the organization or person.",
+            "type": [
+                "Offer"
+            ],
+            "classes": [
+                "Organization",
+                "Person"
+            ]
+        },
+        "member": {
+            "@type": "Property",
+            "$id": "https://schema.org/member",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "member",
+            "description": "A member of an Organization or a ProgramMembership. Organizations can be members of organizations; ProgramMembership is typically for individuals.",
+            "type": [
+                "Organization",
+                "Person"
+            ],
+            "classes": [
+                "Organization",
+                "ProgramMembership"
+            ]
+        },
+        "memberOf": {
+            "@type": "Property",
+            "$id": "https://schema.org/memberOf",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "memberOf",
+            "description": "An Organization (or ProgramMembership) to which this Person or Organization belongs.",
+            "type": [
+                "MemberProgramTier",
+                "Organization",
+                "ProgramMembership"
+            ],
+            "classes": [
+                "Organization",
+                "Person"
+            ]
+        },
+        "members": {
+            "@type": "Property",
+            "$id": "https://schema.org/members",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "members",
+            "description": "A member of this organization.",
+            "type": [
+                "Organization",
+                "Person"
+            ],
+            "classes": [
+                "Organization",
+                "ProgramMembership"
+            ]
+        },
+        "naics": {
+            "@type": "Property",
+            "$id": "https://schema.org/naics",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "naics",
+            "description": "The North American Industry Classification System (NAICS) code for a particular organization or business person.",
+            "type": [
+                "Text"
+            ],
+            "classes": [
+                "Organization",
+                "Person"
+            ]
+        },
+        "nonprofitStatus": {
+            "@type": "Property",
+            "$id": "https://schema.org/nonprofitStatus",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "nonprofitStatus",
+            "description": "nonprofitStatus indicates the legal status of a non-profit organization in its primary place of business.",
+            "type": [
+                "NonprofitType"
+            ],
+            "classes": [
+                "Organization"
+            ]
+        },
+        "numberOfEmployees": {
+            "@type": "Property",
+            "$id": "https://schema.org/numberOfEmployees",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "numberOfEmployees",
+            "description": "The number of employees in an organization, e.g. business.",
+            "type": [
+                "QuantitativeValue"
+            ],
+            "classes": [
+                "BusinessAudience",
+                "Organization"
+            ]
+        },
+        "ownershipFundingInfo": {
+            "@type": "Property",
+            "$id": "https://schema.org/ownershipFundingInfo",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "ownershipFundingInfo",
+            "description": "For an [[Organization]] (often but not necessarily a [[NewsMediaOrganization]]), a description of organizational ownership structure; funding and grants. In a news/media setting, this is with particular reference to editorial independence.   Note that the [[funder]] is also available and can be used to make basic funder information machine-readable.",
+            "type": [
+                "AboutPage",
+                "CreativeWork",
+                "Text",
+                "URL"
+            ],
+            "classes": [
+                "NewsMediaOrganization",
+                "Organization"
+            ]
+        },
+        "owns": {
+            "@type": "Property",
+            "$id": "https://schema.org/owns",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "owns",
+            "description": "Things owned by the organization or person.",
+            "type": [
+                "Thing"
+            ],
+            "classes": [
+                "Organization",
+                "Person"
+            ]
+        },
+        "parentOrganization": {
+            "@type": "Property",
+            "$id": "https://schema.org/parentOrganization",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "parentOrganization",
+            "description": "The larger organization that this organization is a [[subOrganization]] of, if any.",
+            "type": [
+                "Organization"
+            ],
+            "classes": [
+                "Organization"
+            ]
+        },
+        "publishingPrinciples": {
+            "@type": "Property",
+            "$id": "https://schema.org/publishingPrinciples",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "publishingPrinciples",
+            "description": "The publishingPrinciples property indicates (typically via [[URL]]) a document describing the editorial principles of an [[Organization]] (or individual, e.g. a [[Person]] writing a blog) that relate to their activities as a publisher, e.g. ethics or diversity policies. When applied to a [[CreativeWork]] (e.g. [[NewsArticle]]) the principles are those of the party primarily responsible for the creation of the [[CreativeWork]].\n\nWhile such policies are most typically expressed in natural language, sometimes related information (e.g. indicating a [[funder]]) can be expressed using schema.org terminology.\n",
+            "type": [
+                "CreativeWork",
+                "URL"
+            ],
+            "classes": [
+                "CreativeWork",
+                "Organization",
+                "Person"
+            ]
+        },
+        "review": {
+            "@type": "Property",
+            "$id": "https://schema.org/review",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "review",
+            "description": "A review of the item.",
+            "type": [
+                "Review"
+            ],
+            "classes": [
+                "Brand",
+                "CreativeWork",
+                "Event",
+                "Offer",
+                "Organization",
+                "Place",
+                "Product",
+                "Service"
+            ]
+        },
+        "reviews": {
+            "@type": "Property",
+            "$id": "https://schema.org/reviews",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "reviews",
+            "description": "Review of the item.",
+            "type": [
+                "Review"
+            ],
+            "classes": [
+                "CreativeWork",
+                "Offer",
+                "Organization",
+                "Place",
+                "Product"
+            ]
+        },
+        "seeks": {
+            "@type": "Property",
+            "$id": "https://schema.org/seeks",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "seeks",
+            "description": "A pointer to products or services sought by the organization or person (demand).",
+            "type": [
+                "Demand"
+            ],
+            "classes": [
+                "Organization",
+                "Person"
+            ]
+        },
+        "serviceArea": {
+            "@type": "Property",
+            "$id": "https://schema.org/serviceArea",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "serviceArea",
+            "description": "The geographic area where the service is provided.",
+            "type": [
+                "AdministrativeArea",
+                "GeoShape",
+                "Place"
+            ],
+            "classes": [
+                "ContactPoint",
+                "Organization",
+                "Service"
+            ]
+        },
+        "skills": {
+            "@type": "Property",
+            "$id": "https://schema.org/skills",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "skills",
+            "description": "A statement of knowledge, skill, ability, task or any other assertion expressing a competency that is either claimed by a person, an organization or desired or required to fulfill a role or to work in an occupation.",
+            "type": [
+                "DefinedTerm",
+                "Text"
+            ],
+            "classes": [
+                "JobPosting",
+                "Occupation",
+                "Organization",
+                "Person"
+            ]
+        },
+        "slogan": {
+            "@type": "Property",
+            "$id": "https://schema.org/slogan",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "slogan",
+            "description": "A slogan or motto associated with the item.",
+            "type": [
+                "Text"
+            ],
+            "classes": [
+                "Brand",
+                "Organization",
+                "Place",
+                "Product",
+                "Service"
+            ]
+        },
+        "sponsor": {
+            "@type": "Property",
+            "$id": "https://schema.org/sponsor",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "sponsor",
+            "description": "A person or organization that supports a thing through a pledge, promise, or financial contribution. E.g. a sponsor of a Medical Study or a corporate sponsor of an event.",
+            "type": [
+                "Organization",
+                "Person"
+            ],
+            "classes": [
+                "CreativeWork",
+                "Event",
+                "Grant",
+                "MedicalStudy",
+                "Organization",
+                "Person"
+            ]
+        },
+        "subOrganization": {
+            "@type": "Property",
+            "$id": "https://schema.org/subOrganization",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "subOrganization",
+            "description": "A relationship between two organizations where the first includes the second, e.g., as a subsidiary. See also: the more specific 'department' property.",
+            "type": [
+                "Organization"
+            ],
+            "classes": [
+                "Organization"
+            ]
+        },
+        "taxID": {
+            "@type": "Property",
+            "$id": "https://schema.org/taxID",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "taxID",
+            "description": "The Tax / Fiscal ID of the organization or person, e.g. the TIN in the US or the CIF/NIF in Spain.",
+            "type": [
+                "Text"
+            ],
+            "classes": [
+                "Organization",
+                "Person"
+            ]
+        },
+        "telephone": {
+            "@type": "Property",
+            "$id": "https://schema.org/telephone",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "telephone",
+            "description": "The telephone number.",
+            "type": [
+                "Text"
+            ],
+            "classes": [
+                "ContactPoint",
+                "Organization",
+                "Person",
+                "Place"
+            ]
+        },
+        "unnamedSourcesPolicy": {
+            "@type": "Property",
+            "$id": "https://schema.org/unnamedSourcesPolicy",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "unnamedSourcesPolicy",
+            "description": "For an [[Organization]] (typically a [[NewsMediaOrganization]]), a statement about policy on use of unnamed sources and the decision process required.",
+            "type": [
+                "CreativeWork",
+                "URL"
+            ],
+            "classes": [
+                "NewsMediaOrganization",
+                "Organization"
+            ]
+        },
+        "vatID": {
+            "@type": "Property",
+            "$id": "https://schema.org/vatID",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "vatID",
+            "description": "The value-added Tax ID of the organization or person with national prefix (for example IT123456789). Can also be described as [[iso6523Code]] with proper prefix.",
+            "type": [
+                "Text"
+            ],
+            "classes": [
+                "Organization",
+                "Person"
+            ]
+        }
+    },
+    "propertiesAll": {
+        "acceptedPaymentMethod": {
+            "@type": "Property",
+            "$id": "https://schema.org/acceptedPaymentMethod",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "acceptedPaymentMethod",
+            "description": "The payment method(s) that are accepted in general by an organization, or for some specific demand or offer.",
+            "type": [
+                "LoanOrCredit",
+                "PaymentMethod",
+                "Text"
+            ],
+            "classes": [
+                "Demand",
+                "Offer",
+                "Organization"
+            ]
+        },
+        "actionableFeedbackPolicy": {
+            "@type": "Property",
+            "$id": "https://schema.org/actionableFeedbackPolicy",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "actionableFeedbackPolicy",
+            "description": "For a [[NewsMediaOrganization]] or other news-related [[Organization]], a statement about public engagement activities (for news media, the newsroom’s), including involving the public - digitally or otherwise -- in coverage decisions, reporting and activities after publication.",
+            "type": [
+                "CreativeWork",
+                "URL"
+            ],
+            "classes": [
+                "NewsMediaOrganization",
+                "Organization"
+            ]
+        },
+        "address": {
+            "@type": "Property",
+            "$id": "https://schema.org/address",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "address",
+            "description": "Physical address of the item.",
+            "type": [
+                "PostalAddress",
+                "Text"
+            ],
+            "classes": [
+                "GeoCoordinates",
+                "GeoShape",
+                "Organization",
+                "Person",
+                "Place"
+            ]
+        },
+        "agentInteractionStatistic": {
+            "@type": "Property",
+            "$id": "https://schema.org/agentInteractionStatistic",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "agentInteractionStatistic",
+            "description": "The number of completed interactions for this entity, in a particular role (the 'agent'), in a particular action (indicated in the statistic), and in a particular context (i.e. interactionService).",
+            "type": [
+                "InteractionCounter"
+            ],
+            "classes": [
+                "Organization",
+                "Person"
+            ]
+        },
+        "aggregateRating": {
+            "@type": "Property",
+            "$id": "https://schema.org/aggregateRating",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "aggregateRating",
+            "description": "The overall rating, based on a collection of reviews or ratings, of the item.",
+            "type": [
+                "AggregateRating"
+            ],
+            "classes": [
+                "Brand",
+                "CreativeWork",
+                "Event",
+                "Offer",
+                "Organization",
+                "Place",
+                "Product",
+                "Service"
+            ]
+        },
+        "alumni": {
+            "@type": "Property",
+            "$id": "https://schema.org/alumni",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "alumni",
+            "description": "Alumni of an organization.",
+            "type": [
+                "Person"
+            ],
+            "classes": [
+                "EducationalOrganization",
+                "Organization"
+            ]
+        },
+        "areaServed": {
+            "@type": "Property",
+            "$id": "https://schema.org/areaServed",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "areaServed",
+            "description": "The geographic area where a service or offered item is provided.",
+            "type": [
+                "AdministrativeArea",
+                "GeoShape",
+                "Place",
+                "Text"
+            ],
+            "classes": [
+                "ContactPoint",
+                "DeliveryChargeSpecification",
+                "Demand",
+                "FinancialIncentive",
+                "Offer",
+                "Organization",
+                "Service"
+            ]
+        },
+        "authorizedRepresentative": {
+            "@type": "Property",
+            "$id": "https://schema.org/authorizedRepresentative",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "authorizedRepresentative",
+            "description": "An organization or person officially appointed to act on behalf of the manufacturer in a specific region or context.",
+            "type": [
+                "Organization",
+                "Person"
+            ],
+            "classes": [
+                "Organization",
+                "Product"
+            ]
+        },
+        "award": {
+            "@type": "Property",
+            "$id": "https://schema.org/award",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "award",
+            "description": "An award won by or for this item.",
+            "type": [
+                "Text"
+            ],
+            "classes": [
+                "CreativeWork",
+                "Organization",
+                "Person",
+                "Product",
+                "Service"
+            ]
+        },
+        "awards": {
+            "@type": "Property",
+            "$id": "https://schema.org/awards",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "awards",
+            "description": "Awards won by or for this item.",
+            "type": [
+                "Text"
+            ],
+            "classes": [
+                "CreativeWork",
+                "Organization",
+                "Person",
+                "Product"
+            ]
+        },
+        "brand": {
+            "@type": "Property",
+            "$id": "https://schema.org/brand",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "brand",
+            "description": "The brand(s) associated with a product or service, or the brand(s) maintained by an organization or business person.",
+            "type": [
+                "Brand",
+                "Organization"
+            ],
+            "classes": [
+                "Organization",
+                "Person",
+                "Product",
+                "Service"
+            ]
+        },
+        "companyRegistration": {
+            "@type": "Property",
+            "$id": "https://schema.org/companyRegistration",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "companyRegistration",
+            "description": "The official registration information of a business including the organization that issued it such as Company House or Chamber of Commerce in form of a Certification.",
+            "type": [
+                "Certification"
+            ],
+            "classes": [
+                "Organization"
+            ]
+        },
+        "contactPoint": {
+            "@type": "Property",
+            "$id": "https://schema.org/contactPoint",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "contactPoint",
+            "description": "A contact point for a person or organization.",
+            "type": [
+                "ContactPoint"
+            ],
+            "classes": [
+                "HealthInsurancePlan",
+                "Organization",
+                "Person"
+            ]
+        },
+        "contactPoints": {
+            "@type": "Property",
+            "$id": "https://schema.org/contactPoints",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "contactPoints",
+            "description": "A contact point for a person or organization.",
+            "type": [
+                "ContactPoint"
+            ],
+            "classes": [
+                "Organization",
+                "Person"
+            ]
+        },
+        "correctionsPolicy": {
+            "@type": "Property",
+            "$id": "https://schema.org/correctionsPolicy",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "correctionsPolicy",
+            "description": "For an [[Organization]] (e.g. [[NewsMediaOrganization]]), a statement describing (in news media, the newsroom’s) disclosure and correction policy for errors.",
+            "type": [
+                "CreativeWork",
+                "URL"
+            ],
+            "classes": [
+                "NewsMediaOrganization",
+                "Organization"
+            ]
+        },
+        "department": {
+            "@type": "Property",
+            "$id": "https://schema.org/department",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "department",
+            "description": "A relationship between an organization and a department of that organization, also described as an organization (allowing different urls, logos, opening hours). For example: a store with a pharmacy, or a bakery with a cafe.",
+            "type": [
+                "Organization"
+            ],
+            "classes": [
+                "Organization"
+            ]
+        },
+        "dissolutionDate": {
+            "@type": "Property",
+            "$id": "https://schema.org/dissolutionDate",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "dissolutionDate",
+            "description": "The date that this organization was dissolved.",
+            "type": [
+                "Date"
+            ],
+            "classes": [
+                "Organization"
+            ]
+        },
+        "diversityPolicy": {
+            "@type": "Property",
+            "$id": "https://schema.org/diversityPolicy",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "diversityPolicy",
+            "description": "Statement on diversity policy by an [[Organization]] e.g. a [[NewsMediaOrganization]]. For a [[NewsMediaOrganization]], a statement describing the newsroom’s diversity policy on both staffing and sources, typically providing staffing data.",
+            "type": [
+                "CreativeWork",
+                "URL"
+            ],
+            "classes": [
+                "NewsMediaOrganization",
+                "Organization"
+            ]
+        },
+        "diversityStaffingReport": {
+            "@type": "Property",
+            "$id": "https://schema.org/diversityStaffingReport",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "diversityStaffingReport",
+            "description": "For an [[Organization]] (often but not necessarily a [[NewsMediaOrganization]]), a report on staffing diversity issues. In a news context this might be for example ASNE or RTDNA (US) reports, or self-reported.",
+            "type": [
+                "Article",
+                "URL"
+            ],
+            "classes": [
+                "NewsMediaOrganization",
+                "Organization"
+            ]
+        },
+        "duns": {
+            "@type": "Property",
+            "$id": "https://schema.org/duns",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "duns",
+            "description": "The Dun & Bradstreet DUNS number for identifying an organization or business person.",
+            "type": [
+                "Text"
+            ],
+            "classes": [
+                "Organization",
+                "Person"
+            ]
+        },
+        "email": {
+            "@type": "Property",
+            "$id": "https://schema.org/email",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "email",
+            "description": "Email address.",
+            "type": [
+                "Text"
+            ],
+            "classes": [
+                "ContactPoint",
+                "Organization",
+                "Person"
+            ]
+        },
+        "employee": {
+            "@type": "Property",
+            "$id": "https://schema.org/employee",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "employee",
+            "description": "Someone working for this organization.",
+            "type": [
+                "Person"
+            ],
+            "classes": [
+                "Organization"
+            ]
+        },
+        "employees": {
+            "@type": "Property",
+            "$id": "https://schema.org/employees",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "employees",
+            "description": "People working for this organization.",
+            "type": [
+                "Person"
+            ],
+            "classes": [
+                "Organization"
+            ]
+        },
+        "ethicsPolicy": {
+            "@type": "Property",
+            "$id": "https://schema.org/ethicsPolicy",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "ethicsPolicy",
+            "description": "Statement about ethics policy, e.g. of a [[NewsMediaOrganization]] regarding journalistic and publishing practices, or of a [[Restaurant]], a page describing food source policies. In the case of a [[NewsMediaOrganization]], an ethicsPolicy is typically a statement describing the personal, organizational, and corporate standards of behavior expected by the organization.",
+            "type": [
+                "CreativeWork",
+                "URL"
+            ],
+            "classes": [
+                "NewsMediaOrganization",
+                "Organization"
+            ]
+        },
+        "event": {
+            "@type": "Property",
+            "$id": "https://schema.org/event",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "event",
+            "description": "Upcoming or past event associated with this place, organization, or action.",
+            "type": [
+                "Event"
+            ],
+            "classes": [
+                "InformAction",
+                "InviteAction",
+                "JoinAction",
+                "LeaveAction",
+                "Organization",
+                "Place",
+                "PlayAction"
+            ]
+        },
+        "events": {
+            "@type": "Property",
+            "$id": "https://schema.org/events",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "events",
+            "description": "Upcoming or past events associated with this place or organization.",
+            "type": [
+                "Event"
+            ],
+            "classes": [
+                "Organization",
+                "Place"
+            ]
+        },
+        "faxNumber": {
+            "@type": "Property",
+            "$id": "https://schema.org/faxNumber",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "faxNumber",
+            "description": "The fax number.",
+            "type": [
+                "Text"
+            ],
+            "classes": [
+                "ContactPoint",
+                "Organization",
+                "Person",
+                "Place"
+            ]
+        },
+        "founder": {
+            "@type": "Property",
+            "$id": "https://schema.org/founder",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "founder",
+            "description": "A person or organization who founded this organization.",
+            "type": [
+                "Organization",
+                "Person"
+            ],
+            "classes": [
+                "Organization"
+            ]
+        },
+        "founders": {
+            "@type": "Property",
+            "$id": "https://schema.org/founders",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "founders",
+            "description": "A person who founded this organization.",
+            "type": [
+                "Person"
+            ],
+            "classes": [
+                "Organization"
+            ]
+        },
+        "foundingDate": {
+            "@type": "Property",
+            "$id": "https://schema.org/foundingDate",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "foundingDate",
+            "description": "The date that this organization was founded.",
+            "type": [
+                "Date"
+            ],
+            "classes": [
+                "Organization"
+            ]
+        },
+        "foundingLocation": {
+            "@type": "Property",
+            "$id": "https://schema.org/foundingLocation",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "foundingLocation",
+            "description": "The place where the Organization was founded.",
+            "type": [
+                "Place"
+            ],
+            "classes": [
+                "Organization"
+            ]
+        },
+        "funder": {
+            "@type": "Property",
+            "$id": "https://schema.org/funder",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "funder",
+            "description": "A person or organization that supports (sponsors) something through some kind of financial contribution.",
+            "type": [
+                "Organization",
+                "Person"
+            ],
+            "classes": [
+                "CreativeWork",
+                "Event",
+                "Grant",
+                "MonetaryGrant",
+                "Organization",
+                "Person"
+            ]
+        },
+        "funding": {
+            "@type": "Property",
+            "$id": "https://schema.org/funding",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "funding",
+            "description": "A [[Grant]] that directly or indirectly provide funding or sponsorship for this item. See also [[ownershipFundingInfo]].",
+            "type": [
+                "Grant"
+            ],
+            "classes": [
+                "BioChemEntity",
+                "CreativeWork",
+                "Event",
+                "MedicalEntity",
+                "Organization",
+                "Person",
+                "Product"
+            ]
+        },
+        "globalLocationNumber": {
+            "@type": "Property",
+            "$id": "https://schema.org/globalLocationNumber",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "globalLocationNumber",
+            "description": "The [Global Location Number](http://www.gs1.org/gln) (GLN, sometimes also referred to as International Location Number or ILN) of the respective organization, person, or place. The GLN is a 13-digit number used to identify parties and physical locations.",
+            "type": [
+                "Text"
+            ],
+            "classes": [
+                "Organization",
+                "Person",
+                "Place"
+            ]
+        },
+        "hasCertification": {
+            "@type": "Property",
+            "$id": "https://schema.org/hasCertification",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "hasCertification",
+            "description": "Certification information about a product, organization, service, place, or person.",
+            "type": [
+                "Certification"
+            ],
+            "classes": [
+                "Organization",
+                "Person",
+                "Place",
+                "Product",
+                "Service"
+            ]
+        },
+        "hasCredential": {
+            "@type": "Property",
+            "$id": "https://schema.org/hasCredential",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "hasCredential",
+            "description": "A credential awarded to the Person or Organization.",
+            "type": [
+                "Credential"
+            ],
+            "classes": [
+                "Organization",
+                "Person"
+            ]
+        },
+        "hasGS1DigitalLink": {
+            "@type": "Property",
+            "$id": "https://schema.org/hasGS1DigitalLink",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "hasGS1DigitalLink",
+            "description": "The <a href=\"https://www.gs1.org/standards/gs1-digital-link\">GS1 digital link</a> associated with the object. This URL should conform to the particular requirements of digital links. The link should only contain the Application Identifiers (AIs) that are relevant for the entity being annotated, for instance a [[Product]] or an [[Organization]], and for the correct granularity. In particular, for products:<ul><li>A Digital Link that contains a serial number (AI <code>21</code>) should only be present on instances of [[IndividualProduct]]</li><li>A Digital Link that contains a lot number (AI <code>10</code>) should be annotated as [[SomeProducts]] if only products from that lot are sold, or [[IndividualProduct]] if there is only a specific product.</li><li>A Digital Link that contains a global model number (AI <code>8013</code>) should be attached to a [[Product]] or a [[ProductModel]].</li></ul> Other item types should be adapted similarly.",
+            "type": [
+                "URL"
+            ],
+            "classes": [
+                "Offer",
+                "Organization",
+                "Place",
+                "Product"
+            ]
+        },
+        "hasMemberProgram": {
+            "@type": "Property",
+            "$id": "https://schema.org/hasMemberProgram",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "hasMemberProgram",
+            "description": "MemberProgram offered by an Organization, for example an eCommerce merchant or an airline.",
+            "type": [
+                "MemberProgram"
+            ],
+            "classes": [
+                "Organization"
+            ]
+        },
+        "hasMerchantReturnPolicy": {
+            "@type": "Property",
+            "$id": "https://schema.org/hasMerchantReturnPolicy",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "hasMerchantReturnPolicy",
+            "description": "Specifies a MerchantReturnPolicy that may be applicable.",
+            "type": [
+                "MerchantReturnPolicy"
+            ],
+            "classes": [
+                "Offer",
+                "Organization",
+                "Product"
+            ]
+        },
+        "hasOfferCatalog": {
+            "@type": "Property",
+            "$id": "https://schema.org/hasOfferCatalog",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "hasOfferCatalog",
+            "description": "Indicates an OfferCatalog listing for this Organization, Person, or Service.",
+            "type": [
+                "OfferCatalog"
+            ],
+            "classes": [
+                "Organization",
+                "Person",
+                "Service"
+            ]
+        },
+        "hasPOS": {
+            "@type": "Property",
+            "$id": "https://schema.org/hasPOS",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "hasPOS",
+            "description": "Points-of-Sales operated by the organization or person.",
+            "type": [
+                "Place"
+            ],
+            "classes": [
+                "Organization",
+                "Person"
+            ]
+        },
+        "hasProductReturnPolicy": {
+            "@type": "Property",
+            "$id": "https://schema.org/hasProductReturnPolicy",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "hasProductReturnPolicy",
+            "description": "Indicates a ProductReturnPolicy that may be applicable.",
+            "type": [
+                "ProductReturnPolicy"
+            ],
+            "classes": [
+                "Organization",
+                "Product"
+            ]
+        },
+        "hasShippingService": {
+            "@type": "Property",
+            "$id": "https://schema.org/hasShippingService",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "hasShippingService",
+            "description": "Specification of a shipping service offered by the organization.",
+            "type": [
+                "ShippingService"
+            ],
+            "classes": [
+                "OfferShippingDetails",
+                "Organization"
+            ]
+        },
+        "interactionStatistic": {
+            "@type": "Property",
+            "$id": "https://schema.org/interactionStatistic",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "interactionStatistic",
+            "description": "The number of interactions for the CreativeWork using the WebSite or SoftwareApplication. The most specific child type of InteractionCounter should be used.",
+            "type": [
+                "InteractionCounter"
+            ],
+            "classes": [
+                "CreativeWork",
+                "Organization",
+                "Person"
+            ]
+        },
+        "isicV4": {
+            "@type": "Property",
+            "$id": "https://schema.org/isicV4",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "isicV4",
+            "description": "The International Standard of Industrial Classification of All Economic Activities (ISIC), Revision 4 code for a particular organization, business person, or place.",
+            "type": [
+                "Text"
+            ],
+            "classes": [
+                "Organization",
+                "Person",
+                "Place"
+            ]
+        },
+        "iso6523Code": {
+            "@type": "Property",
+            "$id": "https://schema.org/iso6523Code",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "iso6523Code",
+            "description": "An organization identifier as defined in [ISO 6523(-1)](https://en.wikipedia.org/wiki/ISO/IEC_6523). The identifier should be in the `XXXX:YYYYYY:ZZZ` or `XXXX:YYYYYY`format. Where `XXXX` is a 4 digit _ICD_ (International Code Designator), `YYYYYY` is an _OID_ (Organization Identifier) with all formatting characters (dots, dashes, spaces) removed with a maximal length of 35 characters, and `ZZZ` is an optional OPI (Organization Part Identifier) with a maximum length of 35 characters. The various components (ICD, OID, OPI) are joined with a colon character (ASCII `0x3a`). Note that many existing organization identifiers defined as attributes like [leiCode](https://schema.org/leiCode) (`0199`), [duns](https://schema.org/duns) (`0060`) or [GLN](https://schema.org/globalLocationNumber) (`0088`) can be expressed using ISO-6523. If possible, ISO-6523 codes should be preferred to populating [vatID](https://schema.org/vatID) or [taxID](https://schema.org/taxID), as ISO identifiers are less ambiguous.",
+            "type": [
+                "Text"
+            ],
+            "classes": [
+                "Organization"
+            ]
+        },
+        "keywords": {
+            "@type": "Property",
+            "$id": "https://schema.org/keywords",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "keywords",
+            "description": "Keywords or tags used to describe some item. Multiple textual entries in a keywords list are typically delimited by commas, or by repeating the property.",
+            "type": [
+                "DefinedTerm",
+                "Text",
+                "URL"
+            ],
+            "classes": [
+                "CreativeWork",
+                "Event",
+                "Organization",
+                "Place",
+                "Product"
+            ]
+        },
+        "knowsAbout": {
+            "@type": "Property",
+            "$id": "https://schema.org/knowsAbout",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "knowsAbout",
+            "description": "Of a [[Person]], and less typically of an [[Organization]], to indicate a topic that is known about - suggesting possible expertise but not implying it. We do not distinguish skill levels here, or relate this to educational content, events, objectives or [[JobPosting]] descriptions.",
+            "type": [
+                "Text",
+                "Thing",
+                "URL"
+            ],
+            "classes": [
+                "Organization",
+                "Person"
+            ]
+        },
+        "knowsLanguage": {
+            "@type": "Property",
+            "$id": "https://schema.org/knowsLanguage",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "knowsLanguage",
+            "description": "Of a [[Person]], and less typically of an [[Organization]], to indicate a known language. We do not distinguish skill levels or reading/writing/speaking/signing here. Use language codes from the [IETF BCP 47 standard](http://tools.ietf.org/html/bcp47).",
+            "type": [
+                "Language",
+                "Text"
+            ],
+            "classes": [
+                "Organization",
+                "Person"
+            ]
+        },
+        "legalAddress": {
+            "@type": "Property",
+            "$id": "https://schema.org/legalAddress",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "legalAddress",
+            "description": "The legal address of an organization which acts as the officially registered address used for legal and tax purposes. The legal address can be different from the place of operations of a business and other addresses can be part of an organization.",
+            "type": [
+                "PostalAddress"
+            ],
+            "classes": [
+                "Organization"
+            ]
+        },
+        "legalName": {
+            "@type": "Property",
+            "$id": "https://schema.org/legalName",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "legalName",
+            "description": "The official name of the organization, e.g. the registered company name.",
+            "type": [
+                "Text"
+            ],
+            "classes": [
+                "Organization"
+            ]
+        },
+        "legalRepresentative": {
+            "@type": "Property",
+            "$id": "https://schema.org/legalRepresentative",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "legalRepresentative",
+            "description": "One or multiple persons who represent this organization legally such as CEO or sole administrator.",
+            "type": [
+                "Person"
+            ],
+            "classes": [
+                "Organization"
+            ]
+        },
+        "leiCode": {
+            "@type": "Property",
+            "$id": "https://schema.org/leiCode",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "leiCode",
+            "description": "An organization identifier that uniquely identifies a legal entity as defined in ISO 17442.",
+            "type": [
+                "Text"
+            ],
+            "classes": [
+                "Organization"
+            ]
+        },
+        "location": {
+            "@type": "Property",
+            "$id": "https://schema.org/location",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "location",
+            "description": "The location of, for example, where an event is happening, where an organization is located, or where an action takes place.",
+            "type": [
+                "Place",
+                "PostalAddress",
+                "Text",
+                "VirtualLocation"
+            ],
+            "classes": [
+                "Action",
+                "Event",
+                "InteractionCounter",
+                "Organization"
+            ]
+        },
+        "logo": {
+            "@type": "Property",
+            "$id": "https://schema.org/logo",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "logo",
+            "description": "An associated logo.",
+            "type": [
+                "ImageObject",
+                "URL"
+            ],
+            "classes": [
+                "Brand",
+                "Certification",
+                "Organization",
+                "Place",
+                "Product",
+                "Service"
+            ]
+        },
+        "makesOffer": {
+            "@type": "Property",
+            "$id": "https://schema.org/makesOffer",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "makesOffer",
+            "description": "A pointer to products or services offered by the organization or person.",
+            "type": [
+                "Offer"
+            ],
+            "classes": [
+                "Organization",
+                "Person"
+            ]
+        },
+        "member": {
+            "@type": "Property",
+            "$id": "https://schema.org/member",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "member",
+            "description": "A member of an Organization or a ProgramMembership. Organizations can be members of organizations; ProgramMembership is typically for individuals.",
+            "type": [
+                "Organization",
+                "Person"
+            ],
+            "classes": [
+                "Organization",
+                "ProgramMembership"
+            ]
+        },
+        "memberOf": {
+            "@type": "Property",
+            "$id": "https://schema.org/memberOf",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "memberOf",
+            "description": "An Organization (or ProgramMembership) to which this Person or Organization belongs.",
+            "type": [
+                "MemberProgramTier",
+                "Organization",
+                "ProgramMembership"
+            ],
+            "classes": [
+                "Organization",
+                "Person"
+            ]
+        },
+        "members": {
+            "@type": "Property",
+            "$id": "https://schema.org/members",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "members",
+            "description": "A member of this organization.",
+            "type": [
+                "Organization",
+                "Person"
+            ],
+            "classes": [
+                "Organization",
+                "ProgramMembership"
+            ]
+        },
+        "naics": {
+            "@type": "Property",
+            "$id": "https://schema.org/naics",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "naics",
+            "description": "The North American Industry Classification System (NAICS) code for a particular organization or business person.",
+            "type": [
+                "Text"
+            ],
+            "classes": [
+                "Organization",
+                "Person"
+            ]
+        },
+        "nonprofitStatus": {
+            "@type": "Property",
+            "$id": "https://schema.org/nonprofitStatus",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "nonprofitStatus",
+            "description": "nonprofitStatus indicates the legal status of a non-profit organization in its primary place of business.",
+            "type": [
+                "NonprofitType"
+            ],
+            "classes": [
+                "Organization"
+            ]
+        },
+        "numberOfEmployees": {
+            "@type": "Property",
+            "$id": "https://schema.org/numberOfEmployees",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "numberOfEmployees",
+            "description": "The number of employees in an organization, e.g. business.",
+            "type": [
+                "QuantitativeValue"
+            ],
+            "classes": [
+                "BusinessAudience",
+                "Organization"
+            ]
+        },
+        "ownershipFundingInfo": {
+            "@type": "Property",
+            "$id": "https://schema.org/ownershipFundingInfo",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "ownershipFundingInfo",
+            "description": "For an [[Organization]] (often but not necessarily a [[NewsMediaOrganization]]), a description of organizational ownership structure; funding and grants. In a news/media setting, this is with particular reference to editorial independence.   Note that the [[funder]] is also available and can be used to make basic funder information machine-readable.",
+            "type": [
+                "AboutPage",
+                "CreativeWork",
+                "Text",
+                "URL"
+            ],
+            "classes": [
+                "NewsMediaOrganization",
+                "Organization"
+            ]
+        },
+        "owns": {
+            "@type": "Property",
+            "$id": "https://schema.org/owns",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "owns",
+            "description": "Things owned by the organization or person.",
+            "type": [
+                "Thing"
+            ],
+            "classes": [
+                "Organization",
+                "Person"
+            ]
+        },
+        "parentOrganization": {
+            "@type": "Property",
+            "$id": "https://schema.org/parentOrganization",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "parentOrganization",
+            "description": "The larger organization that this organization is a [[subOrganization]] of, if any.",
+            "type": [
+                "Organization"
+            ],
+            "classes": [
+                "Organization"
+            ]
+        },
+        "publishingPrinciples": {
+            "@type": "Property",
+            "$id": "https://schema.org/publishingPrinciples",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "publishingPrinciples",
+            "description": "The publishingPrinciples property indicates (typically via [[URL]]) a document describing the editorial principles of an [[Organization]] (or individual, e.g. a [[Person]] writing a blog) that relate to their activities as a publisher, e.g. ethics or diversity policies. When applied to a [[CreativeWork]] (e.g. [[NewsArticle]]) the principles are those of the party primarily responsible for the creation of the [[CreativeWork]].\n\nWhile such policies are most typically expressed in natural language, sometimes related information (e.g. indicating a [[funder]]) can be expressed using schema.org terminology.\n",
+            "type": [
+                "CreativeWork",
+                "URL"
+            ],
+            "classes": [
+                "CreativeWork",
+                "Organization",
+                "Person"
+            ]
+        },
+        "review": {
+            "@type": "Property",
+            "$id": "https://schema.org/review",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "review",
+            "description": "A review of the item.",
+            "type": [
+                "Review"
+            ],
+            "classes": [
+                "Brand",
+                "CreativeWork",
+                "Event",
+                "Offer",
+                "Organization",
+                "Place",
+                "Product",
+                "Service"
+            ]
+        },
+        "reviews": {
+            "@type": "Property",
+            "$id": "https://schema.org/reviews",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "reviews",
+            "description": "Review of the item.",
+            "type": [
+                "Review"
+            ],
+            "classes": [
+                "CreativeWork",
+                "Offer",
+                "Organization",
+                "Place",
+                "Product"
+            ]
+        },
+        "seeks": {
+            "@type": "Property",
+            "$id": "https://schema.org/seeks",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "seeks",
+            "description": "A pointer to products or services sought by the organization or person (demand).",
+            "type": [
+                "Demand"
+            ],
+            "classes": [
+                "Organization",
+                "Person"
+            ]
+        },
+        "serviceArea": {
+            "@type": "Property",
+            "$id": "https://schema.org/serviceArea",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "serviceArea",
+            "description": "The geographic area where the service is provided.",
+            "type": [
+                "AdministrativeArea",
+                "GeoShape",
+                "Place"
+            ],
+            "classes": [
+                "ContactPoint",
+                "Organization",
+                "Service"
+            ]
+        },
+        "skills": {
+            "@type": "Property",
+            "$id": "https://schema.org/skills",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "skills",
+            "description": "A statement of knowledge, skill, ability, task or any other assertion expressing a competency that is either claimed by a person, an organization or desired or required to fulfill a role or to work in an occupation.",
+            "type": [
+                "DefinedTerm",
+                "Text"
+            ],
+            "classes": [
+                "JobPosting",
+                "Occupation",
+                "Organization",
+                "Person"
+            ]
+        },
+        "slogan": {
+            "@type": "Property",
+            "$id": "https://schema.org/slogan",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "slogan",
+            "description": "A slogan or motto associated with the item.",
+            "type": [
+                "Text"
+            ],
+            "classes": [
+                "Brand",
+                "Organization",
+                "Place",
+                "Product",
+                "Service"
+            ]
+        },
+        "sponsor": {
+            "@type": "Property",
+            "$id": "https://schema.org/sponsor",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "sponsor",
+            "description": "A person or organization that supports a thing through a pledge, promise, or financial contribution. E.g. a sponsor of a Medical Study or a corporate sponsor of an event.",
+            "type": [
+                "Organization",
+                "Person"
+            ],
+            "classes": [
+                "CreativeWork",
+                "Event",
+                "Grant",
+                "MedicalStudy",
+                "Organization",
+                "Person"
+            ]
+        },
+        "subOrganization": {
+            "@type": "Property",
+            "$id": "https://schema.org/subOrganization",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "subOrganization",
+            "description": "A relationship between two organizations where the first includes the second, e.g., as a subsidiary. See also: the more specific 'department' property.",
+            "type": [
+                "Organization"
+            ],
+            "classes": [
+                "Organization"
+            ]
+        },
+        "taxID": {
+            "@type": "Property",
+            "$id": "https://schema.org/taxID",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "taxID",
+            "description": "The Tax / Fiscal ID of the organization or person, e.g. the TIN in the US or the CIF/NIF in Spain.",
+            "type": [
+                "Text"
+            ],
+            "classes": [
+                "Organization",
+                "Person"
+            ]
+        },
+        "telephone": {
+            "@type": "Property",
+            "$id": "https://schema.org/telephone",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "telephone",
+            "description": "The telephone number.",
+            "type": [
+                "Text"
+            ],
+            "classes": [
+                "ContactPoint",
+                "Organization",
+                "Person",
+                "Place"
+            ]
+        },
+        "unnamedSourcesPolicy": {
+            "@type": "Property",
+            "$id": "https://schema.org/unnamedSourcesPolicy",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "unnamedSourcesPolicy",
+            "description": "For an [[Organization]] (typically a [[NewsMediaOrganization]]), a statement about policy on use of unnamed sources and the decision process required.",
+            "type": [
+                "CreativeWork",
+                "URL"
+            ],
+            "classes": [
+                "NewsMediaOrganization",
+                "Organization"
+            ]
+        },
+        "vatID": {
+            "@type": "Property",
+            "$id": "https://schema.org/vatID",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "vatID",
+            "description": "The value-added Tax ID of the organization or person with national prefix (for example IT123456789). Can also be described as [[iso6523Code]] with proper prefix.",
+            "type": [
+                "Text"
+            ],
+            "classes": [
+                "Organization",
+                "Person"
+            ]
+        },
+        "additionalType": {
+            "@type": "Property",
+            "$id": "https://schema.org/additionalType",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "additionalType",
+            "description": "An additional type for the item, typically used for adding more specific types from external vocabularies in microdata syntax. This is a relationship between something and a class that the thing is in. Typically the value is a URI-identified RDF class, and in this case corresponds to the\n    use of rdf:type in RDF. Text values can be used sparingly, for cases where useful information can be added without their being an appropriate schema to reference. In the case of text values, the class label should follow the schema.org <a href=\"https://schema.org/docs/styleguide.html\">style guide</a>.",
+            "type": [
+                "Text",
+                "URL"
+            ],
+            "classes": [
+                "Thing"
+            ]
+        },
+        "alternateName": {
+            "@type": "Property",
+            "$id": "https://schema.org/alternateName",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "alternateName",
+            "description": "An alias for the item.",
+            "type": [
+                "Text"
+            ],
+            "classes": [
+                "Thing"
+            ]
+        },
+        "description": {
+            "@type": "Property",
+            "$id": "https://schema.org/description",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "description",
+            "description": "A description of the item.",
+            "type": [
+                "Text",
+                "TextObject"
+            ],
+            "classes": [
+                "Thing"
+            ]
+        },
+        "disambiguatingDescription": {
+            "@type": "Property",
+            "$id": "https://schema.org/disambiguatingDescription",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "disambiguatingDescription",
+            "description": "A sub property of description. A short description of the item used to disambiguate from other, similar items. Information from other properties (in particular, name) may be necessary for the description to be useful for disambiguation.",
+            "type": [
+                "Text"
+            ],
+            "classes": [
+                "Thing"
+            ]
+        },
+        "identifier": {
+            "@type": "Property",
+            "$id": "https://schema.org/identifier",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "identifier",
+            "description": "The identifier property represents any kind of identifier for any kind of [[Thing]], such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See [background notes](/docs/datamodel.html#identifierBg) for more details.\n        ",
+            "type": [
+                "PropertyValue",
+                "Text",
+                "URL"
+            ],
+            "classes": [
+                "Thing"
+            ]
+        },
+        "image": {
+            "@type": "Property",
+            "$id": "https://schema.org/image",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "image",
+            "description": "An image of the item. This can be a [[URL]] or a fully described [[ImageObject]].",
+            "type": [
+                "ImageObject",
+                "URL"
+            ],
+            "classes": [
+                "Thing"
+            ]
+        },
+        "mainEntityOfPage": {
+            "@type": "Property",
+            "$id": "https://schema.org/mainEntityOfPage",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "mainEntityOfPage",
+            "description": "Indicates a page (or other CreativeWork) for which this thing is the main entity being described. See [background notes](/docs/datamodel.html#mainEntityBackground) for details.",
+            "type": [
+                "CreativeWork",
+                "URL"
+            ],
+            "classes": [
+                "Thing"
+            ]
+        },
+        "name": {
+            "@type": "Property",
+            "$id": "https://schema.org/name",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "name",
+            "description": "The name of the item.",
+            "type": [
+                "Text"
+            ],
+            "classes": [
+                "Thing"
+            ]
+        },
+        "owner": {
+            "@type": "Property",
+            "$id": "https://schema.org/owner",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "owner",
+            "description": "A person or organization who owns this Thing.",
+            "type": [
+                "Organization",
+                "Person"
+            ],
+            "classes": [
+                "Thing"
+            ]
+        },
+        "potentialAction": {
+            "@type": "Property",
+            "$id": "https://schema.org/potentialAction",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "potentialAction",
+            "description": "Indicates a potential Action, which describes an idealized action in which this thing would play an 'object' role.",
+            "type": [
+                "Action"
+            ],
+            "classes": [
+                "Thing"
+            ]
+        },
+        "sameAs": {
+            "@type": "Property",
+            "$id": "https://schema.org/sameAs",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "sameAs",
+            "description": "URL of a reference Web page that unambiguously indicates the item's identity. E.g. the URL of the item's Wikipedia page, Wikidata entry, or official website.",
+            "type": [
+                "URL"
+            ],
+            "classes": [
+                "Thing"
+            ]
+        },
+        "subjectOf": {
+            "@type": "Property",
+            "$id": "https://schema.org/subjectOf",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "subjectOf",
+            "description": "A CreativeWork or Event about this Thing.",
+            "type": [
+                "CreativeWork",
+                "Event"
+            ],
+            "classes": [
+                "Thing"
+            ]
+        },
+        "url": {
+            "@type": "Property",
+            "$id": "https://schema.org/url",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "url",
+            "description": "URL of the item.",
+            "type": [
+                "URL"
+            ],
+            "classes": [
+                "Thing"
+            ]
+        }
+    }
+}
